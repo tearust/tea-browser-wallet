@@ -1,6 +1,6 @@
 {
-  "name": "webapp",
-  "version": "0.1.0",
+  "name": "tea-browser-wallet",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "npm run dapp",
