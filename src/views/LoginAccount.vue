@@ -28,9 +28,72 @@
 
   <el-divider />
 
-  
+  <div class="tea-card">
+    <i class="x-icon el-icon-user"></i>
+
+    <div class="x-list">
+      <div class="x-item">
+        <b>DAI</b>
+        <span>{{layer1_account ? layer1_account.dai : ''}}</span>
+      </div>
+
+    </div>
+
+    <div class="x-right">
+      <el-button @click="convertDaiToCml()">CONVERT</el-button>
+      
+    </div>
+  </div>
 
   <el-divider />
+  <el-table 
+    :data="layer1_account ? layer1_account.cml : []"
+    stripe
+    size="small"
+    border
+  >
+    <el-table-column
+      prop="id"
+      label="NTF ID"
+    />
+    <el-table-column
+      prop="group"
+      label="Group"
+    />
+    <el-table-column
+      prop="life_time"
+      label="Life Time"
+    />
+    <el-table-column
+      prop="miner_id"
+      label="Miner ID"
+    />
+    <el-table-column
+      prop="mining_rate"
+      label="Mining Rate"
+    />
+    <el-table-column
+      prop="status"
+      label="Status"
+    />
+    <el-table-column
+      prop="created_at"
+      label="Created At"
+    />
+    <el-table-column
+      label="Actions"
+      width="120">
+      <template slot-scope="scope">
+        <el-button
+          @click="showStakingSlot(scope)"
+          type="text"
+          size="small">
+          Staking List
+        </el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+ 
   
 </div>
 </template>
@@ -72,46 +135,6 @@ export default {
       this.wf.showSelectLayer1Modal();
     },
 
-    async bindMobileHandler(){
-      const address = this.layer1_account.address;
-      const layer1_instance = this.wf.getLayer1Instance();
-      const gluon_pallet = layer1_instance.getGluonPallet();
-      try{
-        const nonce = helper.getRandomNonce();
-        this.$root.loading(true);
-        await gluon_pallet.sendNonceForPairMobileDevice(nonce, address);
-
-        const json = {
-          nonce,
-          address,
-          type: 'pair',
-        };
-
-        // start listening
-        layer1_instance.buildCallback('gluon.RegistrationApplicationSucceed', (data)=>{
-          const address1 = helper.encodeAddress(data[0]);
-          const address2 = helper.encodeAddress(data[1]);
-          if(_.includes([address1, address2], address)){
-            this.wf.closeQrCodeModal();
-            this.refreshAccount();
-          }
-        })
-
-        this.wf.showQrCodeModal({
-          text: JSON.stringify(json),
-        });
-
-      }catch(e){
-        const err = e.message || e.toString();
-        this.$alert(err, 'Layer1 Error', {
-          type: 'error'
-        });
-        
-      }finally{
-        this.$root.loading(false);
-      }
-    },
-
     async rechargeHandler(){
       this.$root.loading(true);
       const layer1_instance = this.wf.getLayer1Instance();
@@ -125,36 +148,25 @@ export default {
       await this.wf.refreshCurrentAccount();
     },
 
-    async unpairHandler(){
-      let f;
-      try{
-        await this.$confirm('Are you sure to unpair this device?', 'UNPAIR', {
-          confirmButtonText: 'CONFIRM',
-          cancelButtonText: 'CANCEL'
-        });
-        f = true;
-      }catch(e){
-        f = false;
-      }
-
-      if(!f) return false;
-      this.$root.loading(true);
-
+    async convertDaiToCml(){
       try{
         const layer1_instance = this.wf.getLayer1Instance();
-        const gluon_pallet = layer1_instance.getGluonPallet();
-        await gluon_pallet.unpair(this.layer1_account.address);
+        const api = layer1_instance.getApi();
+        const convert_tx = api.tx.assets.convertCmlFromDai();
+
+        await layer1_instance.sendTx(this.layer1_account.address, convert_tx);
         await this.refreshAccount();
-
       }catch(e){
-        const err = e.message || e.toString();
-        this.$alert(err, 'Layer1 Error', {
-          type: 'error'
-        });
+        this.$root.showError(e);
       }
+      
+    },
 
-      this.$root.loading(false);
+    showStakingSlot(scope){
+      console.log(11, scope.row, scope.$index);
     }
+
+    
   }
 
   

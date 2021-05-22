@@ -28,6 +28,7 @@ class Layer1 {
     const _layer1 = new TeaLayer1({
       ws_url: LAYER1_URL,
       http_url: LAYER1_HTTP,
+      system_top_up_account: 'Alice',
       env: 'browser',
       types,
     });

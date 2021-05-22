@@ -79,8 +79,8 @@ export default class {
 
     const api = layer1_instance.getApi();
     
-    const dai = api.query.assets.daiStore(layer1_account.address);
-    const cml = api.query.assets.cmlStore(layer1_account.address);
+    const dai = await api.query.assets.daiStore(layer1_account.address);
+    const cml = await api.query.assets.cmlStore(layer1_account.address);
 
     // reset all state
     store.commit('reset_state');
