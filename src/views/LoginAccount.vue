@@ -268,7 +268,7 @@ export default {
     },
 
     showStakingSlot(scope){
-      console.log(11, scope.row, scope.$index);
+      // console.log(11, scope.row, scope.$index);
       this.staking_modal.data = scope.row;
 
       this.staking_modal.visible = true;
