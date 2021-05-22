@@ -41,11 +41,13 @@
 
     <div class="x-right">
       <el-button @click="convertDaiToCml()">CONVERT</el-button>
-      
+      <el-button @click="dai_modal.visible=true">TRANSFER</el-button>
     </div>
   </div>
 
   <el-divider />
+
+  <h4>CML LIST</h4>
   <el-table 
     :data="layer1_account ? layer1_account.cml : []"
     stripe
@@ -94,7 +96,35 @@
     </el-table-column>
   </el-table>
  
-  
+
+
+
+  <el-dialog
+    title="Transfer Dai"
+    :visible.sync="dai_modal.visible"
+    width="900"
+    :close-on-click-modal="false"
+    custom-class="tea-modal"
+  >
+
+    <p style="margin:0 15px 40px; font-size:15px;">
+      Transfer Dai to another account.
+    </p>
+    <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="120px">
+      <el-form-item label="Target Address" prop="target_address">
+        <el-input v-model="dai_modal.form.target_address"></el-input>
+      </el-form-item>
+      <el-form-item label="Amount" prop="amount">
+        <el-input-number v-model="dai_modal.form.amount" :min="1" :max="100"></el-input-number>
+      </el-form-item>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+      <el-button size="small" @click="dai_modal.visible = false">Close</el-button>
+      <el-button size="small" type="primary" @click="transferDai()">Confirm</el-button>
+    </span>
+
+  </el-dialog>
 </div>
 </template>
 <script>
@@ -105,7 +135,19 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   data(){
     return {
-      
+      dai_modal: {
+        visible: false,
+        form: {
+          target_address: '',
+          amount: null,
+        },
+        rules: {
+          target_address: [
+            { required: true },
+          ],
+          amount: [],
+        }
+      }
     };
   },
 
@@ -149,6 +191,7 @@ export default {
     },
 
     async convertDaiToCml(){
+      this.$root.loading(true);
       try{
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
@@ -159,12 +202,37 @@ export default {
       }catch(e){
         this.$root.showError(e);
       }
-      
+      this.$root.loading(false);
     },
 
     showStakingSlot(scope){
       console.log(11, scope.row, scope.$index);
-    }
+    },
+
+    async transferDai(){
+      const ref = this.$refs['dai_modal'];
+      this.$root.loading(true);
+      try{
+        await ref.validate();
+        const {target_address, amount} = this.dai_modal.form;
+
+        const layer1_instance = this.wf.getLayer1Instance();
+        const api = layer1_instance.getApi();
+        const tx = api.tx.assets.transferDai(target_address, amount);
+
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+        await this.refreshAccount();
+
+        this.$message.success('success');
+        ref.resetFields();
+        this.dai_modal.visible = false;
+
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
+      
+    },
 
     
   }
