@@ -76,8 +76,11 @@ export default class {
     this._log.i("refresh current layer1_account");
     const layer1_instance = this.getLayer1Instance();
     const balance = await layer1_instance.getAccountBalance(layer1_account.address);
-    const gluonPallet = layer1_instance.getGluonPallet();
-    const info = await gluonPallet.getAccountProfile(layer1_account.address);
+
+    const api = layer1_instance.getApi();
+    
+    const dai = api.query.assets.daiStore(layer1_account.address);
+    const cml = api.query.assets.cmlStore(layer1_account.address);
 
     // reset all state
     store.commit('reset_state');
@@ -86,17 +89,11 @@ export default class {
       balance,
       address: layer1_account.address,
       ori_name: layer1_account.name,
+      dai: dai.toHuman(),
+      cml: cml.toHuman(),
     });
 
-    if(info.pair_address){
-      store.commit('set_bind_mobile', {
-        address: info.pair_address,
-        uuid: info.pair_meta.uuid || ''
-      });
-    }
-    else{
-      store.commit('set_bind_mobile', null);
-    }
+
   }
 
   

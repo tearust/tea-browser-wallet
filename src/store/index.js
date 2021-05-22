@@ -20,6 +20,8 @@ const initState = ()=>{
       name: null,
       address: null,
       balance: null,
+      dai: null,
+      cml: [],
     },
 
     // address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
@@ -82,6 +84,8 @@ const store = new Vuex.Store({
         name: account.ori_name,
         address: account.address,
         balance: account.balance,
+        dai: account.dai,
+        cml: account.cml || []
       };
       
       localStorage.setItem('tea-layer1-account', JSON.stringify(state.layer1_account));

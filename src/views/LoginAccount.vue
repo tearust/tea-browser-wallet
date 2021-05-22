@@ -28,29 +28,7 @@
 
   <el-divider />
 
-  <div class="tea-card mb" v-if="bind_mobile">
-    <i class="x-icon el-icon-mobile-phone"></i>
-
-    <div class="x-list">
-      <div class="x-item">
-        <b>UUID</b>
-        <span>{{bind_mobile ? bind_mobile.uuid : ''}}</span>
-      </div>
-      <div class="x-item">
-        <b>ADDRESS</b>
-        <span>{{bind_mobile ? bind_mobile.address : ''}}</span>
-      </div>
-
-    </div>
-
-    <div class="x-right">
-      <el-button class="gray" @click="unpairHandler()" >UNPAIR</el-button>
-    </div>
-  </div>
-
-  <div class="tea-card flex-center gray" v-if="!bind_mobile">
-    <el-button @click="bindMobileHandler()" :disabled="!layer1_account.address" class="x-only-btn">BIND MOBILE</el-button>
-  </div>
+  
 
   <el-divider />
   
@@ -85,6 +63,7 @@ export default {
 
     await this.refreshAccount();
     this.$root.loading(false);
+    console.log(this.layer1_account)
 
   },
 

@@ -2,6 +2,8 @@ import utils from './utils';
 const LAYER1_URL = utils.get_env('layer1_url') || 'ws://127.0.0.1:9944';
 const LAYER1_HTTP = utils.get_env('layer1_http') || 'http://127.0.0.1:9933';
 
+import types from './types.json';
+
 import {
   _,
 } from 'tearust_utils';
@@ -27,6 +29,7 @@ class Layer1 {
       ws_url: LAYER1_URL,
       http_url: LAYER1_HTTP,
       env: 'browser',
+      types,
     });
 
     await _layer1.init();
