@@ -69,7 +69,16 @@
     <el-table-column
       prop="miner_id"
       label="Miner ID"
-    />
+    > 
+      <template slot-scope="scope">
+        <el-button
+          @click="showMinerInfo(scope.row.miner_id)"
+          type="text"
+          size="small">
+          {{scope.row.miner_id}}
+        </el-button>
+      </template>
+    </el-table-column>
     <el-table-column
       prop="mining_rate"
       label="Mining Rate"
@@ -125,6 +134,55 @@
     </span>
 
   </el-dialog>
+
+  <el-dialog
+    title="Staking List"
+    :visible.sync="staking_modal.visible"
+    width="70%"
+    :close-on-click-modal="false"
+    custom-class="tea-modal"
+  >
+    <h4>{{staking_modal.data ? staking_modal.data.id : ''}}</h4>
+    <el-table 
+      :data="staking_modal.data ? staking_modal.data.staking_slot : []"
+      stripe
+      size="small"
+      border
+    >
+      <el-table-column
+        prop="owner"
+        label="Owner"
+      />
+      <el-table-column
+        prop="category"
+        label="Category"
+      />
+      <el-table-column
+        prop="amount"
+        label="Amount"
+      />
+      
+      <el-table-column
+        label="Actions"
+        width="120">
+        <!-- <template slot-scope="scope">
+          <el-button
+            @click="showStakingSlot(scope)"
+            type="text"
+            size="small">
+            Staking List
+          </el-button>
+        </template> -->
+      </el-table-column>
+    </el-table>
+    
+
+    <span slot="footer" class="dialog-footer">
+      <el-button size="small" @click="staking_modal.visible = false">Close</el-button>
+    </span>
+
+  </el-dialog>
+
 </div>
 </template>
 <script>
@@ -147,6 +205,10 @@ export default {
           ],
           amount: [],
         }
+      },
+      staking_modal: {
+        visible: false,
+        data: null,
       }
     };
   },
@@ -207,6 +269,9 @@ export default {
 
     showStakingSlot(scope){
       console.log(11, scope.row, scope.$index);
+      this.staking_modal.data = scope.row;
+
+      this.staking_modal.visible = true;
     },
 
     async transferDai(){
@@ -234,7 +299,14 @@ export default {
       
     },
 
-    
+    async showMinerInfo(miner_id){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const mm = await api.query.assets.minerItemStore(miner_id);
+
+      alert(JSON.stringify(mm.toHuman()));
+    }
   }
 
   

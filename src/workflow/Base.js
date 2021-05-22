@@ -5,6 +5,15 @@ import http from '../tea/http';
 import store from '../store';
 
 import {_, forge} from 'tearust_utils';
+import {helper} from 'tearust_layer1';
+
+import {BN_MILLION,
+  bnToBn,
+  promisify,
+  stringToHex, 
+  stringToU8a, 
+  u8aToHex, 
+  u8aToString} from '@polkadot/util';
 
 
 let _layer1 = null;
