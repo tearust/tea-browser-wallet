@@ -257,7 +257,7 @@ export default {
       try{
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
-        const convert_tx = api.tx.assets.convertCmlFromDai();
+        const convert_tx = api.tx.cml.convertCmlFromDai();
 
         await layer1_instance.sendTx(this.layer1_account.address, convert_tx);
         await this.refreshAccount();
@@ -283,7 +283,7 @@ export default {
 
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
-        const tx = api.tx.assets.transferDai(target_address, amount);
+        const tx = api.tx.cml.transferDai(target_address, amount);
 
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
@@ -303,7 +303,7 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const mm = await api.query.assets.minerItemStore(miner_id);
+      const mm = await api.query.cml.minerItemStore(miner_id);
 
       alert(JSON.stringify(mm.toHuman()));
     }

@@ -232,11 +232,11 @@ const store = new Vuex.Store({
 
       const layer1 = await F.getLayer1();
       const layer1_instance = layer1.getLayer1Instance();
-      const gluon_pallet = layer1_instance.getGluonPallet();
+      // const gluon_pallet = layer1_instance.getGluonPallet();
 
-      const asset = await gluon_pallet.getAccountAssets(layer1_account.address);
+      // const asset = await gluon_pallet.getAccountAssets(layer1_account.address);
 
-      store.commit('set_layer1_asset', asset);
+      store.commit('set_layer1_asset', null);
     },
     async set_recovery_current(store){
       const layer1_account = store.getters.layer1_account;

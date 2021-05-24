@@ -89,7 +89,7 @@ export default {
         const layer1_instance = this.test.getLayer1Instance();
         const api = layer1_instance.getApi();
 
-        const tx = api.tx.assets.activeCmlForNitro(cml_id, miner_id, miner_ip);
+        const tx = api.tx.cml.activeCmlForNitro(cml_id, miner_id, miner_ip);
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         console.log(cml_id, miner_id, miner_ip);
 
@@ -111,7 +111,7 @@ export default {
       const layer1_instance = this.test.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const mm = await api.query.assets.minerItemStore(miner_id);
+      const mm = await api.query.cml.minerItemStore(miner_id);
 
       this.result = mm.toHuman();
     }
