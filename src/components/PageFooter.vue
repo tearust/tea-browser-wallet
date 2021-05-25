@@ -11,8 +11,8 @@
         
       </el-col>
       <el-col :span="12">
-        <!-- <h4 class="t-h">Contact</h4> -->
-        <!-- <span class="t-a">Email: </span> -->
+        <h4 class="t-h">Tools</h4>
+        <a class="t-a" href="javascript:void(0)" @click="$router.push('/tools/calculate_staking_profit');">Staking收益计算器</a>
       </el-col>
     </el-row>
 

@@ -7,6 +7,8 @@ import SocialRecovery from './views/SocialRecovery';
 import LoginAccount from './views/LoginAccount';
 import Test from './views/Test';
 
+import CalculateStakingProfit from './views/tools/CalculateStakingProfit';
+
 
 Vue.use(Router);
 
@@ -42,6 +44,12 @@ let routers = [
     meta: {
       needLogin: true
     }
+  },
+
+  {
+    path: '/tools/calculate_staking_profit',
+    name: 'calculate_staking_profit',
+    component: CalculateStakingProfit,
   }
   
 ];
