@@ -52,23 +52,26 @@ export default {
     calculate(){
       const n = this.form.staking_amount;
 
-      const arr = [];
-      let total = 0;
-      for(let i=0; i<n; i++){
+      // const arr = [];
+      // let total = 0;
+      // for(let i=0; i<n; i++){
+      //   const index = i+1;
+      //   const weight = Math.sqrt(i+1) - Math.sqrt(i);
+      //   total += weight;
+      //   arr.push({
+      //     index,
+      //     weight,
+      //   });
+      // }
+
+      const total = Math.sqrt(n);
+      const list = _.map(_.range(n), (i)=>{
         const index = i+1;
         const weight = Math.sqrt(i+1) - Math.sqrt(i);
-        total += weight;
-        arr.push({
-          index,
-          weight,
-        });
-      }
-
-      const list = _.map(arr, (item)=>{
-        const persent = item.weight / total;
+        const persent = weight / total;
         const profit = 100 * persent;
         return {
-          index: item.index,
+          index,
           persent: Math.round(100*persent * 10000) / 10000 + '%',
           profit,
         }
