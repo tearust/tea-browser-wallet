@@ -17,8 +17,8 @@
     "lodash": "4.17.21",
     "protobufjs": "^6.9.0",
     "pubsub-js": "^1.9.0",
-    "tearust_layer1": "0.0.7",
-    "tearust_utils": "0.0.7",
+    "tearust_layer1": "0.1.0",
+    "tearust_utils": "0.1.0",
     "vue": "^2.6.11",
     "vue-router": "3.3.4",
     "vuex": "^3.6.0"
