@@ -320,7 +320,8 @@ export default {
       const api = layer1_instance.getApi();
 
       const query = await api.query.auction.userAuctionStore(this.layer1_account.address);
-      console.log(11, api.query.auction, query.toHuman())
+      // const query1 = await api.query.auction.auctionStore(1);
+      console.log(11, query.toHuman())
 
       this.$store.commit('modal/open', {
         key: 'put_to_auction_store', 
