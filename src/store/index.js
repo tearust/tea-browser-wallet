@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import Base from '../workflow/Base';
 
+import modal from './modal';
+
 Vue.use(Vuex)
 
 const F = {
@@ -61,6 +63,10 @@ const initState = ()=>{
 };
 
 const store = new Vuex.Store({
+  modules: {
+    modal: modal,
+  },
+
   state: initState(),
 
   getters: {

@@ -13,6 +13,8 @@
 
     <QRCodeModal />
     <SelectLayer1Modal />
+
+    <PutToAuctionStoreModal />
   </div>
 </template>
 
@@ -23,12 +25,16 @@ import PageFooter from './components/PageFooter';
 import QRCodeModal from './components/QRCodeModal';
 import SelectLayer1Modal from './components/SelectLayer1Modal';
 
+import PutToAuctionStoreModal from './views/modals/PutToAuctionStoreModal';
+
 export default {
   components: {
     PageHeader,
     PageFooter,
     QRCodeModal,
     SelectLayer1Modal,
+    
+    PutToAuctionStoreModal,
   }
 }
 </script>

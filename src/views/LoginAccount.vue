@@ -33,7 +33,7 @@
 
     <div class="x-list">
       <div class="x-item">
-        <b>DAI</b>
+        <b>VOUCHER</b>
         <span>{{layer1_account ? layer1_account.dai : ''}}</span>
       </div>
 
@@ -56,7 +56,7 @@
   >
     <el-table-column
       prop="id"
-      label="NTF ID"
+      label="CML ID"
     />
     <el-table-column
       prop="group"
@@ -101,6 +101,13 @@
           size="small">
           Staking List
         </el-button>
+        &nbsp;
+        <el-button
+          @click="openPutAuctionModal(scope)"
+          type="text"
+          size="small">
+          Auction
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -109,7 +116,7 @@
 
 
   <el-dialog
-    title="Transfer Dai"
+    title="Transfer Voucher"
     :visible.sync="dai_modal.visible"
     width="900"
     :close-on-click-modal="false"
@@ -117,7 +124,7 @@
   >
 
     <p style="margin:0 15px 40px; font-size:15px;">
-      Transfer Dai to another account.
+      Transfer Voucher to another account.
     </p>
     <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="120px">
       <el-form-item label="Target Address" prop="target_address">
@@ -189,7 +196,7 @@
 import SettingAccount from '../workflow/SettingAccount';
 import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex';
 export default {
   data(){
     return {
@@ -306,6 +313,42 @@ export default {
       const mm = await api.query.cml.minerItemStore(miner_id);
 
       alert(JSON.stringify(mm.toHuman()));
+    },
+
+    async openPutAuctionModal(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const query = await api.query.auction.userAuctionStore(this.layer1_account.address);
+      console.log(11, api.query.auction, query.toHuman())
+
+      this.$store.commit('modal/open', {
+        key: 'put_to_auction_store', 
+        param: {
+          cml_id: scope.row.id,
+        },
+        cb: async (form)=>{
+          this.$root.loading(true);
+          try{
+            const cml_id = scope.row.id;
+            
+
+            const p1 = layer1_instance.asUnit(form.starting_price);
+            const p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
+
+            console.log(11, p1, p2);
+
+            const tx = api.tx.auction.putToStore(cml_id, p1, p2);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+
+            this.$store.commit('modal/close', 'put_to_auction_store');
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
     }
   }
 

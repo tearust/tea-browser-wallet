@@ -85,12 +85,17 @@ export default class {
     // reset all state
     store.commit('reset_state');
 
+    const cml_data = _.map(cml.toHuman(), (cml)=>{
+      cml.id = utils.toNumber(cml.id);
+      
+      return cml;
+    });
     store.commit('set_account', {
       balance,
       address: layer1_account.address,
       ori_name: layer1_account.name,
       dai: dai.toHuman(),
-      cml: cml.toHuman(),
+      cml: cml_data,
     });
 
 
