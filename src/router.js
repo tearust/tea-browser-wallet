@@ -3,11 +3,13 @@ import Router from 'vue-router'
 
 
 import Home from './views/Home';
-import SocialRecovery from './views/SocialRecovery';
+// import SocialRecovery from './views/SocialRecovery';
 import LoginAccount from './views/LoginAccount';
 import Test from './views/Test';
 
 import CalculateStakingProfit from './views/tools/CalculateStakingProfit';
+
+import AuctionStore from './views/auction/AuctionStore';
 
 
 Vue.use(Router);
@@ -28,14 +30,6 @@ let routers = [
     name: 'login_account',
     component: LoginAccount,
   },
-  {
-    path: '/social_recovery',
-    name: 'social_recovery',
-    component: SocialRecovery,
-    meta: {
-      needLogin: true
-    }
-  },
   
   {
     path: '/test',
@@ -50,6 +44,12 @@ let routers = [
     path: '/tools/calculate_staking_profit',
     name: 'calculate_staking_profit',
     component: CalculateStakingProfit,
+  },
+
+  {
+    path: '/auction_store',
+    name: 'auction_store',
+    component: AuctionStore,
   }
   
 ];

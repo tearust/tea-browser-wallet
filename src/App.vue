@@ -15,6 +15,7 @@
     <SelectLayer1Modal />
 
     <PutToAuctionStoreModal />
+    <BidForAuctionModal />
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import QRCodeModal from './components/QRCodeModal';
 import SelectLayer1Modal from './components/SelectLayer1Modal';
 
 import PutToAuctionStoreModal from './views/modals/PutToAuctionStoreModal';
+import BidForAuctionModal from './views/modals/BidForAuctionModal'
 
 export default {
   components: {
@@ -35,6 +37,7 @@ export default {
     SelectLayer1Modal,
     
     PutToAuctionStoreModal,
+    BidForAuctionModal,
   }
 }
 </script>

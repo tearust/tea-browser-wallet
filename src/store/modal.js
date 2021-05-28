@@ -8,6 +8,10 @@ const initState = ()=>{
       visible: false,
       param: {},
     },
+    bid_for_auction: {
+      visible: false,
+      param: {},
+    }
 
   };
 }
