@@ -1,11 +1,10 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>Auction List</h4>
+  <h4>My Auction</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
-
   <el-table 
-    :data="auction.auction_list"
+    :data="auction.my_auction_list"
     stripe
     size="small"
     border
@@ -39,7 +38,7 @@
       label="Status"
     />
     
-    <el-table-column
+    <!-- <el-table-column
       label="Actions"
       width="120">
       <template slot-scope="scope">
@@ -51,7 +50,7 @@
         </el-button>
         
       </template>
-    </el-table-column>
+    </el-table-column> -->
   </el-table>
 </div>
 </template>
@@ -76,14 +75,14 @@ export default {
   async mounted(){
     this.wf = new Auction();
     await this.wf.init();
-
+    
     await this.refreshList();
   },
   methods: {
     async refreshList(){
       this.$root.loading(true);
       try{
-        await this.$store.dispatch('init_auction_store', 100, true);
+        await this.$store.dispatch('init_my_auction_list');
       }catch(e){
         this.$root.showError(e);
       }
@@ -91,35 +90,6 @@ export default {
       this.$root.loading(false);
     },
     async bidForAuctionItem(scope){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-
-      this.$store.commit('modal/open', {
-        key: 'bid_for_auction', 
-        param: {
-          cml_id: scope.row.cml_id,
-        },
-        cb: async (form)=>{
-          this.$root.loading(true);
-          try{
-            const auction_id = scope.row.id;        
-            const price = layer1_instance.asUnit(form.price);
-            
-            console.log(11, price);
-
-            const tx = api.tx.auction.bidForAuction(auction_id, price);
-            await layer1_instance.sendTx(this.layer1_account.address, tx);
-
-            this.$message.success('success');
-            this.$store.commit('modal/close', 'bid_for_auction');
-
-            await this.$store.dispatch('init_auction_store', 100, true);
-          }catch(e){
-            this.$root.showError(e);
-          }
-          this.$root.loading(false);
-        },
-      });
     }
   }
 }

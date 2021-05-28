@@ -53,6 +53,7 @@ a, a:hover, a:focus, button:focus {
 .tea-page{
   text-align: left;
   min-height: calc(100vh - 327px);
+  position: relative;
 
   h4.tea-title{
     margin: 0;
@@ -60,6 +61,11 @@ a, a:hover, a:focus, button:focus {
     font-weight: normal;
   }
   
+  .tea-refresh-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 
   .el-table__body{
     cursor: pointer;
@@ -76,10 +82,29 @@ a, a:hover, a:focus, button:focus {
     font-weight: bold;
   }
 
+  .el-tabs__item.is-active{
+    color: $mainColor !important;
+    font-size: 17px;
+    font-weight: bold;
+  }
+  .el-tabs__active-bar{
+    background-color: $mainColor !important;
+  }
+  .el-tabs__item{
+    font-size: 17px;
+    color: #777777;
+  }
+
   &>h4{
     font-size: 25px;
     color: #666;
     margin: 10px 0 10px;
+  }
+
+  .el-button--primary.is-plain {
+    color: $mainColor;
+    background: #f9f9f9;
+    border-color: $mainColor;
   }
 }
 

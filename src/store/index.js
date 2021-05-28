@@ -39,7 +39,6 @@ const initState = ()=>{
       delegator_nonce: null,
       delegator_nonce_hash: null,
       delegator_nonce_rsa: null,
-
     },
 
 
@@ -51,6 +50,9 @@ const initState = ()=>{
       last_auction_id: 0,
 
       auction_list: [],
+
+      my_auction_list: [],
+      my_bid_list: [],
     }
   }
 };
@@ -92,9 +94,12 @@ const store = new Vuex.Store({
 
     reset_state(state){
       const init_state = initState();
-      Object.keys(init_state).forEach(key => {
-        state[key] = init_state[key]
-      })
+      // Object.keys(init_state).forEach(key => {
+      //   state[key] = init_state[key]
+      // })
+      state.layer1_account = init_state.layer1_account;
+      state.auction.my_auction_list = [];
+      state.auction.my_bid_list = [];
     },
 
     set_bind_mobile(state, opts){
@@ -109,30 +114,27 @@ const store = new Vuex.Store({
       }
     },
 
-    set_all_asset(state, asset){
-      const list = _.map(asset, (item)=>{
-        item.balance = 0;
-        item.status = 'normal';
-        return item;
-      });
 
-      state.btc_list = list;
-    },
-
-    set_meta(state, opts){
-      state.latest_meta = _.extend(state.latest_meta, opts);
-    },
-    set_layer1_asset(state, asset){
-      if(asset && asset.dot){
-        state.layer1_asset.dot = asset.dot;
-      }
-    },
+    // set_meta(state, opts){
+    //   state.latest_meta = _.extend(state.latest_meta, opts);
+    // },
+    // set_layer1_asset(state, asset){
+    //   if(asset && asset.dot){
+    //     state.layer1_asset.dot = asset.dot;
+    //   }
+    // },
 
     set_auction_last_id(state, id){
       state.auction.last_auction_id = id;
     },
     set_auction_list(state, list=[]){
       state.auction.auction_list = list;
+    },
+    set_my_auction_list(state, list=[]){
+      state.auction.my_auction_list = list;
+    },
+    set_my_bid_list(state, list=[]){
+      state.auction.my_bid_list = list;
     }
     
       
@@ -157,6 +159,8 @@ const store = new Vuex.Store({
     async init_auction_store(store, page_size=10, from_start=false){
 
       const layer1 = await F.getLayer1();
+      await utils.waitLayer1Ready(layer1);
+
       const layer1_instance = layer1.getLayer1Instance();
       const api = layer1_instance.getApi();
 
@@ -201,6 +205,85 @@ const store = new Vuex.Store({
       });
       console.log(11, xlist);
       store.commit('set_auction_list', xlist);
+    },
+
+    async init_my_auction_list(){
+      const layer1_account = store.getters.layer1_account;
+      if(!layer1_account){
+        throw 'Invalid layer1 account';
+      }
+
+      const layer1 = await F.getLayer1();
+      await utils.waitLayer1Ready(layer1);
+
+      const layer1_instance = layer1.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      let user_auction = await api.query.auction.userAuctionStore(layer1_account.address);
+      user_auction = user_auction.toJSON();
+      const x_list = [];
+      if(user_auction && user_auction.length > 0){
+        for(let i=0, len=user_auction.length; i<len; i++){
+          const tmp = await api.query.auction.auctionStore(user_auction[i]);
+          const d = tmp.toHuman();
+          if(d){
+            if(d.bid_user){
+              let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
+              bid_item = bid_item.toHuman();
+              d.bid_price = bid_item.price;
+            }
+            
+            x_list.push(d);
+          }
+        }
+      }
+      
+      const list = _.map(x_list, (item)=>{
+        item.id = utils.toNumber(item.id);
+        item.cml_id = utils.toNumber(item.cml_id);
+        return item;
+      });
+
+      store.commit('set_my_auction_list', list);
+    },
+
+    async init_my_bid_list(){
+      const layer1_account = store.getters.layer1_account;
+      if(!layer1_account){
+        throw 'Invalid layer1 account';
+      }
+
+      const layer1 = await F.getLayer1();
+      await utils.waitLayer1Ready(layer1);
+
+      const layer1_instance = layer1.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      let user_bid = await api.query.auction.userBidStore(layer1_account.address);
+      user_bid = user_bid.toJSON();
+      
+      const x_list = [];
+
+      if(user_bid && user_bid.length > 0){
+        for(let i=0, len=user_bid.length; i<len; i++){
+          const tmp = await api.query.auction.bidStore(layer1_account.address, user_bid[i]);
+          const d = tmp.toHuman();
+          if(d){
+            const auction = await api.query.auction.auctionStore(utils.toNumber(d.auction_id));
+            d.auction = auction.toHuman();
+            d.cml_id = utils.toNumber(auction.toHuman().cml_id);
+            x_list.push(d);
+          }
+        }
+      }
+      console.log(111, x_list);
+
+      const list = _.map(x_list, (item)=>{
+        item.auction_id = utils.toNumber(item.auction_id);
+        return item;
+      });
+
+      store.commit('set_my_bid_list', list);
     }
   }
 })

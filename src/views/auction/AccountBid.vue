@@ -1,42 +1,34 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>Auction List</h4>
+  <h4>My Bid List</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
-
   <el-table 
-    :data="auction.auction_list"
+    :data="auction.my_bid_list"
     stripe
     size="small"
     border
   >
     <el-table-column
-      prop="id"
+      prop="auction_id"
       label="Auction Id"
     />
     <el-table-column
       prop="cml_id"
       label="CML Id"
     />
-    <!-- <el-table-column
-      prop="cml_owner"
-      label="CML Owner"
-    /> -->
     <el-table-column
-      prop="starting_price"
-      label="Starting Price"
+      prop="price"
+      label="My Price"
+    />
+    
+    <el-table-column
+      prop="created_at"
+      label="Created At"
     />
     <el-table-column
-      prop="buy_now_price"
-      label="Buy Now Price"
-    />
-    <el-table-column
-      prop="bid_price"
-      label="Bid Price"
-    />
-    <el-table-column
-      prop="status"
-      label="Status"
+      prop="updated_at"
+      label="Updated At"
     />
     
     <el-table-column
@@ -44,10 +36,10 @@
       width="120">
       <template slot-scope="scope">
         <el-button
-          @click="bidForAuctionItem(scope)"
+          @click="addPriceForBid(scope)"
           type="text"
           size="small">
-          Bid
+          Add Price
         </el-button>
         
       </template>
@@ -83,14 +75,14 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       try{
-        await this.$store.dispatch('init_auction_store', 100, true);
+        await this.$store.dispatch('init_my_bid_list');
       }catch(e){
         this.$root.showError(e);
       }
       await utils.sleep(1000)
       this.$root.loading(false);
     },
-    async bidForAuctionItem(scope){
+    async addPriceForBid(scope){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
@@ -102,18 +94,16 @@ export default {
         cb: async (form)=>{
           this.$root.loading(true);
           try{
-            const auction_id = scope.row.id;        
+            const auction_id = scope.row.auction_id;        
             const price = layer1_instance.asUnit(form.price);
             
-            console.log(11, price);
-
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
             this.$message.success('success');
             this.$store.commit('modal/close', 'bid_for_auction');
 
-            await this.$store.dispatch('init_auction_store', 100, true);
+            await this.$store.dispatch('init_my_bid_list');
           }catch(e){
             this.$root.showError(e);
           }

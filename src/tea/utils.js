@@ -110,6 +110,12 @@ const F = {
   toNumber(n){
     const tmp = n.toString().replace(/,/g, '');
     return _.toNumber(tmp);
+  },
+
+  async waitLayer1Ready(layer1){
+    while (layer1.connected !== 2) {
+      await F.sleep(500);
+    }
   }
 };
 

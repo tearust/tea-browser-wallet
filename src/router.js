@@ -9,7 +9,7 @@ import Test from './views/Test';
 
 import CalculateStakingProfit from './views/tools/CalculateStakingProfit';
 
-import AuctionStore from './views/auction/AuctionStore';
+import AuctionStoreStart from './views/auction/Start';
 
 
 Vue.use(Router);
@@ -49,7 +49,7 @@ let routers = [
   {
     path: '/auction_store',
     name: 'auction_store',
-    component: AuctionStore,
+    component: AuctionStoreStart,
   }
   
 ];

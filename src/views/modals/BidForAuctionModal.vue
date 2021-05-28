@@ -51,6 +51,10 @@ export default {
       const cb = utils.mem.get('bid_for_auction');
       if(cb){
         cb(this.form);
+
+        this.form = {
+          price: null,
+        };
       }
     }
   }
