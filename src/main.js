@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Vuex from 'vuex'
 
+import './elementui-style/index.css';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 import { Loading } from 'element-ui';
 
 import router from './router';

@@ -101,13 +101,6 @@
           size="small">
           Staking List
         </el-button>
-        &nbsp;
-        <el-button
-          @click="openPutAuctionModal(scope)"
-          type="text"
-          size="small">
-          Auction
-        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -313,43 +306,6 @@ export default {
       const mm = await api.query.cml.minerItemStore(miner_id);
 
       alert(JSON.stringify(mm.toHuman()));
-    },
-
-    async openPutAuctionModal(scope){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-
-      const query = await api.query.auction.userAuctionStore(this.layer1_account.address);
-      // const query1 = await api.query.auction.auctionStore(1);
-      console.log(11, query.toHuman())
-
-      this.$store.commit('modal/open', {
-        key: 'put_to_auction_store', 
-        param: {
-          cml_id: scope.row.id,
-        },
-        cb: async (form)=>{
-          this.$root.loading(true);
-          try{
-            const cml_id = scope.row.id;
-            
-
-            const p1 = layer1_instance.asUnit(form.starting_price);
-            const p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
-
-            console.log(11, p1, p2);
-
-            const tx = api.tx.auction.putToStore(cml_id, p1, p2);
-            await layer1_instance.sendTx(this.layer1_account.address, tx);
-
-
-            this.$store.commit('modal/close', 'put_to_auction_store');
-          }catch(e){
-            this.$root.showError(e);
-          }
-          this.$root.loading(false);
-        },
-      });
     }
   }
 

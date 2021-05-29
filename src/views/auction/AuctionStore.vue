@@ -17,7 +17,16 @@
     <el-table-column
       prop="cml_id"
       label="CML Id"
-    />
+    >
+      <template slot-scope="scope">
+        <el-button
+          @click="showCmlDetails(scope)"
+          type="text"
+          size="small">
+          {{scope.row.cml_id}}
+        </el-button>
+      </template>
+    </el-table-column>
     <!-- <el-table-column
       prop="cml_owner"
       label="CML Owner"
@@ -78,6 +87,10 @@ export default {
     await this.wf.init();
 
     await this.refreshList();
+
+    utils.register('Auction Store', async ()=>{
+      await this.refreshList();
+    });
   },
   methods: {
     async refreshList(){
@@ -119,6 +132,17 @@ export default {
           }
           this.$root.loading(false);
         },
+      });
+    },
+    async showCmlDetails(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      const cml_data = await api.query.cml.cmlStore(scope.row.cml_id);
+      const d = cml_data.toHuman();
+
+      this.$store.commit('modal/open', {
+        key: 'data_details',
+        param: _.omit(d, 'staking_slot', 'miner_id'),
       });
     }
   }

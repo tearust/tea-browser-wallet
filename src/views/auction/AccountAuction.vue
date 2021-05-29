@@ -52,6 +52,10 @@
       </template>
     </el-table-column> -->
   </el-table>
+
+  <div style="display:flex; justify-content: flex-end;">
+    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openPutAuctionModal()">Add New Auction</el-button>
+  </div>
 </div>
 </template>
 
@@ -77,7 +81,12 @@ export default {
     await this.wf.init();
     
     await this.refreshList();
+
+    utils.register('My Auction', async ()=>{
+      await this.refreshList();
+    });
   },
+
   methods: {
     async refreshList(){
       this.$root.loading(true);
@@ -90,6 +99,34 @@ export default {
       this.$root.loading(false);
     },
     async bidForAuctionItem(scope){
+    },
+
+    async openPutAuctionModal(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'put_to_auction_store', 
+        param: {},
+        cb: async (form)=>{
+          this.$root.loading(true);
+          try{
+            const cml_id = form.cml_id;
+            const p1 = layer1_instance.asUnit(form.starting_price);
+            const p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
+
+
+            const tx = api.tx.auction.putToStore(cml_id, p1, p2);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+
+            this.$store.commit('modal/close', 'put_to_auction_store');
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
     }
   }
 }

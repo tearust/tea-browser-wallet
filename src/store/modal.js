@@ -11,7 +11,11 @@ const initState = ()=>{
     bid_for_auction: {
       visible: false,
       param: {},
-    }
+    },
+    data_details: {
+      visible: false,
+      param: {}
+    },
 
   };
 }
@@ -29,7 +33,7 @@ export default {
           param,
         });
 
-        utils.mem.set(key, cb);
+        cb && utils.mem.set(key, cb);
       }
     },
     close(state, key){

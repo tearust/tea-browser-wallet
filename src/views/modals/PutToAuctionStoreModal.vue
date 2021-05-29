@@ -11,7 +11,7 @@
 
     <el-form :model="form" label-width="120px">
       <el-form-item label="Cml Id">
-        <el-input :disabled="true" :value="param.cml_id"></el-input>
+        <el-input v-model="form.cml_id"></el-input>
       </el-form-item>
       <el-form-item label="Starting Price">
         <el-input-number v-model="form.starting_price" :min="0" :max="50000"></el-input-number>
@@ -40,6 +40,7 @@ export default {
       form: {
         starting_price: null,
         buy_now_price: null,
+        cml_id: null,
       }
     };
   },

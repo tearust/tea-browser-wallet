@@ -100,12 +100,6 @@ a, a:hover, a:focus, button:focus {
     color: #666;
     margin: 10px 0 10px;
   }
-
-  .el-button--primary.is-plain {
-    color: $mainColor;
-    background: #f9f9f9;
-    border-color: $mainColor;
-  }
 }
 
 .tea-modal{
@@ -122,6 +116,15 @@ a, a:hover, a:focus, button:focus {
   }
 }
 
+
+
+/* overrid element ui css */
+.el-button--primary.is-plain {
+  background: #f9f9f9;
+}
+.el-button--primary{
+  font-weight: bold;
+}
 
 
 

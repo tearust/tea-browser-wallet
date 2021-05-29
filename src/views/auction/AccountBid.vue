@@ -70,6 +70,10 @@ export default {
     await this.wf.init();
 
     await this.refreshList();
+
+    utils.register('My Bid', async ()=>{
+      await this.refreshList();
+    });
   },
   methods: {
     async refreshList(){

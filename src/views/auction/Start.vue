@@ -1,6 +1,6 @@
 <template>
 <div class="tea-page">
-  <el-tabs tab-position="left" style="height: 200px;">
+  <el-tabs tab-position="left" @tab-click="clickTab($event)">
     <el-tab-pane label="Auction Store" :lazy="true">
       <AuctionStore />
     </el-tab-pane>
@@ -18,7 +18,6 @@
 import {_} from 'tearust_utils';
 import utils from '../../tea/utils';
 
-
 import AuctionStore from './AuctionStore';
 import AccountBid from './AccountBid';
 import AccountAuction from './AccountAuction';
@@ -31,6 +30,13 @@ export default {
   data(){
     return {};
   },
+  methods: {
+    clickTab(e){
+      const label = e.label;
+
+      utils.publish(label, {});
+    }
+  }
   
 }
 </script>
