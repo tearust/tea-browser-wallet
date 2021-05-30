@@ -38,19 +38,15 @@
       label="Status"
     />
     
-    <!-- <el-table-column
+    <el-table-column
       label="Actions"
       width="120">
       <template slot-scope="scope">
-        <el-button
-          @click="bidForAuctionItem(scope)"
-          type="text"
-          size="small">
-          Bid
-        </el-button>
+        <el-link class="tea-action-icon" title="View Bid List" :underline="false" type="primary" icon="el-icon-view" @click="viewBidList(scope)"></el-link>
+        <el-link class="tea-action-icon" :underline="false" type="primary" icon="el-icon-delete" @click="deleteAuction(scope)"></el-link>
         
       </template>
-    </el-table-column> -->
+    </el-table-column>
   </el-table>
 
   <div style="display:flex; justify-content: flex-end;">
@@ -119,14 +115,55 @@ export default {
             const tx = api.tx.auction.putToStore(cml_id, p1, p2);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
-
             this.$store.commit('modal/close', 'put_to_auction_store');
+
+            await this.refreshList();
           }catch(e){
             this.$root.showError(e);
           }
           this.$root.loading(false);
         },
       });
+    },
+
+    async deleteAuction(scope){
+      const x = await this.$confirm("Are you sure to delete this auction?", "Danger Operation").catch(()=>{});
+
+      if(x === 'confirm'){
+        alert(1);
+      }
+    },
+
+    async viewBidList(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const bid_user = await api.query.auction.auctionBidStore(scope.row.id);
+      const bid_user_data = bid_user.toJSON();
+
+      
+      const list = await Promise.all(_.map(bid_user_data, async (user)=>{
+        const bid_item = await api.query.auction.bidStore(user, scope.row.id);
+        const tmp = bid_item.toHuman();
+        tmp.ori_price = _.get(bid_item.toJSON(), 'price');
+        return tmp;
+      }));
+      
+
+      list.sort((a, b)=>{
+        return b.ori_price - a.ori_price;
+      });
+
+      const param = {};
+      _.each(list, (item)=>{
+        _.set(param, item.user, item.price);
+      });
+      param.title = 'Bid User List';
+      this.$store.commit('modal/open', {
+        key: 'data_details',
+        param,
+      });
+      
     }
   }
 }

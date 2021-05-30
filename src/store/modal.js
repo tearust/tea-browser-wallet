@@ -14,6 +14,7 @@ const initState = ()=>{
     },
     data_details: {
       visible: false,
+      title: '',
       param: {}
     },
 
@@ -28,10 +29,15 @@ export default {
     open(state, params){
       const {key, cb, param} = params;
       if(!_.isUndefined(state[key])){
-        _.set(state, key, {
+        const doc = {
           visible: true,
-          param,
-        });
+        };
+        if(param.title){
+          doc.title = param.title;
+          doc.param = _.omit(param, 'title');
+        }
+
+        _.set(state, key, doc);
 
         cb && utils.mem.set(key, cb);
       }

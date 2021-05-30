@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Details"
+    :title="title || 'Details'"
     :visible="visible"
     width="70%"
     :close-on-click-modal="false"
@@ -44,8 +44,9 @@ export default {
   },
   computed: {
     ...mapState('modal', {
-      visible:state => store.state.modal.data_details.visible,
+      visible: state => store.state.modal.data_details.visible,
       param: state => store.state.modal.data_details.param,
+      title: state => store.state.modal.data_details.title,
     })
   },
 
