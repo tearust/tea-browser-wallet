@@ -96,7 +96,10 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       try{
-        await this.$store.dispatch('init_auction_store', 100, true);
+        await this.$store.dispatch('init_auction_store', {
+          page_size: 100,
+          from_start: true,
+        });
       }catch(e){
         this.$root.showError(e);
       }
@@ -126,7 +129,10 @@ export default {
             this.$message.success('success');
             this.$store.commit('modal/close', 'bid_for_auction');
 
-            await this.$store.dispatch('init_auction_store', 100, true);
+            await this.$store.dispatch('init_auction_store', {
+              page_size: 100,
+              from_start: true,
+            });
           }catch(e){
             this.$root.showError(e);
           }
@@ -140,6 +146,7 @@ export default {
       const cml_data = await api.query.cml.cmlStore(scope.row.cml_id);
       const d = cml_data.toHuman();
 
+      d.title = 'CML Details';
       this.$store.commit('modal/open', {
         key: 'data_details',
         param: _.omit(d, 'staking_slot', 'miner_id'),

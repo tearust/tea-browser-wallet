@@ -30,7 +30,7 @@ export default class {
       try {
         _layer1 = new Layer1();
         await _layer1.init();
-
+        await utils.waitLayer1Ready(_layer1);
         this.layer1 = _layer1;
       } catch (e) {
         console.error(e);
@@ -87,7 +87,7 @@ export default class {
 
     let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
     my_auction = my_auction.toHuman();
-console.log(1, my_auction);
+// console.log(1, my_auction);
     const cml_data = await Promise.all(_.map(user_cml.toJSON(), async (cml_id)=>{
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toHuman();

@@ -35,12 +35,8 @@
       label="Actions"
       width="120">
       <template slot-scope="scope">
-        <el-button
-          @click="addPriceForBid(scope)"
-          type="text"
-          size="small">
-          Add Price
-        </el-button>
+        <el-link class="tea-action-icon" title="Add Price" :underline="false" type="primary" icon="el-icon-view" @click="addPriceForBid(scope)"></el-link>
+        <el-link class="tea-action-icon" :underline="false" type="primary" icon="el-icon-delete" @click="deleteBid(scope)"></el-link>
         
       </template>
     </el-table-column>
@@ -114,6 +110,25 @@ export default {
           this.$root.loading(false);
         },
       });
+    },
+    async deleteBid(scope){
+      const x = await this.$confirm("Are you sure to delete this bid?", "Danger Operation").catch(()=>{});
+
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$root.loading(true);
+      try{
+        const auction_id = scope.row.auction_id;
+
+        const tx = api.tx.auction.removeBidForAuction(auction_id);
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        await this.refreshList();
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
     }
   }
 }

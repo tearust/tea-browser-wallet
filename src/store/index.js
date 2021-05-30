@@ -156,7 +156,8 @@ const store = new Vuex.Store({
       store.commit('set_layer1_asset', null);
     },
     
-    async init_auction_store(store, page_size=10, from_start=false){
+    async init_auction_store(store, params){
+      const {page_size=10, from_start=false} = params;
 
       const layer1 = await F.getLayer1();
       await utils.waitLayer1Ready(layer1);
@@ -166,7 +167,9 @@ const store = new Vuex.Store({
 
       let last_auction_id;
       if(from_start){
+        
         last_auction_id = await api.query.auction.lastAuctionId();
+        console.log(111, last_auction_id);
         store.commit('set_auction_last_id', last_auction_id.toJSON());
         store.commit('set_auction_list', []);
       }
@@ -179,11 +182,12 @@ const store = new Vuex.Store({
           last_auction_id = MIN_AUCTION_ID;
         }
       }
-
+      
       let end = last_auction_id - page_size;
       if(end < MIN_AUCTION_ID) end = MIN_AUCTION_ID-1;
 
       const list = [];
+      
       for(let i=last_auction_id; i>end; i--){
         const tmp = await api.query.auction.auctionStore(i);
         const d = tmp.toHuman();
@@ -207,7 +211,7 @@ const store = new Vuex.Store({
       store.commit('set_auction_list', xlist);
     },
 
-    async init_my_auction_list(){
+    async init_my_auction_list(store){
       const layer1_account = store.getters.layer1_account;
       if(!layer1_account){
         throw 'Invalid layer1 account';
@@ -247,7 +251,7 @@ const store = new Vuex.Store({
       store.commit('set_my_auction_list', list);
     },
 
-    async init_my_bid_list(){
+    async init_my_bid_list(store){
       const layer1_account = store.getters.layer1_account;
       if(!layer1_account){
         throw 'Invalid layer1 account';
@@ -276,7 +280,7 @@ const store = new Vuex.Store({
           }
         }
       }
-      console.log(111, x_list);
+      // console.log(111, x_list);
 
       const list = _.map(x_list, (item)=>{
         item.auction_id = utils.toNumber(item.auction_id);

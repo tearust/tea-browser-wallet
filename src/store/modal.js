@@ -31,6 +31,7 @@ export default {
       if(!_.isUndefined(state[key])){
         const doc = {
           visible: true,
+          param,
         };
         if(param.title){
           doc.title = param.title;

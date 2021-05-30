@@ -129,9 +129,21 @@ export default {
     async deleteAuction(scope){
       const x = await this.$confirm("Are you sure to delete this auction?", "Danger Operation").catch(()=>{});
 
-      if(x === 'confirm'){
-        alert(1);
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$root.loading(true);
+      try{
+        const auction_id = scope.row.id;
+
+        const tx = api.tx.auction.removeFromStore(auction_id);
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        await this.refreshList();
+      }catch(e){
+        this.$root.showError(e);
       }
+      this.$root.loading(false);
     },
 
     async viewBidList(scope){
