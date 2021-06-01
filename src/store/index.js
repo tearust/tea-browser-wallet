@@ -169,7 +169,6 @@ const store = new Vuex.Store({
       if(from_start){
         
         last_auction_id = await api.query.auction.lastAuctionId();
-        console.log(111, last_auction_id);
         store.commit('set_auction_last_id', last_auction_id.toJSON());
         store.commit('set_auction_list', []);
       }

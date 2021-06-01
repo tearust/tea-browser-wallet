@@ -3,7 +3,7 @@ import http from './http';
 import Pubsub from 'pubsub-js';
 
 import * as tearust_utils from 'tearust_utils';
-
+import {hexToString} from 'tearust_layer1';
 
 import './index';
 
@@ -57,7 +57,7 @@ const F = {
   cache,
   mem,
   crypto,
-  tearust_utils,
+  forge,
 
   getHttpBaseUrl() {
     if(!_http_base_url){
@@ -109,6 +109,29 @@ const F = {
   toNumber(n){
     const tmp = n.toString().replace(/,/g, '');
     return _.toNumber(tmp);
+  },
+
+  _toData(layer1_json){
+    const rs = {};
+    _.each(layer1_json, (val, key)=>{
+      if(_.isArray(val)){
+        rs[key] = _.map(val, (item)=>{
+          return F._toData(item);
+        });
+      }
+      else if(_.isString(val) && _.startsWith(val, '0x')){
+        rs[key] = hexToString(val);
+      }
+      else{
+        rs[key] = val;
+      }
+    });
+
+    return rs;
+  },
+  toData(layer1_query){
+    const tmp = layer1_query.toJSON();
+    return F._toData(tmp);
   },
 
   async waitLayer1Ready(layer1){

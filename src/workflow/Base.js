@@ -81,19 +81,16 @@ export default class {
     
     const dai = await api.query.cml.daiStore(layer1_account.address);
     const user_cml = await api.query.cml.userCmlStore(layer1_account.address);
-
+    
     // reset all state
     store.commit('reset_state');
 
     let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
     my_auction = my_auction.toHuman();
-// console.log(1, my_auction);
     const cml_data = await Promise.all(_.map(user_cml.toJSON(), async (cml_id)=>{
       let cml = await api.query.cml.cmlStore(cml_id);
-      cml = cml.toHuman();
-      cml.id = utils.toNumber(cml.id);
 
-      return cml;
+      return utils.toData(cml);
     }));
 
     store.commit('set_account', {
