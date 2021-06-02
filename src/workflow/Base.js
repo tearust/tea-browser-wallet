@@ -66,6 +66,42 @@ export default class {
     utils.publish('tea-select-layer1-modal', true);
   }
 
+  async getAllBalance(address){
+    const layer1_instance = this.getLayer1Instance();
+    const api = layer1_instance.getApi();
+    let tmp = await api.query.system.account(address);
+    console.log('balance =>', tmp.toJSON().data);
+    tmp = tmp.data;
+    
+    const free = parseInt(tmp.free, 10) / layer1_instance.asUnit();
+    const lock = parseInt(tmp.reserved, 10) / layer1_instance.asUnit();
+
+    return {
+      free: Math.floor(free*10000)/10000,
+      lock: Math.floor(lock*10000)/10000
+    };
+  }
+  
+  async transferBalance(address, amount){
+    const layer1_account = store.getters.layer1_account;
+    if(!layer1_account.address){
+      return false;
+    }
+
+    if(!amount || amount == 0){
+      throw 'Invalid transfer balance.';
+    }
+
+    const layer1_instance = this.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    const total = layer1_instance.asUnit() * amount;
+
+    const transfer_tx = api.tx.balances.transfer(address, total);
+
+    await layer1_instance.sendTx(layer1_account.address, transfer_tx);
+  }
+
   async refreshCurrentAccount(){
     
     const layer1_account = store.getters.layer1_account;
@@ -75,10 +111,12 @@ export default class {
 
     this._log.i("refresh current layer1_account");
     const layer1_instance = this.getLayer1Instance();
-    const balance = await layer1_instance.getAccountBalance(layer1_account.address);
+    // const balance = await layer1_instance.getAccountBalance(layer1_account.address);
 
     const api = layer1_instance.getApi();
-    
+
+    const balance = await this.getAllBalance(layer1_account.address);
+
     const dai = await api.query.cml.daiStore(layer1_account.address);
     const user_cml = await api.query.cml.userCmlStore(layer1_account.address);
     
@@ -94,7 +132,8 @@ export default class {
     }));
 
     store.commit('set_account', {
-      balance,
+      balance: balance.free,
+      lock_balance: balance.lock,
       address: layer1_account.address,
       ori_name: layer1_account.name,
       dai: dai.toHuman(),

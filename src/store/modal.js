@@ -17,6 +17,10 @@ const initState = ()=>{
       title: '',
       param: {}
     },
+    transfer_balance: {
+      visible: false,
+      param: {}
+    }
 
   };
 }

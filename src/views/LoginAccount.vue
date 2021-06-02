@@ -14,8 +14,12 @@
         <span>{{layer1_account ? layer1_account.address : ''}}</span>
       </div>
       <div class="x-item">
-        <b>BALANCE</b>
+        <b>TOTAL BALANCE</b>
         <span>{{layer1_account ? layer1_account.balance : ''}}</span>
+      </div>
+      <div class="x-item">
+        <b>LOCK BALANCE</b>
+        <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
       </div>
 
     </div>
@@ -23,6 +27,7 @@
     <div class="x-right">
       <el-button @click="showSelectLayer1()">CHANGE</el-button>
       <el-button v-if="layer1_account.address" @click="rechargeHandler()">TOP UP</el-button>
+      <el-button v-if="layer1_account.address" @click="transferBalance()">TRANSFER</el-button>
     </div>
   </div>
 
@@ -306,6 +311,30 @@ export default {
       const mm = await api.query.cml.minerItemStore(miner_id);
 
       alert(JSON.stringify(mm.toHuman()));
+    },
+
+    async transferBalance(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'transfer_balance', 
+        param: {},
+        cb: async (form, closeFn)=>{
+          this.$root.loading(true);
+          try{
+            const {address, amount} = form;
+
+            await this.wf.transferBalance(address, amount);
+
+            closeFn();
+            await this.refreshAccount();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
     }
   }
 

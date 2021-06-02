@@ -85,6 +85,7 @@ const store = new Vuex.Store({
         name: account.ori_name,
         address: account.address,
         balance: account.balance,
+        lock_balance: account.lock_balance,
         dai: account.dai,
         cml: account.cml || []
       };
