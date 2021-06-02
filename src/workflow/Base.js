@@ -22,7 +22,7 @@ export default class {
 
   async init() {
     await this.initLayer1();
-    this.gluon = this.layer1.gluon;
+    // this.gluon = this.layer1.gluon;
   }
 
   async initLayer1() {
@@ -32,10 +32,23 @@ export default class {
         await _layer1.init();
         await utils.waitLayer1Ready(_layer1);
         this.layer1 = _layer1;
+
+        await this.initEvent();
       } catch (e) {
         console.error(e);
       }
     }
+  }
+
+  async initEvent(){
+    const api = this.getLayer1Instance().getApi();
+    api.rpc.chain.subscribeNewHeads((header) => {
+      console.log(`chain is at #${header.number} has hash ${header.hash}`);
+      store.commit('set_chain', {
+        current_block: header.number,
+        current_block_hash: header.hash,
+      });
+    })
   }
 
   getLayer1Instance(){

@@ -53,7 +53,12 @@ const initState = ()=>{
 
       my_auction_list: [],
       my_bid_list: [],
-    }
+    },
+
+    chain: {
+      current_block: null,
+      current_block_hash: null,
+    },
   }
 };
 
@@ -91,6 +96,10 @@ const store = new Vuex.Store({
       };
       
       localStorage.setItem('tea-layer1-account', JSON.stringify(state.layer1_account));
+    },
+
+    set_chain(state, chain_data){
+      state.chain = _.extend(state.chain, chain_data||{});
     },
 
     reset_state(state){

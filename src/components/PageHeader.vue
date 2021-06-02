@@ -9,7 +9,7 @@
       fit="fit">
     </el-image>
     
-    <b class="lg">TEA WALLET</b>
+    <b class="lg">TEA WALLET {{chain.current_block_hash ? '- '+chain.current_block : ''}}</b>
   </a>
   
 
@@ -34,7 +34,7 @@
 
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapState} from 'vuex';
 import Base from '../workflow/Base';
 import _ from 'lodash';
 export default {
@@ -55,7 +55,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['layer1_account'])
+    ...mapGetters(['layer1_account']),
+    ...mapState([
+      'chain'
+    ]),
   },
   methods: {
     handleSelect(key, keyPath) {

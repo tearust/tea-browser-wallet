@@ -4,6 +4,8 @@
   <div class="t-box">
     <el-button size="small" type="primary" @click="active_modal.visible=true">ACTIVE CML</el-button>
     <el-button size="small" type="primary" @click="queryMiner()">QUERY MINER</el-button>
+
+    <el-button size="small" type="primary" @click="queryEndBlockAuction()">QUERY ENDBLOCK AUCTION</el-button>
   </div>
   <el-divider />
 
@@ -114,6 +116,18 @@ export default {
       const mm = await api.query.cml.minerItemStore(miner_id);
 
       this.result = mm.toHuman();
+    },
+    async queryEndBlockAuction(){
+      const layer1_instance = this.test.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const n = await prompt('Input block number');
+      if(!n){
+        alert('Invalid');
+        return;
+      }
+      const tmp = await api.query.auction.endblockAuctionStore(n);
+      console.log(1, tmp.toHuman());
     }
   },
 
