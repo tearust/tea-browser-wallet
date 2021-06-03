@@ -142,6 +142,7 @@ export default class {
       let cml = await api.query.cml.cmlStore(cml_id);
 
       return utils.toData(cml);
+      // return cml.toHuman();
     }));
 
     store.commit('set_account', {
