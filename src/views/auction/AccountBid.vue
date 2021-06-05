@@ -13,14 +13,27 @@
       prop="auction_id"
       label="Auction Id"
     />
+
     <el-table-column
       prop="cml_id"
       label="CML Id"
-    />
+    >
+      <template slot-scope="scope">
+        <el-button
+          @click="showCmlDetails(scope)"
+          type="text"
+          size="small">
+          {{scope.row.cml_id}}
+        </el-button>
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="price"
       label="My Price"
-    />
+    >
+      <template slot-scope="scope">{{scope.row.price | formatBalance}}</template>
+    </el-table-column>
     
     <el-table-column
       prop="created_at"
@@ -35,7 +48,7 @@
       label="Actions"
       width="120">
       <template slot-scope="scope">
-        <el-link class="tea-action-icon" title="Add Price" :underline="false" type="primary" icon="el-icon-view" @click="addPriceForBid(scope)"></el-link>
+        <el-link class="tea-action-icon" title="Add Price" :underline="false" type="primary" icon="el-icon-plus" @click="addPriceForBid(scope)"></el-link>
         <el-link class="tea-action-icon" :underline="false" type="primary" icon="el-icon-delete" @click="deleteBid(scope)"></el-link>
         
       </template>
@@ -82,20 +95,43 @@ export default {
       await utils.sleep(1000)
       this.$root.loading(false);
     },
+
+    async calculateBidMinPrice(api, row){
+      let step = api.consts.auction.minPriceForBid.toJSON();
+      let min_price = 0;
+
+      let bid_item = await api.query.auction.bidStore(row.auction.bid_user, row.auction_id);
+
+      if(bid_item){
+        bid_item = bid_item.toJSON();
+        min_price = bid_item.price - row.price + step;
+      }
+
+      return min_price;
+    },
     async addPriceForBid(scope){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
+
+      const min_price = await this.calculateBidMinPrice(api, scope.row);
+      const msg = `You need at least ${utils.layer1.formatBalance(min_price)} to add price.`;
+
 
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
+          msg,
         },
         cb: async (form)=>{
           this.$root.loading(true);
           try{
             const auction_id = scope.row.auction_id;        
             const price = layer1_instance.asUnit(form.price);
+
+            if(price < min_price){
+              throw 'Not Enough balance.'
+            }
             
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
@@ -112,7 +148,13 @@ export default {
       });
     },
     async deleteBid(scope){
+      if(scope.row.auction.bid_user === this.layer1_account.address){
+        this.$message.error('You can delete this bid until anyone bid higher.');
+        return;
+      }
+
       const x = await this.$confirm("Are you sure to delete this bid?", "Danger Operation").catch(()=>{});
+      if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
@@ -129,6 +171,19 @@ export default {
         this.$root.showError(e);
       }
       this.$root.loading(false);
+    },
+
+    async showCmlDetails(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      const cml_data = await api.query.cml.cmlStore(scope.row.cml_id);
+      const d = cml_data.toHuman();
+
+      d.title = 'CML Details';
+      this.$store.commit('modal/open', {
+        key: 'data_details',
+        param: _.omit(d, 'staking_slot', 'miner_id'),
+      });
     }
   }
 }

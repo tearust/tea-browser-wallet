@@ -289,9 +289,9 @@ const store = new Vuex.Store({
       if(user_bid && user_bid.length > 0){
         for(let i=0, len=user_bid.length; i<len; i++){
           const tmp = await api.query.auction.bidStore(layer1_account.address, user_bid[i]);
-          const d = tmp.toHuman();
+          const d = tmp.toJSON();
           if(d){
-            const auction = await api.query.auction.auctionStore(utils.toNumber(d.auction_id));
+            const auction = await api.query.auction.auctionStore(d.auction_id);
             d.auction = auction.toHuman();
             d.cml_id = utils.toNumber(auction.toHuman().cml_id);
             x_list.push(d);
