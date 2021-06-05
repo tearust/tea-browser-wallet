@@ -167,6 +167,11 @@ const store = new Vuex.Store({
     },
     
     async init_auction_store(store, params){
+      const layer1_account = store.getters.layer1_account;
+      if(!layer1_account){
+        throw 'Invalid layer1 account';
+      }
+
       const {page_size=10, from_start=false} = params;
 
       const layer1 = await F.getLayer1();
@@ -199,14 +204,18 @@ const store = new Vuex.Store({
       
       for(let i=last_auction_id; i>end; i--){
         const tmp = await api.query.auction.auctionStore(i);
-        const d = tmp.toHuman();
+        const d = tmp.toJSON();
         if(d){
           if(d.bid_user){
             let bid_item = await api.query.auction.bidStore(d.bid_user, d.id);
-            bid_item = bid_item.toHuman();
+            bid_item = bid_item.toJSON();
             d.bid_price = bid_item.price;
           }
           
+          let tmp = await api.query.auction.bidStore(layer1_account.address, d.id);
+          tmp = tmp.toJSON();
+          d.for_current = tmp;
+
           list.push(d);
         }
       }

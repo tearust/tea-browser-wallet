@@ -34,19 +34,29 @@
     <el-table-column
       prop="starting_price"
       label="Starting Price"
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.starting_price | formatBalance}}
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="buy_now_price"
       label="Buy Now Price"
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.buy_now_price | formatBalance}}
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="bid_price"
       label="Bid Price"
-    />
-    <el-table-column
-      prop="status"
-      label="Status"
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.bid_price | formatBalance}}
+      </template>
+    </el-table-column>
     
     <el-table-column
       label="Actions"
@@ -55,8 +65,9 @@
         <el-button
           @click="bidForAuctionItem(scope)"
           type="text"
+          :disabled="scope.row.cml_owner === layer1_account.address"
           size="small">
-          Bid
+          {{scope.row.for_current ? 'ADD' : 'BID'}}
         </el-button>
         
       </template>
@@ -106,14 +117,35 @@ export default {
       await utils.sleep(1000)
       this.$root.loading(false);
     },
+
+    calculateBidMinPrice(api, row){
+      let step = api.consts.auction.minPriceForBid.toJSON();
+      let min_price = row.starting_price + step;
+
+      if(row.bid_user){
+        min_price = row.bid_price + step;
+      }
+
+      if(row.for_current){
+        min_price = min_price - row.for_current.price;
+      }
+
+      return min_price;
+    },
+
     async bidForAuctionItem(scope){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
+
+      const min_price = this.calculateBidMinPrice(api, scope.row);
+
+      const msg = `You need at least ${utils.layer1.formatBalance(min_price)} to ${scope.row.for_current ? 'add price' : 'bid this auction'}`;
 
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
+          msg,
         },
         cb: async (form)=>{
           this.$root.loading(true);
@@ -121,7 +153,9 @@ export default {
             const auction_id = scope.row.id;        
             const price = layer1_instance.asUnit(form.price);
             
-            console.log(11, price);
+            if(price < min_price){
+              throw 'Not Enough balance.'
+            }
 
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);

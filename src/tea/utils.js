@@ -3,7 +3,7 @@ import http from './http';
 import Pubsub from 'pubsub-js';
 
 import * as tearust_utils from 'tearust_utils';
-import {hexToString} from 'tearust_layer1';
+import {hexToString, formatBalance} from 'tearust_layer1';
 
 import './index';
 
@@ -40,10 +40,15 @@ const cache = {
 
 };
 
+// TODO move to tearust_layer1 pkgs
+const layer1 = {
+  formatBalance(number){
+    return formatBalance(number, {decimals: 12, withSi: true, withUnit: 'TEA'});
+  }
+};
 
 const crypto = {
   
-
   sha256(data){
     const tmp = forge.sha256.create();
     tmp.update(data);
@@ -58,6 +63,7 @@ const F = {
   mem,
   crypto,
   forge,
+  layer1,
 
   getHttpBaseUrl() {
     if(!_http_base_url){
@@ -138,7 +144,7 @@ const F = {
     while (layer1.connected !== 2) {
       await F.sleep(500);
     }
-  }
+  },
 };
 
 window.utils = F;

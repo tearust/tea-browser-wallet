@@ -10,6 +10,7 @@ import router from './router';
 import './style.scss';
 
 import store from './store';
+import utils from './tea/utils';
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
@@ -27,6 +28,10 @@ router.beforeEach((to, from, next)=>{
   next();
 })
 
+Vue.filter('formatBalance', (value)=>{
+  if(!value) return '';
+  return utils.layer1.formatBalance(value);
+})
 
 const C = {};
 new Vue({

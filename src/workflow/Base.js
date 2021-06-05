@@ -43,12 +43,17 @@ export default class {
   async initEvent(){
     const api = this.getLayer1Instance().getApi();
     api.rpc.chain.subscribeNewHeads((header) => {
-      console.log(`chain is at #${header.number} has hash ${header.hash}`);
+      // console.log(`chain is at #${header.number} has hash ${header.hash}`);
       store.commit('set_chain', {
         current_block: header.number,
         current_block_hash: header.hash,
       });
-    })
+    });
+
+    const chainInfo = await api.registry.getChainProperties();
+    store.commit('set_chain', chainInfo.toHuman());
+
+    // console.log(1, api.errors)
   }
 
   getLayer1Instance(){

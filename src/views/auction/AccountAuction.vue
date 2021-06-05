@@ -127,10 +127,18 @@ export default {
     },
 
     async deleteAuction(scope){
-      const x = await this.$confirm("Are you sure to delete this auction?", "Danger Operation").catch(()=>{});
-
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
+
+      let tmp = await api.query.auction.auctionBidStore(scope.row.id);
+      tmp = tmp.toJSON();
+      const len = tmp ? tmp.length : 0;
+      const penalty = api.consts.auction.auctionOwnerPenaltyForEachBid.toJSON() * len;
+
+      const msg = penalty > 0 ? `Remove this auction will need pay ${utils.layer1.formatBalance(penalty)}, Please confirm?` : 'Are you sure to delete this auction?';
+
+      const x = await this.$confirm(msg, "Delete Auction").catch(()=>{});
+      if(!x) return false;
 
       this.$root.loading(true);
       try{
