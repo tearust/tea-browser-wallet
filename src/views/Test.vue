@@ -48,6 +48,7 @@ import Test from '../workflow/Test';
 import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
 import { mapGetters, mapState } from 'vuex';
+window.api = 1;
 export default {
   data(){
     return {
@@ -77,6 +78,10 @@ export default {
 
     this.test = new Test();
     await this.test.init();
+
+    const layer1_instance = this.test.getLayer1Instance();
+    const api = layer1_instance.getApi();
+    window.api = api;
 
     this.$root.loading(false);
   },
