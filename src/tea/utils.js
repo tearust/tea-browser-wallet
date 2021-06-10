@@ -9,6 +9,8 @@ import './index';
 
 const {_, uuid, forge} = tearust_utils;
 
+window.L = require('tearust_layer1');
+
 const _MEM = {};
 const mem = {
   set(key, val){

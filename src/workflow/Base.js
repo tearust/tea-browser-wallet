@@ -42,17 +42,37 @@ export default class {
 
   async initEvent(){
     const api = this.getLayer1Instance().getApi();
-    api.rpc.chain.subscribeNewHeads((header) => {
+    api.rpc.chain.subscribeNewHeads(async (header) => {
       // console.log(`chain is at #${header.number} has hash ${header.hash}`);
       store.commit('set_chain', {
         current_block: header.number,
         current_block_hash: header.hash,
       });
+
+      // const blockInfo = await api.rpc.chain.getBlock(header.hash);
+
+      // const tmp = blockInfo.block.extrinsics;
+      // _.each(tmp, (item)=>{
+      //   if(item.isSigned){
+      //     const rs = {
+      //       method: item.method.method,
+      //       args: _.map(item.method.args, (v)=>v.toJSON()),
+      //       section: item.method.section,
+      //       signature: item.signature.toHuman(),
+      //       sender: item.signer.toHuman().Id,
+
+      //     };
+      //     window.R = rs;
+      //     console.log(1, rs)
+      //   }
+      // })
+      
     });
 
     const chainInfo = await api.registry.getChainProperties();
     store.commit('set_chain', chainInfo.toHuman());
 
+    
     // console.log(1, api.errors)
   }
 
@@ -132,7 +152,6 @@ export default class {
     // const balance = await layer1_instance.getAccountBalance(layer1_account.address);
 
     const api = layer1_instance.getApi();
-
     const balance = await this.getAllBalance(layer1_account.address);
 
     const dai = await api.query.cml.daiStore(layer1_account.address);
