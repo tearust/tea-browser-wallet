@@ -10,6 +10,7 @@ import Test from './views/Test';
 import CalculateStakingProfit from './views/tools/CalculateStakingProfit';
 
 import AuctionStoreStart from './views/auction/Start';
+import LogIndex from './views/log/Index';
 
 
 Vue.use(Router);
@@ -50,6 +51,11 @@ let routers = [
     path: '/auction_store',
     name: 'auction_store',
     component: AuctionStoreStart,
+  },
+  {
+    path: '/log',
+    name: 'log',
+    component: LogIndex,
   }
   
 ];

@@ -17,6 +17,8 @@
   <el-menu-item style="margin-left: 50px;" index="/login_account">{{layer1_account.name || 'N/A'}}</el-menu-item>
 
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
+
+  <el-menu-item index="/log">{{'Log'}}</el-menu-item>
   <el-menu-item index="/auction_store">{{'Auction'}}</el-menu-item>
   
   <el-menu-item index="/">{{'Home'}}</el-menu-item>

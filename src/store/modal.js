@@ -20,6 +20,10 @@ const initState = ()=>{
     transfer_balance: {
       visible: false,
       param: {}
+    },
+    log_details: {
+      visible: false,
+      param: {}
     }
 
   };

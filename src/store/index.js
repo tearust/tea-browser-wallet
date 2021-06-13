@@ -5,6 +5,7 @@ import _ from 'lodash';
 import Base from '../workflow/Base';
 
 import modal from './modal';
+import clog from './clog';
 import utils from '../tea/utils';
 
 Vue.use(Vuex);
@@ -65,6 +66,7 @@ const initState = ()=>{
 const store = new Vuex.Store({
   modules: {
     modal: modal,
+    clog: clog,
   },
 
   state: initState(),
