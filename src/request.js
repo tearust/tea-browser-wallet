@@ -62,11 +62,11 @@ const F = {
   
   async getLog(filter){
     const query_filter = help.buildFilter(filter);
-
+// console.log(11, query_filter)
     const query = `
 query {
   logs (
-    first: 100
+    first: 9999
     orderBy: AT_BLOCK_DESC
     ${filter ? query_filter : ''}
   ) {
@@ -77,6 +77,10 @@ query {
       args
       atBlock
       from
+      to
+      auctionId
+      cmlId
+      price
     }
   }
 }

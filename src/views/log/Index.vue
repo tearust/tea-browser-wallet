@@ -31,10 +31,10 @@
     >
       <template slot-scope="scope">
         <el-button
-          @click="showAuctionDetails(scope.row.auction_id)"
+          @click="showAuctionDetails(scope.row.auctionId)"
           type="text"
           size="small">
-          {{scope.row.auction_id}}
+          {{scope.row.auctionId}}
         </el-button>
       </template>
     </el-table-column>
@@ -43,7 +43,7 @@
       label="Cml Id"
     >
       <template slot-scope="scope">
-        {{scope.row.cml_id}}
+        {{scope.row.cmlId}}
       </template>
     </el-table-column>
 
@@ -113,8 +113,14 @@ export default {
       await this.$store.dispatch('clog/init_my_auction_log', {});
     },
 
-    async showAuctionDetails(){
-      alert('coming soon');
+    showAuctionDetails(auction_id){
+      this.$store.commit('modal/open', {
+        key: 'log_details', 
+        param: {
+          type: 'auction_id', 
+          value: auction_id,
+        },
+      });
     }
   }
   

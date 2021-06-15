@@ -3,71 +3,17 @@ import utils from '../tea/utils';
 import request from '../request';
 
 const help = {
-  logArgs(name, args){
-    let xargs = JSON.parse(args.replace("{", "[").replace('}',']'));
-    let auction_id = null;
-    let cml_id = null;
-    let price = null;
-    let target = null;
-
-    let flag = false;
-    if(name === 'bidForAuction'){
-      auction_id = xargs[0];
-      price = utils.layer1.formatBalance(xargs[1]);
-
-      flag = true;
-    }
-    else if(name === 'AuctionSuccess'){
-      auction_id = xargs[0];
-      target = xargs[1];
-      price = utils.layer1.formatBalance(xargs[2]);
-
-      flag = true;
-    }
-    else if(name === 'putToStore'){
-      cml_id = xargs[0];
-
-      flag = true;
-    }
-    else if(name === 'NewAuctionToStore'){
-      auction_id = xargs[0];
-
-      flag = true;
-    }
-    else if(name === 'activeCmlForNitro'){
-      cml_id = xargs[0];
-
-      flag = true;
-    }
-    else if(name === 'convertCmlFromDai'){
-
-      flag = true;
-    }
-
-    if(!flag) return false;
-
-    return {
-      args,
-      auction_id,
-      cml_id,
-      price,
-      target,
-    }
-  },
   formatLogs(nodes=[]){
     const list = _.map(nodes, (item)=>{
       const tmp = {
         ...item,
+        price: item.price ? utils.layer1.formatBalance(item.price) : '',
+        target: item.to,
       };
-
-      const args = help.logArgs(item.name, item.args);
-      if(args){
-        _.extend(tmp, args);
-      }
 
       return tmp;
     });
-    console.log(1, list);
+
     return list;
   }
 };
@@ -107,12 +53,18 @@ export default {
       store.commit('set_my_log', help.formatLogs(rs.nodes));
     },
 
-    async fetch_details_log(store, type, value){
-      // const filter = {};
+    async fetch_details_log(store, opts){
+      const {type, value} = opts;
 
-      // if(type === 'auction'){
-      //   type
-      // }
+      const filter = {};
+
+      if(type === 'auction_id'){
+        filter.auctionId = `equalTo: "${value}"`;
+        filter.type = `in: ["event", "tx"]`;
+      }
+
+      const rs = await request.getLog(filter);
+      store.commit('set_details', help.formatLogs(rs.nodes));
     }
   }
 };

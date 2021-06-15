@@ -18,6 +18,7 @@
     <BidForAuctionModal />
     <DataDetailsModal />
     <TransferBalanceModal />
+    <LogDetailsModal />
   </div>
 </template>
 
@@ -32,6 +33,7 @@ import PutToAuctionStoreModal from './views/modals/PutToAuctionStoreModal';
 import BidForAuctionModal from './views/modals/BidForAuctionModal';
 import DataDetailsModal from './views/modals/DataDetailsModal';
 import TransferBalanceModal from './views/modals/TransferBalanceModal';
+import LogDetailsModal from './views/modals/LogDetailsModal';
 
 export default {
   components: {
@@ -44,6 +46,7 @@ export default {
     BidForAuctionModal,
     DataDetailsModal,
     TransferBalanceModal,
+    LogDetailsModal,
   }
 }
 </script>
