@@ -20,6 +20,8 @@
 
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
   <el-menu-item index="/auction_store">{{'Auction'}}</el-menu-item>
+
+  <el-menu-item index="/lucky_draw">{{'LuckyBox'}}</el-menu-item>
   
   <el-menu-item index="/">{{'Home'}}</el-menu-item>
 

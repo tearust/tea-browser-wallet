@@ -26,7 +26,9 @@ const initState = ()=>{
       name: null,
       address: null,
       balance: null,
-      dai: null,
+      voucher_A: null,
+      voucher_B: null,
+      voucher_C: null,
       cml: [],
     },
 
@@ -93,7 +95,9 @@ const store = new Vuex.Store({
         address: account.address,
         balance: account.balance,
         lock_balance: account.lock_balance,
-        dai: account.dai,
+        voucher_A: account.voucher_A,
+        voucher_B: account.voucher_B,
+        voucher_C: account.voucher_C,
         cml: account.cml || []
       };
       

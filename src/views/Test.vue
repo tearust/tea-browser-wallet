@@ -1,11 +1,13 @@
 <template>
 <div class="tea-page">
-  <h4>ASSETS</h4>
+  <h4>STORAGE</h4>
   <div class="t-box">
     <el-button size="small" type="primary" @click="active_modal.visible=true">ACTIVE CML</el-button>
     <el-button size="small" type="primary" @click="queryMiner()">QUERY MINER</el-button>
 
     <el-button size="small" type="primary" @click="queryEndBlockAuction()">QUERY ENDBLOCK AUCTION</el-button>
+
+    <el-button size="small" type="primary" @click="luckyDrawBox()">LUCKY DRAW BOX</el-button>
   </div>
   <el-divider />
 
@@ -46,7 +48,7 @@
 <script>
 import Test from '../workflow/Test';
 import {_} from 'tearust_utils';
-import {helper} from 'tearust_layer1';
+import {helper, stringToU8a} from 'tearust_layer1';
 import { mapGetters, mapState } from 'vuex';
 window.api = 1;
 export default {
@@ -133,6 +135,16 @@ export default {
       }
       const tmp = await api.query.auction.endblockAuctionStore(n);
       console.log(1, tmp.toHuman());
+    },
+
+    async luckyDrawBox(){
+      const layer1_instance = this.test.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const tmp_A = await api.query.cml.luckyDrawBox("A");
+      const tmp_B = await api.query.cml.luckyDrawBox("B");
+      const tmp_C = await api.query.cml.luckyDrawBox("C");
+      console.log(tmp_A.toJSON(), tmp_B.toJSON(), tmp_C.toJSON());
     }
   },
 

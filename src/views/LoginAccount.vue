@@ -39,14 +39,25 @@
     <div class="x-list">
       <div class="x-item">
         <b>VOUCHER</b>
-        <span>{{layer1_account ? layer1_account.dai : ''}}</span>
+      </div>
+      <div class="x-item">
+        <b>TYPE - A</b>
+        <span>{{(layer1_account && layer1_account.voucher_A) ? layer1_account.voucher_A.amount : 0}}</span>
+      </div>
+      <div class="x-item">
+        <b>TYPE - B</b>
+        <span>{{(layer1_account && layer1_account.voucher_B) ? layer1_account.voucher_B.amount : 0}}</span>
+      </div>
+      <div class="x-item">
+        <b>TYPE - C</b>
+        <span>{{(layer1_account && layer1_account.voucher_C) ? layer1_account.voucher_C.amount : 0}}</span>
       </div>
 
     </div>
 
     <div class="x-right">
-      <el-button @click="convertDaiToCml()">CONVERT</el-button>
-      <el-button @click="dai_modal.visible=true">TRANSFER</el-button>
+      <!-- <el-button @click="convertDaiToCml()">CONVERT</el-button>
+      <el-button @click="dai_modal.visible=true">TRANSFER</el-button> -->
     </div>
   </div>
 

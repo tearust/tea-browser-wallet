@@ -12,6 +12,8 @@ import CalculateStakingProfit from './views/tools/CalculateStakingProfit';
 import AuctionStoreStart from './views/auction/Start';
 import LogIndex from './views/log/Index';
 
+import LuckyDrawBox from './views/LuckyDrawBox';
+
 
 Vue.use(Router);
 
@@ -56,6 +58,11 @@ let routers = [
     path: '/log',
     name: 'log',
     component: LogIndex,
+  },
+  {
+    path: '/lucky_draw',
+    name: 'lucky_draw',
+    component: LuckyDrawBox,
   }
   
 ];

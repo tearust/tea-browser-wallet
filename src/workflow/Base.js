@@ -154,7 +154,10 @@ export default class {
     const api = layer1_instance.getApi();
     const balance = await this.getAllBalance(layer1_account.address);
 
-    const dai = await api.query.cml.daiStore(layer1_account.address);
+    const voucher_A = await api.query.cml.userVoucherStore(layer1_account.address, 'A');
+    const voucher_B = await api.query.cml.userVoucherStore(layer1_account.address, 'B');
+    const voucher_C = await api.query.cml.userVoucherStore(layer1_account.address, 'C');
+
     const user_cml = await api.query.cml.userCmlStore(layer1_account.address);
     
     // reset all state
@@ -174,11 +177,32 @@ export default class {
       lock_balance: balance.lock,
       address: layer1_account.address,
       ori_name: layer1_account.name,
-      dai: dai.toHuman(),
       cml: cml_data,
+      voucher_A: voucher_A.toJSON(),
+      voucher_B: voucher_B.toJSON(),
+      voucher_C: voucher_C.toJSON(),
     });
 
 
+  }
+
+  async getCmlByList(cml_list){
+    const layer1_instance = this.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    const list = await Promise.all(_.map(cml_list, async (cml_id)=>{
+      let cml = await api.query.cml.cmlStore(cml_id);
+      cml = cml.toJSON();
+
+      // cml.deforst_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
+      return {
+        ...cml,
+        ...cml.intrinsic,
+      };
+    }));
+
+    return list;
+    
   }
 
   
