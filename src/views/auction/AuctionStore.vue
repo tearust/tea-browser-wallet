@@ -177,13 +177,13 @@ export default {
     async showCmlDetails(scope){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
-      const cml_data = await api.query.cml.cmlStore(scope.row.cml_id);
-      const d = cml_data.toHuman();
+      const cml_data = await this.wf.getCmlByList([scope.row.cml_id]);
+      const d = cml_data[0];
 
       d.title = 'CML Details';
       this.$store.commit('modal/open', {
         key: 'data_details',
-        param: _.omit(d, 'staking_slot', 'miner_id'),
+        param: _.omit(d, 'staking_slot', 'intrinsic'),
       });
     }
   }

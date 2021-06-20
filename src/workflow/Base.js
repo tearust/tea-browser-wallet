@@ -159,19 +159,14 @@ export default class {
     const voucher_C = await api.query.cml.userVoucherStore(layer1_account.address, 'C');
 
     const user_cml = await api.query.cml.userCmlStore(layer1_account.address);
-    
+
     // reset all state
     store.commit('reset_state');
 
     let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
     my_auction = my_auction.toHuman();
-    const cml_data = await Promise.all(_.map(user_cml.toJSON(), async (cml_id)=>{
-      let cml = await api.query.cml.cmlStore(cml_id);
-
-      return utils.toData(cml);
-      // return cml.toHuman();
-    }));
-
+    const cml_data = await this.getCmlByList(user_cml.toJSON());
+// console.log(11, cml_data);
     store.commit('set_account', {
       balance: balance.free,
       lock_balance: balance.lock,

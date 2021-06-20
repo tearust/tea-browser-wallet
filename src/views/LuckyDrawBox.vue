@@ -1,11 +1,7 @@
 <template>
 <div class="tea-page">
-  <el-tabs tab-position="left" @tab-click="clickTab($event)" style="position:absolute;">
-    <el-tab-pane label="CLASS - A" ct="A" :lazy="true">
-    </el-tab-pane>
-    <el-tab-pane label="CLASS - B" ct="B" :lazy="true">
-    </el-tab-pane>
-    <el-tab-pane label="CLASS - C" ct="C" :lazy="true">
+  <el-tabs v-if="cml_type" tab-position="left" @tab-click="clickTab($event)" style="position:absolute;">
+    <el-tab-pane v-for="(type, key) of cml_type" :key="key" :label="'CLASS - '+type" :ct="type" :lazy="true">
     </el-tab-pane>
     
   </el-tabs>
@@ -68,11 +64,14 @@ export default {
 
   data(){
     return {
+      cml_type: null,
       type: null,
       cml_list: null,
     };
   },
   async mounted(){
+    this.cml_type = utils.consts.CmlType;
+
     this.wf = new Base();
     await this.wf.init();
     this.type = 'A';

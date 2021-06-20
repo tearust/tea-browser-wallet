@@ -61,7 +61,7 @@ export default {
 }
 #app .tea-section{
   margin: 0 auto;
-  width: 960px;
+  width: 1080px;
   padding: 24px 0 40px;
 }
 </style>

@@ -129,7 +129,7 @@ export default {
 
 .p-header{
   padding: 10px 0 0 0;
-  width: 960px;
+  width: 1080px;
   margin: 0 auto !important;
   .lg{
     font-size: 20px;
@@ -142,7 +142,8 @@ export default {
 }
 .el-menu--horizontal > .el-menu-item{
   float: right !important;
-  
+  padding: 10px !important;
+  font-size: 17px !important;
 }
 .el-menu--horizontal > .el-submenu{
   float: right !important;

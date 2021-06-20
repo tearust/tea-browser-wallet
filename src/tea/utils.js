@@ -9,7 +9,15 @@ import './index';
 
 const {_, uuid, forge} = tearust_utils;
 
-window.L = require('tearust_layer1');
+// window.L = require('tearust_layer1');
+
+const consts = {
+  CmlType: {
+    A: 'A',
+    B: 'B',
+    C: 'C',
+  }
+};
 
 const _MEM = {};
 const mem = {
@@ -66,6 +74,7 @@ const F = {
   crypto,
   forge,
   layer1,
+  consts,
 
   getHttpBaseUrl() {
     if(!_http_base_url){

@@ -1,5 +1,5 @@
 <template>
-<div class="tea-page h-center">
+<div class="tea-page">
 
   <div class="tea-card">
     <i class="x-icon el-icon-user"></i>
@@ -29,10 +29,14 @@
       <el-button v-if="layer1_account.address" @click="rechargeHandler()">TOP UP</el-button>
       <el-button v-if="layer1_account.address" @click="transferBalance()">TRANSFER</el-button>
     </div>
+
   </div>
 
   <el-divider />
 
+  <div v-if="
+    layer1_account && (layer1_account.voucher_A || layer1_account.voucher_B || layer1_account.voucher_C)
+  ">
   <div class="tea-card">
     <i class="x-icon el-icon-user"></i>
 
@@ -56,12 +60,14 @@
     </div>
 
     <div class="x-right">
-      <!-- <el-button @click="convertDaiToCml()">CONVERT</el-button>
-      <el-button @click="dai_modal.visible=true">TRANSFER</el-button> -->
+      <!-- <el-button @click="convertDaiToCml()">CONVERT</el-button> -->
+      <el-button @click="dai_modal.visible=true">Lottery</el-button>
     </div>
+
   </div>
 
   <el-divider />
+  </div>
 
   <h4>CML LIST</h4>
   <el-table 
@@ -72,26 +78,33 @@
   >
     <el-table-column
       prop="id"
+      sortable
       label="CML ID"
+    />
+    <el-table-column
+      prop="cml_type"
+      label="Type"
+      sortable
+      width="70"
     />
     <el-table-column
       prop="group"
       label="Group"
     />
     <el-table-column
-      prop="life_time"
+      prop="lifespan"
       label="Life Time"
     />
     <el-table-column
-      prop="miner_id"
+      prop="machine_id"
       label="Miner ID"
     > 
       <template slot-scope="scope">
         <el-button
-          @click="showMinerInfo(scope.row.miner_id)"
+          @click="showMinerInfo(scope.row.machine_id)"
           type="text"
           size="small">
-          {{scope.row.miner_id}}
+          {{scope.row.machine_id}}
         </el-button>
       </template>
     </el-table-column>
@@ -99,25 +112,43 @@
       prop="mining_rate"
       label="Mining Rate"
     />
+
+    <el-table-column
+      prop="performance"
+      label="Performance"
+      sortable
+      width="120"
+    />
+
+    <el-table-column
+      prop="defrost_schedule"
+      label="Deforst Schedule"
+      width="120"
+    />
+
+    <el-table-column
+      prop="generate_defrost_time"
+      label="Deforst Block"
+      sortable
+      width="120"
+    />
+
     <el-table-column
       prop="status"
       label="Status"
     />
-    <el-table-column
-      prop="created_at"
-      label="Created At"
-    />
+
     <el-table-column
       label="Actions"
       width="120">
-      <template slot-scope="scope">
+      <!-- <template slot-scope="scope">
         <el-button
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
           Staking List
         </el-button>
-      </template>
+      </template> -->
     </el-table-column>
   </el-table>
  
@@ -132,21 +163,15 @@
     custom-class="tea-modal"
   >
 
-    <p style="margin:0 15px 40px; font-size:15px;">
-      Transfer Voucher to another account.
+    <p style="margin:0 0 40px; font-size:15px;">
+      Lottery Operation will transfer all your vouchers to Camellia Seeds.
+      <br />
+      Please confirm your operation.
     </p>
-    <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="120px">
-      <el-form-item label="Target Address" prop="target_address">
-        <el-input v-model="dai_modal.form.target_address"></el-input>
-      </el-form-item>
-      <el-form-item label="Amount" prop="amount">
-        <el-input-number v-model="dai_modal.form.amount" :min="1" :max="100"></el-input-number>
-      </el-form-item>
-    </el-form>
-
+    
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="dai_modal.visible = false">Close</el-button>
-      <el-button size="small" type="primary" @click="transferDai()">Confirm</el-button>
+      <el-button size="small" type="primary" @click="confirmLuckyDraw()">Confirm</el-button>
     </span>
 
   </el-dialog>
@@ -211,16 +236,6 @@ export default {
     return {
       dai_modal: {
         visible: false,
-        form: {
-          target_address: '',
-          amount: null,
-        },
-        rules: {
-          target_address: [
-            { required: true },
-          ],
-          amount: [],
-        }
       },
       staking_modal: {
         visible: false,
@@ -290,22 +305,19 @@ export default {
       this.staking_modal.visible = true;
     },
 
-    async transferDai(){
+    async confirmLuckyDraw(){
       const ref = this.$refs['dai_modal'];
       this.$root.loading(true);
       try{
-        await ref.validate();
-        const {target_address, amount} = this.dai_modal.form;
-
+        
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
-        const tx = api.tx.cml.transferDai(target_address, amount);
+        const tx = api.tx.cml.drawCmlsFromVoucher();
 
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
 
         this.$message.success('success');
-        ref.resetFields();
         this.dai_modal.visible = false;
 
       }catch(e){
