@@ -60,8 +60,8 @@
     </div>
 
     <div class="x-right">
-      <!-- <el-button @click="convertDaiToCml()">CONVERT</el-button> -->
-      <el-button @click="dai_modal.visible=true">Lottery</el-button>
+      <el-button @click="lotteryHandler()">LOTTERY</el-button>
+      <el-button @click="dai_modal.visible=true">TRANSFER</el-button>
     </div>
 
   </div>
@@ -163,15 +163,34 @@
     custom-class="tea-modal"
   >
 
-    <p style="margin:0 0 40px; font-size:15px;">
-      Lottery Operation will transfer all your vouchers to Camellia Seeds.
-      <br />
-      Please confirm your operation.
+    <p style="margin:0 15px 40px; font-size:15px;">
+      Transfer Voucher to another account.
     </p>
+    <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="120px">
+      <el-form-item label="Target Address" prop="target_address">
+        <el-input v-model="dai_modal.form.target_address"></el-input>
+      </el-form-item>
+
+      <el-form-item label="Class Type" prop="class">
+        <el-select v-model="dai_modal.form.class" placeholder="Please Select Class">
+          <el-option
+            v-for="val in dai_modal.class_options"
+            :key="val"
+            :label="val"
+            :value="val">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="Amount" prop="amount">
+        <el-input-number v-model="dai_modal.form.amount" :min="1" :max="10000"></el-input-number>
+      </el-form-item>
+    </el-form>
+
     
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="dai_modal.visible = false">Close</el-button>
-      <el-button size="small" type="primary" @click="confirmLuckyDraw()">Confirm</el-button>
+      <el-button size="small" type="primary" @click="transferVoucher()">Confirm</el-button>
     </span>
 
   </el-dialog>
@@ -230,12 +249,28 @@
 import SettingAccount from '../workflow/SettingAccount';
 import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
+import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 export default {
   data(){
     return {
       dai_modal: {
         visible: false,
+        form: {
+          target_address: '',
+          amount: null,
+          class: null,
+        },
+        rules: {
+          target_address: [
+            { required: true },
+          ],
+          amount: [],
+          class: [
+            { required: true },
+          ]
+        },
+        class_options: [],
       },
       staking_modal: {
         visible: false,
@@ -254,6 +289,8 @@ export default {
   },
   
   async mounted(){
+    this.dai_modal.class_options = utils.consts.CmlType;
+
     this.$root.loading(true);
 
     this.wf = new SettingAccount();
@@ -283,20 +320,6 @@ export default {
       await this.wf.refreshCurrentAccount();
     },
 
-    async convertDaiToCml(){
-      this.$root.loading(true);
-      try{
-        const layer1_instance = this.wf.getLayer1Instance();
-        const api = layer1_instance.getApi();
-        const convert_tx = api.tx.cml.convertCmlFromDai();
-
-        await layer1_instance.sendTx(this.layer1_account.address, convert_tx);
-        await this.refreshAccount();
-      }catch(e){
-        this.$root.showError(e);
-      }
-      this.$root.loading(false);
-    },
 
     showStakingSlot(scope){
       // console.log(11, scope.row, scope.$index);
@@ -305,11 +328,20 @@ export default {
       this.staking_modal.visible = true;
     },
 
-    async confirmLuckyDraw(){
-      const ref = this.$refs['dai_modal'];
+    async lotteryHandler(){
+      const msg = `
+        Lottery will transfer all your vouchers to Camellia Seeds.
+        <br />
+        Please confirm your operation.
+      `
+      const x = await this.$confirm(msg, {
+        title: 'Lottery',
+        dangerouslyUseHTMLString: true,
+      }).catch(()=>{});
+      if(!x) return false;
+
       this.$root.loading(true);
       try{
-        
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
         const tx = api.tx.cml.drawCmlsFromVoucher();
@@ -318,7 +350,6 @@ export default {
         await this.refreshAccount();
 
         this.$message.success('success');
-        this.dai_modal.visible = false;
 
       }catch(e){
         this.$root.showError(e);
@@ -358,7 +389,36 @@ export default {
           this.$root.loading(false);
         },
       });
-    }
+    },
+
+    async transferVoucher(){
+      const ref = this.$refs['dai_modal'];
+      this.$root.loading(true);
+      try{
+        await ref.validate();
+        const {target_address, amount} = this.dai_modal.form;
+
+        const type = this.dai_modal.form.class;
+        const vc = _.get(this.layer1_account, 'voucher_'+type, null);
+
+        if(vc && amount > vc.amount){
+          throw 'Not Enough Vouchers for Class - '+type;
+        }
+
+        const layer1_instance = this.wf.getLayer1Instance();
+        const api = layer1_instance.getApi();
+        const tx = api.tx.cml.transferVoucher(target_address, type, amount);
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+        await this.refreshAccount();
+        this.$message.success('success');
+        ref.resetFields();
+        this.dai_modal.visible = false;
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
+      
+    },
   }
 
   
