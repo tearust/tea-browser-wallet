@@ -49,7 +49,7 @@ export default {
       const rs = await request.getLog({
         from: `in: ["${layer1_account.address}"]`
       });
-console.log(111, help.formatLogs(rs.nodes))
+
       store.commit('set_my_log', help.formatLogs(rs.nodes));
     },
 
