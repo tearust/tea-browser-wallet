@@ -5,7 +5,8 @@ base on VUE and Polkadot JS
 ```
 // make sure node version greater than 14
 
-// Edit .env.test to change your local layer1 url
+// Edit .env.test to change your local layer1 url and the Server URL
+
 
 npm i
 npm start
