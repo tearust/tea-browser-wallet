@@ -54,6 +54,14 @@
         {{scope.row.price}}
       </template>
     </el-table-column>
+    
+    <el-table-column
+      label="Amount"
+    >
+      <template slot-scope="scope">
+        {{scope.row.amount}}
+      </template>
+    </el-table-column>
 
     <el-table-column
       label="Target User"

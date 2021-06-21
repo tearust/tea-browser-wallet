@@ -81,6 +81,7 @@ query {
       auctionId
       cmlId
       price
+      amount
     }
   }
 }
