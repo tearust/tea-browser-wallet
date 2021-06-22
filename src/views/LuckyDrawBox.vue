@@ -18,29 +18,31 @@
     <el-table-column
       prop="id"
       label="CML ID"
+      sortable
     />
-    <el-table-column
-      prop="group"
-      label="Group"
-    />
+
     <el-table-column
       prop="lifespan"
-      label="Life Time"
+      label="Life Span"
+      sortable
     />
     
     <el-table-column
       prop="performance"
       label="Performance"
+      sortable
     />
 
     <el-table-column
       prop="defrost_schedule"
       label="Deforst Schedule"
+      sortable
     />
 
     <el-table-column
       prop="generate_defrost_time"
       label="Deforst Block"
+      sortable
     />
 
 
@@ -92,10 +94,12 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      let list = await api.query.cml.luckyDrawBox(ct);
+      let list = await api.query.cml.luckyDrawBox(ct, utils.consts.DefrostScheduleType.Investor);
       list = list.toJSON();
+      let list1 = await api.query.cml.luckyDrawBox(ct, utils.consts.DefrostScheduleType.Team);
+      list1 = list1.toJSON();
 
-      const cml_list = await this.wf.getCmlByList(list);
+      const cml_list = await this.wf.getCmlByList(_.concat(list, list1));
       this.cml_list = cml_list;
 
       this.$root.loading(false);

@@ -36,6 +36,9 @@
   "CmlType": {
     "_enum": ["A", "B", "C"]
   },
+  "DefrostScheduleType": {
+    "_enum": ["Investor", "Team"]
+  },
 
   "Voucher": {
     "amount": "u32",
@@ -43,9 +46,8 @@
   },
 
   "CmlId": "u64",
-  "luckyDrawBox": "Vec<u32>",
   "CmlStatus": {
-    "_enum": ["SeedLive", "SeedFrozen", "CmlLive", "Staking", "Dead"]
+    "_enum": ["Seed", "SeedStaking", "Tree"]
   },
   "MinerStatus": {
     "_enum": ["Active", "Offline"]
@@ -64,15 +66,11 @@
     "cml": "Option<CmlId>"
   },
 
-  "MachineId": "u32",
+  "MachineId": "u64",
   "MinerItem": {
     "id": "MachineId",
     "ip": "Cid",
     "status": "MinerStatus"
-  },
-
-  "DefrostScheduleType": {
-    "_enum": ["Investor", "Team"]
   },
 
   "Seed": {

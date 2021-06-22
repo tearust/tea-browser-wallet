@@ -12,11 +12,8 @@ const {_, uuid, forge} = tearust_utils;
 // window.L = require('tearust_layer1');
 
 const consts = {
-  CmlType: {
-    A: 'A',
-    B: 'B',
-    C: 'C',
-  }
+  CmlType: {A: 'A', B: 'B', C: 'C'},
+  DefrostScheduleType: {Investor: 'Investor', Team: 'Team'},
 };
 
 const _MEM = {};

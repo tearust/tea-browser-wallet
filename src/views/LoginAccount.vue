@@ -35,32 +35,62 @@
   <el-divider />
 
   <div v-if="
-    layer1_account && (layer1_account.voucher_A || layer1_account.voucher_B || layer1_account.voucher_C)
+    layer1_account && (
+      layer1_account.voucher_team_A || layer1_account.voucher_team_B || layer1_account.voucher_team_C ||
+      layer1_account.voucher_investor_A || layer1_account.voucher_investor_B || layer1_account.voucher_investor_C
+    )
   ">
   <div class="tea-card">
     <i class="x-icon el-icon-user"></i>
 
-    <div class="x-list">
+    <div class="x-list" style="width: 810px;">
       <div class="x-item">
-        <b>VOUCHER</b>
+        <b>COUPON - ( INVESTOR / TEAM )</b>
       </div>
       <div class="x-item">
         <b>TYPE - A</b>
-        <span>{{(layer1_account && layer1_account.voucher_A) ? layer1_account.voucher_A.amount : 0}}</span>
+        <span>
+          {{layer1_account.voucher_investor_A ? layer1_account.voucher_investor_A.amount : 0}}
+          /
+          {{layer1_account.voucher_team_A ? layer1_account.voucher_team_A.amount : 0}}
+        </span>
       </div>
       <div class="x-item">
         <b>TYPE - B</b>
-        <span>{{(layer1_account && layer1_account.voucher_B) ? layer1_account.voucher_B.amount : 0}}</span>
+        <span>
+          {{layer1_account.voucher_investor_B ? layer1_account.voucher_investor_B.amount : 0}}
+          /
+          {{layer1_account.voucher_team_B ? layer1_account.voucher_team_B.amount : 0}}
+        </span>
       </div>
       <div class="x-item">
         <b>TYPE - C</b>
-        <span>{{(layer1_account && layer1_account.voucher_C) ? layer1_account.voucher_C.amount : 0}}</span>
+        <span>
+          {{layer1_account.voucher_investor_C ? layer1_account.voucher_investor_C.amount : 0}}
+          /
+          {{layer1_account.voucher_team_C ? layer1_account.voucher_team_C.amount : 0}}
+        </span>
       </div>
 
     </div>
 
     <div class="x-right">
-      <el-button @click="lotteryHandler()">LOTTERY</el-button>
+      <el-button 
+        :disabled="
+          (!layer1_account.voucher_team_A || layer1_account.voucher_team_A.amount<1) &&
+          (!layer1_account.voucher_team_B || layer1_account.voucher_team_B.amount<1) &&
+          (!layer1_account.voucher_team_C || layer1_account.voucher_team_C.amount<1) 
+        "
+        style="padding: 0 12px;" @click="lotteryHandler(0)"
+      >LUCKDRAW - TEAM</el-button>
+      <el-button 
+        :disabled="
+          (!layer1_account.voucher_investor_A || layer1_account.voucher_investor_A.amount<1) &&
+          (!layer1_account.voucher_investor_B || layer1_account.voucher_investor_B.amount<1) &&
+          (!layer1_account.voucher_investor_C || layer1_account.voucher_investor_C.amount<1) 
+        "
+        style="padding: 0 12px;" @click="lotteryHandler(1)"
+      >LUCKDRAW - INVESTOR</el-button>
       <el-button @click="dai_modal.visible=true">TRANSFER</el-button>
     </div>
 
@@ -79,6 +109,7 @@
     <el-table-column
       prop="id"
       sortable
+      width="90"
       label="CML ID"
     />
     <el-table-column
@@ -87,13 +118,10 @@
       sortable
       width="70"
     />
-    <el-table-column
-      prop="group"
-      label="Group"
-    />
+
     <el-table-column
       prop="lifespan"
-      label="Life Time"
+      label="Life Span"
     />
     <el-table-column
       prop="machine_id"
@@ -108,10 +136,6 @@
         </el-button>
       </template>
     </el-table-column>
-    <el-table-column
-      prop="mining_rate"
-      label="Mining Rate"
-    />
 
     <el-table-column
       prop="performance"
@@ -123,7 +147,8 @@
     <el-table-column
       prop="defrost_schedule"
       label="Deforst Schedule"
-      width="120"
+      sortable
+      width="150"
     />
 
     <el-table-column
@@ -156,25 +181,36 @@
 
 
   <el-dialog
-    title="Transfer Voucher"
+    title="Transfer Coupons"
     :visible.sync="dai_modal.visible"
-    width="900"
+    width="800px"
     :close-on-click-modal="false"
     custom-class="tea-modal"
   >
 
-    <p style="margin:0 15px 40px; font-size:15px;">
+    <!-- <p style="margin:0 0 40px; font-size:15px;">
       Transfer Voucher to another account.
-    </p>
-    <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="120px">
+    </p> -->
+    <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="150px">
       <el-form-item label="Target Address" prop="target_address">
         <el-input v-model="dai_modal.form.target_address"></el-input>
       </el-form-item>
 
       <el-form-item label="Class Type" prop="class">
-        <el-select v-model="dai_modal.form.class" placeholder="Please Select Class">
+        <el-select v-model="dai_modal.form.class" style="width: 300px;" placeholder="Please Select Class">
           <el-option
             v-for="val in dai_modal.class_options"
+            :key="val"
+            :label="val"
+            :value="val">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="Defrost Schedule" prop="defrost">
+        <el-select v-model="dai_modal.form.defrost" style="width: 300px;" placeholder="Please Select Defrost Schedule">
+          <el-option
+            v-for="val in dai_modal.defrost_options"
             :key="val"
             :label="val"
             :value="val">
@@ -260,6 +296,7 @@ export default {
           target_address: '',
           amount: null,
           class: null,
+          defrost: null,
         },
         rules: {
           target_address: [
@@ -268,9 +305,13 @@ export default {
           amount: [],
           class: [
             { required: true },
+          ],
+          defrost: [
+            { required: true },
           ]
         },
         class_options: [],
+        defrost_options: [],
       },
       staking_modal: {
         visible: false,
@@ -290,6 +331,7 @@ export default {
   
   async mounted(){
     this.dai_modal.class_options = utils.consts.CmlType;
+    this.dai_modal.defrost_options = utils.consts.DefrostScheduleType,
 
     this.$root.loading(true);
 
@@ -328,9 +370,14 @@ export default {
       this.staking_modal.visible = true;
     },
 
-    async lotteryHandler(){
+    async lotteryHandler(n){
+      let defrost = utils.consts.DefrostScheduleType.Investor;
+      if(n === 0){
+        defrost = utils.consts.DefrostScheduleType.Team;
+      }
+
       const msg = `
-        Lottery will transfer all your vouchers to Camellia Seeds.
+        Lottery will transfer all your ${defrost} Coupons to Camellia Seeds.
         <br />
         Please confirm your operation.
       `
@@ -340,11 +387,14 @@ export default {
       }).catch(()=>{});
       if(!x) return false;
 
+
+
       this.$root.loading(true);
       try{
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
-        const tx = api.tx.cml.drawCmlsFromVoucher();
+
+        const tx = api.tx.cml.drawCmlsFromVoucher(defrost);
 
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
@@ -396,18 +446,18 @@ export default {
       this.$root.loading(true);
       try{
         await ref.validate();
-        const {target_address, amount} = this.dai_modal.form;
+        const {target_address, amount, defrost} = this.dai_modal.form;
 
         const type = this.dai_modal.form.class;
-        const vc = _.get(this.layer1_account, 'voucher_'+type, null);
+        const vc = _.get(this.layer1_account, 'voucher_'+_.toLower(defrost)+'_'+type, null);
 
-        if(vc && amount > vc.amount){
-          throw 'Not Enough Vouchers for Class - '+type;
+        if(!vc || amount > vc.amount){
+          throw 'Not Enough Coupons for Class - '+type+' - '+defrost;
         }
 
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
-        const tx = api.tx.cml.transferVoucher(target_address, type, amount);
+        const tx = api.tx.cml.transferVoucher(target_address, type, defrost, amount);
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
         this.$message.success('success');

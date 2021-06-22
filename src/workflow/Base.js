@@ -140,6 +140,28 @@ export default class {
     await layer1_instance.sendTx(layer1_account.address, transfer_tx);
   }
 
+  async getVouchers(address){
+    const layer1_instance = this.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    const voucher_investor_A = await api.query.cml.investorVoucherStore(address, 'A');
+    const voucher_investor_B = await api.query.cml.investorVoucherStore(address, 'B');
+    const voucher_investor_C = await api.query.cml.investorVoucherStore(address, 'C');
+
+    const voucher_team_A = await api.query.cml.teamVoucherStore(address, 'A');
+    const voucher_team_B = await api.query.cml.teamVoucherStore(address, 'B');
+    const voucher_team_C = await api.query.cml.teamVoucherStore(address, 'C');
+
+    return {
+      voucher_investor_A: voucher_investor_A.toJSON(),
+      voucher_investor_B: voucher_investor_B.toJSON(),
+      voucher_investor_C: voucher_investor_C.toJSON(),
+      voucher_team_A: voucher_team_A.toJSON(),
+      voucher_team_B: voucher_team_B.toJSON(),
+      voucher_team_C: voucher_team_C.toJSON(),
+    }
+  }
+
   async refreshCurrentAccount(){
     
     const layer1_account = store.getters.layer1_account;
@@ -154,9 +176,8 @@ export default class {
     const api = layer1_instance.getApi();
     const balance = await this.getAllBalance(layer1_account.address);
 
-    const voucher_A = await api.query.cml.userVoucherStore(layer1_account.address, 'A');
-    const voucher_B = await api.query.cml.userVoucherStore(layer1_account.address, 'B');
-    const voucher_C = await api.query.cml.userVoucherStore(layer1_account.address, 'C');
+    const vouchers = await this.getVouchers(layer1_account.address);
+    console.log(111, vouchers);
 
     const user_cml = await api.query.cml.userCmlStore(layer1_account.address);
 
@@ -173,9 +194,7 @@ export default class {
       address: layer1_account.address,
       ori_name: layer1_account.name,
       cml: cml_data,
-      voucher_A: voucher_A.toJSON(),
-      voucher_B: voucher_B.toJSON(),
-      voucher_C: voucher_C.toJSON(),
+      vouchers,
     });
 
 
