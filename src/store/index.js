@@ -226,7 +226,7 @@ const store = new Vuex.Store({
         item.cml_id = utils.toNumber(item.cml_id);
         return item;
       });
-      console.log(11, xlist);
+ 
       store.commit('set_auction_list', xlist);
     },
 

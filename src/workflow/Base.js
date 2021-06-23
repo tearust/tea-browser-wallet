@@ -143,7 +143,7 @@ export default class {
   async getVouchers(address){
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
-window.api = api;
+// window.api = api;
     const voucher_investor_A = await api.query.cml.investorVoucherStore(address, 'A');
     const voucher_investor_B = await api.query.cml.investorVoucherStore(address, 'B');
     const voucher_investor_C = await api.query.cml.investorVoucherStore(address, 'C');

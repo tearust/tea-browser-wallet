@@ -153,9 +153,9 @@ export default {
             const auction_id = scope.row.id;        
             const price = layer1_instance.asUnit(form.price);
             
-            if(price < min_price){
-              throw 'Not Enough balance.'
-            }
+            // if(price < min_price){
+            //   throw 'Not Enough balance.'
+            // }
 
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
