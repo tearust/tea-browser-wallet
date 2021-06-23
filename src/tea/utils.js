@@ -9,7 +9,7 @@ import './index';
 
 const {_, uuid, forge} = tearust_utils;
 
-// window.L = require('tearust_layer1');
+window.L = require('tearust_layer1');
 
 const consts = {
   CmlType: {A: 'A', B: 'B', C: 'C'},
