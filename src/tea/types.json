@@ -7,7 +7,12 @@
   "Cid": "Bytes",
   "Signature": "Bytes",
   "NodeStatus": {
-    "_enum": ["Pending", "Active", "Inactive", "Invalid"]
+    "_enum": [
+      "Pending",
+      "Active",
+      "Inactive",
+      "Invalid"
+    ]
   },
   "Node": {
     "teaId": "TeaPubKey",
@@ -32,44 +37,56 @@
     "ephemeralId": "TeaPubKey",
     "updateHeight": "BlockNumber"
   },
-
   "CmlType": {
-    "_enum": ["A", "B", "C"]
+    "_enum": [
+      "A",
+      "B",
+      "C"
+    ]
   },
   "DefrostScheduleType": {
-    "_enum": ["Investor", "Team"]
+    "_enum": [
+      "Investor",
+      "Team"
+    ]
   },
-
   "Voucher": {
     "amount": "u32",
     "cml_type": "CmlType"
   },
-
   "CmlId": "u64",
   "CmlStatus": {
-    "_enum": ["FrozenSeed", "FreshSeed(BlockNumber)", "Tree", "Staking(CmlId, StakingIndex)"]
+    "_enum": [
+      "FrozenSeed",
+      "FreshSeed(BlockNumber)",
+      "Tree",
+      "Staking(CmlId, StakingIndex)"
+    ]
   },
   "MinerStatus": {
-    "_enum": ["Active", "Offline"]
+    "_enum": [
+      "Active",
+      "Offline"
+    ]
   },
   "StakingCategory": {
-    "_enum": ["Tea", "Cml"]
+    "_enum": [
+      "Tea",
+      "Cml"
+    ]
   },
-
   "StakingItem": {
     "owner": "AccountId",
     "category": "StakingCategory",
     "amount": "Option<Balance>",
     "cml": "Option<CmlId>"
   },
-
   "MachineId": "[u8; 32]",
   "MinerItem": {
     "id": "MachineId",
     "ip": "Cid",
     "status": "MinerStatus"
   },
-
   "performance": "u32",
   "Seed": {
     "id": "CmlId",
@@ -79,18 +96,15 @@
     "lifespan": "BlockNumber",
     "performance": "performance"
   },
-
   "CML": {
     "intrinsic": "Seed",
     "status": "CmlStatus",
     "owner": "Option<AccountId>",
-    
     "staking_slot": "Vec<StakingItem>",
     "planted_at": "Option<BlockNumber>",
     "machine_id": "Option<MachineId>",
-    "RottenDuration": "PhantomData<RottenDuration>"
+    "FreshDuration": "PhantomData<FreshDuration>"
   },
-  
   "AuctionId": "u64",
   "AuctionItem": {
     "id": "AuctionId",
@@ -105,13 +119,12 @@
   },
   "BidItem": {
     "auction_id": "AuctionId",
-	  "user": "AccountId",
+    "user": "AccountId",
     "price": "Balance",
     "deposit": "Option<Balance>",
-	  "created_at": "BlockNumber",
-	  "updated_at": "BlockNumber"
+    "created_at": "BlockNumber",
+    "updated_at": "BlockNumber"
   },
-
   "chainbridge::ChainId": "u8",
   "ChainId": "u8",
   "ResourceId": "[u8; 32]",
