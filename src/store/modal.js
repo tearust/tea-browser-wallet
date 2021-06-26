@@ -24,6 +24,11 @@ const initState = ()=>{
     log_details: {
       visible: false,
       param: {}
+    },
+
+    common_tx: {
+      visible: false,
+      param: {},
     }
 
   };

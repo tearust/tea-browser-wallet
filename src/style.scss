@@ -130,6 +130,10 @@ a, a:hover, a:focus, button:focus {
   font-weight: bold;
 }
 
+.el-dialog__body{
+  padding: 10px 20px;
+}
+
 
 
 @import './css/tea-card.scss';

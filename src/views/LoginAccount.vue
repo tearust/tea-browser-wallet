@@ -32,7 +32,6 @@
 
   </div>
 
-  <el-divider />
 
   <div v-if="
     layer1_account && (
@@ -40,6 +39,7 @@
       layer1_account.voucher_investor_A || layer1_account.voucher_investor_B || layer1_account.voucher_investor_C
     )
   ">
+  <el-divider />
   <div class="tea-card">
     <i class="x-icon el-icon-user"></i>
 
@@ -96,88 +96,26 @@
 
   </div>
 
-  <el-divider />
   </div>
 
-  <h4>CML LIST</h4>
-  <el-table 
-    :data="layer1_account ? layer1_account.cml : []"
-    stripe
-    size="small"
-    border
-  >
-    <el-table-column
-      prop="id"
-      sortable
-      width="90"
-      label="CML ID"
-    />
-    <el-table-column
-      prop="cml_type"
-      label="Type"
-      sortable
-      width="70"
-    />
 
-    <el-table-column
-      prop="lifespan"
-      label="Life Span"
-    />
-    <el-table-column
-      prop="machine_id"
-      label="Miner ID"
-    > 
-      <template slot-scope="scope">
-        <el-button
-          @click="showMinerInfo(scope.row.machine_id)"
-          type="text"
-          size="small">
-          {{scope.row.machine_id}}
-        </el-button>
-      </template>
-    </el-table-column>
+  <div style="position: relative; padding: 20px 0 40px;">
+    <el-tabs tab-position="top" style="margin-top: 32px;">
+      <el-tab-pane label="MY CML" :lazy="true">
+        <MyCmlList />
+      </el-tab-pane>
+      <el-tab-pane label="MY STAKING" :lazy="true">
+        <MyStakingList />
+      </el-tab-pane>
+      <el-tab-pane label="MY APPS" :lazy="true">
+        <MyAppList />
+      </el-tab-pane>
+  
+    </el-tabs>
 
-    <el-table-column
-      prop="performance"
-      label="Performance"
-      sortable
-      width="120"
-    />
-
-    <el-table-column
-      prop="defrost_schedule"
-      label="Deforst Schedule"
-      sortable
-      width="150"
-    />
-
-    <el-table-column
-      prop="generate_defrost_time"
-      label="Deforst Block"
-      sortable
-      width="120"
-    />
-
-    <el-table-column
-      prop="status"
-      label="Status"
-    />
-
-    <el-table-column
-      label="Actions"
-      width="120">
-      <!-- <template slot-scope="scope">
-        <el-button
-          @click="showStakingSlot(scope)"
-          type="text"
-          size="small">
-          Staking List
-        </el-button>
-      </template> -->
-    </el-table-column>
-  </el-table>
- 
-
+    <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshAccount(true)" style="top: 52px;"></el-button>
+  </div>
+  
 
 
   <el-dialog
@@ -231,53 +169,6 @@
 
   </el-dialog>
 
-  <el-dialog
-    title="Staking List"
-    :visible.sync="staking_modal.visible"
-    width="70%"
-    :close-on-click-modal="false"
-    custom-class="tea-modal"
-  >
-    <h4>{{staking_modal.data ? staking_modal.data.id : ''}}</h4>
-    <el-table 
-      :data="staking_modal.data ? staking_modal.data.staking_slot : []"
-      stripe
-      size="small"
-      border
-    >
-      <el-table-column
-        prop="owner"
-        label="Owner"
-      />
-      <el-table-column
-        prop="category"
-        label="Category"
-      />
-      <el-table-column
-        prop="amount"
-        label="Amount"
-      />
-      
-      <el-table-column
-        label="Actions"
-        width="120">
-        <!-- <template slot-scope="scope">
-          <el-button
-            @click="showStakingSlot(scope)"
-            type="text"
-            size="small">
-            Staking List
-          </el-button>
-        </template> -->
-      </el-table-column>
-    </el-table>
-    
-
-    <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="staking_modal.visible = false">Close</el-button>
-    </span>
-
-  </el-dialog>
 
 </div>
 </template>
@@ -287,7 +178,15 @@ import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
 import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
+import MyCmlList from './profile/MyCmlList';
+import MyStakingList from './profile/MyStakingList';
+import MyAppList from './profile/MyAppList';
 export default {
+  components: {
+    MyCmlList,
+    MyStakingList,
+    MyAppList,
+  },
   data(){
     return {
       dai_modal: {
@@ -313,10 +212,6 @@ export default {
         class_options: [],
         defrost_options: [],
       },
-      staking_modal: {
-        visible: false,
-        data: null,
-      }
     };
   },
 
@@ -324,9 +219,6 @@ export default {
     ...mapGetters([
       'layer1_account'
     ]),
-    ...mapState([
-      'bind_mobile'
-    ])
   },
   
   async mounted(){
@@ -340,7 +232,7 @@ export default {
 
     await this.refreshAccount();
     this.$root.loading(false);
-    console.log(this.layer1_account)
+    console.log(11, this.layer1_account)
 
   },
 
@@ -358,17 +250,12 @@ export default {
       this.$root.loading(false);
     },
 
-    async refreshAccount(){
+    async refreshAccount(flag=false){
+      flag && this.$root.loading(true);
       await this.wf.refreshCurrentAccount();
+      flag && this.$root.loading(false);
     },
 
-
-    showStakingSlot(scope){
-      // console.log(11, scope.row, scope.$index);
-      this.staking_modal.data = scope.row;
-
-      this.staking_modal.visible = true;
-    },
 
     async lotteryHandler(n){
       let defrost = utils.consts.DefrostScheduleType.Investor;

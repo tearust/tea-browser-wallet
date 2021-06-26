@@ -2,47 +2,19 @@
 <div class="tea-page">
   <h4>STORAGE</h4>
   <div class="t-box">
-    <el-button size="small" type="primary" @click="active_modal.visible=true">ACTIVE CML</el-button>
-    <el-button size="small" type="primary" @click="queryMiner()">QUERY MINER</el-button>
+    <el-button size="small" type="primary" @click="startMining">ACTIVE CML FOR MINING</el-button>
+    <!-- <el-button size="small" type="primary" @click="queryMiner()">QUERY MINER</el-button>
 
     <el-button size="small" type="primary" @click="queryEndBlockAuction()">QUERY ENDBLOCK AUCTION</el-button>
 
-    <el-button size="small" type="primary" @click="luckyDrawBox()">LUCKY DRAW BOX</el-button>
+    <el-button size="small" type="primary" @click="luckyDrawBox()">LUCKY DRAW BOX</el-button> -->
   </div>
   <el-divider />
 
   <h4>Result:</h4>
   <div>{{result}}</div>
 
-  
 
-  <el-dialog
-    title="Transfer Dai"
-    :visible.sync="active_modal.visible"
-    width="900"
-    :close-on-click-modal="false"
-    custom-class="tea-modal"
-  >
-
-    <el-form :model="active_modal.form" ref="active_modal" label-width="120px">
-      <el-form-item label="CML ID">
-        <el-input v-model="active_modal.form.cml_id"></el-input>
-      </el-form-item>
-      <el-form-item label="MINER ID">
-        <el-input v-model="active_modal.form.miner_id"></el-input>
-      </el-form-item>
-      <el-form-item label="MINER IP">
-        <el-input v-model="active_modal.form.miner_ip"></el-input>
-      </el-form-item>
-
-    </el-form>
-
-    <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="active_modal.visible = false">Close</el-button>
-      <el-button size="small" type="primary" @click="activeCML()">Confirm</el-button>
-    </span>
-
-  </el-dialog>
 </div>
 </template>
 <script>
@@ -50,7 +22,7 @@ import Test from '../workflow/Test';
 import {_} from 'tearust_utils';
 import {helper, stringToU8a} from 'tearust_layer1';
 import { mapGetters, mapState } from 'vuex';
-window.api = 1;
+
 export default {
   data(){
     return {
@@ -70,9 +42,6 @@ export default {
     ...mapGetters([
       'layer1_account'
     ]),
-    ...mapState([
-      'bind_mobile',
-    ]),
   },
 
   async mounted(){
@@ -83,32 +52,37 @@ export default {
 
     const layer1_instance = this.test.getLayer1Instance();
     const api = layer1_instance.getApi();
-    window.api = api;
 
     this.$root.loading(false);
   },
 
   methods: {
-    async activeCML(){
-      const ref = this.$refs['active_modal'];
-      this.$root.loading(true);
-      try{
-        const {cml_id, miner_id, miner_ip} = this.active_modal.form;
+    async startMining(){
+      const layer1_instance = this.test.getLayer1Instance();
+      const api = layer1_instance.getApi();
 
-        const layer1_instance = this.test.getLayer1Instance();
-        const api = layer1_instance.getApi();
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Active CML',
+          pallet: 'cml',
+          tx: 'startMining',
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+            console.log(111, form);
+            const tx = api.tx.cml.startMining(form.cml_id, form.machine_id, form.miner_ip);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
 
-        const tx = api.tx.cml.activeCmlForNitro(cml_id, miner_id, miner_ip);
-        await layer1_instance.sendTx(this.layer1_account.address, tx);
-        console.log(cml_id, miner_id, miner_ip);
-
-        this.$message.success('success');
-        ref.resetFields();
-        this.active_modal.visible = false;
-      }catch(e){
-        this.$root.showError(e);
-      }
-      this.$root.loading(false);
     },
     async queryMiner(){
       const miner_id = await prompt('Input Miner ID');

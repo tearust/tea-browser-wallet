@@ -63,6 +63,13 @@ const crypto = {
   }
 };
 
+const form = {
+  nameToLabel(name){
+    return _.map(name.split('_'), (n)=>{
+      return _.capitalize(n);
+    }).join(' ');
+  }
+};
 
 let _http_base_url = '';
 const F = {
@@ -72,6 +79,7 @@ const F = {
   forge,
   layer1,
   consts,
+  form,
 
   getHttpBaseUrl() {
     if(!_http_base_url){

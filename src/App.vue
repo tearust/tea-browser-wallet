@@ -19,6 +19,7 @@
     <DataDetailsModal />
     <TransferBalanceModal />
     <LogDetailsModal />
+    <CommonTxModal />
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import BidForAuctionModal from './views/modals/BidForAuctionModal';
 import DataDetailsModal from './views/modals/DataDetailsModal';
 import TransferBalanceModal from './views/modals/TransferBalanceModal';
 import LogDetailsModal from './views/modals/LogDetailsModal';
+import CommonTxModal from './views/modals/CommonTxModal';
 
 export default {
   components: {
@@ -47,6 +49,7 @@ export default {
     DataDetailsModal,
     TransferBalanceModal,
     LogDetailsModal,
+    CommonTxModal,
   }
 }
 </script>

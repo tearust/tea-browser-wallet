@@ -143,7 +143,7 @@ export default class {
   async getVouchers(address){
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
-// window.api = api;
+window.api = api;
     const voucher_investor_A = await api.query.cml.investorVoucherStore(address, 'A');
     const voucher_investor_B = await api.query.cml.investorVoucherStore(address, 'B');
     const voucher_investor_C = await api.query.cml.investorVoucherStore(address, 'C');
@@ -178,15 +178,13 @@ export default class {
 
     const vouchers = await this.getVouchers(layer1_account.address);
 
-    const user_cml = await api.query.cml.userCmlStore(layer1_account.address);
-
     // reset all state
     store.commit('reset_state');
 
-    let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
-    my_auction = my_auction.toHuman();
-    const cml_data = await this.getCmlByList(user_cml.toJSON());
-// console.log(11, cml_data);
+    // let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
+    // my_auction = my_auction.toHuman();
+    const cml_data = await this.getCmlListByUser(layer1_account.address);
+console.log(11, cml_data);
     store.commit('set_account', {
       balance: balance.free,
       lock_balance: balance.lock,
@@ -196,6 +194,18 @@ export default class {
       vouchers,
     });
 
+
+  }
+
+  async getCmlListByUser(address){
+    const layer1_instance = this.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    // TODO change to rpc call
+    // const user_cml = await api.query.cml.userCmlStore(address);
+
+    const user_cml_list = [1,2,3,4,5, 37];
+    return await this.getCmlByList(user_cml_list);
 
   }
 
