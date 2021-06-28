@@ -100,7 +100,7 @@
 
 
   <div style="position: relative; padding: 20px 0 40px;">
-    <el-tabs tab-position="top" style="margin-top: 32px;">
+    <el-tabs tab-position="top" style="margin-top: 32px;" @tab-click="clickTab($event)">
       <el-tab-pane label="MY CML" :lazy="true">
         <MyCmlList />
       </el-tab-pane>
@@ -232,8 +232,11 @@ export default {
 
     await this.refreshAccount();
     this.$root.loading(false);
-    console.log(11, this.layer1_account)
+    
 
+    utils.register('refresh-current-account', async ()=>{
+      await this.refreshAccount();
+    });
   },
 
   methods: {
@@ -295,15 +298,6 @@ export default {
       
     },
 
-    async showMinerInfo(miner_id){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-
-      const mm = await api.query.cml.minerItemStore(miner_id);
-
-      alert(JSON.stringify(mm.toHuman()));
-    },
-
     async transferBalance(){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
@@ -356,6 +350,11 @@ export default {
       this.$root.loading(false);
       
     },
+    clickTab(e){
+      const label = e.label;
+
+      utils.publish(label, {});
+    }
   }
 
   

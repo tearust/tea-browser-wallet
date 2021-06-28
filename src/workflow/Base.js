@@ -3,8 +3,10 @@ import utils from '../tea/utils';
 import Log from '../shared/utility/Log';
 import http from '../tea/http';
 import store from '../store';
+import request from '../request';
 
 import {_, forge} from 'tearust_utils';
+import {hexToString} from 'tearust_layer1';
 
 
 let _layer1 = null;
@@ -183,8 +185,9 @@ window.api = api;
 
     // let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
     // my_auction = my_auction.toHuman();
-    const cml_data = await this.getCmlListByUser(layer1_account.address);
-console.log(11, cml_data);
+    const cml_list = await this.getCmlListByUser(layer1_account.address);
+    const cml_data = await this.getCmlByList(cml_list);
+
     store.commit('set_account', {
       balance: balance.free,
       lock_balance: balance.lock,
@@ -198,15 +201,11 @@ console.log(11, cml_data);
   }
 
   async getCmlListByUser(address){
-    const layer1_instance = this.getLayer1Instance();
-    const api = layer1_instance.getApi();
+    const user_cml_list = await request.layer1_rpc('cml_getUserCmlList', [
+      address
+    ])
 
-    // TODO change to rpc call
-    // const user_cml = await api.query.cml.userCmlStore(address);
-
-    const user_cml_list = [1,2,3,4,5, 37];
-    return await this.getCmlByList(user_cml_list);
-
+    return user_cml_list;
   }
 
   async getCmlByList(cml_list){
@@ -221,6 +220,7 @@ console.log(11, cml_data);
       return {
         ...cml,
         ...cml.intrinsic,
+        machine_id: hexToString(cml.machine_id),
       };
     }));
 

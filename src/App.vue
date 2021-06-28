@@ -20,6 +20,7 @@
     <TransferBalanceModal />
     <LogDetailsModal />
     <CommonTxModal />
+    <StakingSlotModal />
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import DataDetailsModal from './views/modals/DataDetailsModal';
 import TransferBalanceModal from './views/modals/TransferBalanceModal';
 import LogDetailsModal from './views/modals/LogDetailsModal';
 import CommonTxModal from './views/modals/CommonTxModal';
+import StakingSlotModal from './views/modals/StakingSlotModal';
 
 export default {
   components: {
@@ -50,6 +52,7 @@ export default {
     TransferBalanceModal,
     LogDetailsModal,
     CommonTxModal,
+    StakingSlotModal,
   }
 }
 </script>

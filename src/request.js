@@ -3,6 +3,7 @@ import _ from 'lodash';
 import utils from './tea/utils';
 
 const SERVER_URL = utils.get_env('SERVER_URL');
+const LAYER1_RPC = utils.get_env('LAYER1_RPC');
 const BASE_URL = `${SERVER_URL}/`;
 
 console.log("server_url => "+BASE_URL);
@@ -88,6 +89,27 @@ query {
     `;
     const result = await F.queryGraphQL(query);
     return result.logs;
+  },
+
+
+  async layer1_rpc(method, params=[]){
+    const data = {
+      jsonrpc: '2.0',
+      method,
+      params,
+      id: 9999
+    };
+    const rs = await axios.post(LAYER1_RPC, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if(rs.data.id === 9999){
+      return rs.data.result;
+    }
+
+    return null;
   }
 };
 

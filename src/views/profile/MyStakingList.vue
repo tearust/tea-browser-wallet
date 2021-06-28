@@ -1,10 +1,65 @@
 <template>
 <div class="tea-page">
 
+  <el-table 
+    v-if="list"
+    :data="list"
+    stripe
+    size="small"
+    border
+  >
+    <el-table-column
+      prop="id"
+      width="90"
+      label="CML ID"
+    />
+    <el-table-column
+      prop="cml_type"
+      label="Type"
+      width="70"
+    />
+
+    <el-table-column
+      prop="lifespan"
+      label="Life Span"
+    />
+
+    <el-table-column
+      prop="performance"
+      label="Performance"
+      width="120"
+    />
+
+    <el-table-column
+      prop="status"
+      label="Status"
+    />
+
+    <el-table-column
+      label="Staking Slot"
+      width="120">
+      <template slot-scope="scope">
+        <el-button
+          v-if="scope.row.staking_slot.length>0"
+          @click="showStakingSlot(scope)"
+          type="text"
+          size="small">
+          {{scope.row.staking_slot.length}}
+        </el-button>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="index"
+      label="IAM AT"
+    />
+
+  </el-table>
 
   <div style="display:flex; justify-content: flex-end;">
     <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openInvolveStakingModal()">Involve Staking</el-button>
   </div>
+
 </div>
 </template>
 <script>
@@ -13,10 +68,11 @@ import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
+import request from '../../request';
 export default {
   data(){
     return {
-      
+      list: null,
     };
   },
 
@@ -29,6 +85,11 @@ export default {
   async mounted(){
     this.wf = new SettingAccount();
     await this.wf.init();
+
+    await this.refreshList();
+    utils.register('MY STAKING', async ()=>{
+      await this.refreshList();
+    });
   },
 
   methods: {
@@ -47,7 +108,8 @@ export default {
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
-            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml);
+
+            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
             close();
@@ -60,8 +122,35 @@ export default {
     },
 
     async refreshList(){
+      const list = await request.layer1_rpc('cml_getUserStakingList', [
+        this.layer1_account.address
+      ]);
 
-    }
+      const cml_list = await Promise.all(_.map(list, async (val)=>{
+        const cml_id = val[0];
+        const index = val[1];
+
+        const [cml] = await this.wf.getCmlByList([cml_id]);
+
+        return {
+          ...cml,
+          index,
+        }
+      }));
+
+      this.list = cml_list;
+
+      utils.publish('refresh-current-account');
+    },
+
+    showStakingSlot(scope){
+      this.$store.commit('modal/open', {
+        key: 'staking_slot',
+        param: {
+          list: scope.row.staking_slot
+        }
+      });
+    },
     
 
     

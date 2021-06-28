@@ -29,6 +29,10 @@ const initState = ()=>{
     common_tx: {
       visible: false,
       param: {},
+    },
+    staking_slot: {
+      visible: false,
+      param: {},
     }
 
   };

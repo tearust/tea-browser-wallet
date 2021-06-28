@@ -65,67 +65,20 @@
     />
 
     <el-table-column
-      label="Actions"
+      label="Staking Slot"
       width="120">
-      <!-- <template slot-scope="scope">
+      <template slot-scope="scope">
         <el-button
+          v-if="scope.row.staking_slot.length>0"
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
-          Staking List
+          {{scope.row.staking_slot.length}}
         </el-button>
-      </template> -->
+      </template>
     </el-table-column>
   </el-table>
- 
 
-  <!-- <el-dialog
-    title="Staking List"
-    :visible.sync="staking_modal.visible"
-    width="70%"
-    :close-on-click-modal="false"
-    custom-class="tea-modal"
-  >
-    <h4>{{staking_modal.data ? staking_modal.data.id : ''}}</h4>
-    <el-table 
-      :data="staking_modal.data ? staking_modal.data.staking_slot : []"
-      stripe
-      size="small"
-      border
-    >
-      <el-table-column
-        prop="owner"
-        label="Owner"
-      />
-      <el-table-column
-        prop="category"
-        label="Category"
-      />
-      <el-table-column
-        prop="amount"
-        label="Amount"
-      />
-      
-      <el-table-column
-        label="Actions"
-        width="120">
-        <template slot-scope="scope">
-          <el-button
-            @click="showStakingSlot(scope)"
-            type="text"
-            size="small">
-            Staking List
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    
-
-    <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="staking_modal.visible = false">Close</el-button>
-    </span>
-
-  </el-dialog> -->
 
 </div>
 </template>
@@ -135,6 +88,7 @@ import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
+import {hexToString} from 'tearust_layer1';
 export default {
   data(){
     return {
@@ -152,16 +106,37 @@ export default {
   },
   
   async mounted(){
-
+    this.wf = new SettingAccount();
+    await this.wf.init();
   },
 
   methods: {
     
     showStakingSlot(scope){
-      // console.log(11, scope.row, scope.$index);
-      this.staking_modal.data = scope.row;
+      this.$store.commit('modal/open', {
+        key: 'staking_slot',
+        param: {
+          list: scope.row.staking_slot
+        }
+      });
+    },
 
-      this.staking_modal.visible = true;
+    async showMinerInfo(miner_id){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      let mm = await api.query.cml.minerItemStore(miner_id);
+      mm = mm.toJSON();
+
+      mm.id = hexToString(mm.id);
+      
+      this.$store.commit('modal/open', {
+        key: 'data_details',
+        param: {
+          ...mm,
+          title: 'Miner Details',
+        },
+      });
     },
 
     
