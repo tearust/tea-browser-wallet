@@ -90,6 +90,12 @@ export default {
     utils.register('MY STAKING', async ()=>{
       await this.refreshList();
     });
+
+    utils.register('refresh-current-account', async (key, param)=>{
+      if(param === 'MY STAKING'){
+        await this.refreshList();
+      }      
+    });
   },
 
   methods: {
@@ -112,6 +118,8 @@ export default {
             const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
+
+            utils.publish('refresh-current-account', 'account');
             close();
           }catch(e){
             this.$root.showError(e);
@@ -139,15 +147,14 @@ export default {
       }));
 
       this.list = cml_list;
-
-      utils.publish('refresh-current-account');
     },
 
     showStakingSlot(scope){
       this.$store.commit('modal/open', {
         key: 'staking_slot',
         param: {
-          list: scope.row.staking_slot
+          list: scope.row.staking_slot,
+          cml_id: scope.row.id,
         }
       });
     },

@@ -113,7 +113,7 @@
   
     </el-tabs>
 
-    <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshAccount(true)" style="top: 52px;"></el-button>
+    <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="clickRefreshBtn(true)" style="top: 52px;"></el-button>
   </div>
   
 
@@ -189,6 +189,7 @@ export default {
   },
   data(){
     return {
+      tab: 'NA',
       dai_modal: {
         visible: false,
         form: {
@@ -234,8 +235,11 @@ export default {
     this.$root.loading(false);
     
 
-    utils.register('refresh-current-account', async ()=>{
-      await this.refreshAccount();
+    utils.register('refresh-current-account', async (key, param)=>{
+      if(param === 'account'){
+        await this.refreshAccount();
+      }
+        
     });
   },
 
@@ -352,8 +356,14 @@ export default {
     },
     clickTab(e){
       const label = e.label;
+      this.tab = label;
 
       utils.publish(label, {});
+    },
+
+    clickRefreshBtn(){
+      utils.publish('refresh-current-account', 'account')
+      utils.publish('refresh-current-account', this.tab)
     }
   }
 

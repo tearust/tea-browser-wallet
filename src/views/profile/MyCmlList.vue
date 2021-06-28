@@ -116,7 +116,8 @@ export default {
       this.$store.commit('modal/open', {
         key: 'staking_slot',
         param: {
-          list: scope.row.staking_slot
+          list: scope.row.staking_slot,
+          cml_id: scope.row.id,
         }
       });
     },

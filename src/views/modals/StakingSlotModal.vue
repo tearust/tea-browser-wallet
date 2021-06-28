@@ -98,13 +98,38 @@ export default {
 
   methods: {
     async openHandler(){
-      
+      this.wf = new Base();
+      await this.wf.init();
+      await utils.waitLayer1Ready(this.wf.layer1);
+      this.layer1_instance = this.wf.getLayer1Instance();
+      this.api = this.layer1_instance.getApi();
     },
+
     close(){
       this.$store.commit('modal/close', 'staking_slot');
     },
+
     async removeStaking(scope){
-console.log(111, scope);
+      const x = await this.$confirm("Are you sure to remove staking?", "Remove Staking").catch(()=>{});
+      if(!x) return;
+
+      if(!this.param.cml_id){
+        throw 'Invalid cml id';
+      }
+
+      this.$root.loading(true);
+      try{
+        const tx = this.api.tx.cml.stopStaking(this.param.cml_id, scope.$index);
+        await this.layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        this.close();
+        utils.publish('refresh-current-account', 'account');
+        utils.publish('refresh-current-account', 'MY STAKING');
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
+
     }
   }
 }
