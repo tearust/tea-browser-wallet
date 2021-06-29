@@ -53,8 +53,8 @@
     />
 
     <el-table-column
-      prop="generate_defrost_time"
-      label="Deforst Block"
+      prop="deforst_day"
+      label="Deforst Day"
       sortable
       width="120"
     />

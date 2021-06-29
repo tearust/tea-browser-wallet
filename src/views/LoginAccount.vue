@@ -22,12 +22,18 @@
         <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
       </div>
 
+      <div v-if="layer1_account && layer1_account.reward" class="x-item">
+        <b>STAKING REWARD</b>
+        <span>{{layer1_account.reward}}</span>
+      </div>
+
     </div>
 
     <div class="x-right">
       <el-button @click="showSelectLayer1()">CHANGE</el-button>
-      <el-button v-if="layer1_account.address" @click="rechargeHandler()">TOP UP</el-button>
-      <el-button v-if="layer1_account.address" @click="transferBalance()">TRANSFER</el-button>
+      <el-button v-if="layer1_account" @click="rechargeHandler()">TOP UP</el-button>
+      <el-button v-if="layer1_account" @click="transferBalance()">TRANSFER</el-button>
+      <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">WITHDRAW REWARD</el-button>
     </div>
 
   </div>
@@ -235,11 +241,8 @@ export default {
     this.$root.loading(false);
     
 
-    utils.register('refresh-current-account', async (key, param)=>{
-      if(param === 'account'){
-        await this.refreshAccount();
-      }
-        
+    utils.register('refresh-current-account__account', async (key, param)=>{
+      await this.refreshAccount();
     });
   },
 
@@ -362,8 +365,24 @@ export default {
     },
 
     clickRefreshBtn(){
-      utils.publish('refresh-current-account', 'account')
-      utils.publish('refresh-current-account', this.tab)
+      utils.publish('refresh-current-account__account')
+      utils.publish('refresh-current-account__'+this.tab)
+    },
+
+    async withdrawStakingReward(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$root.loading(true);
+      try{
+        const tx = api.tx.cml.withdrawStakingReward();
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+        await this.refreshAccount();
+        this.$message.success('success');
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
     }
   }
 

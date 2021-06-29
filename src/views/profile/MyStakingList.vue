@@ -91,10 +91,8 @@ export default {
       await this.refreshList();
     });
 
-    utils.register('refresh-current-account', async (key, param)=>{
-      if(param === 'MY STAKING'){
-        await this.refreshList();
-      }      
+    utils.register('refresh-current-account__MY STAKING', async (key, param)=>{
+      await this.refreshList();   
     });
   },
 
@@ -119,7 +117,7 @@ export default {
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 
-            utils.publish('refresh-current-account', 'account');
+            utils.publish('refresh-current-account__account');
             close();
           }catch(e){
             this.$root.showError(e);

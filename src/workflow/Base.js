@@ -110,15 +110,22 @@ export default class {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
     let tmp = await api.query.system.account(address);
-    console.log('balance =>', tmp.toJSON().data);
+    // console.log('balance =>', tmp.toJSON().data);
     tmp = tmp.data;
+
+    let reward = await api.query.cml.accountRewards(address);
+    reward = reward.toJSON();
     
     const free = parseInt(tmp.free, 10) / layer1_instance.asUnit();
     const lock = parseInt(tmp.reserved, 10) / layer1_instance.asUnit();
+    if(reward){
+      reward = reward / layer1_instance.asUnit();
+    }
 
     return {
       free: Math.floor(free*10000)/10000,
-      lock: Math.floor(lock*10000)/10000
+      lock: Math.floor(lock*10000)/10000,
+      reward: reward ? Math.floor(reward*10000)/10000 : null,
     };
   }
   
@@ -145,7 +152,7 @@ export default class {
   async getVouchers(address){
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
-window.api = api;
+
     const voucher_investor_A = await api.query.cml.investorVoucherStore(address, 'A');
     const voucher_investor_B = await api.query.cml.investorVoucherStore(address, 'B');
     const voucher_investor_C = await api.query.cml.investorVoucherStore(address, 'C');
@@ -194,6 +201,7 @@ window.api = api;
       address: layer1_account.address,
       ori_name: layer1_account.name,
       cml: cml_data,
+      reward: balance.reward,
       vouchers,
     });
 
@@ -216,7 +224,7 @@ window.api = api;
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
 
-      // cml.deforst_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
+      cml.deforst_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
       return {
         ...cml,
         ...cml.intrinsic,

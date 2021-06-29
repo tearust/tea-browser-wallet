@@ -121,7 +121,10 @@ const F = {
   },
 
 
-  register: Pubsub.subscribe,
+  register: (key, cb)=>{
+    Pubsub.unsubscribe(key);
+    Pubsub.subscribe(key, cb);
+  },
   publish: Pubsub.publish,
 
   async sleep(time){

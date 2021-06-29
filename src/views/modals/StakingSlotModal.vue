@@ -123,8 +123,8 @@ export default {
         await this.layer1_instance.sendTx(this.layer1_account.address, tx);
 
         this.close();
-        utils.publish('refresh-current-account', 'account');
-        utils.publish('refresh-current-account', 'MY STAKING');
+        utils.publish('refresh-current-account__account');
+        utils.publish('refresh-current-account__MY STAKING');
       }catch(e){
         this.$root.showError(e);
       }
