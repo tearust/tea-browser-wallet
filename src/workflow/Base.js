@@ -7,6 +7,7 @@ import request from '../request';
 
 import {_, forge} from 'tearust_utils';
 import {hexToString} from 'tearust_layer1';
+import { add } from 'lodash';
 
 
 let _layer1 = null;
@@ -122,10 +123,17 @@ export default class {
       reward = reward / layer1_instance.asUnit();
     }
 
+    let debt = await api.query.cml.genesisMinerCreditStore(address);
+    debt = debt.toJSON();
+    if(debt){
+      debt = debt / layer1_instance.asUnit();
+    }
+
     return {
       free: Math.floor(free*10000)/10000,
       lock: Math.floor(lock*10000)/10000,
       reward: reward ? Math.floor(reward*10000)/10000 : null,
+      debt: debt ? Math.floor(debt*10000)/10000 : null,
     };
   }
   
@@ -202,6 +210,7 @@ export default class {
       ori_name: layer1_account.name,
       cml: cml_data,
       reward: balance.reward,
+      debt: balance.debt,
       vouchers,
     });
 

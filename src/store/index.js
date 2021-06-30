@@ -28,6 +28,7 @@ const initState = ()=>{
       balance: null,
       cml: [],
       reward: null,
+      debt: null,
     },
 
     // address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
@@ -95,6 +96,7 @@ const store = new Vuex.Store({
         lock_balance: account.lock_balance,
         cml: account.cml || [],
         reward: account.reward,
+        debt: account.debt,
         ...account.vouchers || {},
       };
       

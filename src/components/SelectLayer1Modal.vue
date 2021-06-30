@@ -35,6 +35,7 @@ import PubSub from 'pubsub-js';
 import { mapGetters, mapState } from 'vuex';
 import SettingAccount from '../workflow/SettingAccount';
 import {_} from 'tearust_utils';
+import utils from '../tea/utils';
 export default {
   data(){
     return {
@@ -75,6 +76,7 @@ export default {
 
     closedHandler(){
       this.sa.refreshCurrentAccount();
+      utils.publish('refresh-current-account__MY STAKING');
     },
 
     layer1ChangeHandler(account){

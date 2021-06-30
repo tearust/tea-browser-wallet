@@ -22,6 +22,11 @@
         <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
       </div>
 
+      <div v-if="layer1_account && layer1_account.debt" class="x-item">
+        <b>STAKING DEBT</b>
+        <span>{{layer1_account.debt}}</span>
+      </div>
+
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
         <b>STAKING REWARD</b>
         <span>{{layer1_account.reward}}</span>
