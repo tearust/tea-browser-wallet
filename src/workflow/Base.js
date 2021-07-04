@@ -50,6 +50,7 @@ export default class {
       store.commit('set_chain', {
         current_block: header.number,
         current_block_hash: header.hash,
+        metadata: this.getLayer1Instance().getMetadata(),
       });
 
       // const blockInfo = await api.rpc.chain.getBlock(header.hash);

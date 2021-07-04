@@ -62,6 +62,7 @@
     <el-table-column
       prop="status"
       label="Status"
+      sortable
     />
 
     <el-table-column
@@ -131,6 +132,7 @@ export default {
       mm = mm.toJSON();
 
       mm.id = hexToString(mm.id);
+      mm.ip = hexToString(mm.ip);
       
       this.$store.commit('modal/open', {
         key: 'data_details',
