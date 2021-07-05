@@ -37,7 +37,7 @@
     <div class="x-right">
       <el-button @click="showSelectLayer1()">CHANGE</el-button>
       <el-button v-if="layer1_account" @click="rechargeHandler()">TOP UP</el-button>
-      <el-button v-if="layer1_account" @click="transferBalance()">TRANSFER</el-button>
+      <el-button v-if="layer1_account" @click="transferBalance()">SEND</el-button>
       <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">WITHDRAW REWARD</el-button>
     </div>
 
