@@ -42,7 +42,7 @@
 
     <el-table-column
       prop="buy_now_price"
-      label="Buy-Now price"
+      label="Buy-now price"
     >
       <template slot-scope="scope">
         {{scope.row.buy_now_price | formatBalance}}
