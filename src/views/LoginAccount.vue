@@ -6,11 +6,11 @@
 
     <div class="x-list">
       <div class="x-item">
-        <b>{{'name' | cardTitle}}</b>
+        <b>{{'Name' | cardTitle}}</b>
         <span>{{layer1_account ? layer1_account.name : ''}}</span>
       </div>
       <div class="x-item">
-        <b>{{'address' | cardTitle}}</b>
+        <b>{{'Address' | cardTitle}}</b>
         <span>
           <font class="js_need_copy">{{layer1_account ? layer1_account.address : ''}}</font>
           <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
@@ -20,11 +20,11 @@
 
       </div>
       <div class="x-item">
-        <b>{{'total balance' | cardTitle}}</b>
+        <b>{{'Total balance' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
       <div class="x-item">
-        <b>{{'locked balance' | cardTitle}}</b>
+        <b>{{'Locked balance' | cardTitle}}</b>
         <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
       </div>
 
@@ -42,8 +42,8 @@
 
     <div class="x-right">
       <!-- <el-button @click="showSelectLayer1()">CHANGE</el-button> -->
-      <el-button v-if="layer1_account" @click="rechargeHandler()">TOP UP</el-button>
-      <el-button v-if="layer1_account" @click="transferBalance()">SEND</el-button>
+      <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
+      <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
       <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">WITHDRAW REWARD</el-button>
     </div>
 
@@ -119,13 +119,13 @@
 
   <div style="position: relative; padding: 20px 0 40px;">
     <el-tabs tab-position="top" style="margin-top: 32px;" @tab-click="clickTab($event)">
-      <el-tab-pane label="MY CML" :lazy="true">
+      <el-tab-pane label="My Camellia" :lazy="true">
         <MyCmlList />
       </el-tab-pane>
-      <el-tab-pane label="MY STAKING" :lazy="true">
+      <el-tab-pane label="My staking on Camellia" :lazy="true">
         <MyStakingList />
       </el-tab-pane>
-      <el-tab-pane label="MY APPS" :lazy="true">
+      <el-tab-pane label="My investment on Apps" :lazy="true">
         <MyAppList />
       </el-tab-pane>
   
@@ -153,7 +153,7 @@
       </el-form-item>
 
       <el-form-item label="Type" prop="class">
-        <el-select v-model="dai_modal.form.class" style="width: 300px;" placeholder="Please Select Class">
+        <el-select v-model="dai_modal.form.class" style="width: 300px;" placeholder="Please select class">
           <el-option
             v-for="val in dai_modal.class_options"
             :key="val"
@@ -163,8 +163,8 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="Defrost Schedule" prop="defrost">
-        <el-select v-model="dai_modal.form.defrost" style="width: 300px;" placeholder="Please Select Defrost Schedule">
+      <el-form-item label="Defrost schedule" prop="defrost">
+        <el-select v-model="dai_modal.form.defrost" style="width: 300px;" placeholder="Please select defrost schedule">
           <el-option
             v-for="val in dai_modal.defrost_options"
             :key="val"

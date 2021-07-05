@@ -27,7 +27,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Auction Id"
+      label="Auction ID"
     >
       <template slot-scope="scope">
         <el-button
@@ -40,7 +40,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Cml Id"
+      label="Cml ID"
     >
       <template slot-scope="scope">
         {{scope.row.cmlId}}
@@ -64,7 +64,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Target User"
+      label="Target user"
     >
       <template slot-scope="scope">
         {{scope.row.target}}
@@ -81,7 +81,7 @@
     </el-table-column> -->
     <el-table-column
       prop="atBlock"
-      label="At Block"
+      label="At block"
       width="100"
     >
       <template slot-scope="scope">

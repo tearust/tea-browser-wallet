@@ -2,17 +2,17 @@
 <div class="tea-page">
 
   <span class="tea-info">
-    Next window block - {{next_window_block}}
+    Next trading window starts at block # {{next_window_block}}
   </span>
 
   <el-tabs tab-position="left" style="margin-top: 20px;" @tab-click="clickTab($event)">
-    <el-tab-pane label="Auction Store" :lazy="true">
+    <el-tab-pane label="Auction store" :lazy="true">
       <AuctionStore />
     </el-tab-pane>
-    <el-tab-pane label="My Auction" :lazy="true">
+    <el-tab-pane label="My auction" :lazy="true">
       <AccountAuction />
     </el-tab-pane>
-    <el-tab-pane label="My Bid" :lazy="true">
+    <el-tab-pane label="My bid" :lazy="true">
       <AccountBid />
     </el-tab-pane>
   </el-tabs>

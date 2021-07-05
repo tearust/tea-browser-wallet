@@ -22,7 +22,7 @@
 
     <el-table-column
       prop="lifespan"
-      label="Life Span"
+      label="Life span"
     />
     <el-table-column
       prop="machine_id"
@@ -47,14 +47,14 @@
 
     <el-table-column
       prop="defrost_schedule"
-      label="Deforst Schedule"
+      label="Deforst schedule"
       sortable
       width="150"
     />
 
     <el-table-column
       prop="deforst_day"
-      label="Deforst Day"
+      label="Deforst day"
       sortable
       width="120"
     />
@@ -66,7 +66,7 @@
     />
 
     <el-table-column
-      label="Staking Slot"
+      label="Staking slot"
       width="120">
       <template slot-scope="scope">
         <el-button

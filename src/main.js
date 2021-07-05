@@ -12,39 +12,39 @@ import './style.scss';
 
 import store from './store';
 import utils from './tea/utils';
-import {_} from 'tearust_utils';
+import { _ } from 'tearust_utils';
 
 import layer1_error_tips from './assets/error';
 
-Vue.use(ElementUI, {locale});
+Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
 
 
 
-router.beforeEach((to, from, next)=>{  
-  if(to.meta && to.meta.needLogin){
-    const {layer1_account} = store.getters;
-    if(!layer1_account){
-      next({path: '/login_account'})
+router.beforeEach((to, from, next) => {
+  if (to.meta && to.meta.needLogin) {
+    const { layer1_account } = store.getters;
+    if (!layer1_account) {
+      next({ path: '/login_account' })
     }
   }
 
   next();
 })
 
-Vue.filter('formatBalance', (value)=>{
-  if(!value) return '';
+Vue.filter('formatBalance', (value) => {
+  if (!value) return '';
   return utils.layer1.formatBalance(value);
 });
 
-Vue.filter('addTea', (value)=>{
+Vue.filter('addTea', (value) => {
   return `${value} TEA`;
 });
-Vue.filter('teaIcon', (value)=>{
-  return '<img src="/tea_logo/tea.png" style="width: 16px;height: 16px;position: relative;top: 2px;" /> '+value;
+Vue.filter('teaIcon', (value) => {
+  return '<img src="/tea_logo/tea.png" style="width: 16px;height: 16px;position: relative;top: 2px;" /> ' + value;
 });
-Vue.filter('cardTitle', (value)=>{
-  return value.split(' ').map((v)=>_.capitalize(v)).join(' ');
+Vue.filter('cardTitle', (value) => {
+  return value.split(' ').join(' ');
 });
 
 const C = {};
@@ -52,11 +52,11 @@ new Vue({
   router,
   store,
   methods: {
-    isDev(){
+    isDev() {
       return true;
     },
-    loading(f, text='Loading...'){
-      if(f){
+    loading(f, text = 'Loading...') {
+      if (f) {
         C._loading = Loading.service({
           lock: true,
           text: 'Loading...',
@@ -65,11 +65,11 @@ new Vue({
           background: 'rgba(0, 0, 0, 0.7)'
         });
       }
-      else{
+      else {
         C._loading && C._loading.close();
       }
     },
-    showError(e, title='Layer1 Error'){
+    showError(e, title = 'Layer1 Error') {
       const err = e.message || e.toString();
       const ex = _.get(layer1_error_tips, err, err);
       this.$alert(ex, title, {

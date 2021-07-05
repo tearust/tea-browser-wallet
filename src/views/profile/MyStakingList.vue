@@ -21,7 +21,7 @@
 
     <el-table-column
       prop="lifespan"
-      label="Life Span"
+      label="Life span"
     />
 
     <el-table-column
@@ -36,7 +36,7 @@
     />
 
     <el-table-column
-      label="Staking Slot"
+      label="Staking slot"
       width="120">
       <template slot-scope="scope">
         <el-button
@@ -51,13 +51,13 @@
 
     <el-table-column
       prop="index"
-      label="IAM AT"
+      label="Staking slot index"
     />
 
   </el-table>
 
   <div style="display:flex; justify-content: flex-end;">
-    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openInvolveStakingModal()">Involve Staking</el-button>
+    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openInvolveStakingModal()">Invest to staking</el-button>
   </div>
 
 </div>
@@ -104,7 +104,7 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
-          title: 'Involve Staking',
+          title: 'Staking invest',
           pallet: 'cml',
           tx: 'startStaking',
           text: 'If no staking cml, means use 1000 TEA to staking.',

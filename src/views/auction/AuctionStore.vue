@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>Auction List</h4>
+  <h4>Auction list</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
 
   <el-table 
@@ -12,11 +12,11 @@
   >
     <el-table-column
       prop="id"
-      label="Auction Id"
+      label="Auction ID"
     />
     <el-table-column
       prop="cml_id"
-      label="CML Id"
+      label="CML ID"
     >
       <template slot-scope="scope">
         <el-button
@@ -33,7 +33,7 @@
     /> -->
     <el-table-column
       prop="starting_price"
-      label="Starting Price"
+      label="Starting price"
     >
       <template slot-scope="scope">
         {{scope.row.starting_price | formatBalance}}
@@ -42,7 +42,7 @@
 
     <el-table-column
       prop="buy_now_price"
-      label="Buy Now Price"
+      label="Buy-Now price"
     >
       <template slot-scope="scope">
         {{scope.row.buy_now_price | formatBalance}}
@@ -51,7 +51,7 @@
 
     <el-table-column
       prop="bid_price"
-      label="Bid Price"
+      label="Bid price"
     >
       <template slot-scope="scope">
         {{scope.row.bid_price | formatBalance}}

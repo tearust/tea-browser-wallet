@@ -2,7 +2,7 @@
 <div class="tea-page">
   <h4>STORAGE</h4>
   <div class="t-box">
-    <el-button size="small" type="primary" @click="startMining">ACTIVE CML FOR MINING</el-button>
+    <el-button size="small" type="primary" @click="startMining">Plant for mining</el-button>
     <!-- <el-button size="small" type="primary" @click="queryMiner()">QUERY MINER</el-button>
 
     <el-button size="small" type="primary" @click="queryEndBlockAuction()">QUERY ENDBLOCK AUCTION</el-button>
