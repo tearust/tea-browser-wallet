@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Transfer Balance"
+    :title="'Send' | addTea"
     :visible="visible"
     width="70%"
     :close-on-click-modal="false"
@@ -9,18 +9,18 @@
     @close="close()"
   >
 
-    <el-form :model="form" label-width="120px">
-      <el-form-item label="Target Address">
+    <el-form :model="form" label-width="150px">
+      <el-form-item label="Receiver's address">
         <el-input v-model="form.address"></el-input>
       </el-form-item>
-      <el-form-item label="Amount">
+      <el-form-item label="TEA amount to send">
         <el-input v-model="form.amount" ></el-input>
       </el-form-item>
     </el-form>
 
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="close()">Close</el-button>
-      <el-button size="small" type="primary" @click="confrim()">Confirm</el-button>
+      <el-button size="small" @click="close()">Cancel</el-button>
+      <el-button size="small" type="primary" @click="confrim()">Send</el-button>
     </span>
 
   </el-dialog>

@@ -32,7 +32,11 @@ router.beforeEach((to, from, next)=>{
 Vue.filter('formatBalance', (value)=>{
   if(!value) return '';
   return utils.layer1.formatBalance(value);
-})
+});
+
+Vue.filter('addTea', (value)=>{
+  return `${value} TEA`;
+});
 
 const C = {};
 new Vue({
