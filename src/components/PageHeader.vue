@@ -4,12 +4,11 @@
 <el-menu active-text-color="#35a696" :default-active="activeIndex" class="p-header" @select="handleSelect" mode="horizontal">
   <a href="javascript:void(0)" onClick="location.reload()" style="float:left;">
     <el-image
-      style="width: 60px; height: 60px;"
-      src="http://gluonwallet.com/img/logo.png"
+      src="/tea_logo/Tea Project - full-logo-black.png"
       fit="fit">
     </el-image>
     
-    <b class="lg">TEA WALLET {{chain.current_block_hash ? '- '+chain.current_block : ''}}</b>
+    <b class="lg">{{chain.current_block_hash ? chain.current_block : ''}}</b>
   </a>
   
 
@@ -176,7 +175,7 @@ export default {
 }
 
 .p-header{
-  padding: 10px 0 0 0;
+  padding: 0 0 10px;
   width: 1080px;
   margin: 0 auto !important;
   .lg{
@@ -185,8 +184,17 @@ export default {
     position: relative;
     vertical-align: top;
     top: 20px;
-    left: 10px;
+    left: 90px;
   }
+  .el-image{
+    width: 60px; 
+    height: 60px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: -10px;
+  }
+  
 }
 .el-menu--horizontal > .el-menu-item{
   float: right !important;
