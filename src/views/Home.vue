@@ -1,6 +1,15 @@
 <template>
 <div class="tea-page">
   <h1>TODO</h1>
+  <p>
+  This welcome page will be used to show orientation informaiton to first time user. Help them to get familiar to this new tool</p>
+  <ul>
+    <li>How to install polkadot browser extension</li>
+    <li>The basic concept of plant and staking</li>
+    <li>Links to help, documents and teaproject.org home page</li>
+    <li>Links to discord, telegram, reddit, twitter</li>
+  </ul>
+  <input type="checkbox" checked id="showagain"><label for="showagain">Show me next time?</label>
   <!-- <div class="tea-card" style="margin-bottom: 12px;" v-for="(address, i) in layer1_asset.dot" :key="i">
     <i class="x-icon el-icon-grape"></i>
     <div class="x-list">
