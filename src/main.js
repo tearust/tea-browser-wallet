@@ -5,6 +5,7 @@ import './elementui-style/index.css';
 import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
 import { Loading } from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en';
 
 import router from './router';
 import './style.scss';
@@ -12,7 +13,7 @@ import './style.scss';
 import store from './store';
 import utils from './tea/utils';
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {locale});
 Vue.config.productionTip = false;
 
 

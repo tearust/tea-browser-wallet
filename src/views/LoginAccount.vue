@@ -18,7 +18,7 @@
         <span>{{layer1_account ? layer1_account.balance : ''}}</span>
       </div>
       <div class="x-item">
-        <b>LOCK BALANCE</b>
+        <b>LOCKED BALANCE</b>
         <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
       </div>
 

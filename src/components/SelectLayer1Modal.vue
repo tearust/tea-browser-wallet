@@ -1,7 +1,7 @@
 <template>
 
 <el-dialog
-  title="LAYER1 ACCOUNT"
+  title=""
   :visible.sync="visible"
   width="900"
   custom-class="tea-modal"
@@ -9,9 +9,9 @@
   @closed="closedHandler"
   :before-close="handleClose">
 
-  <h6>Please Select Layer1 Account.</h6>
+  <h6>Please select account</h6>
 
-  <div class="center" v-if="!loading">
+  <div style="text-align:center;" v-if="!loading">
 
     <el-select style="width: 400px;" :value="layer1_account ? layer1_account.address : null" @change="layer1ChangeHandler($event)" placeholder="Please select account" no-data-text="Please register account with polkadot extension.">
       <el-option
@@ -22,7 +22,13 @@
       </el-option>
     </el-select>
 
+    <p style="width: 400px; text-align:right; margin: 5px auto 0;">
+      <el-link href="https://teaproject.org/#/doc_list/%2FFAQ%2Fhow_to_install_polkadot_extension.md" target="_blank">How to install Polkadot browser extension?</el-link>
+    </p>
+    
+
   </div>
+  
 
   <span slot="footer" class="dialog-footer">
     <el-button @click="visible = false">Close</el-button>
