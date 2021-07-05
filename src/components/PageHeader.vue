@@ -14,16 +14,31 @@
   
 
   
-  <el-menu-item style="margin-left: 50px;" index="/login_account">{{layer1_account.name || 'N/A'}}</el-menu-item>
+  <!-- <el-menu-item style="margin-left: 50px;" index="/login_account">{{layer1_account.name || 'N/A'}}</el-menu-item> -->
+  <div style="margin-left: 50px;" class="el-menu-item">
+    <el-dropdown trigger="click" @command="handleCommand">
+      <el-button size="small" type="primary" round style="font-size: 14px; ">
+        {{layer1_account.name || 'N/A'}}
+        <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
+      </el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-for="(item, i) of all_account" :key="i" :command="item">
+          <span v-if="layer1_account && layer1_account.address!==item.address">{{item.ori_name}}</span>
+        </el-dropdown-item>
+        
+      </el-dropdown-menu>
+    </el-dropdown>
+  </div>
 
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
 
+  <el-menu-item index="/login_account">My Asset</el-menu-item>
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
-  <el-menu-item index="/auction_store">{{'Auction'}}</el-menu-item>
+  <el-menu-item index="/auction_store">{{'Market Place'}}</el-menu-item>
 
   <el-menu-item index="/lucky_draw">{{'LuckyBox'}}</el-menu-item>
   
-  <el-menu-item index="/">{{'Home'}}</el-menu-item>
+  <el-menu-item index="/">{{'Welcome'}}</el-menu-item>
 
   <el-menu-item v-if="$root.isDev()" index="/test">{{'Test'}}</el-menu-item>
     
@@ -41,11 +56,14 @@
 import {mapGetters, mapState} from 'vuex';
 import Base from '../workflow/Base';
 import _ from 'lodash';
+import utils from '../tea/utils';
 export default {
   data() {
     return {
       activeIndex: null,
       connected: 0,
+
+      all_account: [],
     };
   },
   watch: {
@@ -85,6 +103,33 @@ export default {
       }
 
     },
+
+    async initAllPluginAccount(wf){
+      const layer1_instance = wf.getLayer1Instance();
+      let tmp = await wf.getAllLayer1Account();
+      tmp = _.map(tmp, (item)=>{
+        (async ()=>{
+          // item.balance = await layer1_instance.getAccountBalance(item.address);
+          item.ori_name = _.clone(item.name);
+          item.name = item.name + '  -  ' + item.balance;
+        })();
+        return item;
+      });
+
+      this.all_account = tmp;
+    },
+
+    async handleCommand(item){
+
+      this.$store.commit('set_account', item);
+      if(this.wf){
+        this.wf.refreshCurrentAccount();
+        utils.publish('refresh-current-account__MY STAKING');
+
+        utils.publish('change-account', item);
+      }
+
+    }
     
   },
   mounted(){
@@ -97,6 +142,9 @@ export default {
         const connected = wf.layer1.isConnected();
         if(connected !== this.connected){
           this.connected = connected;
+
+          this.wf = wf;
+          this.initAllPluginAccount(wf);
         }
         
         if(this.connected > 0){

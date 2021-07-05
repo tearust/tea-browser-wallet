@@ -28,6 +28,17 @@ export default class {
     // this.gluon = this.layer1.gluon;
   }
 
+  async getAllLayer1Account(){
+    const layer1_instance = this.getLayer1Instance();
+    if(layer1_instance && layer1_instance.extension){
+      const all_account = await layer1_instance.extension.getAllAccounts();
+
+      return all_account;
+    }
+    
+    return [];
+  }
+
   async initLayer1() {
     if (!_layer1) {
       try {

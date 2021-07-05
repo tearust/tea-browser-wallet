@@ -22,16 +22,21 @@ Vue.use(Router);
 let routers = [
   {
     path: '/',
+    redirect: '/login_account',
+  },
+  {
+    path: '/home',
     name: 'home',
     component: Home,
-    meta: {
-      needLogin: true
-    }
+    
   },
   {
     path: '/login_account',
     name: 'login_account',
     component: LoginAccount,
+    meta: {
+      needLogin: true
+    }
   },
   
   {
