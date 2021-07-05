@@ -32,9 +32,9 @@
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
 
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
-  <el-menu-item index="/auction_store">{{'Market place'}}</el-menu-item>
+  <el-menu-item index="/auction_store">{{'Marketplace'}}</el-menu-item>
 
-  <el-menu-item index="/lucky_draw">{{'Seeds pool'}}</el-menu-item>
+  <el-menu-item index="/lucky_draw">{{'Seed pool'}}</el-menu-item>
   <el-menu-item index="/login_account">My assets</el-menu-item>
   <el-menu-item index="/home">{{'Welcome'}}</el-menu-item>
 
