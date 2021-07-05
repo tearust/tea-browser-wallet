@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>My Bid List</h4>
+  <h4>My bid list</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <el-table 
     :data="auction.my_bid_list"
@@ -30,18 +30,18 @@
 
     <el-table-column
       prop="price"
-      label="My Price"
+      label="My price"
     >
       <template slot-scope="scope">{{scope.row.price | formatBalance}}</template>
     </el-table-column>
     
     <el-table-column
       prop="created_at"
-      label="Created At"
+      label="Created at"
     />
     <el-table-column
       prop="updated_at"
-      label="Updated At"
+      label="Updated at"
     />
     
     <el-table-column

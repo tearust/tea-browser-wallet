@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>My Auction</h4>
+  <h4>My auction</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <el-table 
     :data="auction.my_auction_list"
@@ -23,15 +23,15 @@
     /> -->
     <el-table-column
       prop="starting_price"
-      label="Starting Price"
+      label="Starting price"
     />
     <el-table-column
       prop="buy_now_price"
-      label="Buy Now Price"
+      label="Buy-now price"
     />
     <el-table-column
       prop="bid_price"
-      label="Bid Price"
+      label="Bid price"
     />
     <el-table-column
       prop="status"

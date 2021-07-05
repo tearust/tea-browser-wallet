@@ -7,8 +7,8 @@
   </el-tabs>
 
   <div class="tea-page" style="margin-left: 130px;">
-    <h4>Genesis Camllia seeds in pool</h4>
-    <p>You can find all remaining genesis camellia seeds here. You can lucky draw the seeds using your coupons</p>  
+    <h4>Genesis Camellia seeds in pool</h4>
+    <p>The followings are all remaining genesis Camellia seeds. You can draw a seed using your coupon.</p>  
 
   <el-table 
     :data="cml_list || []"

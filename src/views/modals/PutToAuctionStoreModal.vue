@@ -13,10 +13,10 @@
       <el-form-item label="Cml Id">
         <el-input v-model="form.cml_id"></el-input>
       </el-form-item>
-      <el-form-item label="Starting Price">
+      <el-form-item label="Starting price">
         <el-input-number v-model="form.starting_price" :min="0" :max="50000"></el-input-number>
       </el-form-item>
-      <el-form-item label="Buy Now Price">
+      <el-form-item label=" price">
         <el-input-number v-model="form.buy_now_price" :min="0" :max="100000"></el-input-number>
       </el-form-item>
     </el-form>
