@@ -62,10 +62,10 @@
 
     <div class="x-list" style="width: 810px;">
       <div class="x-item">
-        <b>{{'COUPON - ( INVESTOR / TEAM )' | cardTitle}}</b>
+        <b>{{'Coupon - ( Investors / Team )' | cardTitle}}</b>
       </div>
       <div class="x-item">
-        <b>{{'type - A' | cardTitle}}</b>
+        <b>{{'Type - A' | cardTitle}}</b>
         <span>
           {{layer1_account.voucher_investor_A ? layer1_account.voucher_investor_A.amount : 0}}
           /
@@ -73,7 +73,7 @@
         </span>
       </div>
       <div class="x-item">
-        <b>{{'type - B' | cardTitle}}</b>
+        <b>{{'Type - B' | cardTitle}}</b>
         <span>
           {{layer1_account.voucher_investor_B ? layer1_account.voucher_investor_B.amount : 0}}
           /
@@ -81,7 +81,7 @@
         </span>
       </div>
       <div class="x-item">
-        <b>{{'type - C' | cardTitle}}</b>
+        <b>{{'Type - C' | cardTitle}}</b>
         <span>
           {{layer1_account.voucher_investor_C ? layer1_account.voucher_investor_C.amount : 0}}
           /
@@ -99,7 +99,7 @@
           (!layer1_account.voucher_team_C || layer1_account.voucher_team_C.amount<1) 
         "
         style="padding: 0 12px;" @click="lotteryHandler(0)"
-      >LUCKDRAW - TEAM</el-button>
+      >Seed draw- Team</el-button>
       <el-button 
         :disabled="
           (!layer1_account.voucher_investor_A || layer1_account.voucher_investor_A.amount<1) &&
@@ -107,8 +107,8 @@
           (!layer1_account.voucher_investor_C || layer1_account.voucher_investor_C.amount<1) 
         "
         style="padding: 0 12px;" @click="lotteryHandler(1)"
-      >LUCKDRAW - INVESTOR</el-button>
-      <el-button @click="dai_modal.visible=true">TRANSFER</el-button>
+      >Seed draw - Investor</el-button>
+      <el-button @click="dai_modal.visible=true">Transfer</el-button>
     </div>
 
   </div>
