@@ -148,11 +148,11 @@
       Transfer Voucher to another account.
     </p> -->
     <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="150px">
-      <el-form-item label="Target Address" prop="target_address">
+      <el-form-item label="Receiver's address" prop="target_address">
         <el-input v-model="dai_modal.form.target_address"></el-input>
       </el-form-item>
 
-      <el-form-item label="Class Type" prop="class">
+      <el-form-item label="Type" prop="class">
         <el-select v-model="dai_modal.form.class" style="width: 300px;" placeholder="Please Select Class">
           <el-option
             v-for="val in dai_modal.class_options"
@@ -220,7 +220,7 @@ export default {
         },
         rules: {
           target_address: [
-            { required: true },
+            { required: true, message: 'Receiver\'s address is required.' },
           ],
           amount: [],
           class: [
@@ -326,7 +326,7 @@ export default {
       const api = layer1_instance.getApi();
 
       this.$store.commit('modal/open', {
-        key: 'transfer_balance', 
+        key: 'transfer_balance',
         param: {},
         cb: async (form, closeFn)=>{
           this.$root.loading(true);
@@ -347,9 +347,9 @@ export default {
 
     async transferVoucher(){
       const ref = this.$refs['dai_modal'];
+      await ref.validate();
       this.$root.loading(true);
       try{
-        await ref.validate();
         const {target_address, amount, defrost} = this.dai_modal.form;
 
         const type = this.dai_modal.form.class;

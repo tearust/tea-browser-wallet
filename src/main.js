@@ -14,6 +14,8 @@ import store from './store';
 import utils from './tea/utils';
 import {_} from 'tearust_utils';
 
+import layer1_error_tips from './assets/error';
+
 Vue.use(ElementUI, {locale});
 Vue.config.productionTip = false;
 
@@ -69,7 +71,8 @@ new Vue({
     },
     showError(e, title='Layer1 Error'){
       const err = e.message || e.toString();
-      this.$alert(err, title, {
+      const ex = _.get(layer1_error_tips, err, err);
+      this.$alert(ex, title, {
         type: 'error'
       });
     },

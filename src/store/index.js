@@ -117,17 +117,17 @@ const store = new Vuex.Store({
       state.auction.my_bid_list = [];
     },
 
-    set_bind_mobile(state, opts){
-      if(!opts){
-        state.bind_mobile = null;
-      }
-      else{
-        state.bind_mobile = {
-          address: opts.address,
-          uuid: opts.uuid,
-        };
-      }
-    },
+    // set_bind_mobile(state, opts){
+    //   if(!opts){
+    //     state.bind_mobile = null;
+    //   }
+    //   else{
+    //     state.bind_mobile = {
+    //       address: opts.address,
+    //       uuid: opts.uuid,
+    //     };
+    //   }
+    // },
 
 
     // set_meta(state, opts){
