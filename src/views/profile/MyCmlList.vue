@@ -53,8 +53,8 @@
     />
 
     <el-table-column
-      prop="deforst_day"
-      label="Deforst day"
+      prop="defrost_day"
+      label="Defrost day"
       sortable
       width="120"
     />
