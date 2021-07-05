@@ -38,7 +38,7 @@
 
   <el-menu-item index="/lucky_draw">{{'LuckyBox'}}</el-menu-item>
   
-  <el-menu-item index="/">{{'Welcome'}}</el-menu-item>
+  <el-menu-item index="/home">{{'Welcome'}}</el-menu-item>
 
   <el-menu-item v-if="$root.isDev()" index="/test">{{'Test'}}</el-menu-item>
     
