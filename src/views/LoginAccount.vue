@@ -6,11 +6,11 @@
 
     <div class="x-list">
       <div class="x-item">
-        <b>NAME</b>
+        <b>{{'name' | cardTitle}}</b>
         <span>{{layer1_account ? layer1_account.name : ''}}</span>
       </div>
       <div class="x-item">
-        <b>ADDRESS</b>
+        <b>{{'address' | cardTitle}}</b>
         <span>
           <font class="js_need_copy">{{layer1_account ? layer1_account.address : ''}}</font>
           <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
@@ -20,21 +20,21 @@
 
       </div>
       <div class="x-item">
-        <b>TOTAL BALANCE</b>
+        <b>{{'total balance' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
       <div class="x-item">
-        <b>LOCKED BALANCE</b>
+        <b>{{'locked balance' | cardTitle}}</b>
         <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
       </div>
 
       <div v-if="layer1_account && layer1_account.debt" class="x-item">
-        <b>STAKING DEBT</b>
+        <b>{{'staking debt' | cardTitle}}</b>
         <span>{{layer1_account.debt}}</span>
       </div>
 
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
-        <b>STAKING REWARD</b>
+        <b>{{'staking reward' | cardTitle}}</b>
         <span>{{layer1_account.reward}}</span>
       </div>
 
@@ -62,10 +62,10 @@
 
     <div class="x-list" style="width: 810px;">
       <div class="x-item">
-        <b>COUPON - ( INVESTOR / TEAM )</b>
+        <b>{{'COUPON - ( INVESTOR / TEAM )' | cardTitle}}</b>
       </div>
       <div class="x-item">
-        <b>TYPE - A</b>
+        <b>{{'type - A' | cardTitle}}</b>
         <span>
           {{layer1_account.voucher_investor_A ? layer1_account.voucher_investor_A.amount : 0}}
           /
@@ -73,7 +73,7 @@
         </span>
       </div>
       <div class="x-item">
-        <b>TYPE - B</b>
+        <b>{{'type - B' | cardTitle}}</b>
         <span>
           {{layer1_account.voucher_investor_B ? layer1_account.voucher_investor_B.amount : 0}}
           /
@@ -81,7 +81,7 @@
         </span>
       </div>
       <div class="x-item">
-        <b>TYPE - C</b>
+        <b>{{'type - C' | cardTitle}}</b>
         <span>
           {{layer1_account.voucher_investor_C ? layer1_account.voucher_investor_C.amount : 0}}
           /

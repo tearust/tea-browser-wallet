@@ -12,6 +12,7 @@ import './style.scss';
 
 import store from './store';
 import utils from './tea/utils';
+import {_} from 'tearust_utils';
 
 Vue.use(ElementUI, {locale});
 Vue.config.productionTip = false;
@@ -39,6 +40,9 @@ Vue.filter('addTea', (value)=>{
 });
 Vue.filter('teaIcon', (value)=>{
   return '<img src="/tea_logo/tea.png" style="width: 16px;height: 16px;position: relative;top: 2px;" /> '+value;
+});
+Vue.filter('cardTitle', (value)=>{
+  return value.split(' ').map((v)=>_.capitalize(v)).join(' ');
 });
 
 const C = {};
