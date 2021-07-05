@@ -1,5 +1,6 @@
 $mainColor: #35a696;
 
+
 html, body{
   margin: 0;
   padding: 0;
@@ -24,6 +25,11 @@ a, a:hover, a:focus, button:focus {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.tea-icon-btn{
+  cursor: pointer;
+  display: inline-block;
 }
 
 .mb{

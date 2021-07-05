@@ -11,7 +11,13 @@
       </div>
       <div class="x-item">
         <b>ADDRESS</b>
-        <span>{{layer1_account ? layer1_account.address : ''}}</span>
+        <span>
+          <font class="js_need_copy">{{layer1_account ? layer1_account.address : ''}}</font>
+          <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
+          <span @click="showAddressQrcode(layer1_account.address)" style="margin-left: 5px;" title="qrcode" class="iconfont tea-icon-btn icon-qr_code"></span>
+          
+        </span>
+
       </div>
       <div class="x-item">
         <b>TOTAL BALANCE</b>
@@ -192,6 +198,8 @@ import { mapGetters, mapState } from 'vuex';
 import MyCmlList from './profile/MyCmlList';
 import MyStakingList from './profile/MyStakingList';
 import MyAppList from './profile/MyAppList';
+import PubSub from 'pubsub-js';
+import ClipboardJS from 'clipboard';
 export default {
   components: {
     MyCmlList,
@@ -243,6 +251,8 @@ export default {
     await this.wf.init();
 
     await this.refreshAccount();
+
+    this.initCopyEvent();
     this.$root.loading(false);
     
 
@@ -388,6 +398,25 @@ export default {
         this.$root.showError(e);
       }
       this.$root.loading(false);
+    },
+
+    showAddressQrcode(address){
+      PubSub.publish('tea-qrcode-modal', {
+        info: null,
+        visible: true,
+        text: address,
+      });
+    },
+
+    initCopyEvent(){
+      const clipboard = new ClipboardJS('.js_copy');
+      clipboard.on('success', (e)=>{
+        e.clearSelection();
+        this.$message.success('copy success.');
+      });
+
+      clipboard.on('error', (e)=>{
+      });
     }
   }
 

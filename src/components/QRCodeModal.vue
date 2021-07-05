@@ -10,11 +10,11 @@
   @close="closedHandler"
   :before-close="handleClose">
 
-  <h6>Please scan the QR Code with mobile app.</h6>
+  <h6 v-if="params && params.info">{{params.info}}</h6>
 
   <div id="js_qr_code" class="center"></div>
 
-  <p>{{params ? params.text : ''}}</p>
+  <!-- <p>{{params ? params.text : ''}}</p> -->
   <span slot="footer" class="dialog-footer">
     <el-button @click="visible = false">Close</el-button>
   </span>
