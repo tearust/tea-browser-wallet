@@ -56,6 +56,9 @@ export default class {
 
   async initEvent(){
     const api = this.getLayer1Instance().getApi();
+    if(utils.get_env('env') !== 'prod'){
+      window.api = api;
+    }
     api.rpc.chain.subscribeNewHeads(async (header) => {
       // console.log(`chain is at #${header.number} has hash ${header.hash}`);
       store.commit('set_chain', {
@@ -63,7 +66,6 @@ export default class {
         current_block_hash: header.hash,
         metadata: this.getLayer1Instance().getMetadata(),
       });
-
       // const blockInfo = await api.rpc.chain.getBlock(header.hash);
 
       // const tmp = blockInfo.block.extrinsics;

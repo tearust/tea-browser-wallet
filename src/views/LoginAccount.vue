@@ -112,6 +112,7 @@
     </div>
 
   </div>
+  <span class="tea-card-tip">Expired blockheight 100</span>
 
   </div>
 
