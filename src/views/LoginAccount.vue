@@ -21,7 +21,7 @@
       </div>
       <div class="x-item">
         <b>TOTAL BALANCE</b>
-        <span>{{layer1_account ? layer1_account.balance : ''}}</span>
+        <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
       <div class="x-item">
         <b>LOCKED BALANCE</b>

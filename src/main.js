@@ -37,6 +37,9 @@ Vue.filter('formatBalance', (value)=>{
 Vue.filter('addTea', (value)=>{
   return `${value} TEA`;
 });
+Vue.filter('teaIcon', (value)=>{
+  return '<img src="/tea_logo/tea.png" style="width: 16px;height: 16px;position: relative;top: 2px;" /> '+value;
+});
 
 const C = {};
 new Vue({
