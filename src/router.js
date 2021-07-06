@@ -22,7 +22,7 @@ Vue.use(Router);
 let routers = [
   {
     path: '/',
-    redirect: '/login_account',
+    redirect: '/home',
   },
   {
     path: '/home',
