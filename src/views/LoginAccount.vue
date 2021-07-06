@@ -167,44 +167,6 @@ export default {
     },
 
 
-    async lotteryHandler(n){
-      let defrost = utils.consts.DefrostScheduleType.Investor;
-      if(n === 0){
-        defrost = utils.consts.DefrostScheduleType.Team;
-      }
-
-      const msg = `
-        Lottery will transfer all your ${defrost} Coupons to Camellia Seeds.
-        <br />
-        Please confirm your operation.
-      `
-      const x = await this.$confirm(msg, {
-        title: 'Lottery',
-        dangerouslyUseHTMLString: true,
-      }).catch(()=>{});
-      if(!x) return false;
-
-
-
-      this.$root.loading(true);
-      try{
-        const layer1_instance = this.wf.getLayer1Instance();
-        const api = layer1_instance.getApi();
-
-        const tx = api.tx.cml.drawCmlsFromVoucher(defrost);
-
-        await layer1_instance.sendTx(this.layer1_account.address, tx);
-        await this.refreshAccount();
-
-        this.$message.success('success');
-
-      }catch(e){
-        this.$root.showError(e);
-      }
-      this.$root.loading(false);
-      
-    },
-
     async transferBalance(){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();

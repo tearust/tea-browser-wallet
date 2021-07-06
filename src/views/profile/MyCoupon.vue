@@ -1,63 +1,64 @@
 <template>
 <div class="tea-page">
 
-  <div class="tea-card">
-    <i class="x-icon el-icon-user"></i>
+  <span class="tea-table-tip">Expired blockheight 100</span>
+  <el-table 
+    :data="list"
+    stripe
+    size="small"
+    border
+  >
+    <el-table-column
+      prop="type"
+      width="150"
+      label="Type"
+      sortable
+    />
+    <el-table-column
+      prop="schedule"
+      label="Defrost Schedule"
+      sortable
+    />
 
-    <div class="x-list" style="width: 810px;">
-      <div class="x-item">
-        <b>{{'Coupon - ( Investors / Team )' | cardTitle}}</b>
-      </div>
-      <div class="x-item">
-        <b>{{'Type - A' | cardTitle}}</b>
-        <span>
-          {{layer1_account.voucher_investor_A ? layer1_account.voucher_investor_A.amount : 0}}
-          /
-          {{layer1_account.voucher_team_A ? layer1_account.voucher_team_A.amount : 0}}
-        </span>
-      </div>
-      <div class="x-item">
-        <b>{{'Type - B' | cardTitle}}</b>
-        <span>
-          {{layer1_account.voucher_investor_B ? layer1_account.voucher_investor_B.amount : 0}}
-          /
-          {{layer1_account.voucher_team_B ? layer1_account.voucher_team_B.amount : 0}}
-        </span>
-      </div>
-      <div class="x-item">
-        <b>{{'Type - C' | cardTitle}}</b>
-        <span>
-          {{layer1_account.voucher_investor_C ? layer1_account.voucher_investor_C.amount : 0}}
-          /
-          {{layer1_account.voucher_team_C ? layer1_account.voucher_team_C.amount : 0}}
-        </span>
-      </div>
+    <el-table-column
+      prop="amount"
+      label="Amount"
+      width="150"
+    />
+  
+  </el-table>
 
-    </div>
+  <div style="display:flex; justify-content: flex-end; margin-top: 40px;">
+    <el-button style="padding-left: 15px; padding-right: 15px;" 
+      @click="dai_modal.visible=true"
+      plain
+      type="primary">
+      Transfer
+    </el-button>
 
-    <div class="x-right">
-      <el-button 
-        :disabled="
-          (!layer1_account.voucher_team_A || layer1_account.voucher_team_A.amount<1) &&
-          (!layer1_account.voucher_team_B || layer1_account.voucher_team_B.amount<1) &&
-          (!layer1_account.voucher_team_C || layer1_account.voucher_team_C.amount<1) 
-        "
-        style="padding: 0 12px;" @click="lotteryHandler(0)"
-      >Seed draw- Team</el-button>
-      <el-button 
-        :disabled="
-          (!layer1_account.voucher_investor_A || layer1_account.voucher_investor_A.amount<1) &&
-          (!layer1_account.voucher_investor_B || layer1_account.voucher_investor_B.amount<1) &&
-          (!layer1_account.voucher_investor_C || layer1_account.voucher_investor_C.amount<1) 
-        "
-        style="padding: 0 12px;" @click="lotteryHandler(1)"
-      >Seed draw - Investor</el-button>
-      <el-button @click="dai_modal.visible=true">Transfer</el-button>
-    </div>
+    <el-button style="padding-left: 15px; padding-right: 15px;" 
+      @click="lotteryHandler(0)"
+      :disabled="
+        (!layer1_account.voucher_team_A || layer1_account.voucher_team_A.amount<1) &&
+        (!layer1_account.voucher_team_B || layer1_account.voucher_team_B.amount<1) &&
+        (!layer1_account.voucher_team_C || layer1_account.voucher_team_C.amount<1) 
+      "
+      type="primary">
+      Seed draw - Team
+    </el-button>
+
+    <el-button style="padding-left: 15px; padding-right: 15px;" 
+      @click="lotteryHandler(1)"
+      :disabled="
+        (!layer1_account.voucher_investor_A || layer1_account.voucher_investor_A.amount<1) &&
+        (!layer1_account.voucher_investor_B || layer1_account.voucher_investor_B.amount<1) &&
+        (!layer1_account.voucher_investor_C || layer1_account.voucher_investor_C.amount<1) 
+      "
+      type="primary">
+      Seed draw - Investor
+    </el-button>
 
   </div>
-  <span class="tea-card-tip">Expired blockheight 100</span>
-
 
  <el-dialog
     title="Transfer Coupons"
@@ -66,7 +67,6 @@
     :close-on-click-modal="false"
     custom-class="tea-modal"
   >
-
 
     <el-form :model="dai_modal.form" :rules="dai_modal.rules" ref="dai_modal" label-width="150px">
       <el-form-item label="Receiver's address" prop="target_address">
@@ -120,6 +120,8 @@ import {hexToString} from 'tearust_layer1';
 export default {
   data(){
     return {
+      has_team: false,
+      has_investor: false,
       dai_modal: {
         visible: false,
         form: {
@@ -150,6 +152,30 @@ export default {
     ...mapGetters([
       'layer1_account'
     ]),
+    list: (p)=>{
+      if(!p.layer1_account) return [];
+      const layer1_account = p.layer1_account;
+      const list = [];
+      const tmp = [
+        ['voucher_investor_A', 'Investor', 'A'],
+        ['voucher_investor_B', 'Investor', 'B'],
+        ['voucher_investor_C', 'Investor', 'C'],
+        ['voucher_team_A', 'Team', 'A'],
+        ['voucher_team_B', 'Team', 'B'],
+        ['voucher_team_C', 'Team', 'C'],
+      ]
+      _.each(tmp, (item)=>{
+        const key = item[0];
+        if(layer1_account[key] && layer1_account[key].amount>0){
+          list.push({
+            amount: layer1_account[key].amount,
+            type: item[2],
+            schedule: item[1],
+          })
+        }
+      });
+      return list;
+    }
   },
   
   async mounted(){
@@ -163,7 +189,7 @@ export default {
   methods: {
 
     async refreshAccount(){
-      
+      utils.publish('refresh-current-account__account', {});
     },
     
     async transferVoucher(){
@@ -188,6 +214,42 @@ export default {
         this.$message.success('success');
         ref.resetFields();
         this.dai_modal.visible = false;
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
+      
+    },
+
+    async lotteryHandler(n){
+      let defrost = utils.consts.DefrostScheduleType.Investor;
+      if(n === 0){
+        defrost = utils.consts.DefrostScheduleType.Team;
+      }
+
+      const msg = `
+        Lottery will transfer all your ${defrost} Coupons to Camellia Seeds.
+        <br />
+        Please confirm your operation.
+      `
+      const x = await this.$confirm(msg, {
+        title: 'Lottery',
+        dangerouslyUseHTMLString: true,
+      }).catch(()=>{});
+      if(!x) return false;
+
+      this.$root.loading(true);
+      try{
+        const layer1_instance = this.wf.getLayer1Instance();
+        const api = layer1_instance.getApi();
+
+        const tx = api.tx.cml.drawCmlsFromVoucher(defrost);
+
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+        await this.refreshAccount();
+
+        this.$message.success('success');
+
       }catch(e){
         this.$root.showError(e);
       }
