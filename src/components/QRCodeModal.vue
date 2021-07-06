@@ -45,7 +45,8 @@ export default {
         text: opts.text,
         width: 256,
         height: 256,
-        colorDark : '#35a696',
+        // colorDark : '#35a696',
+        colorDark : '#000',
         colorLight : '#ffffff',
         correctLevel : QRCode.CorrectLevel.H
       });
