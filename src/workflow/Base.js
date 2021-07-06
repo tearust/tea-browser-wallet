@@ -247,7 +247,8 @@ export default class {
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
 
-      cml.deforst_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
+      cml.defrost_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
+      console.log(11, cml)
       return {
         ...cml,
         ...cml.intrinsic,

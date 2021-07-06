@@ -47,7 +47,7 @@
 
     <el-table-column
       prop="defrost_schedule"
-      label="Deforst schedule"
+      label="Defrost schedule"
       sortable
       width="150"
     />
