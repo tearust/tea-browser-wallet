@@ -122,9 +122,9 @@ export default {
       this.$store.commit('set_account', item);
       if(this.wf){
         this.wf.refreshCurrentAccount();
-        utils.publish('refresh-current-account__MY STAKING');
+        utils.publish('refresh-current-account__my_staking');
 
-        utils.publish('change-account', item);
+        utils.publish('refresh-current-account__account', item);
       }
 
     }

@@ -93,11 +93,11 @@ export default {
     await this.wf.init();
 
     await this.refreshList();
-    utils.register('MY STAKING', async ()=>{
+    utils.register('my_staking', async ()=>{
       await this.refreshList();
     });
 
-    utils.register('refresh-current-account__MY STAKING', async (key, param)=>{
+    utils.register('refresh-current-account__my_staking', async (key, param)=>{
       await this.refreshList();   
     });
   },

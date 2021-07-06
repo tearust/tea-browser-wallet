@@ -7,10 +7,10 @@ import request from '../request';
 
 import {_, forge} from 'tearust_utils';
 import {hexToString} from 'tearust_layer1';
-import { add } from 'lodash';
 
 
 let _layer1 = null;
+let _init = false;
 export default class {
   constructor() {
     this.layer1 = _layer1;
@@ -24,8 +24,26 @@ export default class {
   }
 
   async init() {
-    await this.initLayer1();
-    // this.gluon = this.layer1.gluon;
+    const init_loop = (resolve)=>{
+      if(!this.layer1 || this.layer1.connected !== 2){
+        _.delay(()=>{
+          init_loop(resolve);
+        }, 300);
+      }
+      else{
+        resolve();
+      }
+    };
+
+
+    return new Promise(async (resolve)=>{
+      if(!_init){
+        _init = true;
+        await this.initLayer1();
+      }
+      init_loop(resolve);
+    });
+
   }
 
   async getAllLayer1Account(){
@@ -41,16 +59,12 @@ export default class {
 
   async initLayer1() {
     if (!_layer1) {
-      try {
-        _layer1 = new Layer1();
-        await _layer1.init();
-        await utils.waitLayer1Ready(_layer1);
-        this.layer1 = _layer1;
-
-        await this.initEvent();
-      } catch (e) {
-        console.error(e);
-      }
+      _layer1 = new Layer1();
+      
+      await _layer1.init();
+      await utils.waitLayer1Ready(_layer1);
+      this.layer1 = _layer1;
+      await this.initEvent();
     }
   }
 
@@ -200,9 +214,7 @@ export default class {
       return false;
     }
 
-    this._log.i("refresh current layer1_account");
     const layer1_instance = this.getLayer1Instance();
-    // const balance = await layer1_instance.getAccountBalance(layer1_account.address);
 
     const api = layer1_instance.getApi();
     const balance = await this.getAllBalance(layer1_account.address);
@@ -217,6 +229,7 @@ export default class {
     const cml_list = await this.getCmlListByUser(layer1_account.address);
     const cml_data = await this.getCmlByList(cml_list);
 
+    this._log.i("refresh current layer1_account");
     store.commit('set_account', {
       balance: balance.free,
       lock_balance: balance.lock,

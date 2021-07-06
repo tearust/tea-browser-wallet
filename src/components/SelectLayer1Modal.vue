@@ -82,7 +82,7 @@ export default {
 
     closedHandler(){
       this.sa.refreshCurrentAccount();
-      utils.publish('refresh-current-account__MY STAKING');
+      utils.publish('refresh-current-account__my_staking');
     },
 
     layer1ChangeHandler(account){
@@ -100,11 +100,10 @@ export default {
   },
 
   async mounted(){
-    this.$root.loading(true);
+
     this.sa = new SettingAccount();
     await this.sa.init();
 
-    this.$root.loading(false);
 
   },
 }
