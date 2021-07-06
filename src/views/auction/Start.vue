@@ -2,7 +2,7 @@
 <div class="tea-page">
 
   <span class="tea-info">
-    Next trading window starts at block # {{next_window_block}}
+    Next trading window starts at block <b class="block"># {{next_window_block}}</b>
   </span>
 
   <el-tabs tab-position="left" style="margin-top: 20px;" @tab-click="clickTab($event)">
@@ -50,7 +50,8 @@ export default {
 
       const x = Math.ceil(block/window_size)*window_size;
 
-      return x;
+      let rs = x - block;
+      return rs;
     }
   },
   methods: {

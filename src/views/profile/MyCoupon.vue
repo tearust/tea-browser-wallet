@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page">
 
-  <span class="tea-table-tip">Expired blockheight 100</span>
+  <span class="tea-table-tip">Coupon will be expired in <b class="block">{{expired_block}}</b> blocks</span>
   <el-table 
     :data="list"
     stripe
@@ -152,6 +152,9 @@ export default {
     ...mapGetters([
       'layer1_account'
     ]),
+    ...mapState([
+      'chain'
+    ]),
     list: (p)=>{
       if(!p.layer1_account) return [];
       const layer1_account = p.layer1_account;
@@ -175,7 +178,18 @@ export default {
         }
       });
       return list;
-    }
+    },
+    expired_block: (p)=>{
+      if(!p.chain) return 'NA';
+      
+      const block = parseInt(p.chain.current_block, 10);
+      const max = utils.consts.VoucherOutdatedBlock;
+
+      let rs = max-block;
+      if(rs < 0) rs = 0;
+
+      return rs;
+    },
   },
   
   async mounted(){

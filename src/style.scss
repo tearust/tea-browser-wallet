@@ -61,6 +61,10 @@ a, a:hover, a:focus, button:focus {
   min-height: calc(100vh - 327px);
   position: relative;
 
+  b.block {
+    color: #35a696;
+  }
+
   h4.tea-title{
     margin: 0;
     font-size: 25px;
