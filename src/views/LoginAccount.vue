@@ -29,12 +29,12 @@
       </div>
 
       <div v-if="layer1_account && layer1_account.debt" class="x-item">
-        <b>{{'staking debt' | cardTitle}}</b>
+        <b>{{'Staking debt' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account.debt | teaIcon"></span>
       </div>
 
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
-        <b>{{'staking reward' | cardTitle}}</b>
+        <b>{{'Staking reward' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account.reward | teaIcon"></span>
       </div>
 
@@ -44,7 +44,7 @@
       <!-- <el-button @click="showSelectLayer1()">CHANGE</el-button> -->
       <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
       <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
-      <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">WITHDRAW REWARD</el-button>
+      <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
     </div>
 
   </div>

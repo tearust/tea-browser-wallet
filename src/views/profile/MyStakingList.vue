@@ -22,7 +22,24 @@
         </el-button>
       </template>
     </el-table-column>
+    <el-table-column
+      label="Total slots"
+      width="120">
+      <template slot-scope="scope">
+        <el-button
+          v-if="scope.row.staking_slot.length>0"
+          @click="showStakingSlot(scope)"
+          type="text"
+          size="small">
+          {{scope.row.staking_slot.length}}
+        </el-button>
+      </template>
+    </el-table-column>
 
+    <el-table-column
+      prop="index"
+      label="My slot index"
+    />
     <el-table-column
       prop="cml_type"
       label="Type"
@@ -41,24 +58,7 @@
     />
 
 
-    <el-table-column
-      label="Top slot index"
-      width="120">
-      <template slot-scope="scope">
-        <el-button
-          v-if="scope.row.staking_slot.length>0"
-          @click="showStakingSlot(scope)"
-          type="text"
-          size="small">
-          {{scope.row.staking_slot.length}}
-        </el-button>
-      </template>
-    </el-table-column>
 
-    <el-table-column
-      prop="index"
-      label="My slot index"
-    />
 
   </el-table>
 
