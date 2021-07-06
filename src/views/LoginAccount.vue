@@ -25,17 +25,17 @@
       </div>
       <div class="x-item">
         <b>{{'Locked balance' | cardTitle}}</b>
-        <span>{{layer1_account ? layer1_account.lock_balance : ''}}</span>
+        <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
       </div>
 
       <div v-if="layer1_account && layer1_account.debt" class="x-item">
         <b>{{'staking debt' | cardTitle}}</b>
-        <span>{{layer1_account.debt}}</span>
+        <span :inner-html.prop="layer1_account.debt | teaIcon"></span>
       </div>
 
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
         <b>{{'staking reward' | cardTitle}}</b>
-        <span>{{layer1_account.reward}}</span>
+        <span :inner-html.prop="layer1_account.reward | teaIcon"></span>
       </div>
 
     </div>

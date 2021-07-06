@@ -41,8 +41,8 @@ Vue.filter('addTea', (value) => {
   return `${value} TEA`;
 });
 Vue.filter('teaIcon', (value=0) => {
-  return '<img src="/tea_logo/tea.png" style="width: 16px;height: 16px;position: relative;top: 2px;" /> ' 
-    + (_.isNull(value)?'0':value);
+  const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
+  return symbol + (_.isNull(value)?'0':value);
 });
 Vue.filter('cardTitle', (value) => {
   return value.split(' ').join(' ');
