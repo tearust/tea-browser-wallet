@@ -2,7 +2,7 @@
 <div class="tea-page">
 
   <span class="tea-info">
-    Next trading window starts at block <b class="block"># {{next_window_block}}</b>
+    Next trading window starts in <b class="block">{{next_window_block}}</b> blocks
   </span>
 
   <el-tabs tab-position="left" style="margin-top: 20px;" @tab-click="clickTab($event)">
