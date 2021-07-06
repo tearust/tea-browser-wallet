@@ -243,12 +243,18 @@ export default class {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
+    const current_block = store.state.chain.current_block;
+
     const list = await Promise.all(_.map(cml_list, async (cml_id)=>{
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
 
       cml.defrost_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
-      console.log(11, cml)
+
+      let remaining = cml.intrinsic.lifespan - current_block;
+      if(remaining < 0) remaining = 0;
+      cml.liferemaining = remaining;
+      // console.log(11, cml)
       return {
         ...cml,
         ...cml.intrinsic,

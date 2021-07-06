@@ -241,6 +241,13 @@ export default {
       'layer1_account'
     ]),
   },
+
+  async created(){
+    this.initCopyEvent();
+  },
+  beforeDestroy(){
+    this.clipboard && this.clipboard.destroy();
+  },
   
   async mounted(){
     this.dai_modal.class_options = utils.consts.CmlType;
@@ -253,7 +260,7 @@ export default {
 
     await this.refreshAccount();
 
-    this.initCopyEvent();
+    
     this.$root.loading(false);
     
 
@@ -411,6 +418,7 @@ export default {
 
     initCopyEvent(){
       const clipboard = new ClipboardJS('.js_copy');
+      this.clipboard = clipboard;
       clipboard.on('success', (e)=>{
         e.clearSelection();
         this.$message.success('copy success.');

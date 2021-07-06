@@ -33,6 +33,10 @@ const initState = ()=>{
     staking_slot: {
       visible: false,
       param: {},
+    },
+    cml_details: {
+      visible: false,
+      param: {},
     }
 
   };

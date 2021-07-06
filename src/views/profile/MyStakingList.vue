@@ -12,7 +12,17 @@
       prop="id"
       width="90"
       label="CML ID"
-    />
+    >
+      <template slot-scope="scope">
+        <el-button
+          @click="showCmlDetails(scope)"
+          type="text"
+          size="small">
+          {{scope.row.id}}
+        </el-button>
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="cml_type"
       label="Type"
@@ -20,8 +30,8 @@
     />
 
     <el-table-column
-      prop="lifespan"
-      label="Life span"
+      prop="liferemaining"
+      label="Life remaining"
     />
 
     <el-table-column
@@ -30,13 +40,9 @@
       width="120"
     />
 
-    <el-table-column
-      prop="status"
-      label="Status"
-    />
 
     <el-table-column
-      label="Staking slot"
+      label="Top slot index"
       width="120">
       <template slot-scope="scope">
         <el-button
@@ -51,7 +57,7 @@
 
     <el-table-column
       prop="index"
-      label="Staking slot index"
+      label="My slot index"
     />
 
   </el-table>
@@ -153,6 +159,20 @@ export default {
         param: {
           list: scope.row.staking_slot,
           cml_id: scope.row.id,
+        }
+      });
+    },
+
+    async showCmlDetails(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      const cml_data = await this.wf.getCmlByList([scope.row.id]);
+      const d = cml_data[0];
+
+      this.$store.commit('modal/open', {
+        key: 'cml_details',
+        param: {
+          cml: scope.row
         }
       });
     },
