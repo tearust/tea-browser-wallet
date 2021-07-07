@@ -138,6 +138,14 @@ export default {
           pallet: 'cml',
           tx: 'startStaking',
           text: 'If no staking cml, means use 1000 TEA to staking.',
+          props: {
+            staking_cml: {
+              type: 'select',
+              options: _.filter(this.layer1_account.cml, (item)=>{
+                return item.generate_defrost_time < 1 && item.status !== 'Tree';
+              }),
+            }
+          },
         },
         cb: async (form, close)=>{
           this.$root.loading(true);

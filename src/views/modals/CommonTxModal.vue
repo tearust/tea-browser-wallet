@@ -19,6 +19,16 @@
     <el-form v-if="!loading" :model="form" :rules="rules" label-width="150px">
       <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name">
         <el-input v-if="types[item.name]==='Input'" v-model="form[item.name]"></el-input>
+
+        <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select.">
+          <el-option
+            v-for="item in props[item.name].options || []"
+            :key="item.id"
+            :label="item.id"
+            :value="item.id"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       
     </el-form>
@@ -77,6 +87,7 @@ export default {
         throw 'Invalid Tx for common_tx_modal.';
       }
       tx = tx.toJSON();
+      tx.props = this.param.props || {};
 
       this.initFormByTx(tx);
     },
@@ -87,6 +98,7 @@ export default {
       const labels = {};
       const rules = {};
       const types = {};
+      const props = {};
 
       _.each(args, (item)=>{
         const n = item.name;
@@ -100,8 +112,12 @@ export default {
         else{
           rules[n] = [{required: true}];
         }
-
         types[n] = 'Input';
+        if(tx.props && tx.props[n]){
+          props[n] = tx.props[n];
+          types[n] = props[n].type;
+        }
+
         form[n] = '';
         
       });
@@ -111,6 +127,7 @@ export default {
       this.types = types;
       this.rules = rules;
       this.args = args;
+      this.props = props;
 
       this.loading = false;
     },
