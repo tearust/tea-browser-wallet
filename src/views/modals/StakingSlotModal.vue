@@ -59,19 +59,7 @@
 
 
       
-      <!-- <el-table-column
-        label="Actions"
-      >
-        <template slot-scope="scope">
-          <el-link class="tea-action-icon" 
-            :underline="false" 
-            type="primary" 
-            icon="el-icon-delete" 
-            @click="removeStaking(scope)"
-            :disabled="layer1_account.address !== scope.row.owner || scope.$index<1"
-          ></el-link>
-        </template>
-      </el-table-column> -->
+      
     </el-table>
 
     <span slot="footer" class="dialog-footer">
@@ -119,28 +107,7 @@ export default {
       this.$store.commit('modal/close', 'staking_slot');
     },
 
-    async removeStaking(scope){
-      const x = await this.$confirm("Are you sure to remove staking?", "Remove Staking").catch(()=>{});
-      if(!x) return;
-
-      if(!this.param.cml_id){
-        throw 'Invalid cml id';
-      }
-
-      this.$root.loading(true);
-      try{
-        const tx = this.api.tx.cml.stopStaking(this.param.cml_id, scope.$index);
-        await this.layer1_instance.sendTx(this.layer1_account.address, tx);
-
-        this.close();
-        utils.publish('refresh-current-account__account');
-        utils.publish('refresh-current-account__MY STAKING');
-      }catch(e){
-        this.$root.showError(e);
-      }
-      this.$root.loading(false);
-
-    }
+    
   }
 }
 </script>

@@ -67,6 +67,21 @@
       </template>
     </el-table-column>
 
+    <el-table-column
+      label="Actions"
+      width="200"
+    >
+      <template slot-scope="scope">
+        <el-link class="tea-action-icon" 
+          :underline="false" 
+          type="primary" 
+          icon="el-icon-delete" 
+          @click="removeStaking(scope)"
+          :disabled="scope.row.index<1"
+        ></el-link>
+      </template>
+    </el-table-column>
+
 
 
   </el-table>
@@ -178,7 +193,25 @@ export default {
       this.$router.push('/cml_details/'+scope.row.id);
     },
     
+    async removeStaking(scope){
+      const x = await this.$confirm("Are you sure to remove staking?", "Remove Staking").catch(()=>{});
+      if(!x) return;
 
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      this.$root.loading(true);
+      try{
+        const tx = api.tx.cml.stopStaking(scope.row.id, scope.row.index);
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        utils.publish('refresh-current-account__account', {tab: 'my_staking'});
+        utils.publish('refresh-current-account__my_staking');
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
+
+    }
     
   }
 
