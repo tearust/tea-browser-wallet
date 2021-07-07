@@ -17,7 +17,7 @@
   <div style="margin-left: 50px;" class="el-menu-item">
     <el-dropdown trigger="click" @command="handleCommand">
       <el-button size="small" type="primary" round style="font-size: 14px; ">
-        {{layer1_account.name || 'N/A'}}
+        {{layer1_account.name || 'Select account'}}
         <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
       </el-button>
       <el-dropdown-menu slot="dropdown">
