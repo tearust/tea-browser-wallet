@@ -11,7 +11,7 @@
     <p>The followings are all remaining genesis Camellia seeds. You can draw a seed using your coupon.</p>  
 
   <el-table 
-    :data="cml_list || []"
+    :data="list || []"
     stripe
     size="small"
     border
@@ -52,7 +52,20 @@
       label="Status"
     />
 
+
   </el-table>
+  
+  <el-pagination
+    hide-on-single-page
+    background
+    style="text-align: right; margin: 10px -10px 40px;"
+    :current-page.sync="P.current"
+    @current-change="changePage($event)"
+    @prev-click="changePage($event)"
+    @next-click="changePage($event)"
+    :page-size.sync="P.size"
+    layout="prev, pager, next"
+    :total="P.total" />
 
   </div>
   
@@ -70,6 +83,13 @@ export default {
       cml_type: null,
       type: null,
       cml_list: null,
+      list: null,
+
+      P: {
+        current: 1,
+        size: 20,
+        total: 0,
+      },
     };
   },
   async mounted(){
@@ -85,7 +105,7 @@ export default {
     async clickTab(e){
       const ct = e.$attrs.ct
       this.type = ct;
-      
+      this.P.current = 1;
       await this.refreshList();
     },
     async refreshList(){
@@ -102,9 +122,18 @@ export default {
 
       const cml_list = await this.wf.getCmlByList(_.concat(list, list1));
       this.cml_list = cml_list;
+      this.P.total = this.cml_list.length;
+
+      this.list = _.slice(this.cml_list, (this.P.current-1)*this.P.size, this.P.current*this.P.size);
 
       this.$root.loading(false);
 
+    },
+    changePage(val){
+      this.P.current = val;
+      const from = (this.P.current-1)*this.P.size;
+      const to = this.P.current*this.P.size;
+      this.list = _.slice(this.cml_list, from, to);
     }
   }
   
