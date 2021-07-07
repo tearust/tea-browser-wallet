@@ -116,6 +116,10 @@ export default class {
   }
 
   async getCurrentBlock(api){
+    if(!api){
+      const layer1_instance = this.getLayer1Instance();
+      api = layer1_instance.getApi();
+    }
     const block = await api.rpc.chain.getBlock();
     return block.toJSON().block.header.number;
   }

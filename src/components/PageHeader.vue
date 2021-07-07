@@ -34,7 +34,7 @@
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
   <el-menu-item index="/auction_store">{{'Marketplace'}}</el-menu-item>
 
-  <el-menu-item index="/lucky_draw">{{'Seed pool'}}</el-menu-item>
+  <el-menu-item v-if="has_seed_pool" index="/lucky_draw">{{'Seed pool'}}</el-menu-item>
   <el-menu-item index="/login_account">My assets</el-menu-item>
   <el-menu-item index="/home">{{'Welcome'}}</el-menu-item>
 
@@ -60,6 +60,7 @@ export default {
     return {
       activeIndex: null,
       connected: 0,
+      has_seed_pool: false,
 
       all_account: [],
       no_plugin_account: false,
@@ -154,15 +155,19 @@ export default {
 
     let time = 500;
 
-    const loop = ()=>{
+    const loop = async (cb)=>{
       try{
         const wf = new Base();
         const connected = wf.layer1.isConnected();
         if(connected !== this.connected){
           this.connected = connected;
 
-          this.wf = wf;
-          this.initAllPluginAccount(wf);
+          if(this.connected === 2){
+            this.wf = wf;
+            this.initAllPluginAccount(wf);
+            cb();
+          }
+          
         }
         
         if(this.connected > 0){
@@ -174,11 +179,22 @@ export default {
       }
      
       _.delay(()=>{
-        loop();
+        loop(cb);
       }, time);
     };
 
-    loop();
+    loop(async ()=>{
+      if(this.wf){
+        await this.wf.init();
+        const block = await this.wf.getCurrentBlock();
+
+        if(block <= utils.consts.VoucherOutdatedBlock){
+          this.has_seed_pool = true;
+        }
+      }
+    });
+
+
   }
 }
 </script>
