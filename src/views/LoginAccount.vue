@@ -172,7 +172,7 @@ export default {
       }
       else {
         this.has_coupon_tab = false;
-        if(this.tab = 'my_coupon'){
+        if(this.tab === 'my_coupon'){
           this.tab = 'my_cml';
         }
       }

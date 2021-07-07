@@ -13,6 +13,7 @@ import AuctionStoreStart from './views/auction/Start';
 import LogIndex from './views/log/Index';
 
 import LuckyDrawBox from './views/LuckyDrawBox';
+import CmlDetails from './views/CmlDetails';
 
 
 Vue.use(Router);
@@ -67,6 +68,11 @@ let routers = [
     path: '/lucky_draw',
     name: 'lucky_draw',
     component: LuckyDrawBox,
+  },
+  {
+    path: '/cml_details/:id',
+    name: 'cml_details',
+    component: CmlDetails,
   }
   
 ];

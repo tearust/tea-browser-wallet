@@ -115,6 +115,11 @@ export default class {
     return null;
   }
 
+  async getCurrentBlock(){
+    const block = await api.rpc.chain.getBlock();
+    return block.toJSON().block.header.number;
+  }
+
   showQrCodeModal(opts){
     utils.publish('tea-qrcode-modal', {
       visible: true,
@@ -256,7 +261,7 @@ export default class {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
-    const current_block = store.state.chain.current_block;
+    const current_block = await this.getCurrentBlock();
 
     const list = await Promise.all(_.map(cml_list, async (cml_id)=>{
       let cml = await api.query.cml.cmlStore(cml_id);

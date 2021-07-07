@@ -84,7 +84,7 @@
       width="200">
       <template slot-scope="scope">
         <el-button
-          v-if="scope.row.generate_defrost_time<1"
+          v-if="scope.row.generate_defrost_time<1 && scope.row.status!=='Tree'"
           @click="clickPlantAction(scope)"
           type="text"
           size="small">

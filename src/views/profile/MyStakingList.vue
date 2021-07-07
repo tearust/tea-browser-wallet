@@ -175,17 +175,7 @@ export default {
     },
 
     async showCmlDetails(scope){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-      const cml_data = await this.wf.getCmlByList([scope.row.id]);
-      const d = cml_data[0];
-
-      this.$store.commit('modal/open', {
-        key: 'cml_details',
-        param: {
-          cml: scope.row
-        }
-      });
+      this.$router.push('/cml_details/'+scope.row.id);
     },
     
 

@@ -44,6 +44,13 @@ Vue.filter('teaIcon', (value=0) => {
   const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
   return symbol + (_.isNull(value)?'0':value);
 });
+Vue.filter('balance', (value=0) => {
+  value = parseInt(value, 10) / (1000000*1000000);
+  value = Math.floor(value*10000)/10000;
+
+  const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
+  return symbol + (_.isNull(value)?'0':value);
+});
 Vue.filter('cardTitle', (value) => {
   return value.split(' ').join(' ');
 });
