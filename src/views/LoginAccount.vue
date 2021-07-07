@@ -2,7 +2,8 @@
 <div class="tea-page">
 
   <div class="tea-card">
-    <i class="x-icon el-icon-user"></i>
+    <i class="x-icon iconfont icon-a-TeaProject-T"></i>
+    
 
     <div class="x-list">
       <div class="x-item">
