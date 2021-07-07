@@ -159,7 +159,7 @@ export default {
     },
 
     clickPlantAction(scope){
-      alert('TODO');
+      this.$router.push('/plant_helper/'+scope.row.id);
     }
 
     

@@ -38,10 +38,7 @@
   <el-menu-item index="/login_account">My assets</el-menu-item>
   <el-menu-item index="/home">{{'Welcome'}}</el-menu-item>
 
-  <el-menu-item v-if="$root.isDev()" index="/test">{{'Test'}}</el-menu-item>
-    
-    <!-- <a href="http://tearust.com/" target="_blank">WEBSITE</a> -->
-    
+  <!-- <el-menu-item v-if="$root.isDev()" index="/test">{{'Test'}}</el-menu-item> -->
 
   
 </el-menu>

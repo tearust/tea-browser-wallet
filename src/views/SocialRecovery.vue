@@ -308,10 +308,11 @@ export default {
     },
     async setSocialRecoveryForCurrent(){
       const ref = this.$refs['set_current_modal'];
+      await ref.validate();
 
       this.$root.loading(true);
       try{
-        await ref.validate();
+        
 
         const {friend_address_1, friend_address_2, friend_address_3} = this.set_current_modal.form;
         console.log([friend_address_1, friend_address_2, friend_address_3])
