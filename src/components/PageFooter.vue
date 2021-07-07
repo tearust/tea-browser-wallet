@@ -16,12 +16,28 @@
       </el-col>
     </el-row> -->
 
-    <!-- <el-divider></el-divider> -->
+    <b class="lg">Block Height : {{chain.current_block_hash ? chain.current_block : ''}}</b>
+    <el-divider></el-divider>
     <p style="margin:0 auto;text-align:center;font-size:16px;">Copyright © 2019-2021 <b>TeaProject.org</b> All Rights Reserved</p>
   </div>
 </section>
 
 </template>
+
+<script>
+import {mapGetters, mapState} from 'vuex';
+import Base from '../workflow/Base';
+import _ from 'lodash';
+import utils from '../tea/utils';
+export default {
+  computed: {
+    // ...mapGetters(['layer1_account']),
+    ...mapState([
+      'chain'
+    ]),
+  },
+}
+</script>
 <style lang="scss">
 .t-footer{
   padding: 24px 0 40px;

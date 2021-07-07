@@ -8,7 +8,7 @@
       fit="fit">
     </el-image>
     
-    <b class="lg">{{chain.current_block_hash ? chain.current_block : ''}}</b>
+    <!-- <b class="lg">{{chain.current_block_hash ? chain.current_block : ''}}</b> -->
   </a>
   
 
@@ -76,9 +76,9 @@ export default {
   },
   computed: {
     ...mapGetters(['layer1_account']),
-    ...mapState([
-      'chain'
-    ]),
+    // ...mapState([
+    //   'chain'
+    // ]),
   },
   methods: {
     handleSelect(key, keyPath) {
