@@ -131,7 +131,7 @@ export default {
       if(param.tab && this.tab !== param.tab){
         if(param.tab === 'my_coupon'){
           if(this.has_coupon_tab) this.tab = param.tab;
-          else this.tab = 'my_cml';
+          // else this.tab = 'my_cml';
         }
         else{
           this.tab = param.tab;

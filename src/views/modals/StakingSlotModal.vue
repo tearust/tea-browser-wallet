@@ -14,10 +14,17 @@
     <el-table 
       v-if="param.list"
       :data="param.list"
+      class="tea-table"
       stripe
       size="small"
       border
     >
+      <el-table-column
+        label="CML ID"
+        width="120"
+      >
+        <template>{{param.cml_id}}</template>
+      </el-table-column>
       <el-table-column
         label="Index"
         width="100"
@@ -26,30 +33,33 @@
       </el-table-column>
       <el-table-column
         prop="owner"
-        label="Owner"
-        width="350"
+        label="Staker"
       />
       <el-table-column
         prop="category"
-        label="Category"
-        width="90"
+        label="Staking with"
+        width="120"
       />
+
+      <el-table-column
+        label="Staking CML ID"
+        width="180"
+      >
+        <template slot-scope="scope">{{scope.row.cml}}</template>
+      </el-table-column>
 
       <el-table-column
         label="Amount"
         width="150"
       >
-        <template v-if="scope.row.amount" slot-scope="scope">{{scope.row.amount | formatBalance}}</template>
+        <template v-if="scope.row.amount" slot-scope="scope">
+          <span :inner-html.prop="scope.row.amount | balance"></span>
+        </template>
       </el-table-column>
 
-      <el-table-column
-        label="Cml Id"
-        width="150"
-      >
-        <template slot-scope="scope">{{scope.row.cml}}</template>
-      </el-table-column>
+
       
-      <el-table-column
+      <!-- <el-table-column
         label="Actions"
       >
         <template slot-scope="scope">
@@ -61,7 +71,7 @@
             :disabled="layer1_account.address !== scope.row.owner || scope.$index<1"
           ></el-link>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
     <span slot="footer" class="dialog-footer">

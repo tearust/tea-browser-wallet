@@ -62,7 +62,7 @@ export default {
       connected: 0,
 
       all_account: [],
-      no_plugin_account: true,
+      no_plugin_account: false,
     };
   },
   watch: {
@@ -115,7 +115,10 @@ export default {
         return item;
       });
 
-      if(tmp.length > 0){
+      if(tmp.length < 1){
+        this.no_plugin_account = true;
+      }
+      else{
         this.no_plugin_account = false;
       }
 

@@ -83,9 +83,16 @@
       />
       <el-table-column
         prop="category"
-        label="Stake with"
+        label="Staking with"
         width="120"
       />
+
+      <el-table-column
+        label="Staking CML ID"
+        width="180"
+      >
+        <template slot-scope="scope">{{scope.row.cml}}</template>
+      </el-table-column>
 
       <el-table-column
         label="Amount"
