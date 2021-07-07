@@ -126,7 +126,7 @@ export default {
 
     this.$root.loading(false);
     
-    utils.register('refresh-current-account__account', async (key, param)=>{
+    utils.register('refresh-current-account__account', async (key, param={})=>{
       await this.refreshAccount();
       if(param.tab && this.tab !== param.tab){
         if(param.tab === 'my_coupon'){
