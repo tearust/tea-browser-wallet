@@ -132,7 +132,9 @@ export default {
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 
-            utils.publish('refresh-current-account__account');
+            utils.publish('refresh-current-account__account', {
+              tab: 'my_staking',
+            });
             close();
           }catch(e){
             this.$root.showError(e);

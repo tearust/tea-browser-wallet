@@ -128,6 +128,16 @@ export default {
     
     utils.register('refresh-current-account__account', async (key, param)=>{
       await this.refreshAccount();
+      if(param.tab && this.tab !== param.tab){
+        if(param.tab === 'my_coupon'){
+          if(this.has_coupon_tab) this.tab = param.tab;
+          else this.tab = 'my_cml';
+        }
+        else{
+          this.tab = param.tab;
+        }
+        
+      }
     });
   },
 
@@ -156,12 +166,15 @@ export default {
           layer1_account.voucher_investor_A || layer1_account.voucher_investor_B || layer1_account.voucher_investor_C
         )
       ) {
-        this.tab = 'my_coupon';
+        
+        // this.tab = 'my_coupon';
         this.has_coupon_tab = true;
       }
       else {
-        this.tab = 'my_cml';
         this.has_coupon_tab = false;
+        if(this.tab = 'my_coupon'){
+          this.tab = 'my_cml';
+        }
       }
       
       flag && this.$root.loading(false);

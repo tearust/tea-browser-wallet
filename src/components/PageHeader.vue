@@ -129,7 +129,9 @@ export default {
         this.wf.refreshCurrentAccount();
         utils.publish('refresh-current-account__my_staking');
 
-        utils.publish('refresh-current-account__account', item);
+        utils.publish('refresh-current-account__account', {
+          tab: 'my_coupon'
+        });
       }
 
     },
