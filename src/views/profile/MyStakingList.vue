@@ -57,6 +57,15 @@
       width="120"
     />
 
+    <el-table-column
+      prop="weight"
+      label="Weight"
+      width="120"
+    >
+      <template slot-scope="scope">
+        {{scope.row.weight || 'TODO'}}
+      </template>
+    </el-table-column>
 
 
 
