@@ -1,7 +1,7 @@
 <template>
   <div class="tea-page">
 
-    <h4>Details</h4>
+    <h4>Camellia detail</h4>
     <el-table 
       :data="cml ? [cml] : []"
       stripe
@@ -63,7 +63,7 @@
     </el-table>
 
     <el-divider />
-    <h4>Staking slot</h4>
+    <h4>Staking slots</h4>
     <el-table 
       :data="cml ? cml.staking_slot : []"
       stripe
