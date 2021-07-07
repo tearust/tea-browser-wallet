@@ -16,7 +16,7 @@
   <!-- <el-menu-item style="margin-left: 50px;" index="/login_account">{{layer1_account.name || 'N/A'}}</el-menu-item> -->
   <div style="margin-left: 50px;" class="el-menu-item">
     <el-dropdown trigger="click" @command="handleCommand">
-      <el-button size="small" type="primary" round style="font-size: 14px; ">
+      <el-button size="small" type="primary" round style="font-size: 14px; " @click="clickSelectAccount()">
         {{layer1_account.name || 'Select account'}}
         <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
       </el-button>
@@ -62,6 +62,7 @@ export default {
       connected: 0,
 
       all_account: [],
+      no_plugin_account: true,
     };
   },
   watch: {
@@ -105,7 +106,7 @@ export default {
     async initAllPluginAccount(wf){
       const layer1_instance = wf.getLayer1Instance();
       let tmp = await wf.getAllLayer1Account();
-      tmp = _.map(tmp, (item)=>{
+      tmp = _.map(tmp||[], (item)=>{
         (async ()=>{
           // item.balance = await layer1_instance.getAccountBalance(item.address);
           item.ori_name = _.clone(item.name);
@@ -113,6 +114,10 @@ export default {
         })();
         return item;
       });
+
+      if(tmp.length > 0){
+        this.no_plugin_account = false;
+      }
 
       this.all_account = tmp;
     },
@@ -127,6 +132,16 @@ export default {
         utils.publish('refresh-current-account__account', item);
       }
 
+    },
+    async clickSelectAccount(){
+      if(this.no_plugin_account){
+        const html = `
+          <p style="font-size: 15px;">Please add an account or <a target="_blank" href="https://teaproject.org/#/doc_list/%2FFAQ%2Fhow_to_install_polkadot_extension.md ">install polkadot browser extension</a></p>
+        `;
+        this.$alert(html, {
+          dangerouslyUseHTMLString: true,
+        });
+      }
     }
     
   },
