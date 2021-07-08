@@ -5,7 +5,7 @@
     <i class="x-icon iconfont icon-a-TeaProject-T"></i>
     
 
-    <div class="x-list">
+    <div class="x-list" style="width:100%;">
       <div class="x-item">
         <b>{{'Name' | cardTitle}}</b>
         <span>{{layer1_account ? layer1_account.name : ''}}</span>
@@ -39,14 +39,18 @@
         <span :inner-html.prop="layer1_account.reward | teaIcon"></span>
       </div>
 
+      <div class="x-bottom">
+        <!-- <el-button @click="showSelectLayer1()">CHANGE</el-button> -->
+        <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
+        <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
+        <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
+      </div>
+
     </div>
 
-    <div class="x-right">
-      <!-- <el-button @click="showSelectLayer1()">CHANGE</el-button> -->
-      <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
-      <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
-      <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
-    </div>
+    <!-- <div class="x-right">
+      
+    </div> -->
 
   </div>
 
