@@ -16,6 +16,7 @@ import LuckyDrawBox from './views/LuckyDrawBox';
 import CmlDetails from './views/CmlDetails';
 
 import PlantHelper from './views/PlantHelper';
+import UserDetails from './views/UserDetails';
 
 
 Vue.use(Router);
@@ -80,6 +81,11 @@ let routers = [
     path: '/plant_helper/:cml_id',
     name: 'plant_helper',
     component: PlantHelper
+  },
+  {
+    path: '/user_details/:address',
+    name: 'user_details',
+    component: UserDetails,
   }
   
 ];

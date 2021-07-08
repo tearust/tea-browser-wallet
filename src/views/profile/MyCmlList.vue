@@ -12,7 +12,11 @@
       sortable
       width="90"
       label="CML ID"
-    />
+    >
+      <template slot-scope="scope">
+        <el-button type="text" @click="$router.push('/cml_details/'+scope.row.id)">{{scope.row.id}}</el-button>
+      </template>
+    </el-table-column>
     <el-table-column
       prop="cml_type"
       label="Type"

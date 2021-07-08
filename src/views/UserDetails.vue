@@ -1,27 +1,62 @@
 <template>
   <div class="tea-page">
+    <h4>Account Details</h4>
+    <div class="tea-card">
+      <i class="x-icon iconfont icon-a-TeaProject-T"></i>
+      
+      <div class="x-list" style="width:100%;">
+        
+        <div class="x-item">
+          <b>{{'Address' | cardTitle}}</b>
+          <span>
+            <font class="js_need_copy">{{address}}</font>
+            <!-- <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px;" class="iconfont tea-icon-btn icon-copy js_copy"></span> -->
+            
+          </span>
 
-    <h4>Camellia detail</h4>
+        </div>
+        <div class="x-item">
+          <b>{{'Total balance' | cardTitle}}</b>
+          <span :inner-html.prop="info ? info.free : '' | teaIcon"></span>
+        </div>
+        <div class="x-item">
+          <b>{{'Locked balance' | cardTitle}}</b>
+          <span :inner-html.prop="info ? info.lock : '' | teaIcon"></span>
+        </div>
+
+      </div>
+
+    </div>
+    <el-divider />
+
+    <h4>Cml List</h4>
     <el-table 
-      :data="cml ? [cml] : []"
+      :data="cml_list || []"
       stripe
+      class="tea-table"
       size="small"
       border
     >
       <el-table-column
         prop="id"
+        sortable
         width="90"
         label="CML ID"
-      />
+      >
+        <template slot-scope="scope">
+          <el-button type="text" @click="$router.push('/cml_details/'+scope.row.id)">{{scope.row.id}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="cml_type"
         label="Type"
+        sortable
         width="70"
       />
 
       <el-table-column
-        prop="liferemaining"
-        label="Life remaining"
+        prop="lifespan"
+        label="Life span"
       />
       <el-table-column
         prop="machine_id"
@@ -37,85 +72,49 @@
         </template>
       </el-table-column>
 
-
       <el-table-column
         prop="performance"
         label="Performance"
+        sortable
         width="120"
       />
 
       <el-table-column
         prop="defrost_schedule"
         label="Defrost schedule"
+        sortable
         width="150"
       />
 
       <el-table-column
         prop="defrost_day"
         label="Defrost day"
+        sortable
         width="120"
       />
 
       <el-table-column
         prop="status"
         label="Status"
+        width="120"
+        sortable
       />
-    </el-table>
 
-    <el-divider />
-    <h4>Staking slots</h4>
-    <el-table 
-      :data="cml ? cml.staking_slot : []"
-      stripe
-      class="tea-table"
-      size="small"
-      border
-    >
       <el-table-column
-        label="Index"
-        width="100"
-      >
-        <template slot-scope="scope">{{scope.$index}}</template>
-      </el-table-column>
-      <el-table-column
-        prop="owner"
-        label="Staker"
-      >
+        label="Staking slot"
+        width="120">
         <template slot-scope="scope">
-          <el-button 
-            @click="$router.push('/user_details/'+scope.row.owner)"
-            type="text">
-            {{scope.row.owner}}
+          <el-button
+            v-if="scope.row.staking_slot.length>0"
+            @click="showStakingSlot(scope)"
+            type="text"
+            size="small">
+            {{scope.row.staking_slot.length}}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="category"
-        label="Staking with"
-        width="120"
-      />
 
-      <el-table-column
-        label="Staking CML ID"
-        width="180"
-      >
-        <template slot-scope="scope">{{scope.row.cml}}</template>
-      </el-table-column>
-
-      <el-table-column
-        label="Amount"
-        width="150"
-      >
-        <template v-if="scope.row.amount" slot-scope="scope">
-          <span :inner-html.prop="scope.row.amount | balance"></span>
-        </template>
-      </el-table-column>
-      
-      
     </el-table>
-
-
-
 
   </div>
 </template>
@@ -128,18 +127,18 @@ import {hexToString} from 'tearust_layer1';
 export default {
   data(){
     return {
-      cml: null,
-      id: null,
+      address: '',
+      info: null,
+      cml_list: null,
     };
   },
   async mounted(){
-    this.id = this.$route.params.id;
+    this.address = this.$route.params.address;
 
     this.$root.loading(true);
     this.wf = new Base();
     await this.wf.init();
 
-    
     await this.refresh();
     this.$root.loading(false);
   },
@@ -148,13 +147,24 @@ export default {
     async refresh(){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
-      const cml_data = await this.wf.getCmlByList([this.id]);
-      // console.log(111, cml_data[0]);
-      this.cml = cml_data[0];
-      if(!this.cml){
-        this.$alert('Invalid cml id');
-        return;
-      }
+
+      const all_balance = await this.wf.getAllBalance(this.address);
+      this.info = all_balance;
+
+      const cml_list = await this.wf.getCmlListByUser(this.address);
+      const cml_data = await this.wf.getCmlByList(cml_list);
+
+      this.cml_list = cml_data;
+    },
+    showStakingSlot(scope){
+      // console.log(111, scope.row);
+      this.$store.commit('modal/open', {
+        key: 'staking_slot',
+        param: {
+          list: scope.row.staking_slot,
+          cml_id: scope.row.id,
+        }
+      });
     },
     async showMinerInfo(miner_id){
       const layer1_instance = this.wf.getLayer1Instance();
