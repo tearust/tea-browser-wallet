@@ -7,6 +7,7 @@
   <el-table 
     :data="auction.auction_list"
     stripe
+    class="tea-table"
     size="small"
     border
   >
@@ -20,9 +21,9 @@
     >
       <template slot-scope="scope">
         <el-button
-          @click="showCmlDetails(scope)"
-          type="text"
-          size="small">
+          @click="$root.goPath('/cml_details/'+scope.row.cml_id)"
+          size="small"
+          type="text">
           {{scope.row.cml_id}}
         </el-button>
       </template>
@@ -36,7 +37,7 @@
       label="Starting price"
     >
       <template slot-scope="scope">
-        {{scope.row.starting_price | formatBalance}}
+        <span :inner-html.prop="scope.row.starting_price | balance" />
       </template>
     </el-table-column>
 
@@ -45,7 +46,7 @@
       label="Buy-now price"
     >
       <template slot-scope="scope">
-        {{scope.row.buy_now_price | formatBalance}}
+        <span :inner-html.prop="scope.row.buy_now_price | balance"></span>
       </template>
     </el-table-column>
 
@@ -54,7 +55,7 @@
       label="Bid price"
     >
       <template slot-scope="scope">
-        {{scope.row.bid_price | formatBalance}}
+        <span :inner-html.prop="scope.row.bid_price | balance"></span>
       </template>
     </el-table-column>
     
@@ -99,7 +100,7 @@ export default {
 
     await this.refreshList();
 
-    utils.register('Auction Store', async ()=>{
+    utils.register('refresh_auction__auction_store', async ()=>{
       await this.refreshList();
     });
   },

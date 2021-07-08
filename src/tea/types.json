@@ -116,6 +116,10 @@
     "machine_id": "Option<MachineId>",
     "fresh_duration": "PhantomData<FreshDuration>"
   },
+
+  "AuctionStatus": {
+    "_enum": ["Normal", "Suspended"]
+  },
   "AuctionId": "u64",
   "AuctionItem": {
     "id": "AuctionId",
@@ -124,9 +128,9 @@
     "starting_price": "Balance",
     "buy_now_price": "Option<Balance>",
     "start_at": "BlockNumber",
-    "end_at": "BlockNumber",
-    "status": "Cid",
-    "bid_user": "Option<AccountId>"
+    "status": "AuctionStatus",
+    "bid_user": "Option<AccountId>",
+    "auto_renew": "bool"
   },
   "BidItem": {
     "auction_id": "AuctionId",

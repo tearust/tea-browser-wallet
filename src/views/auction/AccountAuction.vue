@@ -16,7 +16,11 @@
     <el-table-column
       prop="cml_id"
       label="CML Id"
-    />
+    >
+      <template slot-scope="scope">
+        <el-button size="small" type="text" @click="$root.goPath('/cml_details/'+scope.row.cml_id)">{{scope.row.cml_id}}</el-button>
+      </template>
+    </el-table-column>
     <!-- <el-table-column
       prop="cml_owner"
       label="CML Owner"
@@ -27,7 +31,7 @@
     />
     <el-table-column
       prop="buy_now_price"
-      label="Buy-now price"
+      label="Buy now price"
     />
     <el-table-column
       prop="bid_price"
@@ -78,7 +82,7 @@ export default {
     
     await this.refreshList();
 
-    utils.register('My Auction', async ()=>{
+    utils.register('refresh_auction__my_auction', async ()=>{
       await this.refreshList();
     });
   },
@@ -111,8 +115,7 @@ export default {
             const p1 = layer1_instance.asUnit(form.starting_price);
             const p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
 
-
-            const tx = api.tx.auction.putToStore(cml_id, p1, p2);
+            const tx = api.tx.auction.putToStore(cml_id, p1, p2, form.auto_renew);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
             this.$store.commit('modal/close', 'put_to_auction_store');

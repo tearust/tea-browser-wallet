@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="PUT CML TO AUCTION STORE"
+    :title="'PutCmlToAuctionSore' | str"
     :visible="visible"
     width="70%"
     :close-on-click-modal="false"
@@ -16,8 +16,11 @@
       <el-form-item label="Starting price">
         <el-input-number v-model="form.starting_price" :min="0" :max="50000"></el-input-number>
       </el-form-item>
-      <el-form-item label=" price">
+      <el-form-item label="Buy now price">
         <el-input-number v-model="form.buy_now_price" :min="0" :max="100000"></el-input-number>
+      </el-form-item>
+      <el-form-item label="Auto renew">
+        <el-checkbox v-model="form.auto_renew"></el-checkbox>
       </el-form-item>
     </el-form>
 
@@ -41,6 +44,7 @@ export default {
         starting_price: null,
         buy_now_price: null,
         cml_id: null,
+        auto_renew: false,
       }
     };
   },

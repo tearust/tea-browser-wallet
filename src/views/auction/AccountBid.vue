@@ -80,7 +80,7 @@ export default {
 
     await this.refreshList();
 
-    utils.register('My Bid', async ()=>{
+    utils.register('refresh_auction__my_bid', async ()=>{
       await this.refreshList();
     });
   },

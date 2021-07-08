@@ -5,14 +5,14 @@
     Next trading window starts in <b class="block">{{next_window_block}}</b> blocks
   </span>
 
-  <el-tabs tab-position="left" style="margin-top: 20px;" @tab-click="clickTab($event)">
-    <el-tab-pane label="Auction store" :lazy="true">
+  <el-tabs tab-position="left" style="margin-top: 20px;" v-model="tab" @tab-click="clickTab()">
+    <el-tab-pane name="auction_store" label="Auction store" :lazy="true">
       <AuctionStore />
     </el-tab-pane>
-    <el-tab-pane label="My auction" :lazy="true">
+    <el-tab-pane name="my_auction" label="My auction" :lazy="true">
       <AccountAuction />
     </el-tab-pane>
-    <el-tab-pane label="My bid" :lazy="true">
+    <el-tab-pane name="my_bid" label="My bid" :lazy="true">
       <AccountBid />
     </el-tab-pane>
   </el-tabs>
@@ -34,7 +34,9 @@ export default {
     AccountAuction,
   },
   data(){
-    return {};
+    return {
+      tab: 'auction_store'
+    };
   },
   computed: {
     ...mapState([
@@ -55,13 +57,15 @@ export default {
     }
   },
   methods: {
-    clickTab(e){
-      const label = e.label;
-
-      utils.publish(label, {});
-
-      console.log(1, this.chain);
+    clickTab(){
+      const key = 'refresh_auction__'+this.tab;
+      utils.publish(key, {});
     }
+  },
+  mounted(){
+    utils.register('refresh-current-account__account', async (key, param={})=>{
+      this.clickTab();
+    });
   }
   
 }

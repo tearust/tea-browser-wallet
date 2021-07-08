@@ -188,8 +188,8 @@ const store = new Vuex.Store({
       let last_auction_id;
       if(from_start){
         
-        last_auction_id = await api.query.auction.lastAuctionId();
-        store.commit('set_auction_last_id', last_auction_id.toJSON());
+        last_auction_id = (await api.query.auction.lastAuctionId()).toJSON();
+        store.commit('set_auction_last_id', last_auction_id);
         store.commit('set_auction_list', []);
       }
       else{
@@ -209,6 +209,7 @@ const store = new Vuex.Store({
       
       for(let i=last_auction_id; i>end; i--){
         const tmp = await api.query.auction.auctionStore(i);
+  
         const d = tmp.toJSON();
         if(d){
           if(d.bid_user){
@@ -224,14 +225,8 @@ const store = new Vuex.Store({
           list.push(d);
         }
       }
-
-      const xlist = _.map(list, (item)=>{
-        item.id = utils.toNumber(item.id);
-        item.cml_id = utils.toNumber(item.cml_id);
-        return item;
-      });
- 
-      store.commit('set_auction_list', xlist);
+//  console.log(3, list);
+      store.commit('set_auction_list', list);
     },
 
     async init_my_auction_list(store){
@@ -252,11 +247,11 @@ const store = new Vuex.Store({
       if(user_auction && user_auction.length > 0){
         for(let i=0, len=user_auction.length; i<len; i++){
           const tmp = await api.query.auction.auctionStore(user_auction[i]);
-          const d = tmp.toHuman();
+          const d = tmp.toJSON();
           if(d){
             if(d.bid_user){
               let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
-              bid_item = bid_item.toHuman();
+              bid_item = bid_item.toJSON();
               d.bid_price = bid_item.price;
             }
             
@@ -264,14 +259,9 @@ const store = new Vuex.Store({
           }
         }
       }
-      
-      const list = _.map(x_list, (item)=>{
-        item.id = utils.toNumber(item.id);
-        item.cml_id = utils.toNumber(item.cml_id);
-        return item;
-      });
-
-      store.commit('set_my_auction_list', list);
+    
+      // console.log(1, x_list);
+      store.commit('set_my_auction_list', x_list);
     },
 
     async init_my_bid_list(store){
@@ -297,20 +287,15 @@ const store = new Vuex.Store({
           const d = tmp.toJSON();
           if(d){
             const auction = await api.query.auction.auctionStore(d.auction_id);
-            d.auction = auction.toHuman();
-            d.cml_id = utils.toNumber(auction.toHuman().cml_id);
+            d.auction = auction.toJSON();
+            d.cml_id = d.auction.cml_id;
             x_list.push(d);
           }
         }
       }
-      // console.log(111, x_list);
 
-      const list = _.map(x_list, (item)=>{
-        item.auction_id = utils.toNumber(item.auction_id);
-        return item;
-      });
-
-      store.commit('set_my_bid_list', list);
+      // console.log(2, x_list);
+      store.commit('set_my_bid_list', x_list);
     }
   }
 })
