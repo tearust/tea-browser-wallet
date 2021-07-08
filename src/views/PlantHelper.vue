@@ -23,20 +23,31 @@
   </el-form>
 
   <div style="display:flex; justify-content: flex-end; margin-top: 40px;">
+    <!-- <el-button style="padding-left: 15px; padding-right: 15px;" 
+      @click="testPlant()"
+      plain
+      type="primary">
+      Plant for mining
+    </el-button> -->
+
+    <el-button style="padding-left: 15px; padding-right: 15px;" 
+      @click="generateShell()"
+      type="primary">
+      Generate shell
+    </el-button>
+
+  </div>
+
+  <div class="c-shell" v-if="shell">
+    <p>run >./start_tea_node.sh</p>
+  </div>
+  <div v-if="shell" style="display:flex; justify-content: flex-end; margin-top: 10px;">
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="testPlant()"
       plain
       type="primary">
       Plant for mining
     </el-button>
-
-    <el-button style="padding-left: 15px; padding-right: 15px;" 
-      @click="generateShell()"
-      type="primary">
-      Generate Shell
-    </el-button>
-
-
   </div>
 
 </div>
@@ -61,7 +72,9 @@ export default {
         miner_id: [{required: true}],
         miner_ip: [{required: true}],
         account: [{required: true}],
-      }
+      },
+
+      shell: false,
 
     };
   },
@@ -79,7 +92,9 @@ export default {
   },
   methods: {
     async generateShell(){
-      alert('TODO');
+      const ref = this.$refs['form'];
+      await ref.validate();
+      this.shell = true;
     },
     async testPlant(){
       const ref = this.$refs['form'];
@@ -104,3 +119,17 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.c-shell{
+  padding: 5px 15px;
+  margin-top: 20px;
+  height: 140px;
+  background: #000;
+  
+  p{
+    color: rgb(2, 250, 35);
+    padding: 2px 0;
+    margin: 0;
+  }
+}
+</style>
