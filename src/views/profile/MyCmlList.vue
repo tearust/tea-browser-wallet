@@ -102,7 +102,8 @@
         <el-button
           v-if="
             scope.row.generate_defrost_time<1 
-            && (scope.row.status==='FrozenSeed' || scope.row.status==='FreshSeed')"
+            && scope.row.status!=='Staking'
+            && scope.row.staking_slot.length<1"
           @click="clickPlantAction(scope)"
           type="text"
           size="small">
