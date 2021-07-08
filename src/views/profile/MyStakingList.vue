@@ -38,12 +38,21 @@
 
     <el-table-column
       prop="index"
+      width="100"
       label="My slot index"
     />
     <el-table-column
+      label="Staking with"
+      width="100"
+    >
+      <template slot-scope="scope">
+        {{scope.row.staking_slot[scope.row.index].category}}
+      </template>
+    </el-table-column>
+    <el-table-column
       prop="cml_type"
       label="Type"
-      width="70"
+      width="80"
     />
 
     <el-table-column
@@ -183,7 +192,7 @@ export default {
           index,
         }
       }));
-
+console.log(11, cml_list)
       this.list = cml_list;
     },
 
