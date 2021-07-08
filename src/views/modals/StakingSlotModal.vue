@@ -28,7 +28,15 @@
       <el-table-column
         prop="owner"
         label="Staker"
-      />
+      >
+        <template slot-scope="scope">
+          <el-button 
+            @click="close(); $router.push('/user_details/'+scope.row.owner)"
+            type="text">
+            {{scope.row.owner}}
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="category"
         label="Staking with"
@@ -39,7 +47,9 @@
         label="Staking CML ID"
         width="180"
       >
-        <template slot-scope="scope">{{scope.row.cml}}</template>
+        <template slot-scope="scope">
+          <el-button type="text" @click="close(); $router.push('/cml_details/'+scope.row.cml)">{{scope.row.cml}}</el-button>
+        </template>
       </el-table-column>
 
       <el-table-column

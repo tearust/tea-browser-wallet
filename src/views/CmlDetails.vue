@@ -99,7 +99,9 @@
         label="Staking CML ID"
         width="180"
       >
-        <template slot-scope="scope">{{scope.row.cml}}</template>
+        <template slot-scope="scope">
+          <el-button type="text" @click="$router.push('/cml_details/'+scope.row.cml)">{{scope.row.cml}}</el-button>
+        </template>
       </el-table-column>
 
       <el-table-column
