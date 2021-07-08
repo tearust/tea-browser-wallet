@@ -267,6 +267,30 @@ export default class {
 
     const current_block = await this.getCurrentBlock(api);
 
+    const unzip_status = (cml)=>{
+      const status = cml.status;
+      let rs = status;
+      if(_.isObject(status)){
+        if(_.has(status, 'frozenSeed')){
+          rs = 'Frozen seed';
+        }
+        else if(_.has(status, 'staking')){
+          rs = 'Staking';
+          cml.staking_cml_id = status.staking.cml_id;
+          cml.staking_index = status.staking.staking_index;
+        }
+        else if(_.has(status, 'tree')){
+          rs = 'Tree';
+        }
+        else{
+          rs = 'Fresh seed';
+          cml.fresh_seed_block = status.freshSeed.fresh_seed;
+        }
+      }
+      cml.status = rs;
+      return cml;
+    };
+
     const list = await Promise.all(_.map(cml_list, async (cml_id)=>{
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
@@ -276,6 +300,7 @@ export default class {
       let remaining = cml.intrinsic.lifespan - current_block;
       if(remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
+      cml = unzip_status(cml);
       // console.log(11, cml)
       return {
         ...cml,

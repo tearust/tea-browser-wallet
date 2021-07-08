@@ -62,6 +62,7 @@
     <el-table-column
       prop="status"
       label="Status"
+      width="120"
       sortable
     />
 

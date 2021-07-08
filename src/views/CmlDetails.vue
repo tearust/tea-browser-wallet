@@ -141,6 +141,7 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
       const cml_data = await this.wf.getCmlByList([this.id]);
+      // console.log(111, cml_data[0]);
       this.cml = cml_data[0];
       if(!this.cml){
         this.$alert('Invalid cml id');

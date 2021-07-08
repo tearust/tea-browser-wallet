@@ -56,13 +56,22 @@
   },
   "CmlId": "u64",
   "CmlStatus": {
-    "_enum": [
-      "FrozenSeed",
-      "FreshSeed(BlockNumber)",
-      "Tree",
-      "Staking(CmlId, StakingIndex)"
-    ]
+    "_enum": {
+      "FrozenSeed": null,
+      "FreshSeed": "CmlStatusFreshSeed",
+      "Tree": null,
+      "Staking": "CmlStatusStaking"
+    }
   },
+
+  "CmlStatusFreshSeed": {
+    "fresh_seed": "BlockNumber"
+  },
+  "CmlStatusStaking": {
+    "cml_id": "CmlId",
+    "staking_index": "StakingIndex"
+  },
+
   "MinerStatus": {
     "_enum": [
       "Active",
