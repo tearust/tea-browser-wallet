@@ -2,7 +2,10 @@
   <div class="tea-page">
     <h4>Account Details</h4>
     <div class="tea-card">
-      <i class="x-icon iconfont icon-a-TeaProject-T"></i>
+      <!-- <i class="x-icon iconfont icon-a-TeaProject-T"></i> -->
+      <i class="x-icon ">
+        <img src="/fav.png" />
+      </i>
       
       <div class="x-list" style="width:100%;">
         
