@@ -10,7 +10,7 @@
     @opened="openHandler()"
     @close="close()"
   >
-
+    <p>Cml Id: {{param.cml_id}}</p>
     <el-table 
       v-if="param.list"
       :data="param.list"
@@ -19,12 +19,6 @@
       size="small"
       border
     >
-      <el-table-column
-        label="CML ID"
-        width="120"
-      >
-        <template>{{param.cml_id}}</template>
-      </el-table-column>
       <el-table-column
         label="Index"
         width="100"
