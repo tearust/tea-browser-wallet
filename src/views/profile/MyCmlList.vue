@@ -68,19 +68,30 @@
       label="Status"
       width="120"
       sortable
-    />
+    >
+      <template slot-scope="scope">{{scope.row.status | str}}</template>
+    </el-table-column>
 
     <el-table-column
-      label="Staking slot"
-      width="120">
+      label="Staking status"
+      width="150">
       <template slot-scope="scope">
+        <span v-if="scope.row.staking_slot.length === 1">Myself</span>
         <el-button
-          v-if="scope.row.staking_slot.length>0"
+          v-if="scope.row.staking_slot.length>1"
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
           {{scope.row.staking_slot.length}}
         </el-button>
+        <span v-if="scope.row.status === 'Staking'">
+          <el-button
+            @click="$root.goPath('/cml_details/'+scope.row.staking_cml_id)"
+            type="text"
+            size="small">
+            CML{{scope.row.staking_cml_id}}
+          </el-button> at slot #{{scope.row.staking_index}}
+        </span>
       </template>
     </el-table-column>
 
@@ -89,7 +100,9 @@
       width="200">
       <template slot-scope="scope">
         <el-button
-          v-if="scope.row.generate_defrost_time<1 && scope.row.status!=='Tree'"
+          v-if="
+            scope.row.generate_defrost_time<1 
+            && (scope.row.status==='FrozenSeed' || scope.row.status==='FreshSeed')"
           @click="clickPlantAction(scope)"
           type="text"
           size="small">

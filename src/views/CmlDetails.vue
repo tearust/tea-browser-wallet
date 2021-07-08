@@ -57,9 +57,25 @@
       />
 
       <el-table-column
-        prop="status"
-        label="Status"
-      />
+          prop="status"
+          label="Status"
+          width="120"
+        >
+        <template slot-scope="scope">{{scope.row.status | str}}</template>
+      </el-table-column>
+
+      <el-table-column
+        v-if="is_staking"
+        label="Staking to"
+        width="120"
+      >
+        <template slot-scope="scope">
+          <el-button type="text" @click="changeCmlId(scope.row.staking_cml_id)">{{scope.row.staking_cml_id}}</el-button>
+        </template>
+      </el-table-column>
+      
+
+
     </el-table>
 
     <el-divider />
@@ -100,7 +116,7 @@
         width="180"
       >
         <template slot-scope="scope">
-          <el-button type="text" @click="$router.push('/cml_details/'+scope.row.cml)">{{scope.row.cml}}</el-button>
+          <el-button type="text" @click="changeCmlId(scope.row.cml)">{{scope.row.cml}}</el-button>
         </template>
       </el-table-column>
 
@@ -132,6 +148,7 @@ export default {
     return {
       cml: null,
       id: null,
+      is_staking: false,
     };
   },
   async mounted(){
@@ -153,10 +170,7 @@ export default {
       const cml_data = await this.wf.getCmlByList([this.id]);
       // console.log(111, cml_data[0]);
       this.cml = cml_data[0];
-      if(!this.cml){
-        this.$alert('Invalid cml id');
-        return;
-      }
+      this.is_staking = this.cml.status === 'Staking';
     },
     async showMinerInfo(miner_id){
       const layer1_instance = this.wf.getLayer1Instance();
@@ -176,6 +190,14 @@ export default {
         },
       });
     },
+    async changeCmlId(cml_id){
+      this.$root.goPath('/cml_details/'+cml_id, 'replace');
+      this.id = cml_id
+
+      this.$root.loading(true);
+      await this.refresh();
+      this.$root.loading(false);
+    }
   }
 }
 </script>

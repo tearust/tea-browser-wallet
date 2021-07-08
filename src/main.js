@@ -90,6 +90,9 @@ new Vue({
     },
     str(key){
       return _.get(strings, key, key);
+    },
+    goPath(path, type="push"){
+      this.$router[type](path).catch(()=>{});
     }
   },
   render: h => h(App),

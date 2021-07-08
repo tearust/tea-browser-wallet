@@ -272,7 +272,7 @@ export default class {
       let rs = status;
       if(_.isObject(status)){
         if(_.has(status, 'frozenSeed')){
-          rs = 'Frozen seed';
+          rs = 'FrozenSeed';
         }
         else if(_.has(status, 'staking')){
           rs = 'Staking';
@@ -283,7 +283,7 @@ export default class {
           rs = 'Tree';
         }
         else{
-          rs = 'Fresh seed';
+          rs = 'FreshSeed';
           cml.fresh_seed_block = status.freshSeed.fresh_seed;
         }
       }
