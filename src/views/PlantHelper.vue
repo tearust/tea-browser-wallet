@@ -1,6 +1,6 @@
 <template>
 <div class="tea-page">
-  <h4>Plant My Camellia</h4>
+  <h4>Plant my Camellia</h4>
   <p>Please input the below form to generate the mining shell.</p>
 
   <el-form :model="form" label-width="120px" :rules="rules" ref="form">
