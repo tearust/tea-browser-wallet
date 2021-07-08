@@ -1,7 +1,7 @@
 <template>
 
   <el-dialog
-    title="Staking Slot List"
+    title="Staking slot list"
     :visible="visible"
     width="80%"
     :close-on-click-modal="false"
