@@ -81,13 +81,22 @@
       width="200"
     >
       <template slot-scope="scope">
-        <el-link class="tea-action-icon" 
+        <el-tooltip v-if="scope.row.index<1" :content="'UnstakingButtonDisabledReason' | str">
+          <el-link class="tea-action-icon" 
+            :underline="false" 
+            type="primary" 
+            icon="el-icon-delete" 
+            @click="removeStaking(scope)"
+            :disabled="true"
+          ></el-link>
+        </el-tooltip>
+        <el-link v-if="scope.row.index>0" class="tea-action-icon" 
           :underline="false" 
           type="primary" 
           icon="el-icon-delete" 
           @click="removeStaking(scope)"
-          :disabled="scope.row.index<1"
         ></el-link>
+        
       </template>
     </el-table-column>
 
@@ -192,7 +201,7 @@ export default {
           index,
         }
       }));
-console.log(11, cml_list)
+
       this.list = cml_list;
     },
 

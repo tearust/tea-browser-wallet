@@ -15,6 +15,7 @@ import utils from './tea/utils';
 import { _ } from 'tearust_utils';
 
 import layer1_error_tips from './assets/error';
+import strings from './assets/string';
 
 Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
@@ -54,6 +55,9 @@ Vue.filter('balance', (value=0) => {
 Vue.filter('cardTitle', (value) => {
   return value.split(' ').join(' ');
 });
+Vue.filter('str', (key) => {
+  return _.get(strings, key, key);
+});
 
 const C = {};
 new Vue({
@@ -84,6 +88,9 @@ new Vue({
         type: 'error'
       });
     },
+    str(key){
+      return _.get(strings, key, key);
+    }
   },
   render: h => h(App),
 }).$mount('#app');
