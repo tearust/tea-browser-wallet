@@ -135,6 +135,16 @@ export default {
       cml_list: null,
     };
   },
+  async beforeRouteUpdate(to, from, next){
+    if(to.params.address && this.address && to.params.address !== this.address){
+      this.address = to.params.address;
+      this.$root.loading(true);
+      await this.refresh();
+      this.$root.loading(false);
+    }
+
+    next();
+  },
   async mounted(){
     this.address = this.$route.params.address;
 
@@ -166,6 +176,9 @@ export default {
         param: {
           list: scope.row.staking_slot,
           cml_id: scope.row.id,
+          staker_click: ()=>{
+            alert(1)
+          }
         }
       });
     },

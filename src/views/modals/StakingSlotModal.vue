@@ -31,7 +31,9 @@
       >
         <template slot-scope="scope">
           <el-button 
-            @click="close(); $router.push('/user_details/'+scope.row.owner)"
+            @click="
+              close(); 
+              $root.goPath('/user_details/'+scope.row.owner, 'replace')"
             type="text">
             {{scope.row.owner}}
           </el-button>
@@ -48,7 +50,11 @@
         width="180"
       >
         <template slot-scope="scope">
-          <el-button type="text" @click="close(); $router.push('/cml_details/'+scope.row.cml)">{{scope.row.cml}}</el-button>
+          <el-button type="text" 
+          @click="
+            close(); 
+            $router.push('/cml_details/'+scope.row.cml)"
+          >{{scope.row.cml}}</el-button>
         </template>
       </el-table-column>
 
@@ -105,6 +111,7 @@ export default {
       await utils.waitLayer1Ready(this.wf.layer1);
       this.layer1_instance = this.wf.getLayer1Instance();
       this.api = this.layer1_instance.getApi();
+
     },
 
     close(){
