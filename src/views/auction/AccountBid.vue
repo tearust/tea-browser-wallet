@@ -133,7 +133,7 @@ export default {
             const price = layer1_instance.asUnit(form.price);
 
             if(price < min_price){
-              throw 'Not Enough balance.'
+              throw 'Please input higher bid price'
             }
             
             const tx = api.tx.auction.bidForAuction(auction_id, price);
