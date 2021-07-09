@@ -104,7 +104,8 @@ export default {
       _.each(args, (item)=>{
         const n = item.name;
         labels[n] = utils.form.nameToLabel(n);
-        
+        form[n] = '';
+
         let type = item.type;
         if(_.startsWith(type, 'Option')){
           type = type.replace('Option<', '').replace('>', '');
@@ -113,13 +114,18 @@ export default {
         else{
           rules[n] = [{required: true}];
         }
+        
         types[n] = 'Input';
         if(tx.props && tx.props[n]){
           props[n] = tx.props[n];
           types[n] = props[n].type;
+
+          if(props[n].default){
+            form[n] = props[n].default;
+          }
         }
 
-        form[n] = '';
+        
         
       });
 

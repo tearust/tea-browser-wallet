@@ -165,15 +165,23 @@ export default {
             },
             acceptable_slot_index: {
               type: 'number',
-              min: 1,
+              min: 0,
+              default: 0
+
             }
           },
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
+            let index = form.acceptable_slot_index;
+            if(index < 1){
+              const [cml_item] = await this.wf.getCmlByList([form.staking_to]);
+              
+              index = cml_item.staking_slot.length;
+            }
 
-            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, form.acceptable_slot_index);
+            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, index);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 
