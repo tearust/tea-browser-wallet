@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Camellia Details"
+    title="Camellia details"
     :visible="visible"
     width="80%"
     :close-on-click-modal="false"

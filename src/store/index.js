@@ -212,7 +212,7 @@ const store = new Vuex.Store({
         const tmp = await api.query.auction.auctionStore(i);
   
         const d = tmp.toJSON();
-        if(d){
+        if(d && d.id > 0){
           if(d.bid_user){
             let bid_item = await api.query.auction.bidStore(d.bid_user, d.id);
             bid_item = bid_item.toJSON();
@@ -221,12 +221,15 @@ const store = new Vuex.Store({
           
           let tmp = await api.query.auction.bidStore(layer1_account.address, d.id);
           tmp = tmp.toJSON();
-          d.for_current = tmp;
+          if(tmp && tmp.auction_id > 0){
+            d.for_current = tmp;
+          }
+          
 
           list.push(d);
         }
       }
-//  console.log(3, list);
+
       store.commit('set_auction_list', list);
     },
 
@@ -243,29 +246,26 @@ const store = new Vuex.Store({
       const api = layer1_instance.getApi();
 
       let user_auction = await request.layer1_rpc('auction_userAuctionList', [layer1_account.address]);
-      console.log(111, user_auction, layer1_account.address);
 
-      // let user_auction = await api.query.auction.userAuctionStore(layer1_account.address);
-      // user_auction = user_auction.toJSON();
-      // const x_list = [];
-      // if(user_auction && user_auction.length > 0){
-      //   for(let i=0, len=user_auction.length; i<len; i++){
-      //     const tmp = await api.query.auction.auctionStore(user_auction[i]);
-      //     const d = tmp.toJSON();
-      //     if(d){
-      //       if(d.bid_user){
-      //         let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
-      //         bid_item = bid_item.toJSON();
-      //         d.bid_price = bid_item.price;
-      //       }
+      const x_list = [];
+      if(user_auction && user_auction.length > 0){
+        for(let i=0, len=user_auction.length; i<len; i++){
+          const tmp = await api.query.auction.auctionStore(user_auction[i]);
+          const d = tmp.toJSON();
+          if(d){
+            if(d.bid_user){
+              let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
+              bid_item = bid_item.toJSON();
+              d.bid_price = bid_item.price;
+            }
             
-      //       x_list.push(d);
-      //     }
-      //   }
-      // }
+            x_list.push(d);
+          }
+        }
+      }
     
-      // // console.log(1, x_list);
-      // store.commit('set_my_auction_list', x_list);
+      // console.log(1, x_list);
+      store.commit('set_my_auction_list', x_list);
     },
 
     async init_my_bid_list(store){
@@ -280,9 +280,7 @@ const store = new Vuex.Store({
       const layer1_instance = layer1.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      let user_bid = await api.query.auction.userBidStore(layer1_account.address);
-      user_bid = user_bid.toJSON();
-      
+      let user_bid = await request.layer1_rpc('auction_userBidList', [layer1_account.address]);
       const x_list = [];
 
       if(user_bid && user_bid.length > 0){

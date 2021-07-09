@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="BID"
+    title="Bid"
     :visible="visible"
     width="70%"
     :close-on-click-modal="false"

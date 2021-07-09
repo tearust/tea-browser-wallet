@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="(param && param.title) || 'Log Details'"
+    :title="(param && param.title) || 'Log details'"
     :visible="visible"
     width="90%"
     :close-on-click-modal="false"

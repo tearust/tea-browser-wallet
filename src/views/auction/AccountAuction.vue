@@ -6,6 +6,7 @@
   <el-table 
     :data="auction.my_auction_list"
     stripe
+    class="tea-table"
     size="small"
     border
   >
@@ -25,18 +26,34 @@
       prop="cml_owner"
       label="CML Owner"
     /> -->
+
     <el-table-column
       prop="starting_price"
       label="Starting price"
-    />
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.starting_price | balance" />
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="buy_now_price"
-      label="Buy now price"
-    />
+      label="Buy-now price"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.buy_now_price | balance"></span>
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="bid_price"
       label="Bid price"
-    />
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.bid_price | balance"></span>
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="status"
       label="Status"
