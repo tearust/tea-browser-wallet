@@ -10,11 +10,9 @@
     <h4>Genesis Camellia seeds in pool</h4>
     <p>The followings are all remaining genesis Camellia seeds. You can draw a seed using your coupon.</p>  
 
-  <el-table 
+  <TeaTable 
     :data="list || []"
-    stripe
-    size="small"
-    border
+    name="luck_draw_seed_pool_table"
   >
     <el-table-column
       prop="id"
@@ -53,7 +51,7 @@
     />
 
 
-  </el-table>
+  </TeaTable>
   
   <el-pagination
     hide-on-single-page
@@ -76,8 +74,9 @@
 import {_} from 'tearust_utils';
 import utils from '../tea/utils';
 import Base from '../workflow/Base';
+import TeaTable from '../components/TeaTable';
 export default {
-
+  components: {TeaTable},
   data(){
     return {
       cml_type: null,
