@@ -162,6 +162,10 @@ export default {
               options: _.filter(this.layer1_account.cml, (item)=>{
                 return item.generate_defrost_time < 1 && item.status !== 'Tree';
               }),
+            },
+            acceptable_slot_index: {
+              type: 'number',
+              min: 1,
             }
           },
         },
@@ -169,7 +173,7 @@ export default {
           this.$root.loading(true);
           try{
 
-            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null);
+            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, form.acceptable_slot_index);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 

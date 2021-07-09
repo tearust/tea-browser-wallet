@@ -67,7 +67,8 @@ const crypto = {
 
 const form = {
   nameToLabel(name){
-    return _.map(name.split('_'), (n)=>{
+    return _.map(name.split('_'), (n, i)=>{
+      if(i>0) return n;
       return _.capitalize(n);
     }).join(' ');
   }

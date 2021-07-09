@@ -29,6 +29,7 @@
           >
           </el-option>
         </el-select>
+        <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000"></el-input-number>
       </el-form-item>
       
     </el-form>
