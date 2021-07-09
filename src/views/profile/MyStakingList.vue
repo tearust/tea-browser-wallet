@@ -160,7 +160,7 @@ export default {
             staking_cml: {
               type: 'select',
               options: _.filter(this.layer1_account.cml, (item)=>{
-                return item.generate_defrost_time < 1 && item.status !== 'Tree';
+                return item.generate_defrost_time < 1 && item.staking_slot.length<1 && item.status !== 'Staking';
               }),
             },
             acceptable_slot_index: {
