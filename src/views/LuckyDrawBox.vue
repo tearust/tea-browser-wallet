@@ -48,7 +48,11 @@
     <el-table-column
       prop="status"
       label="Status"
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.status | str}}
+      </template>
+    </el-table-column>
 
 
   </TeaTable>

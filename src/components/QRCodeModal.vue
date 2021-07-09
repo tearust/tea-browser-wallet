@@ -1,7 +1,7 @@
 <template>
 
 <el-dialog
-  title="Use your phone app to scan this QR code"
+  title="Use your phone app to scan this QR code."
   :visible.sync="visible"
   width="800"
   :close-on-click-modal="false"
