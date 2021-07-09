@@ -6,6 +6,7 @@
   <el-table 
     :data="auction.my_bid_list"
     stripe
+    class="tea-table"
     size="small"
     border
   >
@@ -32,17 +33,19 @@
       prop="price"
       label="My price"
     >
-      <template slot-scope="scope">{{scope.row.price | formatBalance}}</template>
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.price | balance" />
+      </template>
     </el-table-column>
     
-    <el-table-column
+    <!-- <el-table-column
       prop="created_at"
       label="Created at"
     />
     <el-table-column
       prop="updated_at"
       label="Updated at"
-    />
+    /> -->
     
     <el-table-column
       label="Actions"
@@ -149,11 +152,11 @@ export default {
     },
     async deleteBid(scope){
       if(scope.row.auction.bid_user === this.layer1_account.address){
-        this.$message.error('You can delete this bid until anyone bid higher.');
+        this.$root.showError('You can delete this bid until anyone bid higher.');
         return;
       }
 
-      const x = await this.$confirm("Are you sure to delete this bid?", "Danger Operation").catch(()=>{});
+      const x = await this.$confirm("Are you sure to delete this bid?", "Danger operation").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();
