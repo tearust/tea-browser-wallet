@@ -186,7 +186,7 @@ export default {
         key: 'data_details',
         param: {
           ...mm,
-          title: 'Miner Details',
+          title: 'Miner details',
         },
       });
     },
