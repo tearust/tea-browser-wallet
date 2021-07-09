@@ -1,14 +1,9 @@
 <template>
 <div class="tea-page">
 
-  <el-table 
+  <TeaTable 
     :data="layer1_account ? layer1_account.cml : []"
-    stripe
-    ref="table"
-    class="tea-table"
-    @sort-change="sortChangeHandler"
-    size="small"
-    border
+    name="profile_cml_list_table"
   >
     <el-table-column
       prop="id"
@@ -114,7 +109,7 @@
         </el-button>
       </template>
     </el-table-column>
-  </el-table>
+  </TeaTable>
 
 
 </div>
@@ -126,7 +121,11 @@ import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
+import TeaTable from '../../components/TeaTable';
 export default {
+  components: {
+    TeaTable,
+  },
   data(){
     return {
       staking_modal: {
@@ -143,10 +142,6 @@ export default {
   },
   
   async mounted(){
-    const default_sort = utils.mem.get('profile_my_cml_table_sort');
-    if(default_sort && this.$refs['table']){
-      this.$refs['table'].sort(default_sort.prop, default_sort.order);
-    }
     
     this.wf = new SettingAccount();
     await this.wf.init();
@@ -189,12 +184,6 @@ export default {
     clickPlantAction(scope){
       this.$router.push('/plant_helper/'+scope.row.id);
     },
-
-    sortChangeHandler({order, prop}){
-      utils.mem.set('profile_my_cml_table_sort', {
-        order, prop
-      });
-    }
 
     
   }

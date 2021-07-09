@@ -105,6 +105,10 @@ query {
       }
     });
 
+    if(rs.data.error){
+      throw rs.data.error;
+    }
+
     if(rs.data.id === 9999){
       return rs.data.result;
     }

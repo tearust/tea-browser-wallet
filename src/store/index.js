@@ -7,6 +7,7 @@ import Base from '../workflow/Base';
 import modal from './modal';
 import clog from './clog';
 import utils from '../tea/utils';
+import request from '../request';
 
 Vue.use(Vuex);
 
@@ -241,27 +242,30 @@ const store = new Vuex.Store({
       const layer1_instance = layer1.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      let user_auction = await api.query.auction.userAuctionStore(layer1_account.address);
-      user_auction = user_auction.toJSON();
-      const x_list = [];
-      if(user_auction && user_auction.length > 0){
-        for(let i=0, len=user_auction.length; i<len; i++){
-          const tmp = await api.query.auction.auctionStore(user_auction[i]);
-          const d = tmp.toJSON();
-          if(d){
-            if(d.bid_user){
-              let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
-              bid_item = bid_item.toJSON();
-              d.bid_price = bid_item.price;
-            }
+      let user_auction = await request.layer1_rpc('auction_userAuctionList', [layer1_account.address]);
+      console.log(111, user_auction, layer1_account.address);
+
+      // let user_auction = await api.query.auction.userAuctionStore(layer1_account.address);
+      // user_auction = user_auction.toJSON();
+      // const x_list = [];
+      // if(user_auction && user_auction.length > 0){
+      //   for(let i=0, len=user_auction.length; i<len; i++){
+      //     const tmp = await api.query.auction.auctionStore(user_auction[i]);
+      //     const d = tmp.toJSON();
+      //     if(d){
+      //       if(d.bid_user){
+      //         let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
+      //         bid_item = bid_item.toJSON();
+      //         d.bid_price = bid_item.price;
+      //       }
             
-            x_list.push(d);
-          }
-        }
-      }
+      //       x_list.push(d);
+      //     }
+      //   }
+      // }
     
-      // console.log(1, x_list);
-      store.commit('set_my_auction_list', x_list);
+      // // console.log(1, x_list);
+      // store.commit('set_my_auction_list', x_list);
     },
 
     async init_my_bid_list(store){

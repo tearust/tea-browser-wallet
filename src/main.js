@@ -82,7 +82,7 @@ new Vue({
         C._loading && C._loading.close();
       }
     },
-    showError(e, title = 'Layer1 Error') {
+    showError(e, title = 'Error message') {
       const err = e.message || e.toString();
       const ex = _.get(layer1_error_tips, err, err);
       this.$alert(ex, title, {
