@@ -301,6 +301,12 @@ export default class {
       if(remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
       cml = unzip_status(cml);
+
+      cml.staking_slot = _.map(cml.staking_slot, (item)=>{
+        item.category = _.toUpper(item.category);
+        return item;
+      });
+
       // console.log(11, cml)
       return {
         ...cml,

@@ -46,7 +46,7 @@
       width="150"
     >
       <template slot-scope="scope">
-        {{scope.row.staking_slot[scope.row.index].category | upper}}
+        {{scope.row.staking_slot[scope.row.index].category}}
         <el-button type="text" @click="$root.goPath('/cml_details/'+scope.row.staking_slot[scope.row.index].cml)" v-if="scope.row.staking_slot[scope.row.index].cml">
           ({{scope.row.staking_slot[scope.row.index].cml}})
         </el-button>
