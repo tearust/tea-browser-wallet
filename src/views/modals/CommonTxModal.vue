@@ -16,7 +16,7 @@
     <p v-if="!loading && param.text" style="font-size: 15px;">
       {{param.text}}
     </p>
-    <el-form v-if="!loading" :model="form" :rules="rules" :label-width="(param.label_width||150)+'px'">
+    <el-form v-if="!loading" ref="tx_form" :model="form" :rules="rules" :label-width="(param.label_width||150)+'px'">
       <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name">
         <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]"></el-input>
 
@@ -108,13 +108,6 @@ export default {
         form[n] = '';
 
         let type = item.type;
-        if(_.startsWith(type, 'Option')){
-          type = type.replace('Option<', '').replace('>', '');
-          rules[n] = [];
-        }
-        else{
-          rules[n] = [{required: true}];
-        }
         
         types[n] = 'Input';
         props[n] = {};
@@ -129,6 +122,14 @@ export default {
           if(props[n].label){
             labels[n] = props[n].label;
           }
+        }
+
+        if(_.startsWith(type, 'Option')){
+          type = type.replace('Option<', '').replace('>', '');
+          rules[n] = [];
+        }
+        else{
+          rules[n] = [{required: true, message: `${labels[n]} is required.`}];
         }
 
         
@@ -152,6 +153,9 @@ export default {
       }, 500)
     },
     async confrim(){
+      const ref = this.$refs['tx_form'];
+      await ref.validate();
+
       const cb = utils.mem.get('common_tx');
       if(cb){
         const form = this.form;
