@@ -38,5 +38,6 @@ export default {
 	LockableInvalid: 'LockableInvalid',
 	NotAllowToAuction: 'NotAllowToAuction',
 	BalanceReserveOrUnreserveError: 'BalanceReserveOrUnreserveError',
-	NotEnoughBalanceForPenalty: 'NotEnoughBalanceForPenalty',
+  NotEnoughBalanceForPenalty: 'NotEnoughBalanceForPenalty',
+  BuyNowPriceShouldHigherThanStartingPrice: 'Buy now price should higher than starting price.'
 };

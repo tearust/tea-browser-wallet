@@ -134,6 +134,10 @@ export default {
             const p1 = layer1_instance.asUnit(form.starting_price);
             const p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
 
+            if(p2 && p2<=p1){
+              throw 'BuyNowPriceShouldHigherThanStartingPrice';
+            }
+
             const tx = api.tx.auction.putToStore(cml_id, p1, p2, form.auto_renew);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
