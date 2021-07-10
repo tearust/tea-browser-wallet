@@ -45,7 +45,7 @@
       </el-table-column>
 
       <el-table-column
-        label="Cml Id"
+        label="CML Id"
         width="60"
       >
         <template slot-scope="scope">

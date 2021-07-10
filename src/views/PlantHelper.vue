@@ -4,7 +4,7 @@
   <p>Please input the below form to generate the mining shell.</p>
 
   <el-form :model="form" label-width="120px" :rules="rules" ref="form">
-    <el-form-item label="Cml Id" prop="cml_id">
+    <el-form-item label="CML Id" prop="cml_id">
       <el-input v-model="form.cml_id"></el-input>
     </el-form-item>
 

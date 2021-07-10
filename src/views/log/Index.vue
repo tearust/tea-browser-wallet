@@ -40,7 +40,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Cml ID"
+      label="CML ID"
     >
       <template slot-scope="scope">
         {{scope.row.cmlId}}

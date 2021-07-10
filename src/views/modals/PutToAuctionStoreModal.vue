@@ -10,7 +10,7 @@
   >
 
     <el-form :model="form" label-width="120px">
-      <el-form-item label="Cml Id">
+      <el-form-item label="CML Id">
         <el-input v-model="form.cml_id"></el-input>
       </el-form-item>
       <el-form-item label="Starting price">

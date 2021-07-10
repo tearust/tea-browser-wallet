@@ -32,7 +32,7 @@
     </div>
     <el-divider />
 
-    <h4>Cml List</h4>
+    <h4>CML List</h4>
     <el-table 
       :data="cml_list || []"
       stripe

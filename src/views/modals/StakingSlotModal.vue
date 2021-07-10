@@ -10,7 +10,7 @@
     @opened="openHandler()"
     @close="close()"
   >
-    <p>Cml Id: {{param.cml_id}}</p>
+    <p>CML Id: {{param.cml_id}}</p>
     <el-table 
       v-if="param.list"
       :data="param.list"
