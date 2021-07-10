@@ -29,9 +29,11 @@
     <el-table-column
       prop="machine_id"
       label="Miner ID"
+      width="120"
     > 
       <template slot-scope="scope">
         <el-button
+          class="c-btn"
           @click="showMinerInfo(scope.row.machine_id)"
           type="text"
           size="small">

@@ -311,6 +311,7 @@ export default class {
         item.category = _.toUpper(item.category);
         return item;
       });
+      cml.slot_len = cml.staking_slot.length;
 
       // status;
       cml.status = ((row)=>{

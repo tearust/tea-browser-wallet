@@ -18,6 +18,8 @@ import CmlDetails from './views/CmlDetails';
 import PlantHelper from './views/PlantHelper';
 import UserDetails from './views/UserDetails';
 
+import MiningTreeList from './views/MiningTreeList';
+
 
 Vue.use(Router);
 
@@ -86,6 +88,11 @@ let routers = [
     path: '/user_details/:address',
     name: 'user_details',
     component: UserDetails,
+  },
+  {
+    path: '/top_tree_list',
+    name: 'top_tree_list',
+    component: MiningTreeList,
   }
   
 ];

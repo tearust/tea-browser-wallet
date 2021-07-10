@@ -32,6 +32,8 @@
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
 
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
+
+  <el-menu-item index="/top_tree_list">{{'Mining Tree'}}</el-menu-item>
   <el-menu-item index="/auction_store">{{'Marketplace'}}</el-menu-item>
 
   <el-menu-item v-if="has_seed_pool" index="/lucky_draw">{{'Seed pool'}}</el-menu-item>

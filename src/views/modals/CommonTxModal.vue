@@ -16,9 +16,9 @@
     <p v-if="!loading && param.text" style="font-size: 15px;">
       {{param.text}}
     </p>
-    <el-form v-if="!loading" :model="form" :rules="rules" label-width="150px">
+    <el-form v-if="!loading" :model="form" :rules="rules" :label-width="(param.label_width||150)+'px'">
       <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name">
-        <el-input v-if="types[item.name]==='Input'" v-model="form[item.name]"></el-input>
+        <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]"></el-input>
 
         <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select.">
           <el-option
@@ -30,6 +30,7 @@
           </el-option>
         </el-select>
         <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000"></el-input-number>
+
       </el-form-item>
       
     </el-form>
@@ -116,12 +117,17 @@ export default {
         }
         
         types[n] = 'Input';
+        props[n] = {};
         if(tx.props && tx.props[n]){
           props[n] = tx.props[n];
           types[n] = props[n].type;
 
           if(props[n].default){
             form[n] = props[n].default;
+          }
+
+          if(props[n].label){
+            labels[n] = props[n].label;
           }
         }
 

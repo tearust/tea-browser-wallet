@@ -147,7 +147,7 @@ export default {
             staking_cml: {
               type: 'select',
               options: _.filter(this.layer1_account.cml, (item)=>{
-                return item.generate_defrost_time < 1 && item.staking_slot.length<1 && item.status !== 'Staking';
+                return item.generate_defrost_time < 1 && item.slot_len<1 && item.status !== 'Staking';
               }),
             },
             acceptable_slot_index: {
@@ -161,12 +161,10 @@ export default {
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
-            let index = form.acceptable_slot_index;
-            if(index < 1){
-              const [cml_item] = await this.wf.getCmlByList([form.staking_to]);
+            let index = form.acceptable_slot_index || 0;
+            const [cml_item] = await this.wf.getCmlByList([form.staking_to]);
               
-              index = cml_item.staking_slot.length;
-            }
+            index = cml_item.slot_len + index;
 
             const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, index);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
