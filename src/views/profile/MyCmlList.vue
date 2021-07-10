@@ -67,7 +67,9 @@
       width="120"
       sortable
     >
-      <template slot-scope="scope">{{scope.row.status | str}}</template>
+      <template slot-scope="scope">
+        {{scope.row | cml_status}}
+      </template>
     </el-table-column>
 
     <el-table-column

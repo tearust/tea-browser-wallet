@@ -3,6 +3,10 @@ import utils from './tea/utils';
 import { _ } from 'tearust_utils';
 import strings from './assets/string';
 
+const str = (key)=>{
+  return _.get(strings, key, key);
+};
+
 Vue.filter('formatBalance', (value) => {
   if (!value) return '';
   return utils.layer1.formatBalance(value);
@@ -32,4 +36,20 @@ Vue.filter('str', (key) => {
 
 Vue.filter('upper', (value)=>{
   return _.toUpper(value);
+});
+
+
+// cml
+Vue.filter('cml_status', (row)=>{
+  if(row.status !== 'Tree'){
+    return str(row.status);
+  }
+  if(row.status === 'Tree'){
+    if(row.staking_slot.length > 0){
+      return 'Mining';
+    }
+    else{
+      return 'Tree'
+    }
+  }
 });
