@@ -44,14 +44,14 @@
       prop="performance"
       label="Performance"
       sortable
-      width="120"
+      width="110"
     />
 
     <el-table-column
       prop="defrost_schedule"
       label="Defrost schedule"
       sortable
-      width="150"
+      width="130"
     />
 
     <el-table-column
@@ -64,27 +64,35 @@
     <el-table-column
       prop="status"
       label="Status"
-      width="120"
+      width="110"
       sortable
     >
       <template slot-scope="scope">
-        {{scope.row | cml_status}}
+        {{scope.row.status | str}}
       </template>
     </el-table-column>
 
     <el-table-column
       label="Staking status"
-      width="150">
+      width="180">
       <template slot-scope="scope">
-        <span v-if="scope.row.staking_slot.length === 1">Myself</span>
+        <el-button
+          v-if="scope.row.staking_slot.length === 1"
+          @click="showStakingSlot(scope)"
+          type="text"
+          size="small">
+          Mining - 1 occupied slot
+        </el-button>
+        <!-- <span v-if="scope.row.staking_slot.length === 1">Mining - 1 occupied slot</span> -->
         <el-button
           v-if="scope.row.staking_slot.length>1"
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
-          {{scope.row.staking_slot.length}}
+          Mining - {{scope.row.staking_slot.length}} occupied slots
         </el-button>
         <span v-if="scope.row.status === 'Staking'">
+          Stake to
           <el-button
             @click="$root.goPath('/cml_details/'+scope.row.staking_cml_id)"
             type="text"

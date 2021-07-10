@@ -7,6 +7,11 @@ import {hexToString, formatBalance} from 'tearust_layer1';
 
 import './index';
 
+import strings from '../assets/string';
+
+const str = (key)=>{
+  return _.get(strings, key, key);
+};
 
 const {_, uuid, forge} = tearust_utils;
 
@@ -82,6 +87,7 @@ const F = {
   forge,
   layer1,
   consts,
+  str,
   form,
 
   getHttpBaseUrl() {

@@ -307,6 +307,20 @@ export default class {
         return item;
       });
 
+      // status;
+      cml.status = ((row)=>{
+        if(row.status === 'Tree'){
+          if(row.staking_slot.length > 0){
+            return 'Mining';
+          }
+          else{
+            return 'Tree'
+          }
+        }
+        
+        return row.status;
+      })(cml);
+      
       // console.log(11, cml)
       return {
         ...cml,
