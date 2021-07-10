@@ -21,9 +21,9 @@
     >
       <template slot-scope="scope">
         <el-button
-          @click="showCmlDetails(scope)"
-          type="text"
-          size="small">
+          @click="$root.goPath('/cml_details/'+scope.row.cml_id)"
+          size="small"
+          type="text">
           {{scope.row.cml_id}}
         </el-button>
       </template>
@@ -35,6 +35,15 @@
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.price | balance" />
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="bid_price"
+      label="Bid price"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.bid_price | balance"></span>
       </template>
     </el-table-column>
     
@@ -84,7 +93,9 @@ export default {
     await this.refreshList();
 
     utils.register('refresh_auction__my_bid', async ()=>{
-      await this.refreshList();
+      _.delay(()=>{
+        this.refreshList();
+      }, 200);
     });
   },
   methods: {

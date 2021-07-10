@@ -101,7 +101,9 @@ export default {
     await this.refreshList();
 
     utils.register('refresh_auction__auction_store', async ()=>{
-      await this.refreshList();
+      _.delay(()=>{
+        this.refreshList();
+      }, 200);
     });
   },
   methods: {

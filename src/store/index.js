@@ -290,13 +290,18 @@ const store = new Vuex.Store({
           if(d){
             const auction = await api.query.auction.auctionStore(d.auction_id);
             d.auction = auction.toJSON();
+            if(d.auction.bid_user){
+              let bid_item = await api.query.auction.bidStore(d.auction.bid_user, d.auction_id);
+              bid_item = bid_item.toJSON();
+              d.bid_price = bid_item.price;
+            }
             d.cml_id = d.auction.cml_id;
             x_list.push(d);
           }
         }
       }
 
-      // console.log(2, x_list);
+      console.log(2, x_list);
       store.commit('set_my_bid_list', x_list);
     }
   }

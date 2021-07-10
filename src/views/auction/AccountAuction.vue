@@ -71,7 +71,7 @@
   </el-table>
 
   <div style="display:flex; justify-content: flex-end;">
-    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openPutAuctionModal()">Add New Auction</el-button>
+    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openPutAuctionModal()">Add new auction</el-button>
   </div>
 </div>
 </template>
@@ -100,7 +100,9 @@ export default {
     await this.refreshList();
 
     utils.register('refresh_auction__my_auction', async ()=>{
-      await this.refreshList();
+      _.delay(()=>{
+        this.refreshList();
+      }, 200);
     });
   },
 
