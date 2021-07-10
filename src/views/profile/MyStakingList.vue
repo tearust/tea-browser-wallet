@@ -43,28 +43,15 @@
     />
     <el-table-column
       label="Staking with"
-      width="100"
+      width="150"
     >
       <template slot-scope="scope">
-        {{scope.row.staking_slot[scope.row.index].category}}
+        {{scope.row.staking_slot[scope.row.index].category | upper}}
+        <el-button type="text" @click="$root.goPath('/cml_details/'+scope.row.staking_slot[scope.row.index].cml)" v-if="scope.row.staking_slot[scope.row.index].cml">
+          ({{scope.row.staking_slot[scope.row.index].cml}})
+        </el-button>
       </template>
     </el-table-column>
-    <el-table-column
-      prop="cml_type"
-      label="Type"
-      width="80"
-    />
-
-    <el-table-column
-      prop="liferemaining"
-      label="Life remaining"
-    />
-
-    <el-table-column
-      prop="performance"
-      label="Performance"
-      width="120"
-    />
 
     <el-table-column
       prop="weight"
@@ -78,7 +65,7 @@
 
     <el-table-column
       label="Actions"
-      width="200"
+
     >
       <template slot-scope="scope">
         <el-tooltip v-if="scope.row.index<1" :content="'UnstakingButtonDisabledReason' | str">

@@ -17,6 +17,8 @@ import { _ } from 'tearust_utils';
 import layer1_error_tips from './assets/error';
 import strings from './assets/string';
 
+import './filter';
+
 Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
 
@@ -31,33 +33,6 @@ router.beforeEach((to, from, next) => {
   }
 
   next();
-})
-
-Vue.filter('formatBalance', (value) => {
-  if (!value) return '';
-  return utils.layer1.formatBalance(value);
-});
-
-Vue.filter('addTea', (value) => {
-  return `${value} TEA`;
-});
-Vue.filter('teaIcon', (value=0) => {
-  const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
-  return symbol + (_.isNull(value)?'0':value);
-});
-Vue.filter('balance', (value) => {
-  if(_.isNull(value) || _.isUndefined(value)) return '';
-  value = parseInt(value, 10) / (1000000*1000000);
-  value = Math.floor(value*10000)/10000;
-
-  const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
-  return symbol + value;
-});
-Vue.filter('cardTitle', (value) => {
-  return value.split(' ').join(' ');
-});
-Vue.filter('str', (key) => {
-  return _.get(strings, key, key);
 });
 
 const C = {};
