@@ -30,6 +30,15 @@
     </el-table-column>
 
     <el-table-column
+      prop="bid_price"
+      label="Bid price"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.bid_price | balance"></span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
       prop="price"
       label="My price"
     >
@@ -38,14 +47,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column
-      prop="bid_price"
-      label="Bid price"
-    >
-      <template slot-scope="scope">
-        <span :inner-html.prop="scope.row.bid_price | balance"></span>
-      </template>
-    </el-table-column>
+    
     
     <!-- <el-table-column
       prop="created_at"
