@@ -172,13 +172,11 @@ const store = new Vuex.Store({
       store.commit('set_layer1_asset', null);
     },
     
-    async init_auction_store(store, params){
+    async init_auction_store(store){
       const layer1_account = store.getters.layer1_account;
       if(!layer1_account){
         throw 'Invalid layer1 account';
       }
-
-      const {page_size=10, from_start=false} = params;
 
       const layer1 = await F.getLayer1();
       await utils.waitLayer1Ready(layer1);
@@ -186,31 +184,11 @@ const store = new Vuex.Store({
       const layer1_instance = layer1.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      let last_auction_id;
-      if(from_start){
+      const auction_list = await request.layer1_rpc('auction_currentAuctionList', []);
+      
+      const list = await Promise.all(_.map(auction_list, async (auction_id)=>{
+        const tmp = await api.query.auction.auctionStore(auction_id);
         
-        last_auction_id = (await api.query.auction.lastAuctionId()).toJSON();
-        store.commit('set_auction_last_id', last_auction_id);
-        store.commit('set_auction_list', []);
-      }
-      else{
-        const last_auction = _.last(store.state.auction.auction_list.length);
-        if(last_auction){
-          last_auction_id = last_auction.id;
-        }
-        else{
-          last_auction_id = MIN_AUCTION_ID;
-        }
-      }
-      
-      let end = last_auction_id - page_size;
-      if(end < MIN_AUCTION_ID) end = MIN_AUCTION_ID-1;
-
-      const list = [];
-      
-      for(let i=last_auction_id; i>end; i--){
-        const tmp = await api.query.auction.auctionStore(i);
-  
         const d = tmp.toJSON();
         if(d && d.id > 0){
           if(d.bid_user){
@@ -226,9 +204,10 @@ const store = new Vuex.Store({
           }
           
 
-          list.push(d);
+          return d;
         }
-      }
+
+      }));
 
       store.commit('set_auction_list', list);
     },

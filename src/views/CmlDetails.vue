@@ -23,6 +23,7 @@
         prop="liferemaining"
         label="Life remaining"
       />
+
       <el-table-column
         prop="machine_id"
         label="Miner ID"

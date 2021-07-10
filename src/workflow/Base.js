@@ -295,12 +295,17 @@ export default class {
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
 
+      cml = unzip_status(cml);
+
       cml.defrost_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
 
-      let remaining = cml.intrinsic.lifespan - current_block;
+      let remaining = cml.intrinsic.lifespan;
+      if(cml.status !== 'FrozenSeed'){
+        remaining = remaining + cml.planted_at - current_block;
+      }
+
       if(remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
-      cml = unzip_status(cml);
 
       cml.staking_slot = _.map(cml.staking_slot, (item)=>{
         item.category = _.toUpper(item.category);
@@ -321,7 +326,7 @@ export default class {
         return row.status;
       })(cml);
       
-      // console.log(11, cml)
+
       return {
         ...cml,
         ...cml.intrinsic,

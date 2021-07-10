@@ -110,10 +110,7 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       try{
-        await this.$store.dispatch('init_auction_store', {
-          page_size: 100,
-          from_start: true,
-        });
+        await this.$store.dispatch('init_auction_store');
       }catch(e){
         this.$root.showError(e);
       }
@@ -166,10 +163,7 @@ export default {
             this.$message.success('success');
             this.$store.commit('modal/close', 'bid_for_auction');
 
-            await this.$store.dispatch('init_auction_store', {
-              page_size: 100,
-              from_start: true,
-            });
+            await this.$store.dispatch('init_auction_store');
           }catch(e){
             this.$root.showError(e);
           }
