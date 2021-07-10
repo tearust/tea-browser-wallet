@@ -254,7 +254,7 @@ export default class {
   }
 
   async getCmlListByUser(address){
-    const user_cml_list = await request.layer1_rpc('cml_getUserCmlList', [
+    const user_cml_list = await request.layer1_rpc('cml_userCmlList', [
       address
     ])
 

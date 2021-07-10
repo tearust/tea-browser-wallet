@@ -198,7 +198,7 @@ export default {
     },
 
     async refreshList(){
-      const list = await request.layer1_rpc('cml_getUserStakingList', [
+      const list = await request.layer1_rpc('cml_userStakingList', [
         this.layer1_account.address
       ]);
 
