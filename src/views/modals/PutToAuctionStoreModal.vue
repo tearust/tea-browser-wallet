@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="'PutCmlToAuctionSore' | str"
+    :title="'PutCmlToAuctionStore' | str"
     :visible="visible"
     width="70%"
     :close-on-click-modal="false"
