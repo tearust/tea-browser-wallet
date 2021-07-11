@@ -46,6 +46,7 @@
         <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
         <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
+        <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Repayment</el-button>
       </div>
 
     </div>
@@ -255,6 +256,25 @@ export default {
 
       clipboard.on('error', (e)=>{
       });
+    },
+
+    async repaymentHandler(){
+      const x = await this.$confirm("Are you sure to repayment the debt?", "Info").catch(()=>{});
+      if(!x) return;
+
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$root.loading(true);
+      try{
+        const tx = api.tx.cml.payOffMiningCredit();
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+        await this.refreshAccount();
+        this.$message.success('success');
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
     }
   }
 
