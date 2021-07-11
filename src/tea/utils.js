@@ -179,12 +179,12 @@ const F = {
     const rs = mem.get(key);
     if(rs) return rs;
     
-    // const request = require('../request');
-    // const price_table = await request.layer1_rpc('cml_stakingPriceTable', []);
+    const request = (require('../request')).default;
+    const rpc_rs = await request.layer1_rpc('cml_stakingPriceTable', []);
     const fn = (n)=>{
-      return Math.round((Math.sqrt(n+1)-Math.sqrt(n))*100, 2)/100
+      return n / 1000000*1000000;
     };
-    const price_table = _.map(_.range(10), (n)=>fn(n));
+    const price_table = _.map(rpc_rs, (n)=>fn(n));
     // console.log(111, price_table);
     mem.set(key, price_table);
 
