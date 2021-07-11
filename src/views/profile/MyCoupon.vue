@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page">
 
-  <span class="tea-table-tip">Coupon will be expired in <b class="block">{{expired_block}}</b> blocks</span>
+  <span class="tea-table-tip">All coupons will be expired in <b class="block">{{expired_block}}</b> blocks</span>
   <el-table 
     :data="list"
     stripe
@@ -11,18 +11,18 @@
     <el-table-column
       prop="type"
       width="150"
-      label="Type"
+      label="Seeds type"
       sortable
     />
     <el-table-column
       prop="schedule"
-      label="Defrost Schedule"
+      label="Seeds defrost schedule"
       sortable
     />
 
     <el-table-column
       prop="amount"
-      label="Amount"
+      label="Coupon amount"
       width="150"
     />
   
@@ -33,7 +33,7 @@
       @click="dai_modal.visible=true"
       plain
       type="primary">
-      Transfer
+      Transfer coupon
     </el-button>
 
     <el-button style="padding-left: 15px; padding-right: 15px;" 
@@ -44,7 +44,7 @@
         (!layer1_account.voucher_team_C || layer1_account.voucher_team_C.amount<1) 
       "
       type="primary">
-      Seed draw - Team
+      Redeem team coupon
     </el-button>
 
     <el-button style="padding-left: 15px; padding-right: 15px;" 
@@ -55,7 +55,7 @@
         (!layer1_account.voucher_investor_C || layer1_account.voucher_investor_C.amount<1) 
       "
       type="primary">
-      Seed draw - Investor
+      Redeem investor coupon
     </el-button>
 
   </div>
