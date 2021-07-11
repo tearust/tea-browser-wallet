@@ -103,7 +103,6 @@ export default class {
     const chainInfo = await api.registry.getChainProperties();
     store.commit('set_chain', chainInfo.toHuman());
 
-    
     // console.log(1, api.errors)
   }
 

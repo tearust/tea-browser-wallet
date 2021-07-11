@@ -174,6 +174,30 @@ const F = {
     }
   },
 
+  async getPriceTable(){
+    const key = 'staking_price_table';
+    const rs = mem.get(key);
+    if(rs) return rs;
+    
+    // const request = require('../request');
+    // const price_table = await request.layer1_rpc('cml_stakingPriceTable', []);
+    const fn = (n)=>{
+      return Math.round((Math.sqrt(n+1)-Math.sqrt(n))*100, 2)/100
+    };
+    const price_table = _.map(_.range(10), (n)=>fn(n));
+    // console.log(111, price_table);
+    mem.set(key, price_table);
+
+    return price_table;
+  },
+  async getStakingWeightByIndex(index, len){
+    const table = await F.getPriceTable();
+    const xt = _.slice(table, 0, len);
+    const total = _.sum(xt);
+
+    return (Math.round((table[index] / total)*100000)/1000)+'%';
+  }
+
 
 };
 

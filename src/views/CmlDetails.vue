@@ -129,6 +129,11 @@
           <span :inner-html.prop="scope.row.amount | balance"></span>
         </template>
       </el-table-column>
+      <el-table-column
+        label="Weight"
+        prop="weight"
+        width="150"
+      />
       
       
     </el-table>
@@ -171,6 +176,10 @@ export default {
       const cml_data = await this.wf.getCmlByList([this.id]);
       // console.log(111, cml_data[0]);
       this.cml = cml_data[0];
+      this.cml.staking_slot = await Promise.all(_.map(this.cml.staking_slot, async (item, index)=>{
+        item.weight = await utils.getStakingWeightByIndex(index, this.cml.slot_len);
+        return item;
+      }));
       this.is_staking = this.cml.status === 'Staking';
     },
     async showMinerInfo(miner_id){

@@ -165,7 +165,7 @@ export default {
     
     showStakingSlot(scope){
       // console.log(111, scope.row);
-      this.$store.commit('modal/open', {
+      this.$store.dispatch('modal/open', {
         key: 'staking_slot',
         param: {
           list: scope.row.staking_slot,

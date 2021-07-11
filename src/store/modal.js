@@ -74,5 +74,21 @@ export default {
         utils.mem.remove(key);
       }
     }
-  }
+  },
+  actions: {
+    async open(store, opts){
+      const {key, param} = opts;
+      if(!key) throw 'Invalid open modal key.';
+
+      if(key === 'staking_slot'){
+        const len = param.list.length;
+        param.list = await Promise.all(_.map(param.list, async (item, index)=>{
+          item.weight = await utils.getStakingWeightByIndex(index, len);
+          return item;
+        }));
+      }
+
+      store.commit('open', opts);
+    }
+  },
 };

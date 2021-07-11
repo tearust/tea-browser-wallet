@@ -59,7 +59,7 @@
       width="120"
     >
       <template slot-scope="scope">
-        {{scope.row.weight || 'TODO'}}
+        {{scope.row.weight}}
       </template>
     </el-table-column>
 
@@ -165,7 +165,6 @@ export default {
             const [cml_item] = await this.wf.getCmlByList([form.staking_to]);
               
             index = cml_item.slot_len + index;
-
             const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, index);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
@@ -192,10 +191,12 @@ export default {
         const index = val[1];
 
         const [cml] = await this.wf.getCmlByList([cml_id]);
+        const weight = await utils.getStakingWeightByIndex(index, cml.slot_len);
 
         return {
           ...cml,
           index,
+          weight,
         }
       }));
 
@@ -203,7 +204,7 @@ export default {
     },
 
     showStakingSlot(scope){
-      this.$store.commit('modal/open', {
+      this.$store.dispatch('modal/open', {
         key: 'staking_slot',
         param: {
           list: scope.row.staking_slot,

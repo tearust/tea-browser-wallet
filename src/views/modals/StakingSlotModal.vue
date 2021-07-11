@@ -66,6 +66,12 @@
           <span :inner-html.prop="scope.row.amount | balance"></span>
         </template>
       </el-table-column>
+      <el-table-column
+        label="Weight"
+        width="150"
+        prop="weight"
+      />
+      
 
 
       
@@ -101,7 +107,13 @@ export default {
       visible:state => store.state.modal.staking_slot.visible,
       // title: state => store.state.modal.common_tx.title,
       param: state => store.state.modal.staking_slot.param,
-    })
+    }),
+
+    list: (p)=>{
+      console.log(p.param.list);
+
+      return p.param.list;
+    }
   },
 
   methods: {
