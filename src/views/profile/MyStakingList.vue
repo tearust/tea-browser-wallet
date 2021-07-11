@@ -218,7 +218,7 @@ export default {
     },
     
     async removeStaking(scope){
-      const x = await this.$confirm("Are you sure to remove staking?", "Remove Staking").catch(()=>{});
+      const x = await this.$confirm("Once unstake, your current staking slot will be occupied by other slots above", "Unstake").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();
