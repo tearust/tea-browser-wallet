@@ -139,10 +139,10 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
-          title: 'Staking invest',
+          title: 'Staking to Camellia',
           pallet: 'cml',
           tx: 'startStaking',
-          text: 'If no staking cml, means use 1000 TEA to staking.',
+          text: 'You can either stake 1000 TEA or one defrost CML to a staking slot. You may leave the "Staking with CML" empty if you stake using TEA.',
           props: {
             staking_cml: {
               type: 'select',

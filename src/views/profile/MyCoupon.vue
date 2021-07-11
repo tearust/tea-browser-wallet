@@ -242,12 +242,10 @@ export default {
       }
 
       const msg = `
-        Lottery will transfer all your ${defrost} Coupons to Camellia Seeds.
-        <br />
-        Please confirm your operation.
+        This will redeem all your ${defrost} coupons to Camellia seeds.
       `
       const x = await this.$confirm(msg, {
-        title: 'Lottery',
+        title: 'Coupon redemption',
         dangerouslyUseHTMLString: true,
       }).catch(()=>{});
       if(!x) return false;

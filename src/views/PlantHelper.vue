@@ -33,7 +33,7 @@
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="generateShell()"
       type="primary">
-      Generate shell
+      Generate scripts
     </el-button>
 
   </div>
@@ -46,7 +46,7 @@
       @click="testPlant()"
       plain
       type="primary">
-      Plant for mining
+      Plant
     </el-button>
   </div>
 
