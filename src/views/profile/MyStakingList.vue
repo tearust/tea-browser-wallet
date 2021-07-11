@@ -39,7 +39,7 @@
     <el-table-column
       prop="index"
       width="100"
-      label="My slot index"
+      label="Slot index"
     />
     <el-table-column
       label="Staking with"
@@ -55,7 +55,7 @@
 
     <el-table-column
       prop="weight"
-      label="Weight"
+      label="Slot weight"
       width="120"
     >
       <template slot-scope="scope">
@@ -92,7 +92,7 @@
   </el-table>
 
   <div style="display:flex; justify-content: flex-end;">
-    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openInvolveStakingModal()">Invest to staking</el-button>
+    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openInvolveStakingModal()">Stake to Camellia</el-button>
   </div>
 
 </div>
