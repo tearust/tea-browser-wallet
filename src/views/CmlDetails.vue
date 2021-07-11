@@ -149,6 +149,7 @@ import store from '../store/index';
 import utils from '../tea/utils';
 import Base from '../workflow/Base';
 import {hexToString} from 'tearust_layer1';
+import {_} from 'tearust_utils';
 export default {
   data(){
     return {
