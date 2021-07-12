@@ -46,7 +46,7 @@
         <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
         <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
-        <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Repayment</el-button>
+        <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Pay off debt</el-button>
       </div>
 
     </div>
@@ -259,7 +259,7 @@ export default {
     },
 
     async repaymentHandler(){
-      const x = await this.$confirm("Are you sure to repayment the debt?", "Info").catch(()=>{});
+      const x = await this.$confirm("Are you sure to payoff the debt? Your staking debt is paid off in full or none.", "Info").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();
