@@ -5,8 +5,8 @@ import http from '../tea/http';
 import store from '../store';
 import request from '../request';
 
-import {_, forge, moment} from 'tearust_utils';
-import {hexToString} from 'tearust_layer1';
+import { _, forge, moment } from 'tearust_utils';
+import { hexToString } from 'tearust_layer1';
 
 import '../tea/moment-precise-range';
 
@@ -21,25 +21,25 @@ export default class {
     this.gluon = null;
   }
 
-  defineLog(){
+  defineLog() {
     return 'Base';
   }
 
   async init() {
-    const init_loop = (resolve)=>{
-      if(!this.layer1 || this.layer1.connected !== 2){
-        _.delay(()=>{
+    const init_loop = (resolve) => {
+      if (!this.layer1 || this.layer1.connected !== 2) {
+        _.delay(() => {
           init_loop(resolve);
         }, 300);
       }
-      else{
+      else {
         resolve();
       }
     };
 
 
-    return new Promise(async (resolve)=>{
-      if(!_init){
+    return new Promise(async (resolve) => {
+      if (!_init) {
         _init = true;
         await this.initLayer1();
       }
@@ -48,21 +48,21 @@ export default class {
 
   }
 
-  async getAllLayer1Account(){
+  async getAllLayer1Account() {
     const layer1_instance = this.getLayer1Instance();
-    if(layer1_instance && layer1_instance.extension){
+    if (layer1_instance && layer1_instance.extension) {
       const all_account = await layer1_instance.extension.getAllAccounts();
 
       return all_account;
     }
-    
+
     return [];
   }
 
   async initLayer1() {
     if (!_layer1) {
       _layer1 = new Layer1();
-      
+
       await _layer1.init();
       await utils.waitLayer1Ready(_layer1);
       this.layer1 = _layer1;
@@ -70,9 +70,9 @@ export default class {
     }
   }
 
-  async initEvent(){
+  async initEvent() {
     const api = this.getLayer1Instance().getApi();
-    if(utils.get_env('env') !== 'prod'){
+    if (utils.get_env('env') !== 'prod') {
       window.api = api;
     }
     api.rpc.chain.subscribeNewHeads(async (header) => {
@@ -99,7 +99,7 @@ export default class {
       //     console.log(1, rs)
       //   }
       // })
-      
+
     });
 
     const chainInfo = await api.registry.getChainProperties();
@@ -108,16 +108,16 @@ export default class {
     // console.log(1, api.errors)
   }
 
-  getLayer1Instance(){
-    if(this.layer1){
+  getLayer1Instance() {
+    if (this.layer1) {
       return this.layer1.getLayer1Instance();
     }
 
     return null;
   }
 
-  async getCurrentBlock(api){
-    if(!api){
+  async getCurrentBlock(api) {
+    if (!api) {
       const layer1_instance = this.getLayer1Instance();
       api = layer1_instance.getApi();
     }
@@ -125,46 +125,46 @@ export default class {
     return block.toJSON().block.header.number;
   }
 
-  showQrCodeModal(opts){
+  showQrCodeModal(opts) {
     utils.publish('tea-qrcode-modal', {
       visible: true,
       text: opts.text,
     });
   }
-  closeQrCodeModal(){
+  closeQrCodeModal() {
     utils.publish('tea-qrcode-modal', {
       visible: false,
     });
   }
 
-  blockToDay(block){
-    const day = 60*60*24/6;
-    const d = Math.floor(block/day);
+  blockToDay(block) {
+    const day = 60 * 60 * 24 / 6;
+    const d = Math.floor(block / day);
 
     const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'd'), true)
     let rs = '';
-    if(tmp.years){
-      rs += tmp.years+'y';
+    if (tmp.years) {
+      rs += tmp.years + 'y';
     }
-    if(tmp.months){
-      rs += tmp.months+'m';
+    if (tmp.months) {
+      rs += tmp.months + 'm';
     }
-    if(tmp.days){
-      rs += tmp.days+'d';
+    if (tmp.days) {
+      rs += tmp.days + 'd';
     }
 
     return rs;
   }
 
-  encode_b64(str){
+  encode_b64(str) {
     return forge.util.encode64(str);
   }
 
-  showSelectLayer1Modal(){
+  showSelectLayer1Modal() {
     utils.publish('tea-select-layer1-modal', true);
   }
 
-  async getAllBalance(address){
+  async getAllBalance(address) {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
     let tmp = await api.query.system.account(address);
@@ -173,34 +173,34 @@ export default class {
 
     let reward = await api.query.cml.accountRewards(address);
     reward = reward.toJSON();
-    
+
     const free = parseInt(tmp.free, 10) / layer1_instance.asUnit();
     const lock = parseInt(tmp.reserved, 10) / layer1_instance.asUnit();
-    if(reward){
+    if (reward) {
       reward = reward / layer1_instance.asUnit();
     }
 
     let debt = await api.query.cml.genesisMinerCreditStore(address);
     debt = debt.toJSON();
-    if(debt){
+    if (debt) {
       debt = debt / layer1_instance.asUnit();
     }
 
     return {
-      free: Math.floor(free*10000)/10000,
-      lock: Math.floor(lock*10000)/10000,
-      reward: reward ? Math.floor(reward*10000)/10000 : null,
-      debt: debt ? Math.floor(debt*10000)/10000 : null,
+      free: Math.floor(free * 10000) / 10000,
+      lock: Math.floor(lock * 10000) / 10000,
+      reward: reward ? Math.floor(reward * 10000) / 10000 : null,
+      debt: debt ? Math.floor(debt * 10000) / 10000 : null,
     };
   }
-  
-  async transferBalance(address, amount){
+
+  async transferBalance(address, amount) {
     const layer1_account = store.getters.layer1_account;
-    if(!layer1_account.address){
+    if (!layer1_account.address) {
       return false;
     }
 
-    if(!amount || amount == 0){
+    if (!amount || amount == 0) {
       throw 'Invalid transfer balance.';
     }
 
@@ -214,32 +214,32 @@ export default class {
     await layer1_instance.sendTx(layer1_account.address, transfer_tx);
   }
 
-  async getVouchers(address){
+  async getCoupons(address) {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
-    const voucher_investor_A = await api.query.cml.investorVoucherStore(address, 'A');
-    const voucher_investor_B = await api.query.cml.investorVoucherStore(address, 'B');
-    const voucher_investor_C = await api.query.cml.investorVoucherStore(address, 'C');
+    const coupon_investor_A = await api.query.cml.investorCouponStore(address, 'A');
+    const coupon_investor_B = await api.query.cml.investorCouponStore(address, 'B');
+    const coupon_investor_C = await api.query.cml.investorCouponStore(address, 'C');
 
-    const voucher_team_A = await api.query.cml.teamVoucherStore(address, 'A');
-    const voucher_team_B = await api.query.cml.teamVoucherStore(address, 'B');
-    const voucher_team_C = await api.query.cml.teamVoucherStore(address, 'C');
+    const coupon_team_A = await api.query.cml.teamCouponStore(address, 'A');
+    const coupon_team_B = await api.query.cml.teamCouponStore(address, 'B');
+    const coupon_team_C = await api.query.cml.teamCouponStore(address, 'C');
 
     return {
-      voucher_investor_A: voucher_investor_A.toJSON(),
-      voucher_investor_B: voucher_investor_B.toJSON(),
-      voucher_investor_C: voucher_investor_C.toJSON(),
-      voucher_team_A: voucher_team_A.toJSON(),
-      voucher_team_B: voucher_team_B.toJSON(),
-      voucher_team_C: voucher_team_C.toJSON(),
+      coupon_investor_A: coupon_investor_A.toJSON(),
+      coupon_investor_B: coupon_investor_B.toJSON(),
+      coupon_investor_C: coupon_investor_C.toJSON(),
+      coupon_team_A: coupon_team_A.toJSON(),
+      coupon_team_B: coupon_team_B.toJSON(),
+      coupon_team_C: coupon_team_C.toJSON(),
     }
   }
 
-  async refreshCurrentAccount(){
-    
+  async refreshCurrentAccount() {
+
     const layer1_account = store.getters.layer1_account;
-    if(!layer1_account.address){
+    if (!layer1_account.address) {
       return false;
     }
 
@@ -248,7 +248,7 @@ export default class {
     const api = layer1_instance.getApi();
     const balance = await this.getAllBalance(layer1_account.address);
 
-    const vouchers = await this.getVouchers(layer1_account.address);
+    const coupons = await this.getCoupons(layer1_account.address);
 
     // reset all state
     store.commit('reset_state');
@@ -267,13 +267,13 @@ export default class {
       cml: cml_data,
       reward: balance.reward,
       debt: balance.debt,
-      vouchers,
+      coupons,
     });
 
 
   }
 
-  async getCmlListByUser(address){
+  async getCmlListByUser(address) {
     const user_cml_list = await request.layer1_rpc('cml_userCmlList', [
       address
     ])
@@ -281,28 +281,28 @@ export default class {
     return user_cml_list;
   }
 
-  async getCmlByList(cml_list){
+  async getCmlByList(cml_list) {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
     const current_block = await this.getCurrentBlock(api);
 
-    const unzip_status = (cml)=>{
+    const unzip_status = (cml) => {
       const status = cml.status;
       let rs = status;
-      if(_.isObject(status)){
-        if(_.has(status, 'frozenSeed')){
+      if (_.isObject(status)) {
+        if (_.has(status, 'frozenSeed')) {
           rs = 'FrozenSeed';
         }
-        else if(_.has(status, 'staking')){
+        else if (_.has(status, 'staking')) {
           rs = 'Staking';
           cml.staking_cml_id = status.staking.cml_id;
           cml.staking_index = status.staking.staking_index;
         }
-        else if(_.has(status, 'tree')){
+        else if (_.has(status, 'tree')) {
           rs = 'Tree';
         }
-        else{
+        else {
           rs = 'FreshSeed';
           cml.fresh_seed_block = status.freshSeed.fresh_seed;
         }
@@ -311,43 +311,43 @@ export default class {
       return cml;
     };
 
-    const list = await Promise.all(_.map(cml_list, async (cml_id)=>{
+    const list = await Promise.all(_.map(cml_list, async (cml_id) => {
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
 
       cml = unzip_status(cml);
 
-      cml.defrost_day = this.blockToDay(cml.intrinsic.generate_defrost_time-current_block);
+      cml.defrost_day = this.blockToDay(cml.intrinsic.generate_defrost_time - current_block);
 
       let remaining = cml.intrinsic.lifespan;
-      if(cml.status !== 'FrozenSeed'){
+      if (cml.status !== 'FrozenSeed') {
         remaining = remaining + cml.planted_at - current_block;
       }
 
-      if(remaining < 0) remaining = 0;
+      if (remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
       cml.life_day = this.blockToDay(remaining);
 
-      cml.staking_slot = _.map(cml.staking_slot, (item)=>{
+      cml.staking_slot = _.map(cml.staking_slot, (item) => {
         item.category = _.toUpper(item.category);
         return item;
       });
       cml.slot_len = cml.staking_slot.length;
 
       // status;
-      cml.status = ((row)=>{
-        if(row.status === 'Tree'){
-          if(row.staking_slot.length > 0){
+      cml.status = ((row) => {
+        if (row.status === 'Tree') {
+          if (row.staking_slot.length > 0) {
             return 'Mining';
           }
-          else{
+          else {
             return 'Tree'
           }
         }
-        
+
         return row.status;
       })(cml);
-      
+
 
       return {
         ...cml,
@@ -357,10 +357,10 @@ export default class {
     }));
 
     return list;
-    
+
   }
 
-  
 
-  
+
+
 }

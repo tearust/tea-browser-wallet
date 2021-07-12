@@ -12,7 +12,7 @@ import request from '../request';
 Vue.use(Vuex);
 
 const F = {
-  async getLayer1(){
+  async getLayer1() {
     const wf = new Base();
     await wf.init();
     return wf.layer1;
@@ -21,7 +21,7 @@ const F = {
 
 
 const MIN_AUCTION_ID = 1;
-const initState = ()=>{
+const initState = () => {
   return {
     layer1_account: {
       name: null,
@@ -74,13 +74,13 @@ const store = new Vuex.Store({
   state: initState(),
 
   getters: {
-    layer1_account: (state)=>{
-      if(state.layer1_account.address){
+    layer1_account: (state) => {
+      if (state.layer1_account.address) {
         return state.layer1_account;
       }
       const ll = localStorage.getItem('tea-layer1-account');
-      if(ll){
-        
+      if (ll) {
+
         return JSON.parse(ll);
       }
 
@@ -89,7 +89,7 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    set_account(state, account){
+    set_account(state, account) {
       state.layer1_account = {
         name: account.ori_name,
         address: account.address,
@@ -98,17 +98,17 @@ const store = new Vuex.Store({
         cml: account.cml || [],
         reward: account.reward,
         debt: account.debt,
-        ...account.vouchers || {},
+        ...account.coupons || {},
       };
-      
+
       localStorage.setItem('tea-layer1-account', JSON.stringify(state.layer1_account));
     },
 
-    set_chain(state, chain_data){
-      state.chain = _.extend(state.chain, chain_data||{});
+    set_chain(state, chain_data) {
+      state.chain = _.extend(state.chain, chain_data || {});
     },
 
-    reset_state(state){
+    reset_state(state) {
       const init_state = initState();
       // Object.keys(init_state).forEach(key => {
       //   state[key] = init_state[key]
@@ -140,26 +140,26 @@ const store = new Vuex.Store({
     //   }
     // },
 
-    set_auction_last_id(state, id){
+    set_auction_last_id(state, id) {
       state.auction.last_auction_id = id;
     },
-    set_auction_list(state, list=[]){
+    set_auction_list(state, list = []) {
       state.auction.auction_list = list;
     },
-    set_my_auction_list(state, list=[]){
+    set_my_auction_list(state, list = []) {
       state.auction.my_auction_list = list;
     },
-    set_my_bid_list(state, list=[]){
+    set_my_bid_list(state, list = []) {
       state.auction.my_bid_list = list;
     }
-    
-      
+
+
   },
 
   actions: {
-    async set_layer1_asset(store){
+    async set_layer1_asset(store) {
       const layer1_account = store.getters.layer1_account;
-      if(!layer1_account){
+      if (!layer1_account) {
         throw 'Invalid layer1 account';
       }
 
@@ -171,10 +171,10 @@ const store = new Vuex.Store({
 
       store.commit('set_layer1_asset', null);
     },
-    
-    async init_auction_store(store){
+
+    async init_auction_store(store) {
       const layer1_account = store.getters.layer1_account;
-      if(!layer1_account){
+      if (!layer1_account) {
         throw 'Invalid layer1 account';
       }
 
@@ -185,24 +185,24 @@ const store = new Vuex.Store({
       const api = layer1_instance.getApi();
 
       const auction_list = await request.layer1_rpc('auction_currentAuctionList', []);
-      
-      const list = await Promise.all(_.map(auction_list, async (auction_id)=>{
+
+      const list = await Promise.all(_.map(auction_list, async (auction_id) => {
         const tmp = await api.query.auction.auctionStore(auction_id);
-        
+
         const d = tmp.toJSON();
-        if(d && d.id > 0){
-          if(d.bid_user){
+        if (d && d.id > 0) {
+          if (d.bid_user) {
             let bid_item = await api.query.auction.bidStore(d.bid_user, d.id);
             bid_item = bid_item.toJSON();
             d.bid_price = bid_item.price;
           }
-          
+
           let tmp = await api.query.auction.bidStore(layer1_account.address, d.id);
           tmp = tmp.toJSON();
-          if(tmp && tmp.auction_id > 0){
+          if (tmp && tmp.auction_id > 0) {
             d.for_current = tmp;
           }
-          
+
 
           return d;
         }
@@ -212,9 +212,9 @@ const store = new Vuex.Store({
       store.commit('set_auction_list', list);
     },
 
-    async init_my_auction_list(store){
+    async init_my_auction_list(store) {
       const layer1_account = store.getters.layer1_account;
-      if(!layer1_account){
+      if (!layer1_account) {
         throw 'Invalid layer1 account';
       }
 
@@ -227,29 +227,29 @@ const store = new Vuex.Store({
       let user_auction = await request.layer1_rpc('auction_userAuctionList', [layer1_account.address]);
 
       const x_list = [];
-      if(user_auction && user_auction.length > 0){
-        for(let i=0, len=user_auction.length; i<len; i++){
+      if (user_auction && user_auction.length > 0) {
+        for (let i = 0, len = user_auction.length; i < len; i++) {
           const tmp = await api.query.auction.auctionStore(user_auction[i]);
           const d = tmp.toJSON();
-          if(d){
-            if(d.bid_user){
+          if (d) {
+            if (d.bid_user) {
               let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
               bid_item = bid_item.toJSON();
               d.bid_price = bid_item.price;
             }
-            
+
             x_list.push(d);
           }
         }
       }
-    
+
       // console.log(1, x_list);
       store.commit('set_my_auction_list', x_list);
     },
 
-    async init_my_bid_list(store){
+    async init_my_bid_list(store) {
       const layer1_account = store.getters.layer1_account;
-      if(!layer1_account){
+      if (!layer1_account) {
         throw 'Invalid layer1 account';
       }
 
@@ -262,14 +262,14 @@ const store = new Vuex.Store({
       let user_bid = await request.layer1_rpc('auction_userBidList', [layer1_account.address]);
       const x_list = [];
 
-      if(user_bid && user_bid.length > 0){
-        for(let i=0, len=user_bid.length; i<len; i++){
+      if (user_bid && user_bid.length > 0) {
+        for (let i = 0, len = user_bid.length; i < len; i++) {
           const tmp = await api.query.auction.bidStore(layer1_account.address, user_bid[i]);
           const d = tmp.toJSON();
-          if(d){
+          if (d) {
             const auction = await api.query.auction.auctionStore(d.auction_id);
             d.auction = auction.toJSON();
-            if(d.auction.bid_user){
+            if (d.auction.bid_user) {
               let bid_item = await api.query.auction.bidStore(d.auction.bid_user, d.auction_id);
               bid_item = bid_item.toJSON();
               d.bid_price = bid_item.price;

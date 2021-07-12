@@ -40,9 +40,9 @@
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="lotteryHandler(0)"
       :disabled="
-        (!layer1_account.voucher_team_A || layer1_account.voucher_team_A.amount<1) &&
-        (!layer1_account.voucher_team_B || layer1_account.voucher_team_B.amount<1) &&
-        (!layer1_account.voucher_team_C || layer1_account.voucher_team_C.amount<1) 
+        (!layer1_account.coupon_team_A || layer1_account.coupon_team_A.amount<1) &&
+        (!layer1_account.coupon_team_B || layer1_account.coupon_team_B.amount<1) &&
+        (!layer1_account.coupon_team_C || layer1_account.coupon_team_C.amount<1) 
       "
       type="primary">
       Redeem team coupon
@@ -51,9 +51,9 @@
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="lotteryHandler(1)"
       :disabled="
-        (!layer1_account.voucher_investor_A || layer1_account.voucher_investor_A.amount<1) &&
-        (!layer1_account.voucher_investor_B || layer1_account.voucher_investor_B.amount<1) &&
-        (!layer1_account.voucher_investor_C || layer1_account.voucher_investor_C.amount<1) 
+        (!layer1_account.coupon_investor_A || layer1_account.coupon_investor_A.amount<1) &&
+        (!layer1_account.coupon_investor_B || layer1_account.coupon_investor_B.amount<1) &&
+        (!layer1_account.coupon_investor_C || layer1_account.coupon_investor_C.amount<1) 
       "
       type="primary">
       Redeem investor coupon
@@ -106,7 +106,7 @@
     
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="dai_modal.visible = false">Close</el-button>
-      <el-button size="small" type="primary" @click="transferVoucher()">Confirm</el-button>
+      <el-button size="small" type="primary" @click="transferCoupon()">Confirm</el-button>
     </span>
 
   </el-dialog>
@@ -163,12 +163,12 @@ export default {
       const layer1_account = p.layer1_account;
       const list = [];
       const tmp = [
-        ['voucher_investor_A', 'Investor', 'A'],
-        ['voucher_investor_B', 'Investor', 'B'],
-        ['voucher_investor_C', 'Investor', 'C'],
-        ['voucher_team_A', 'Team', 'A'],
-        ['voucher_team_B', 'Team', 'B'],
-        ['voucher_team_C', 'Team', 'C'],
+        ['coupon_investor_A', 'Investor', 'A'],
+        ['coupon_investor_B', 'Investor', 'B'],
+        ['coupon_investor_C', 'Investor', 'C'],
+        ['coupon_team_A', 'Team', 'A'],
+        ['coupon_team_B', 'Team', 'B'],
+        ['coupon_team_C', 'Team', 'C'],
       ]
       _.each(tmp, (item)=>{
         const key = item[0];
@@ -186,7 +186,7 @@ export default {
       if(!p.chain) return 'NA';
       
       const block = parseInt(p.chain.current_block, 10);
-      const max = utils.consts.VoucherOutdatedBlock;
+      const max = utils.consts.CouponOutdatedBlock;
 
       let rs = max-block;
       if(rs < 0) rs = 0;
@@ -209,7 +209,7 @@ export default {
       utils.publish('refresh-current-account__account', {});
     },
     
-    async transferVoucher(){
+    async transferCoupon(){
       const ref = this.$refs['dai_modal'];
       await ref.validate();
       this.$root.loading(true);
@@ -217,7 +217,7 @@ export default {
         const {target_address, amount, defrost} = this.dai_modal.form;
 
         const type = this.dai_modal.form.class;
-        const vc = _.get(this.layer1_account, 'voucher_'+_.toLower(defrost)+'_'+type, null);
+        const vc = _.get(this.layer1_account, 'coupon_'+_.toLower(defrost)+'_'+type, null);
 
         if(!vc || amount > vc.amount){
           throw 'Not Enough Coupons for Class - '+type+' - '+defrost;
@@ -225,7 +225,7 @@ export default {
 
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
-        const tx = api.tx.cml.transferVoucher(target_address, type, defrost, amount);
+        const tx = api.tx.cml.transferCoupon(target_address, type, defrost, amount);
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
         this.$message.success('success');
@@ -258,7 +258,7 @@ export default {
         const layer1_instance = this.wf.getLayer1Instance();
         const api = layer1_instance.getApi();
 
-        const tx = api.tx.cml.drawCmlsFromVoucher(defrost);
+        const tx = api.tx.cml.drawCmlsFromCoupon(defrost);
 
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();

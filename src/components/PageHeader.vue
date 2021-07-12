@@ -187,7 +187,7 @@ export default {
         await this.wf.init();
         const block = await this.wf.getCurrentBlock();
 
-        if(block <= utils.consts.VoucherOutdatedBlock){
+        if(block <= utils.consts.CouponOutdatedBlock){
           this.has_seed_pool = true;
         }
       }

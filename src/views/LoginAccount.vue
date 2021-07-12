@@ -169,8 +169,8 @@ export default {
       const layer1_account = this.layer1_account;
       if (
         layer1_account && (
-          layer1_account.voucher_team_A || layer1_account.voucher_team_B || layer1_account.voucher_team_C ||
-          layer1_account.voucher_investor_A || layer1_account.voucher_investor_B || layer1_account.voucher_investor_C
+          layer1_account.coupon_team_A || layer1_account.coupon_team_B || layer1_account.coupon_team_C ||
+          layer1_account.coupon_investor_A || layer1_account.coupon_investor_B || layer1_account.coupon_investor_C
         )
       ) {
         
