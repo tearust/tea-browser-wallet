@@ -128,9 +128,7 @@
       
     >
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="openInvolveStakingModal(scope.row)">
-          Stake
-        </el-button>
+        <TeaIconButton tip="Staking invest" icon="invest" @click="openInvolveStakingModal(scope.row)" />
       </template>
     </el-table-column>
   </TeaTable>
@@ -146,10 +144,11 @@ import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
 import TeaTable from '../components/TeaTable';
+import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
 export default {
   components: {
-    TeaTable,
+    TeaTable, TeaIconButton,
   },
   data(){
     return {

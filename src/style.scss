@@ -154,7 +154,10 @@ a, a:hover, a:focus, button:focus {
   }
 }
 .tea-icon-button{
-  
+  padding: 0;
+  .iconfont{
+    font-size: 14px;
+  }
 }
 
 
@@ -169,6 +172,11 @@ a, a:hover, a:focus, button:focus {
 
 .el-dialog__body{
   padding: 10px 20px;
+}
+
+.el-table--small td, .el-table--small th{
+  padding: 0 !important;
+  height: 40px !important;
 }
 
 
