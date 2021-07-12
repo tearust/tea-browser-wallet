@@ -1,12 +1,13 @@
 <template>
 <div class="tea-page">
 
-  <span class="tea-table-tip">All coupons will be expired in <b class="block">{{expired_block}}</b> blocks</span>
+  <span v-if="expired_block > 0" class="tea-table-tip">All coupons will be expired in <b class="block">{{expired_block}}</b> blocks</span>
   <el-table 
     :data="list"
     stripe
     size="small"
     border
+    v-if="expired_block > 0"
   >
     <el-table-column
       prop="type"
@@ -28,7 +29,7 @@
   
   </el-table>
 
-  <div style="display:flex; justify-content: flex-end; margin-top: 40px;">
+  <div v-if="expired_block > 0" style="display:flex; justify-content: flex-end; margin-top: 40px;">
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="dai_modal.visible=true"
       plain
@@ -59,8 +60,10 @@
     </el-button>
 
   </div>
+  <h6 v-if="expired_block < 1" class="t-info">All your coupon(s) have been expired.</h6>
 
- <el-dialog
+
+  <el-dialog
     title="Transfer Coupons"
     :visible.sync="dai_modal.visible"
     width="800px"
