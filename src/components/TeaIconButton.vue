@@ -1,11 +1,16 @@
 <template>
-<el-tooltip effect="dark" :content="tip" placement="top">
+<el-tooltip :disabled="!tip" effect="dark" :content="tip" placement="top">
   <el-button 
     v-bind="{...$props, ...$attrs}" 
     v-on="$listeners" 
     size="small"
     :type="type"
-    class="tea-icon-button">
+    :disabled="false"
+    :class="
+      'tea-icon-button'+
+      (disabled?' is-disabled':'')
+    "
+  >
     <span :class="'iconfont icon-'+icon"></span>
   </el-button>
 </el-tooltip>
@@ -26,11 +31,15 @@ export default {
     },
     tip: {
       type: String,
-      required: true,
+      default: '',
     },
     type: {
       type: String,
       default: 'text',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     }
   },
   mounted(){    

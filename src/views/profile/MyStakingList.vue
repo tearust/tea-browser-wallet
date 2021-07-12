@@ -68,21 +68,18 @@
 
     >
       <template slot-scope="scope">
-        <el-tooltip v-if="scope.row.index<1" :content="'UnstakingButtonDisabledReason' | str">
-          <el-link class="tea-action-icon" 
-            :underline="false" 
-            type="primary" 
-            icon="el-icon-delete" 
-            @click="removeStaking(scope)"
-            :disabled="true"
-          ></el-link>
-        </el-tooltip>
-        <el-link v-if="scope.row.index>0" class="tea-action-icon" 
-          :underline="false" 
-          type="primary" 
-          icon="el-icon-delete" 
-          @click="removeStaking(scope)"
-        ></el-link>
+        <TeaIconButton 
+          v-if="scope.row.index<1"
+          :tip="'UnstakingButtonDisabledReason' | str" 
+          icon="unstake" 
+          :disabled="true" 
+        />
+        <TeaIconButton 
+          v-if="scope.row.index>0"
+          :tip="'Unstake'" 
+          icon="unstake" 
+          @click="removeStaking(scope)"  
+        />
         
       </template>
     </el-table-column>
@@ -104,7 +101,11 @@ import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import request from '../../request';
+import TeaIconButton from '../../components/TeaIconButton';
 export default {
+  components: {
+    TeaIconButton,
+  },
   data(){
     return {
       list: null,
