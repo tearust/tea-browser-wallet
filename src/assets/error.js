@@ -28,7 +28,7 @@ export default {
 
 
   // auction pallet
-  NotEnoughBalance: 'Insufficient account balance.',
+  NotEnoughBalance: 'Please increase bidding price.',
   AuctionNotExist: 'Auction not exists.',
   InvalidBidPrice: 'Bid price is invalid.',
   NoNeedBid: 'NoNeedBid.',
