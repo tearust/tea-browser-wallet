@@ -8,7 +8,6 @@
     <el-table-column
       prop="id"
       sortable
-      width="90"
       label="CML ID"
     >
       <template slot-scope="scope">
@@ -109,16 +108,15 @@
       label="Actions"
       width="200">
       <template slot-scope="scope">
-        <el-button
+        <TeaIconButton
           v-if="
             scope.row.generate_defrost_time<1 
             && scope.row.status!=='Staking'
             && scope.row.staking_slot.length<1"
           @click="clickPlantAction(scope)"
-          type="text"
-          size="small">
-          {{'Plant'}}
-        </el-button>
+          tip="Plant"
+          icon="plant"
+        />
       </template>
     </el-table-column>
   </TeaTable>
@@ -134,9 +132,11 @@ import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
 import TeaTable from '../../components/TeaTable';
+import TeaIconButton from '../../components/TeaIconButton';
 export default {
   components: {
     TeaTable,
+    TeaIconButton,
   },
   data(){
     return {
