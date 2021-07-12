@@ -229,10 +229,11 @@ export default {
           label_width: 200,
           pallet: 'cml',
           tx: 'startStaking',
-          text: 'If no staking cml, means use 1000 TEA to staking.',
+          text: 'You can either stake 1000 TEA or one defrost CML to a staking slot. <br/>You may leave the "Staking with CML" empty if you stake using TEA.',
           props: {
             staking_to: {
               type: 'Input',
+              label: 'CML ID for staking',
               default: row.id,
               disabled: true,
             },

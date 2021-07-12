@@ -143,9 +143,14 @@ export default {
           title: 'Staking to Camellia',
           pallet: 'cml',
           tx: 'startStaking',
-          text: 'You can either stake 1000 TEA or one defrost CML to a staking slot. You may leave the "Staking with CML" empty if you stake using TEA.',
+          text: 'You can either stake 1000 TEA or one defrost CML to a staking slot. <br/>You may leave the "Staking with CML" empty if you stake using TEA.',
           props: {
+            staking_to: {
+              label: 'CML ID for staking',
+              type: 'Input',
+            },
             staking_cml: {
+              label: 'Staking with CML',
               type: 'select',
               options: _.filter(this.layer1_account.cml, (item)=>{
                 return item.generate_defrost_time < 1 && item.slot_len<1 && item.status !== 'Staking';

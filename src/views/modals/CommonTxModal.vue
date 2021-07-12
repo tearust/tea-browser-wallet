@@ -13,9 +13,8 @@
 
     <i v-if="!param || loading" class="el-icon-loading" style="display: block; width: 40px; height: 40px;font-size: 40px; margin: 0 auto;"></i>
 
-    <p v-if="!loading && param.text" style="font-size: 15px;">
-      {{param.text}}
-    </p>
+    <p v-if="!loading && param.text" style="font-size: 15px;" :inner-html.prop="param.text"></p>
+    
     <el-form v-if="!loading" ref="tx_form" :model="form" :rules="rules" :label-width="(param.label_width||150)+'px'">
       <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name">
         <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]"></el-input>
