@@ -60,7 +60,7 @@
     </el-button>
 
   </div>
-  <h6 v-if="expired_block < 1" class="t-info">All your coupon(s) have been expired.</h6>
+  <h6 v-if="expired_block < 1" class="t-info">All your coupons have expired.</h6>
 
 
   <el-dialog
