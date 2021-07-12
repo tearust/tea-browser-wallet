@@ -5,8 +5,10 @@ import http from '../tea/http';
 import store from '../store';
 import request from '../request';
 
-import {_, forge} from 'tearust_utils';
+import {_, forge, moment} from 'tearust_utils';
 import {hexToString} from 'tearust_layer1';
+
+import '../tea/moment-precise-range';
 
 
 let _layer1 = null;
@@ -133,6 +135,25 @@ export default class {
     utils.publish('tea-qrcode-modal', {
       visible: false,
     });
+  }
+
+  blockToDay(block){
+    const day = 60*60*24/6;
+    const d = Math.floor(block/day);
+
+    const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'd'), true)
+    let rs = '';
+    if(tmp.years){
+      rs += tmp.years+'y';
+    }
+    if(tmp.months){
+      rs += tmp.months+'m';
+    }
+    if(tmp.days){
+      rs += tmp.days+'d';
+    }
+
+    return rs;
   }
 
   encode_b64(str){
@@ -296,7 +317,7 @@ export default class {
 
       cml = unzip_status(cml);
 
-      cml.defrost_day = Math.floor(cml.intrinsic.generate_defrost_time*6/(60*60*24));
+      cml.defrost_day = this.blockToDay(cml.intrinsic.generate_defrost_time-current_block);
 
       let remaining = cml.intrinsic.lifespan;
       if(cml.status !== 'FrozenSeed'){
@@ -305,6 +326,7 @@ export default class {
 
       if(remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
+      cml.life_day = this.blockToDay(remaining);
 
       cml.staking_slot = _.map(cml.staking_slot, (item)=>{
         item.category = _.toUpper(item.category);

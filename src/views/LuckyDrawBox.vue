@@ -24,7 +24,11 @@
       prop="lifespan"
       label="Life span"
       sortable
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.life_day}}
+      </template>
+    </el-table-column>
     
     <el-table-column
       prop="performance"
@@ -40,9 +44,13 @@
 
     <el-table-column
       prop="generate_defrost_time"
-      label="Defrost block"
+      label="Defrost day"
       sortable
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.defrost_day}}
+      </template>
+    </el-table-column>
 
 
     <el-table-column
