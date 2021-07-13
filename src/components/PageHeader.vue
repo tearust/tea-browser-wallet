@@ -76,6 +76,9 @@ export default {
     }
   },
   computed: {
+    ...mapState([
+      'chain'
+    ]),
     ...mapGetters(['layer1_account']),
     // ...mapState([
     //   'chain'
@@ -183,11 +186,13 @@ export default {
     };
 
     loop(async ()=>{
-      if(this.wf){
+      if(this.wf && this.chain){
         await this.wf.init();
         const block = await this.wf.getCurrentBlock();
 
-        if(block <= utils.consts.CouponOutdatedBlock){
+        // console.log(1, this.chain.metadata.consts.cml.couponTimoutHeight.toJSON());
+        const outdated_block = this.chain.metadata.consts.cml.couponTimoutHeight.toJSON();
+        if(block <= outdated_block){
           this.has_seed_pool = true;
         }
       }

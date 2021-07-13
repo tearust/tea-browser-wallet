@@ -19,8 +19,7 @@ const { _, uuid, forge } = tearust_utils;
 
 const consts = {
   CmlType: { A: 'A', B: 'B', C: 'C' },
-  DefrostScheduleType: { Investor: 'Investor', Team: 'Team' },
-  CouponOutdatedBlock: 600,
+  DefrostScheduleType: { Investor: 'Investor', Team: 'Team' }
 };
 
 const _MEM = {};
