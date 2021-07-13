@@ -56,11 +56,15 @@
     />
 
     <el-table-column
-      prop="defrost_day"
+      prop="generate_defrost_time"
       label="Defrost day"
       sortable
       width="120"
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.defrost_day}}
+      </template>
+    </el-table-column>
 
     <el-table-column
       prop="status"

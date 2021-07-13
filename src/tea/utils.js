@@ -182,7 +182,7 @@ const F = {
     const request = (require('../request')).default;
     const rpc_rs = await request.layer1_rpc('cml_stakingPriceTable', []);
     const fn = (n) => {
-      return n / 1000000 * 1000000;
+      return n / (1000000 * 1000000);
     };
     const price_table = _.map(rpc_rs, (n) => fn(n));
     // console.log(111, price_table);

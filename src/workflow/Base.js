@@ -139,7 +139,7 @@ export default class {
 
   blockToDay(block) {
     const day = 60 * 60 * 24 / 6;
-    const d = Math.floor(block / day);
+    const d = Math.ceil(block / day);
 
     const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'd'), true)
     let rs = '';
@@ -149,9 +149,9 @@ export default class {
     if (tmp.months) {
       rs += tmp.months + 'm';
     }
-    if (tmp.days) {
-      rs += tmp.days + 'd';
-    }
+    
+    rs += (tmp.days||0) + 'd';
+    
 
     return rs;
   }
