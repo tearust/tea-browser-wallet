@@ -6,7 +6,7 @@ import store from '../store';
 import request from '../request';
 
 import { _, forge, moment } from 'tearust_utils';
-import { hexToString } from 'tearust_layer1';
+import { hexToString, numberToHex } from 'tearust_layer1';
 
 import '../tea/moment-precise-range';
 
@@ -200,17 +200,23 @@ export default class {
       return false;
     }
 
-    if (!amount || amount == 0) {
+    if (!amount || amount === 0) {
       throw 'Invalid transfer balance.';
+    }
+
+    if(!address){
+      throw 'Invalid receiver\'s address.';
+    }
+
+    if(address === layer1_account.address){
+      throw 'You cannot send TEA to yourself.';
     }
 
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
     const total = layer1_instance.asUnit() * amount;
-
-    const transfer_tx = api.tx.balances.transfer(address, total);
-
+    const transfer_tx = api.tx.balances.transfer(address, numberToHex(total));
     await layer1_instance.sendTx(layer1_account.address, transfer_tx);
   }
 

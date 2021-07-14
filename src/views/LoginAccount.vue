@@ -199,9 +199,6 @@ export default {
           this.$root.loading(true);
           try{
             const {address, amount} = form;
-            if(address === this.layer1_account.address){
-              throw 'You cannot send TEA to yourself.';
-            }
 
             await this.wf.transferBalance(address, amount);
 

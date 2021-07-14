@@ -4,7 +4,6 @@
   "Url": "Bytes",
   "TeaPubKey": "[u8; 32]",
   "PeerId": "Bytes",
-  "Balance": "u128",
   "Cid": "Bytes",
   "Signature": "Bytes",
   "NodeStatus": {
