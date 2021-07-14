@@ -10,7 +10,7 @@ export default {
   CMLOwnerInvalid: 'The owner of CML is invalid',
   CmlIsNotSeed: 'CML is not a seed',
   SeedNotValid: 'Seed is invalid',
-  InsufficientFreeBalance: 'Insufficient free account balance',
+  InsufficientFreeBalance: 'Insufficient account balance',
   InsufficientReservedBalance: 'Insufficient reserved balance',
   MinerAlreadyExist: 'Miner already exists',
   NotFoundMiner: 'Miner is not found',
@@ -25,15 +25,14 @@ export default {
   NotFoundRewardAccount: 'Reward account not found',
   StakingSlotsOverTheMaxLength: 'Staking slots are full',
   StakingSlotsOverAcceptableIndex: 'Staking slots index exceeds limit',
-
-
   // auction pallet
-  NotEnoughBalance: 'Please increase bidding price.',
+  NotEnoughBalance: 'Not enough balance.',
   AuctionNotExist: 'Auction not exists.',
   InvalidBidPrice: 'Bid price is invalid.',
   NoNeedBid: 'NoNeedBid.',
   BidSelfBelongs: 'Bid on the items that you owned is not allowed.',
   AuctionOwnerInvalid: 'The auction owner is invalid',
+  AuctionOwnerHasCredit: 'You have to pay off your debt before adding CML to marketplace.',
   NotFoundBid: 'Bid not found.',
   NotAllowQuitBid: 'Cannot quit bid at this moment.',
   NotInWindowBlock: 'Not in window block',
