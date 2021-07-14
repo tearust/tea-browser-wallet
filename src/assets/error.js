@@ -10,7 +10,7 @@ export default {
   CMLOwnerInvalid: 'The owner of CML is invalid',
   CmlIsNotSeed: 'CML is not a seed',
   SeedNotValid: 'Seed is invalid',
-  InsufficientFreeBalance: 'Insufficient free account balance',
+  InsufficientFreeBalance: 'Insufficient account balance',
   InsufficientReservedBalance: 'Insufficient reserved balance',
   MinerAlreadyExist: 'Miner already exists',
   NotFoundMiner: 'Miner is not found',
