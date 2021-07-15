@@ -25,12 +25,22 @@
     />
 
 
+    <!-- <el-table-column
+      prop="liferemaining"
+      label="Life remaining"
+      sortable
+      width="120"
+    /> -->
     <el-table-column
       prop="liferemaining"
       label="Life remaining"
       sortable
       width="120"
-    />
+    >
+      <template slot-scope="scope">
+        {{scope.row.life_day}}
+      </template>
+    </el-table-column>
     
     <el-table-column
       prop="machine_id"

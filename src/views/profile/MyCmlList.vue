@@ -22,13 +22,20 @@
     />
 
     <el-table-column
-      prop="lifespan"
-      label="Life span"
-    />
+      prop="liferemaining"
+      label="Life remaining"
+      width="100"
+      sortable
+    >
+      <template slot-scope="scope">
+        {{scope.row.life_day}}
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="machine_id"
       label="Miner ID"
-      width="120"
+      width="110"
     > 
       <template slot-scope="scope">
         <el-button

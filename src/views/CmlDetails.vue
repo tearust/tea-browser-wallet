@@ -20,9 +20,14 @@
       />
 
       <el-table-column
-        prop="liferemaining"
+        prop="lifespan"
         label="Life remaining"
-      />
+      >
+        <template slot-scope="scope">
+          {{scope.row.life_day}}
+        </template>
+      </el-table-column>
+
 
       <el-table-column
         prop="machine_id"
