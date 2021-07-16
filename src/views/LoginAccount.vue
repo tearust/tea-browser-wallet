@@ -154,12 +154,14 @@ export default {
     },
 
     async rechargeHandler(){
-      this.$root.loading(true);
-      const layer1_instance = this.wf.getLayer1Instance();
-      await layer1_instance.faucet(this.layer1_account.address);
-      this.refreshAccount();
+      // this.$root.loading(true);
+      // const layer1_instance = this.wf.getLayer1Instance();
+      // await layer1_instance.faucet(this.layer1_account.address);
+      // this.refreshAccount();
       
-      this.$root.loading(false);
+      // this.$root.loading(false);
+      const url = utils.get_env('faucet_url');
+      window.open(url, '_blank');
     },
 
     async refreshAccount(flag=false){
