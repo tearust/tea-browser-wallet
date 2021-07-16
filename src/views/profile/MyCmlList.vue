@@ -24,7 +24,7 @@
     <el-table-column
       prop="liferemaining"
       label="Life remaining"
-      width="100"
+      width="120"
       sortable
     >
       <template slot-scope="scope">
@@ -66,7 +66,7 @@
       prop="generate_defrost_time"
       label="Defrost day"
       sortable
-      width="120"
+      width="110"
     >
       <template slot-scope="scope">
         {{scope.row.defrost_day}}

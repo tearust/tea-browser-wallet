@@ -1,11 +1,12 @@
-tag=0.5
+tag=0.0.1
+name=tea-browser-wallet
 
-echo building webapp...
+echo building browser-wallet...
 npm run build
-echo building webapp docker image...
-docker build . -t tearust/gluon-webapp:$tag
+echo building browser-wallet docker image...
+docker build . -t tearust/$name:$tag
 
 echo docker push...
-docker push tearust/gluon-webapp:$tag
+docker push tearust/$name:$tag
 
 echo Done.
