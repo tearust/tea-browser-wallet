@@ -6,7 +6,7 @@
     "start": "npm run dapp",
     "dapp": "vue-cli-service serve --mode test",
     "local": "vue-cli-service serve --mode dapp",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --mode test",
     "test": "jest"
   },
   "dependencies": {
