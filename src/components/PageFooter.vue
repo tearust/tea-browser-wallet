@@ -16,7 +16,14 @@
       </el-col>
     </el-row> -->
 
-    <b class="lg">Block Height : {{chain.current_block_hash ? chain.current_block : ''}}</b>
+    <div>
+      <b class="lg">Block Height : {{chain.current_block_hash ? chain.current_block : ''}}</b>
+      <b class="lg" style="margin-left: 15px;">Epoch version : {{epoch_version}}</b>
+    </div>
+    <div style="margin-top: 5px;">
+      <b class="lg">Wallet version : {{version}}</b>
+    </div>
+    
     <el-divider></el-divider>
     <p style="margin:0 auto;text-align:center;font-size:16px;">Copyright © 2019-2021 <b>TeaProject.org</b> All Rights Reserved</p>
   </div>
@@ -36,6 +43,16 @@ export default {
       'chain'
     ]),
   },
+  data(){
+    return {
+      epoch_version: null,
+      version: null,
+    };
+  },
+  mounted(){
+    this.epoch_version = utils.get_env('epoch_version');
+    this.version = utils.get_env('version');
+  }
 }
 </script>
 <style lang="scss">
