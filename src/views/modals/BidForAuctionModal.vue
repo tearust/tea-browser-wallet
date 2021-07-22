@@ -48,14 +48,16 @@ export default {
   },
 
   methods: {
-    confrim(){
+    async confrim(){
       const cb = utils.mem.get('bid_for_auction');
       if(cb){
-        cb(this.form);
+        await cb(this.form, ()=>{
+          this.form = {
+            price: null,
+          };
 
-        this.form = {
-          price: null,
-        };
+          this.$store.commit('modal/close', 'bid_for_auction');
+        });
       }
     }
   }

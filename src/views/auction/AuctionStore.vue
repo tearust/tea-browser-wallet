@@ -147,7 +147,7 @@ export default {
           cml_id: scope.row.cml_id,
           msg,
         },
-        cb: async (form)=>{
+        cb: async (form, close)=>{
           this.$root.loading(true);
           try{
             const auction_id = scope.row.id;        
@@ -161,7 +161,7 @@ export default {
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
             this.$message.success('Success');
-            this.$store.commit('modal/close', 'bid_for_auction');
+            close();
 
             await this.$store.dispatch('init_auction_store');
           }catch(e){
