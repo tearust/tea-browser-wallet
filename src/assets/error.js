@@ -27,12 +27,14 @@ export default {
   StakingSlotsOverAcceptableIndex: 'Staking slots index exceeds limit',
   // auction pallet
   NotEnoughBalance: 'Not enough balance.',
-  AuctionNotExist: 'Auction not exists.',
+  NotEnoughBalanceForBid: 'Not enough balance to bid.',
+  NotEnoughBalanceForAuction: 'Not enough balance to start an auction.',
+  AuctionNotExist: 'Auction does not exist.',
   InvalidBidPrice: 'Bid price is invalid.',
   NoNeedBid: 'NoNeedBid.',
   BidSelfBelongs: 'Bid on the items that you owned is not allowed.',
   AuctionOwnerInvalid: 'The auction owner is invalid',
-  AuctionOwnerHasCredit: 'You have to pay off your debt before adding CML to marketplace.',
+  AuctionOwnerHasCredit: 'You have to pay off your debt before adding CML to the marketplace.',
   NotFoundBid: 'Bid not found.',
   NotAllowQuitBid: 'Cannot quit bid at this moment.',
   NotInWindowBlock: 'Not in window block',
@@ -77,4 +79,6 @@ export default {
   CmlIsNotStaking: 'CML is not staking. Cannot unstake.',
   /// Some status that can't convert to another status.
   CmlInvalidStatusConversion: 'CML current status cannot convert to another status',
+
+  OperationForbiddenWithCredit: 'Withdrawing reward not allowed with staking debt balance.',
 };

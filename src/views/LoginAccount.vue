@@ -233,7 +233,7 @@ export default {
         const tx = api.tx.cml.withdrawStakingReward();
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
-        this.$message.success('success');
+        this.$message.success('Success');
       }catch(e){
         this.$root.showError(e);
       }
@@ -253,7 +253,7 @@ export default {
       this.clipboard = clipboard;
       clipboard.on('success', (e)=>{
         e.clearSelection();
-        this.$message.success('copy success.');
+        this.$message.success('Copy success.');
       });
 
       clipboard.on('error', (e)=>{
@@ -261,7 +261,7 @@ export default {
     },
 
     async repaymentHandler(){
-      const x = await this.$confirm("Are you sure to payoff the debt? Your staking debt is paid off in full or none.", "Info").catch(()=>{});
+      const x = await this.$confirm("Are you sure you want to pay off your debt in full? If your balance doesn't cover your entire staking debt, the transaction will be cancelled.", "Info").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();
@@ -272,7 +272,7 @@ export default {
         const tx = api.tx.cml.payOffMiningCredit();
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
-        this.$message.success('success');
+        this.$message.success('Success');
       }catch(e){
         this.$root.showError(e);
       }

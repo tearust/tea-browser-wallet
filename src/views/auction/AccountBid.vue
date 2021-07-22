@@ -130,8 +130,7 @@ export default {
       const api = layer1_instance.getApi();
 
       const min_price = await this.calculateBidMinPrice(api, scope.row);
-      const msg = `You need at least ${utils.layer1.formatBalance(min_price)} to add price.`;
-
+      const msg = `You need at least ${utils.layer1.formatBalance(min_price)} to bid on this auction.`;
 
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
@@ -152,7 +151,7 @@ export default {
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
-            this.$message.success('success');
+            this.$message.success('Success');
             this.$store.commit('modal/close', 'bid_for_auction');
 
             await this.$store.dispatch('init_my_bid_list');

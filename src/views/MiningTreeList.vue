@@ -138,7 +138,7 @@
       
     >
       <template slot-scope="scope">
-        <TeaIconButton tip="Staking invest" icon="invest" @click="openInvolveStakingModal(scope.row)" />
+        <TeaIconButton tip="Stake" icon="invest" @click="openInvolveStakingModal(scope.row)" />
       </template>
     </el-table-column>
   </TeaTable>
@@ -239,7 +239,7 @@ export default {
           label_width: 200,
           pallet: 'cml',
           tx: 'startStaking',
-          text: 'You can either stake 1000 TEA or one defrost CML to a staking slot. You may leave the "Staking with CML" empty if you stake using TEA.',
+          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot. You should leave "Staking with CML" empty if you\'re staking with TEA.',
           props: {
             staking_to: {
               type: 'Input',
@@ -254,7 +254,7 @@ export default {
               }),
             },
             acceptable_slot_index: {
-              // label: 'Accept extend slot number',
+              label: 'Slot index choice',
               type: 'number',
               min: 0,
               default: 0

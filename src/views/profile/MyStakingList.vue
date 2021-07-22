@@ -143,7 +143,7 @@ export default {
           title: 'Staking to Camellia',
           pallet: 'cml',
           tx: 'startStaking',
-          text: 'You can either stake 1000 TEA or one defrost CML to a staking slot. You may leave the "Staking with CML" empty if you stake using TEA.',
+          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot. You should leave "Staking with CML" empty if you\'re staking with TEA.',
           props: {
             staking_to: {
               label: 'CML ID for staking',
@@ -158,6 +158,7 @@ export default {
             },
             acceptable_slot_index: {
               type: 'number',
+              label: 'Slot index choice',
               min: 0,
               default: 0
 
@@ -224,7 +225,7 @@ export default {
     },
     
     async removeStaking(scope){
-      const x = await this.$confirm("After unstaking, the current slot will be taken by other staking slots above.", "Unstake").catch(()=>{});
+      const x = await this.$confirm("After unstaking, your slot will be taken by the user whose staking slot is currently above you.", "Unstake").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();

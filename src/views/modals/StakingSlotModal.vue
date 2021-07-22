@@ -30,7 +30,8 @@
         label="Staker"
       >
         <template slot-scope="scope">
-          <el-button 
+          <el-button
+            :title="scope.row.owner"
             @click="
               close(); 
               $root.goPath('/user_details/'+scope.row.owner, 'replace')"

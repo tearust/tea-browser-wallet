@@ -228,7 +228,7 @@ export default {
         const tx = api.tx.cml.transferCoupon(target_address, type, defrost, amount);
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
-        this.$message.success('success');
+        this.$message.success('Success');
         ref.resetFields();
         this.dai_modal.visible = false;
       }catch(e){
@@ -263,7 +263,7 @@ export default {
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
 
-        this.$message.success('success');
+        this.$message.success('Success');
 
       }catch(e){
         this.$root.showError(e);

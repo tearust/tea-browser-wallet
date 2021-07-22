@@ -157,6 +157,12 @@ a, a:hover, a:focus, button:focus {
     word-break: break-all;
     white-space: normal;
   }
+  .el-button--text{
+    width: 100%;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
 .tea-icon-button{
   padding: 0;

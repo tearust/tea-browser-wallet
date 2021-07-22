@@ -63,7 +63,7 @@
       label="Actions"
       width="120">
       <template slot-scope="scope">
-        <el-link class="tea-action-icon" title="View Bid List" :underline="false" type="primary" icon="el-icon-view" @click="viewBidList(scope)"></el-link>
+        <el-link class="tea-action-icon" title="Bids" :underline="false" type="primary" icon="el-icon-view" @click="viewBidList(scope)"></el-link>
         <el-link class="tea-action-icon" :underline="false" type="primary" icon="el-icon-delete" @click="deleteAuction(scope)"></el-link>
         
       </template>

@@ -8,7 +8,7 @@
 
   <div class="tea-page" style="margin-left: 130px;">
     <h4>Genesis Camellia seeds in pool</h4>
-    <p>The followings are all remaining genesis Camellia seeds. You can draw a seed using your coupon.</p>  
+    <p>The following are the remaining genesis block Camellia seeds. You can claim a seed by using a coupon.</p>  
 
   <TeaTable 
     :data="list || []"
