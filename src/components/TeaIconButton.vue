@@ -10,6 +10,7 @@
       'tea-icon-button'+
       (disabled?' is-disabled':'')
     "
+    style="width:auto;"
   >
     <span :class="'iconfont icon-'+icon"></span>
   </el-button>

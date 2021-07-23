@@ -30,6 +30,7 @@
         </el-select>
         <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000"></el-input-number>
 
+        <span style="float: left; line-height: 16px; color: #9c9c9c; font-size: 12px; word-break: break-word;" v-if="props[item.name].tip">{{props[item.name].tip}}</span>
       </el-form-item>
       
     </el-form>
