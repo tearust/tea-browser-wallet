@@ -253,7 +253,7 @@ export default {
       this.clipboard = clipboard;
       clipboard.on('success', (e)=>{
         e.clearSelection();
-        this.$message.success('Copy success.');
+        this.$message.success('Copied.');
       });
 
       clipboard.on('error', (e)=>{
