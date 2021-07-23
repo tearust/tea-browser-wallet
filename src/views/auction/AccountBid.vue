@@ -62,7 +62,7 @@
       label="Actions"
       width="120">
       <template slot-scope="scope">
-        <el-link class="tea-action-icon" title="Add Price" :underline="false" type="primary" icon="el-icon-plus" @click="addPriceForBid(scope)"></el-link>
+        <el-link class="tea-action-icon" title="Increase Bid" :underline="false" type="primary" icon="el-icon-plus" @click="addPriceForBid(scope)"></el-link>
         <el-link class="tea-action-icon" :underline="false" type="primary" icon="el-icon-delete" @click="deleteBid(scope)"></el-link>
         
       </template>
@@ -130,13 +130,14 @@ export default {
       const api = layer1_instance.getApi();
 
       const min_price = await this.calculateBidMinPrice(api, scope.row);
-      const msg = `You need at least ${utils.layer1.formatBalance(min_price)} to bid on this auction.`;
+      const msg = `You need to add at least ${utils.layer1.formatBalance(min_price)} to your existing bid.`;
 
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
           msg,
+          type: 'add',
         },
         cb: async (form, close)=>{
           this.$root.loading(true);

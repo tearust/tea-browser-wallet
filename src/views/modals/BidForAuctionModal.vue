@@ -9,12 +9,12 @@
     @close="$store.commit('modal/close', 'bid_for_auction')"
   >
 
-    <el-form :model="form" label-width="120px">
+    <el-form :model="form" label-width="150px">
       <p>{{param.msg || ''}}</p>
       <el-form-item label="CML Id">
         <el-input :disabled="true" :value="param.cml_id"></el-input>
       </el-form-item>
-      <el-form-item label="Price">
+      <el-form-item :label="param.type==='add' ? 'Amount to increase bid' : 'Bid'">
         <el-input-number v-model="form.price" :min="0" :max="100000"></el-input-number>
       </el-form-item>
     </el-form>

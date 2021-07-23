@@ -43,7 +43,7 @@
 
     <el-table-column
       prop="buy_now_price"
-      label="Buy-now price"
+      label="Buy now price"
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.buy_now_price | balance"></span>
@@ -139,13 +139,18 @@ export default {
 
       const min_price = this.calculateBidMinPrice(api, scope.row);
 
-      const msg = `You need at least ${utils.layer1.formatBalance(min_price)} to ${scope.row.for_current ? 'your existing bid.' : 'bid on this auction.'}`;
+      let msg = `You need at least ${utils.layer1.formatBalance(min_price)} to bid on this auction.`;
+
+      if(scope.row.for_current){
+        msg = `You need to add at least ${utils.layer1.formatBalance(min_price)} to your existing bid.`;
+      }
 
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
           msg,
+          type: scope.row.for_current ? 'add' : 'new',
         },
         cb: async (form, close)=>{
           this.$root.loading(true);

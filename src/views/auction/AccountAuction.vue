@@ -38,7 +38,7 @@
 
     <el-table-column
       prop="buy_now_price"
-      label="Buy-now price"
+      label="Buy now price"
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.buy_now_price | balance"></span>
