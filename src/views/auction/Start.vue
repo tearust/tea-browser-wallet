@@ -6,13 +6,13 @@
   </span>
 
   <el-tabs tab-position="left" style="margin-top: 20px;" v-model="tab" @tab-click="clickTab()">
-    <el-tab-pane name="auction_store" label="Auction store" :lazy="true">
+    <el-tab-pane name="auction_store" label="Auction list" :lazy="true">
       <AuctionStore />
     </el-tab-pane>
-    <el-tab-pane name="my_auction" label="My auction" :lazy="true">
+    <el-tab-pane name="my_auction" label="My auctions" :lazy="true">
       <AccountAuction />
     </el-tab-pane>
-    <el-tab-pane name="my_bid" label="My bid" :lazy="true">
+    <el-tab-pane name="my_bid" label="My bids" :lazy="true">
       <AccountBid />
     </el-tab-pane>
   </el-tabs>

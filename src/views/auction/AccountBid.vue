@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>My bid list</h4>
+  <h4>My bids</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <el-table 
     :data="auction.my_bid_list"

@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page" style="margin-left: 15px;">
 
-  <h4>My auction</h4>
+  <h4>My auctions</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <el-table 
     :data="auction.my_auction_list"
@@ -204,7 +204,7 @@ export default {
       _.each(list, (item)=>{
         _.set(param, item.user, item.price);
       });
-      param.title = 'Bid User List';
+      param.title = 'Active bids';
       this.$store.commit('modal/open', {
         key: 'data_details',
         param,
