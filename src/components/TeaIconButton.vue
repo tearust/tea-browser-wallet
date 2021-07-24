@@ -1,5 +1,6 @@
 <template>
-<el-tooltip :disabled="!tip" effect="dark" :content="tip" placement="top">
+<el-tooltip :disabled="!tip" effect="light" placement="top">
+  <div v-if="!!tip" slot="content" :inner-html.prop="tip"></div>
   <el-button 
     v-bind="{...$props, ...$attrs}" 
     v-on="$listeners" 
@@ -12,7 +13,7 @@
     "
     style="width:auto;"
   >
-    <span :class="'iconfont icon-'+icon"></span>
+    <span :class="'iconfont icon-'+icon" :style="icon_style || ''"></span>
   </el-button>
 </el-tooltip>
 
@@ -41,6 +42,9 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    icon_style: {
+      type: String,
     }
   },
   mounted(){    

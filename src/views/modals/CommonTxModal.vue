@@ -30,7 +30,7 @@
         </el-select>
         <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000"></el-input-number>
 
-        <span style="float: left; line-height: 16px; color: #9c9c9c; font-size: 12px; word-break: break-word;" v-if="props[item.name].tip">{{props[item.name].tip}}</span>
+        <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
       </el-form-item>
       
     </el-form>
@@ -50,8 +50,12 @@ import store from '../../store/index';
 import utils from '../../tea/utils';
 import Base from '../../workflow/Base';
 import {_} from 'tearust_utils';
+import TeaIconButton from '../../components/TeaIconButton';
 
 export default {
+  components: {
+    TeaIconButton,
+  },
   data(){
     return {
       form: null,

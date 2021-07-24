@@ -159,7 +159,7 @@ export default {
             acceptable_slot_index: {
               type: 'number',
               label: 'Max allowable slippage',
-              tip: 'The system will try to choose the best slot available but multiple users might be competing for the best available staking slot. Max allowable slippage indicates how many levels you\'re willing to fall and still have your staking transaction executed. Selecting 0 means you only want to stake at the currently available slot with no allowable slippage.',
+              tip: 'The system will try to choose the best slot available but multiple users might be competing for the best available staking slot. <br/> Max allowable slippage indicates how many levels you\'re willing to fall and still have your staking transaction executed. <br/> Selecting 0 means you only want to stake at the currently available slot with no allowable slippage.',
               min: 0,
               default: 0
 
