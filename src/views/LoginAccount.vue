@@ -233,7 +233,7 @@ export default {
         const tx = api.tx.cml.withdrawStakingReward();
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         await this.refreshAccount();
-        this.$message.success('Success');
+        this.$root.success();
       }catch(e){
         this.$root.showError(e);
       }
@@ -253,7 +253,7 @@ export default {
       this.clipboard = clipboard;
       clipboard.on('success', (e)=>{
         e.clearSelection();
-        this.$message.success('Copied');
+        this.$root.success('Copied');
       });
 
       clipboard.on('error', (e)=>{
@@ -294,7 +294,7 @@ export default {
             const tx = api.tx.cml.payOffMiningCredit(form.cml_id);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshAccount();
-            this.$message.success('Success');
+            this.$root.success();
             close();
           }catch(e){
             this.$root.showError(e);

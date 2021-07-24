@@ -64,6 +64,19 @@ new Vue({
         type: 'error'
       });
     },
+    success(message='', type='success'){
+      const title = {
+        'success': 'Success',
+        'error': 'Error',
+      }[type];
+      this.$notify({
+        title: title || '',
+        message,
+        customClass: 'tea-notify',
+        type,
+        duration: 2500
+      });
+    },
     str(key){
       return _.get(strings, key, key);
     },

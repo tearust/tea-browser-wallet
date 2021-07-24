@@ -152,7 +152,7 @@ export default {
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
-            this.$message.success('Success');
+            this.$root.success();
             close();
 
             await this.$store.dispatch('init_my_bid_list');
