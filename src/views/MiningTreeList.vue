@@ -253,9 +253,11 @@ export default {
                 return item.generate_defrost_time < 1 && item.slot_len<1 && item.status !== 'Staking';
               }),
             },
+
             acceptable_slot_index: {
-              label: 'Slot index choice',
               type: 'number',
+              label: 'Max allowable slippage',
+              tip: 'Select how many levels you\'re willing to fall and still have your staking transaction executed if others are competing for a slot. <br/>Selecting 0 means you only want to stake at the currently available slot with no allowable slippage.',
               min: 0,
               default: 0
             }

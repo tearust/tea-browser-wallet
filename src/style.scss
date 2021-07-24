@@ -181,6 +181,9 @@ a, a:hover, a:focus, button:focus {
     text-overflow: ellipsis;
     overflow: hidden;
   }
+  span>.el-button--text{
+    width: auto;
+  }
 }
 .tea-icon-button{
   padding: 0;
