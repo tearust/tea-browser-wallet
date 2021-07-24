@@ -142,7 +142,7 @@ export default class {
     const d = Math.ceil(block / day);
     if(d < 0) return '0d';
 
-    const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'd'), true);
+    const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'h'), true);
     let rs = '';
     if (tmp.years) {
       rs += tmp.years + 'y';
@@ -152,8 +152,23 @@ export default class {
     }
     
     rs += (tmp.days||0) + 'd';
-    
 
+    if(rs === '0d'){
+      if(tmp.hours){
+        rs = tmp.hours + 'h';
+      }
+      else if(tmp.minutes){
+        rs = tmp.minutes + 'mins'
+      }
+      else if(tmp.seconds){
+        rs = tmp.seconds + 'seconds'
+      }
+    }
+
+    if(rs === '0d'){
+      rs = '0';
+    }
+    
     return rs;
   }
 
@@ -356,7 +371,6 @@ export default class {
       cml = unzip_status(cml);
 
       cml.defrost_day = this.blockToDay(cml.intrinsic.generate_defrost_time - current_block);
-
       let remaining = cml.intrinsic.lifespan;
       if (cml.status !== 'FrozenSeed') {
         remaining = remaining + cml.planted_at - current_block;

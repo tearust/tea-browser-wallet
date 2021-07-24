@@ -121,7 +121,7 @@
       <template slot-scope="scope">
         <TeaIconButton
           v-if="
-            scope.row.generate_defrost_time<1 
+            scope.row.defrost_day==='0' 
             && scope.row.status!=='Staking'
             && scope.row.staking_slot.length<1"
           @click="clickPlantAction(scope)"
