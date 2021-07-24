@@ -270,7 +270,9 @@ export default {
         };
         cml_id_option.push(tmp);
       });
-      
+
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
@@ -289,7 +291,10 @@ export default {
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
-            console.log(111, form.cml_id);
+            const tx = api.tx.cml.payOffMiningCredit(form.cml_id);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+            this.$message.success('Success');
             close();
           }catch(e){
             this.$root.showError(e);
@@ -298,23 +303,6 @@ export default {
         },
       });
 
-return;
-      const x = await this.$confirm("Are you sure you want to pay off your debt in full? If your balance doesn't cover your entire staking debt, the transaction will be cancelled.", "Info").catch(()=>{});
-      if(!x) return;
-
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-
-      this.$root.loading(true);
-      try{
-        const tx = api.tx.cml.payOffMiningCredit();
-        await layer1_instance.sendTx(this.layer1_account.address, tx);
-        await this.refreshAccount();
-        this.$message.success('Success');
-      }catch(e){
-        this.$root.showError(e);
-      }
-      this.$root.loading(false);
     }
   }
 
