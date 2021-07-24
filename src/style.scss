@@ -147,6 +147,24 @@ a, a:hover, a:focus, button:focus {
     display: flex;
     justify-content: center;
   }
+
+  .c-info{
+    font-size: 16px; 
+    margin: -10px 0 30px;
+  }
+
+  .el-dialog__body{
+    padding: 20px 50px 30px 20px;
+  }
+
+  .el-dialog__header{
+    border-bottom: 1px solid #dfdfdf;
+  }
+
+  .el-dialog__title{
+    font-size: 19px;
+    font-weight: bold;
+  }
 }
 
 .tea-table{

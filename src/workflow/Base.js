@@ -165,6 +165,39 @@ export default class {
     utils.publish('tea-select-layer1-modal', true);
   }
 
+  async getAllDebtByAddress(address){
+    const cml_list = await request.layer1_rpc('cml_userCreditList', [
+      address
+    ]);
+
+    const layer1_instance = this.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    let total = 0;
+    const debt_map = {};
+
+    await Promise.all(_.map(cml_list, async (arr)=>{
+      const cml_id = arr[0];
+      let debt = parseInt(arr[1], 10);
+      // let debt = await api.query.cml.genesisMinerCreditStore(address, cml_id);
+      // debt = debt.toJSON();
+      if (debt) {
+        total += debt;
+      }
+      _.set(debt_map, cml_id, (debt / layer1_instance.asUnit()))
+      return null;
+    }));
+
+    total = total / layer1_instance.asUnit();
+
+    
+    return {
+      total,
+      details: debt_map
+    };
+
+  }
+
   async getAllBalance(address) {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
@@ -181,17 +214,14 @@ export default class {
       reward = reward / layer1_instance.asUnit();
     }
 
-    let debt = await api.query.cml.genesisMinerCreditStore(address);
-    debt = debt.toJSON();
-    if (debt) {
-      debt = debt / layer1_instance.asUnit();
-    }
-
+    const debt = await this.getAllDebtByAddress(address);
+    
     return {
       free: Math.floor(free * 10000) / 10000,
       lock: Math.floor(lock * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
-      debt: debt ? Math.floor(debt * 10000) / 10000 : null,
+      debt: debt.total ? Math.floor(debt.total * 10000) / 10000 : null,
+      debt_detail: debt.details,
     };
   }
 
@@ -274,6 +304,7 @@ export default class {
       cml: cml_data,
       reward: balance.reward,
       debt: balance.debt,
+      debt_detail: balance.debt_detail,
       coupons,
     });
 

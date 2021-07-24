@@ -261,6 +261,44 @@ export default {
     },
 
     async repaymentHandler(){
+      const cml_id_option = [];
+      _.each(this.layer1_account.debt_detail, (val, key)=>{
+        const tmp = {
+          value: key,
+          label: `${key} - ${val}`,
+          key,
+        };
+        cml_id_option.push(tmp);
+      });
+      
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Pay off debt',
+          pallet: 'cml',
+          tx: 'payOffMiningCredit',
+          text: 'Are you sure you want to pay off your debt in full? If your balance doesn\'t cover your entire staking debt, the transaction will be cancelled.',
+          props: {
+            cml_id: {
+              label: 'Pay off cml id',
+              type: 'select',
+              options: cml_id_option,
+            }
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+            console.log(111, form.cml_id);
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+
+return;
       const x = await this.$confirm("Are you sure you want to pay off your debt in full? If your balance doesn't cover your entire staking debt, the transaction will be cancelled.", "Info").catch(()=>{});
       if(!x) return;
 

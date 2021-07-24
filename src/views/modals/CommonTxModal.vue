@@ -13,7 +13,7 @@
 
     <i v-if="!param || loading" class="el-icon-loading" style="display: block; width: 40px; height: 40px;font-size: 40px; margin: 0 auto;"></i>
 
-    <p v-if="!loading && param.text" style="font-size: 15px;" :inner-html.prop="param.text"></p>
+    <p v-if="!loading && param.text" class="c-info" :inner-html.prop="param.text"></p>
     
     <el-form v-if="!loading" ref="tx_form" :model="form" :rules="rules" :label-width="(param.label_width||150)+'px'">
       <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name">
@@ -22,9 +22,9 @@
         <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select.">
           <el-option
             v-for="item in props[item.name].options || []"
-            :key="item.id"
-            :label="item.id"
-            :value="item.id"
+            :key="item.key || item.id"
+            :label="item.label || item.id"
+            :value="item.value || item.id"
           >
           </el-option>
         </el-select>

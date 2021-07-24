@@ -98,6 +98,7 @@ const store = new Vuex.Store({
         cml: account.cml || [],
         reward: account.reward,
         debt: account.debt,
+        debt_detail: account.debt_detail,
         ...account.coupons || {},
       };
 
