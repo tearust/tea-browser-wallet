@@ -282,7 +282,7 @@ export default {
           text: 'Are you sure you want to pay off your debt in full? If your balance doesn\'t cover your entire staking debt, the transaction will be cancelled.',
           props: {
             cml_id: {
-              label: 'Pay off cml id',
+              label: 'CML ID to pay off',
               type: 'select',
               options: cml_id_option,
             }
