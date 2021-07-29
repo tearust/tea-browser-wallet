@@ -1,121 +1,52 @@
 <template>
-<div class="tea-page">
-  <h1>TODO</h1>
+<div class="tea-page p-home">
+  <h4>Install Polkadot browser extension</h4>
   <p>
-  This welcome page will be used to show orientation informaiton to first time user. Help them to get familiar to this new tool</p>
-  <ul>
-    <li>How to install polkadot browser extension</li>
-    <li>The basic concept of plant and staking</li>
-    <li>Links to help, documents and teaproject.org home page</li>
-    <li>Links to discord, telegram, reddit, twitter</li>
-  </ul>
-  <!-- <div class="tea-card" style="margin-bottom: 12px;" v-for="(address, i) in layer1_asset.dot" :key="i">
-    <i class="x-icon el-icon-grape"></i>
-    <div class="x-list">
-      <div class="x-item">
-        <b>TYPE</b>
-        <span>XYZ</span>
-      </div>
-      <div class="x-item">
-        <b>ADDRESS</b>
-        <span>{{address}}</span>
-      </div>
+    Make sure you've installed the polkadot{.js} browser extension. It's available for 
+    <a href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd" target="_blank">Chrome</a>, 
+    <a href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd" target="_blank">Brave</a>, and 
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/" target="_blank">Firefox</a>.
+  </p>
 
-    </div>
+  <h4>Basic concept of plant and staking</h4>
+  <p>
+    You can use your TEA browser wallet to earn TEA tokens through mining or staking. Mining TEA requires planting a Camellia (CML) NFT into a mining machine and paying <i class="iconfont icon-a-TeaProject-T" />1000 for the initial staking slot. Staking can be done on any mining machine operating on the TEA network. Each staking slot requires either <i class="iconfont icon-a-TeaProject-T" />1000 or 1 CML. You may stake or unstake every 1000 blocks.
+  </p>
 
-    <div class="x-right">
-      <el-button class="gray" @click="$alert('coming soon')">REMOVE</el-button>
-    </div>
-  </div>
-
-  <el-divider />
-  <div class="tea-card flex-center">
-    <el-button @click="addTestDotAsset()" class="x-only-btn">Add Test Asset</el-button>
-  </div>
-
-  <el-divider />
-  <div class="tea-card flex-center">
-    <el-button @click="testTransferToOthers()" class="x-only-btn">Test Transfer to Others</el-button>
-  </div> -->
+  <h4>Links</h4>
+  <p>
+    More help is available including a tutorial video in 
+    <a href="https://teaproject.org/#/doc_list/Try_the_demo%2FREADME.md" target="_blank">our mining and staking guide.</a>
+  </p>
+  <p>
+    Learn more about the TEA Project on 
+    <a href="https://teaproject.org" target="_blank">our website</a>.
+    You can also visit us on - 
+    <a href="https://www.youtube.com/channel/UChYmd52JIe0zTdIdXHLK7WQ" target="_blank">YouTube</a>, 
+    <a href="https://twitter.com/teaprojectorg/" target="_blank">Twitter</a>, and 
+    <a href="https://t.me/teaprojectorg" target="_blank">Telegram</a>.
+  </p>
+  
 
 </div>
 </template>
 <script>
 
-// import Home from '../workflow/Home';
-// import {_, sleep} from 'tearust_utils';
-// import utils from '../tea/utils';
-// import {stringToHex} from  'tearust_layer1';
-// import { mapGetters, mapState } from 'vuex';
-// export default {
-//   components: {
-    
-//   },
-//   computed: {
-//     ...mapGetters([
-//       'layer1_account'
-//     ]),
-//     ...mapState([
-//       'layer1_asset'
-//     ])
-//   },
-//   async mounted(){
-//     this.obj = new Home();
-//     await this.obj.init();
 
-//     await this.refreshAsset();
-
-    
-//   },
-//   methods: {
-//     async refreshAsset(){
-//       await this.$store.dispatch('set_layer1_asset');
-//     },
-//     async addTestDotAsset(){
-//       const test_address = prompt('Please input the test asset address');
-//       if(!test_address) return false;
-
-//       this.$root.loading(true);
-//       try{
-//         const layer1_instance = this.obj.getLayer1Instance();
-//         // const gluon_pallet = layer1_instance.getGluonPallet(); 
-//         const api = layer1_instance.getApi();
-//         const tx = api.tx.gluon.testAddAccountAsset(stringToHex('dot'), stringToHex('XYZ_'+test_address));
-//         await layer1_instance.sendTx(this.layer1_account.address, tx);
-//         await sleep(1000);
- 
-//         await this.refreshAsset();
-//       }catch(e){
-//         this.$alert(e, 'Layer1 Error', {
-//           type: 'error'
-//         });
-//       }
-//       this.$root.loading(false);
-//     },
-//     async testTransferToOthers(){
-//       const test_address = prompt('Please input the target layer1 address');
-//       if(!test_address) return false;
-
-//       this.$root.loading(true);
-//       try{
-//         const layer1_instance = this.obj.getLayer1Instance();
-//         // const gluon_pallet = layer1_instance.getGluonPallet(); 
-//         const api = layer1_instance.getApi();
-//         const tx = api.tx.gluon.testTransferAllAsset(test_address);
-//         await layer1_instance.sendTx(this.layer1_account.address, tx);
-//         await sleep(1000);
- 
-//         await this.refreshAsset();
-//       }catch(e){
-//         this.$alert(e, 'Layer1 Error', {
-//           type: 'error'
-//         });
-//       }
-//       this.$root.loading(false);
-//     }
-//   }
-// }
 </script>
 <style lang="scss">
-
+.p-home{
+  h4{
+    margin-top: 32px !important;
+  }
+  p{
+    margin: 5px 0 10px;
+  }
+  .iconfont{
+    color: #35a696;
+    font-size: 14px;
+    position: relative;
+    left: 2px;
+  }
+}
 </style>
