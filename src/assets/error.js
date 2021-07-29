@@ -3,7 +3,7 @@ export default {
   NotEnoughCoupon: 'Your coupon is insufficient for this transaction',
   InvalidCouponAmount: 'The coupon amount is invalid. It might be because of a computing overflow',
   NotEnoughDrawSeeds: 'The Genesis seed pool has run out',
-  SeedsNotOutdatedYet: 'The Seeds are not expired yet',
+  SeedsNotOutdatedYet: 'The seeds are not expired yet',
   CouponsHasOutdated: 'Coupons are expired',
   NoNeedToCleanOutdatedSeeds: 'No need to clean up expired seeds',
   NotFoundCML: 'CML not found',
@@ -80,5 +80,5 @@ export default {
   /// Some status that can't convert to another status.
   CmlInvalidStatusConversion: 'The current CML status cannot be converted to another status',
 
-  OperationForbiddenWithCredit: 'Withdrawing reward not allowed with a staking debt balance',
+  OperationForbiddenWithCredit: 'Withdrawing rewards is not allowed with a staking debt balance',
 };
