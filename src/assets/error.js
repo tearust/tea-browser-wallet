@@ -50,7 +50,7 @@ export default {
   /// 
   CmlStillInFrozenLockedPeriod: 'Defrost time is in the future. Cannot defrost now',
   /// 
-  CmlShouldBeFreshSeed: 'The CML should be a fresh seed.',
+  CmlShouldBeFreshSeed: 'The CML should be a fresh seed',
   /// 
   CmlFreshSeedExpired: 'CML in fresh seed state has a shelf life. This CML has expired',
   /// CML is tree means that cannot be frozen seed or fresh seed 
@@ -78,7 +78,7 @@ export default {
   /// Cml is not staking that can't unstake.
   CmlIsNotStaking: 'This CML is not staking. Cannot unstake',
   /// Some status that can't convert to another status.
-  CmlInvalidStatusConversion: 'CML current status cannot be converted to another status',
+  CmlInvalidStatusConversion: 'The current CML status cannot be converted to another status',
 
-  OperationForbiddenWithCredit: 'Withdrawing reward not allowed with staking debt balance.',
+  OperationForbiddenWithCredit: 'Withdrawing reward not allowed with a staking debt balance',
 };
