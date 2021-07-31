@@ -76,7 +76,7 @@
     <el-table-column
       prop="status"
       label="Status"
-      width="110"
+      width="100"
       sortable
     >
       <template slot-scope="scope">
@@ -117,7 +117,7 @@
 
     <el-table-column
       label="Actions"
-      width="200">
+    >
       <template slot-scope="scope">
         <TeaIconButton
           v-if="
@@ -127,6 +127,15 @@
           @click="clickPlantAction(scope)"
           tip="Plant"
           icon="plant"
+        />
+
+        <TeaIconButton
+          v-if="
+            scope.row.status!=='Staking'
+            && scope.row.staking_slot.length<1"
+          @click="pawnCmlToGB(scope)"
+          tip="Pawn to Genesis bank"
+          icon="bank"
         />
       </template>
     </el-table-column>
@@ -141,7 +150,7 @@ import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
-import {hexToString} from 'tearust_layer1';
+import {hexToString, stringToHex, hexToU8a, compactAddLength, u8aToHex} from 'tearust_layer1';
 import TeaTable from '../../components/TeaTable';
 import TeaIconButton from '../../components/TeaIconButton';
 export default {
@@ -207,6 +216,55 @@ export default {
     clickPlantAction(scope){
       this.$router.push('/plant_helper/'+scope.row.id);
     },
+
+    async pawnCmlToGB(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Pawn CML to Genesis bank',
+          pallet: 'genesisBank',
+          tx: 'pawnAssetToGenesisBank',
+          text: 'Are you sure to pawn CML to Genesis bank?',
+          props: {
+            id: {
+              label: 'Cml ID',
+              type: 'Input',
+              default: scope.row.id,
+              disabled: true,
+            },
+            asset_type: {
+              type: 'Input',
+              default: 'CML',
+              disabled: true,
+              class: 'hidden',
+            }
+            
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+            
+            // thanks for https://github.com/polkadot-js/api/issues/2624
+            let asset_id = api.registry.createType('u64', form.id);
+            asset_id = u8aToHex(asset_id.toU8a());
+
+            const tx = api.tx.genesisBank.pawnAssetToGenesisBank(asset_id, form.asset_type);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+            this.$root.success();
+            close();
+            utils.publish('refresh-current-account__account');
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+    }
 
     
   }

@@ -16,7 +16,7 @@
     <p v-if="!loading && param.text" class="c-info" :inner-html.prop="param.text"></p>
     
     <el-form v-if="!loading" ref="tx_form" :model="form" :rules="rules" :label-width="(param.label_width||150)+'px'">
-      <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name">
+      <el-form-item v-for="(item) in args" :key="item.name" :label="labels[item.name]" :prop="item.name" :class="(props[item.name] && props[item.name].class) || ''">
         <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]"></el-input>
 
         <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select.">

@@ -213,6 +213,18 @@ export default class {
 
   }
 
+  async getAllPawnByAddress(address){
+    const cml_list = await request.layer1_rpc('cml_userCmlLienList', [
+      address
+    ]);
+
+    // const all = await request.layer1_rpc('cml_bankOwnedCmls', []);
+    // console.log(222, all);
+
+    console.log(1, cml_list);
+    return cml_list;
+  }
+
   async getAllBalance(address) {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
@@ -302,6 +314,8 @@ export default class {
 
     const coupons = await this.getCoupons(layer1_account.address);
 
+    const pawn_cml_list = await this.getAllPawnByAddress(layer1_account.address);
+
     // reset all state
     store.commit('reset_state');
 
@@ -321,6 +335,7 @@ export default class {
       debt: balance.debt,
       debt_detail: balance.debt_detail,
       coupons,
+      pawn_cml_list,
     });
 
 

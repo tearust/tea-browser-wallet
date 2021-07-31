@@ -72,6 +72,11 @@
       <el-tab-pane label="My staking on Camellia" name="my_staking" :lazy="true">
         <MyStakingList />
       </el-tab-pane>
+
+      <el-tab-pane v-if="layer1_account && layer1_account.pawn_cml_list && layer1_account.pawn_cml_list.length>0" label="My pawn seeds" name="my_pawn" :lazy="true">
+        <MyPawnList />
+      </el-tab-pane>
+
       <el-tab-pane label="My investment on Apps" name="my_app" :lazy="true">
         <MyAppList />
       </el-tab-pane>
@@ -93,6 +98,7 @@ import { mapGetters, mapState } from 'vuex';
 import MyCmlList from './profile/MyCmlList';
 import MyStakingList from './profile/MyStakingList';
 import MyAppList from './profile/MyAppList';
+import MyPawnList from './profile/MyPawnList';
 import MyCoupon from './profile/MyCoupon';
 import PubSub from 'pubsub-js';
 import ClipboardJS from 'clipboard';
@@ -102,6 +108,7 @@ export default {
     MyStakingList,
     MyAppList,
     MyCoupon,
+    MyPawnList,
   },
   data(){
     return {
@@ -220,7 +227,7 @@ export default {
     },
 
     clickRefreshBtn(){
-      utils.publish('refresh-current-account__account')
+      utils.publish('refresh-current-account__account');
       utils.publish('refresh-current-account__'+this.tab);
     },
 
