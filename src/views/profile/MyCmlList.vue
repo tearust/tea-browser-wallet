@@ -226,7 +226,7 @@ export default {
         param: {
           title: 'Pawn CML to Genesis bank',
           pallet: 'genesisBank',
-          tx: 'pawnAssetToGenesisBank',
+          tx: 'applyLoanGenesisBank',
           text: 'Are you sure to pawn CML to Genesis bank?',
           props: {
             id: {
@@ -252,7 +252,7 @@ export default {
             let asset_id = api.registry.createType('u64', form.id);
             asset_id = u8aToHex(asset_id.toU8a());
 
-            const tx = api.tx.genesisBank.pawnAssetToGenesisBank(asset_id, form.asset_type);
+            const tx = api.tx.genesisBank.applyLoanGenesisBank(asset_id, form.asset_type);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
             this.$root.success();

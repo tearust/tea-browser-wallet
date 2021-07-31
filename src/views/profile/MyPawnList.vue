@@ -149,15 +149,15 @@ export default {
       let asset_id = api.registry.createType('u64', cml_id);
       asset_id = u8aToHex(asset_id.toU8a());
 
-      const redeem_amount = await request.layer1_rpc('cml_cmlLienRedeemAmount', [cml_id, block]);
+      const redeem_amount = await request.layer1_rpc('cml_calculateLoanAmount', [cml_id, block]);
 
-      const info = `You need to payoff ${redeem_amount/(1000000*1000000)}TEA to get your cml back.`;
+      const info = `You need to pay ${redeem_amount/(1000000*1000000)}TEA to get your cml back.`;
       const x = await this.$confirm(info, "Pay off").catch(()=>{});
       if(!x) return;
 
       this.$root.loading(true);
       try{
-        const tx = api.tx.genesisBank.redeemAsset(asset_id, 'CML');
+        const tx = api.tx.genesisBank.payoffLoan(asset_id, 'CML');
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         this.$root.success();
         utils.publish('refresh-current-account__account', {

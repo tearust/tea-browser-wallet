@@ -214,12 +214,10 @@ export default class {
   }
 
   async getAllPawnByAddress(address){
-    const cml_list = await request.layer1_rpc('cml_userCmlLienList', [
+    const cml_list = await request.layer1_rpc('cml_userCmlLoanList', [
       address
     ]);
 
-    // const all = await request.layer1_rpc('cml_bankOwnedCmls', []);
-    // console.log(222, all);
 
     console.log(1, cml_list);
     return cml_list;
