@@ -6,7 +6,7 @@
     v-on="$listeners" 
     size="small"
     :type="type"
-    :disabled="false"
+    :disabled="disabled"
     :class="
       'tea-icon-button'+
       (disabled?' is-disabled':'')
