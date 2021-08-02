@@ -140,7 +140,7 @@ export default class {
   blockToDay(block) {
     const day = 60 * 60 * 24 / 6;
     const d = Math.ceil(block / day);
-    if(d < 0) return '0d';
+    if(d < 0) return '0';
 
     const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'h'), true);
     let rs = '';
@@ -412,7 +412,6 @@ export default class {
 
         return row.status;
       })(cml);
-
 
       return {
         ...cml,
