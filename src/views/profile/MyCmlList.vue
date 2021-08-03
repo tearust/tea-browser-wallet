@@ -134,7 +134,7 @@
             scope.row.status!=='Staking'
             && scope.row.staking_slot.length<1"
           @click="pawnCmlToGB(scope)"
-          tip="Pawn to Genesis bank"
+          tip="Deposit to genesis bank"
           icon="bank"
         />
       </template>
@@ -224,10 +224,10 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
-          title: 'Pawn CML to Genesis bank',
+          title: 'Deposit CML to Genesis bank',
           pallet: 'genesisBank',
           tx: 'applyLoanGenesisBank',
-          text: 'Are you sure to pawn CML to Genesis bank?',
+          text: 'Are you sure you want to deposit CML as collateral to Genesis bank?',
           props: {
             id: {
               label: 'Cml ID',

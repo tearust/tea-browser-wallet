@@ -73,7 +73,7 @@
         <MyStakingList />
       </el-tab-pane>
 
-      <el-tab-pane v-if="layer1_account && layer1_account.pawn_cml_list && layer1_account.pawn_cml_list.length>0" label="My pawn seeds" name="my_pawn" :lazy="true">
+      <el-tab-pane v-if="layer1_account && layer1_account.pawn_cml_list && layer1_account.pawn_cml_list.length>0" label="My collateral seeds" name="my_pawn" :lazy="true">
         <MyPawnList />
       </el-tab-pane>
 
