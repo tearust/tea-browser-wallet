@@ -419,7 +419,7 @@ export default class {
         machine_id: hexToString(cml.machine_id),
       };
     }));
-console.log(1, list);
+
     return list;
 
   }

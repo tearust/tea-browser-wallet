@@ -1,12 +1,57 @@
 <template>
 <div class="tea-page">
-  <h4>My Logs</h4>
+  <h4>Reward Logs (Total: {{my_total_reward}})</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshPage()"></el-button>
-  <el-table 
+  <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshPage()"></el-button>
+  <TeaTable
+    :data="my_reward || []"
+    name="reward_log_table"
+  >
+
+    <el-table-column
+      prop="name"
+      label="Name"
+    >
+      <template slot-scope="scope">
+        {{scope.row.name}}
+      </template>
+    </el-table-column>
+
+
+    <el-table-column
+      label="CML ID"
+    >
+      <template slot-scope="scope">
+        {{scope.row.cmlId}}
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      label="Reward"
+    >
+      <template slot-scope="scope">
+        {{scope.row.price}}
+      </template>
+    </el-table-column>
+    
+    <el-table-column
+      prop="atBlock"
+      label="At block"
+      width="100"
+    >
+      <template slot-scope="scope">
+        {{scope.row.atBlock}}
+      </template>
+    </el-table-column>
+  </TeaTable>
+  
+
+  <el-divider />
+
+  <h4>Opreation Logs</h4>
+  <TeaTable
     :data="my_log || []"
-    stripe
-    size="small"
-    border
+    name="operation_log_table"
   >
     <el-table-column
       prop="type"
@@ -89,7 +134,9 @@
       </template>
     </el-table-column>
     
-  </el-table>
+  </TeaTable>
+
+  
 
 </div>
 </template>
@@ -99,16 +146,21 @@ import {_} from 'tearust_utils';
 import utils from '../../tea/utils';
 import { mapState } from 'vuex';
 import store from '../../store/index';
+import TeaTable from '../../components/TeaTable';
 export default {
   components: {
-
+    TeaTable,
   },
   data(){
-    return {};
+    return {
+      
+    };
   },
   computed: {
     ...mapState('clog', {
       my_log:state => store.state.clog.my_log,
+      my_reward:state => store.state.clog.my_reward,
+      my_total_reward:state => store.state.clog.my_total_reward,
     })
   },
   async mounted(){
@@ -119,6 +171,7 @@ export default {
   methods: {
     async refreshPage(){
       await this.$store.dispatch('clog/init_my_auction_log', {});
+      await this.$store.dispatch('clog/fetch_my_reward_log', {});
     },
 
     showAuctionDetails(auction_id){

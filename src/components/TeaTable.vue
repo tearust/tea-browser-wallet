@@ -1,15 +1,29 @@
 <template>
+<div class="tea-table-box">
 <el-table 
   v-bind="{...$props, ...$attrs}" 
   v-on="$listeners" 
   size="small"
   :ref="name"
+  :data="list||[]"
   stripe
   border
   @sort-change="sortChangeHandler"
   class="tea-table">
   <slot></slot>
 </el-table>
+<el-pagination
+  hide-on-single-page
+  background
+  style="text-align: right; margin: 10px -10px 40px;"
+  :current-page.sync="current"
+  @current-change="changePage($event)"
+  @prev-click="changePage($event)"
+  @next-click="changePage($event)"
+  :page-size.sync="size"
+  layout="prev, pager, next"
+  :total="total" />
+</div>
 
 </template>
 <script>
@@ -18,12 +32,21 @@ import utils from '../tea/utils';
 export default {
   inheritAttrs: false,
   data(){
-    return {};
+    return {
+      all_list: null,
+      list: null,
+      current: 1,
+      total: 0,
+    };
   },
   props: {
     name: {
       type: String,
       required: true,
+    },
+    size: {
+      type: Number,
+      default: 10
     }
   },
   mounted(){    
@@ -32,6 +55,14 @@ export default {
     const ref = this.$refs[this.name];
     if(default_sort && ref && ref.sort){
       ref.sort(default_sort.prop, default_sort.order);
+    }
+
+  },
+  watch: {
+    $attrs() {
+      this.all_list = this.$attrs.data;
+      this.total = this.all_list.length;
+      this.changePage(1);
     }
   },
   methods: {
@@ -43,6 +74,12 @@ export default {
       utils.mem.set(key, {
         order, prop
       });
+    },
+    changePage(val){
+      this.current = val;
+      const from = (this.current-1)*this.size;
+      const to = this.current*this.size;
+      this.list = _.slice(this.all_list, from, to);
     }
   }
 }

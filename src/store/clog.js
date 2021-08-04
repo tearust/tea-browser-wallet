@@ -21,6 +21,8 @@ const help = {
 const initState = ()=>{
   return {
     my_log: null,
+    my_reward: null,
+    my_total_reward: null,
 
     details: null,
   };
@@ -36,6 +38,12 @@ export default {
     },
     set_details(state, logs){
       state.details = logs;
+    },
+    set_my_reward(state, logs){
+      state.my_reward = logs;
+    },
+    set_my_total_reward(state, total){
+      state.my_total_reward = total;
     }
   },
 
@@ -47,10 +55,25 @@ export default {
       }
 
       const rs = await request.getLog({
-        from: `in: ["${layer1_account.address}"]`
+        from: `in: ["${layer1_account.address}"]`,
+        type: `in: ["tx"]`
       });
 
       store.commit('set_my_log', help.formatLogs(rs.nodes));
+    },
+    async fetch_my_reward_log(store){
+      const layer1_account = store.rootGetters.layer1_account;
+      if(!layer1_account){
+        throw 'Invalid layer1 account';
+      }
+
+      const rs = await request.getRewardLog(layer1_account.address);
+
+      store.commit('set_my_reward', help.formatLogs(rs.logs.nodes));
+      if(rs.total){
+        store.commit('set_my_total_reward', utils.layer1.formatBalance(rs.total.raTotal));
+      }
+      
     },
 
     async fetch_details_log(store, opts){

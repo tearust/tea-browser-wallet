@@ -91,6 +91,60 @@ query {
     return result.logs;
   },
 
+  async getRewardLog(address){
+    const query = `
+query {
+  logs (
+    first: 9999
+    orderBy: AT_BLOCK_DESC
+    filter: {
+      name: {in: ["RewardStatements"]}
+    }
+    
+  ) {
+    totalCount
+    nodes {
+      name
+      type
+      args
+      atBlock
+      from
+      to
+      auctionId
+      cmlId
+      price
+      amount
+    }
+  }
+}
+    `;
+    const result = await F.queryGraphQL(query);
+
+const q1 = `
+query {
+  rewards (
+   first: 1,
+   filter: {
+    id: {in: ["${address}"]}
+   }
+
+ ) {
+    totalCount
+      nodes {
+        id,
+        raTotal
+      }
+   }
+}
+  `;
+    const q1_result = await F.queryGraphQL(q1);
+
+    return {
+      logs: result.logs,
+      total: q1_result.rewards.nodes[0] || null,
+    }
+  },
+
 
   async layer1_rpc(method, params=[]){
     const data = {
