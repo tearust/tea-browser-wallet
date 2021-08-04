@@ -142,7 +142,7 @@ export default class {
     const d = Math.ceil(block / day);
     if(d < 0) return '0';
 
-    const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'h'), true);
+    const tmp = moment.utc().preciseDiff(moment.utc().add(d*24, 'h'), true);
     let rs = '';
     if (tmp.years) {
       rs += tmp.years + 'y';
@@ -419,7 +419,7 @@ export default class {
         machine_id: hexToString(cml.machine_id),
       };
     }));
-
+console.log(1, list);
     return list;
 
   }
