@@ -7,7 +7,8 @@
     "dapp": "vue-cli-service serve --mode test",
     "local": "vue-cli-service serve --mode dapp",
     "build": "vue-cli-service build --mode prod",
-    "test": "jest"
+    "test": "jest",
+    "deploy:ipfs_to_kevin": "ipfs add -r dist --api /ip4/64.227.49.206/tcp/5001/p2p/12D3KooWC6J9kTmxfVkDAbb7gjdrfeqBshGYiJuyuWTvnnbZkJhT"
   },
   "dependencies": {
     "axios": "^0.21.1",
