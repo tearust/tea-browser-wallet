@@ -6,6 +6,7 @@
   <TeaTable
     :data="my_reward || []"
     name="reward_log_table"
+    :pagination="true"
   >
 
     <el-table-column
@@ -52,6 +53,7 @@
   <TeaTable
     :data="my_log || []"
     name="operation_log_table"
+    :pagination="true"
   >
     <el-table-column
       prop="type"
