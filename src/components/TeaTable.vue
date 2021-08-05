@@ -13,6 +13,7 @@
   <slot></slot>
 </el-table>
 <el-pagination
+  v-if="pagination"
   hide-on-single-page
   background
   style="text-align: right; margin: 10px -10px 40px;"
@@ -47,6 +48,10 @@ export default {
     size: {
       type: Number,
       default: 10
+    },
+    pagination: {
+      type: Boolean,
+      default: false,
     }
   },
   mounted(){    
@@ -61,8 +66,15 @@ export default {
   watch: {
     $attrs() {
       this.all_list = this.$attrs.data;
-      this.total = this.all_list.length;
-      this.changePage(1);
+
+      if(this.pagination){
+        this.total = this.all_list.length;
+        this.changePage(1);
+      }
+      else{
+        this.list = this.all_list;
+      }
+      
     }
   },
   methods: {
