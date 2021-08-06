@@ -1,21 +1,31 @@
 ### TEA Browser Wallet
-base on VUE and Polkadot JS
+Based on VUE and Polkadot JS
 
-### Run in Local
-```
-// make sure node version greater than 14
+## Running the Wallet
+There are 2 options for running the TEA browser wallet:
 
-// Copy .env.test.sample to .env.test
-// Change your local layer1 url and the Server URL in .env.test file
+1. **Remote.** You can access the remotely hosted wallet client at [wallet.teaproject.org](https://wallet.teaproject.org).
 
+2. **Local.** The TEA Project is decentralized, allowing you to run the browser wallet locally on your machine without the aid of any central servers. 
 
-npm i
-npm start
+- To get started, you should first have Node.js installed on your computer. The [official repo](https://nodejs.org/en/download/) should be sufficient for most users, though [Windows](https://github.com/coreybutler/nvm-windows) and [Mac](https://formulae.brew.sh/formula/node) users might wish to install using a package manager. Just make sure that the Node version is greater than 14.
 
-```
-Open browser and Visit [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- Visit https://github.com/tearust/tea-browser-wallet/ and download the repo:
 
+![](https://raw.githubusercontent.com/tearust/tea-docs/main/res/Try_the_demo/Try_the_demo-Tea-Browser-Wallet-download.png)
 
-### Deploy to ipfs
+Unpack the zip archive.
 
-[US link](http://64.227.49.206:8080/ipfs/QmZfSY3Ft74WdRMohmU9a5PatYp556RSevp1rGUeuLbjDc)
+- Start the browser wallet. From your command line terminal, run the following two commands when in the downloaded **tea-browser-wallet-master** folder :
+
+`npm i`
+
+`npm start`
+
+![](https://raw.githubusercontent.com/tearust/tea-docs/main/res/Try_the_demo/Try_the_demo-node_start.png)
+
+- You should now to be able to access the browser wallet using localhost with the given port in your web browser:
+
+![](https://raw.githubusercontent.com/tearust/tea-docs/main/res/Try_the_demo/Try_the_demo-wallet-localhost.png)
+
+You can use either [localhost:3000](http://localhost:3000) or [127.0.0.1:3000](http://127.0.0.1:3000)
