@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import VueAnalytics from 'vue-analytics';
+
 import './elementui-style/index.css';
 import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
@@ -22,7 +24,9 @@ import './filter';
 Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
 
-
+Vue.use(VueAnalytics, {
+  id: 'G-3Z0XPZQXX0'
+});
 
 router.beforeEach((to, from, next) => {
   if (to.meta && to.meta.needLogin) {
