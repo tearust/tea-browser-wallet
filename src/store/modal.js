@@ -37,6 +37,10 @@ const initState = ()=>{
     cml_details: {
       visible: false,
       param: {},
+    },
+    deposit_loan: {
+      visible: false,
+      param: {},
     }
 
   };
