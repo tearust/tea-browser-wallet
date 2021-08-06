@@ -133,8 +133,7 @@ export default {
   methods: {
     async refreshList(){
       const list = this.layer1_account && this.layer1_account.pawn_cml_list;
-      if(!list && list.length < 1) return;
-
+      // if(!list || list.length < 1) return;
       this.list = await this.wf.getCmlByList(list);
     },
     async paybackToGB(scope){

@@ -218,8 +218,6 @@ export default class {
       address
     ]);
 
-
-    console.log(1, cml_list);
     return cml_list;
   }
 

@@ -62,11 +62,17 @@ export default {
       ref.sort(default_sort.prop, default_sort.order);
     }
 
+    this.refresh();
+
   },
   watch: {
     $attrs() {
+      this.refresh();
+    }
+  },
+  methods: {
+    refresh(){
       this.all_list = this.$attrs.data;
-
       if(this.pagination){
         this.total = this.all_list.length;
         this.changePage(1);
@@ -74,10 +80,7 @@ export default {
       else{
         this.list = this.all_list;
       }
-      
-    }
-  },
-  methods: {
+    },
     sort_key(){
       return this.name+'__sort';
     },
