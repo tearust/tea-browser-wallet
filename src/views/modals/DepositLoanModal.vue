@@ -8,113 +8,132 @@
     :destroy-on-close="true"
     @close="close()"
   >
-
-    <p class="c-info" :inner-html.prop="'Are you sure you want to deposit CML as collateral to Genesis bank?'"></p>
+    <p
+      class="c-info"
+      :inner-html.prop="'Are you sure you want to deposit CML as collateral to Genesis loan?'"
+    ></p>
 
     <el-form v-if="param" :model="form" label-width="120px">
-      
-      <el-form-item label="Cml Id" style="margin-bottom:0;">
-        <el-input v-model="param.cml_id" :disabled="true" ></el-input>
+      <el-form-item label="Cml Id" style="margin-bottom: 0">
+        <el-input v-model="param.cml_id" :disabled="true"></el-input>
       </el-form-item>
 
       <el-form-item label="">
         <!-- <el-checkbox v-model="form.agree" label=""></el-checkbox> -->
-        <el-button @click="toggleAgreement()" type="text" style="margin-left: 0;">TEA Token Loan Term Agreement <i style="position:relative;top:1px;" :class="show_agreement?'el-icon-arrow-up':'el-icon-arrow-down'"></i></el-button>
+        <el-button @click="toggleAgreement()" type="text" style="margin-left: 0"
+          >TEA Token Loan Term Agreement
+          <i
+            style="position: relative; top: 1px"
+            :class="show_agreement ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"
+          ></i
+        ></el-button>
 
-        <span style="margin-left: 20px; color:#9c9c9c;">Click confirm means you argee.</span>
+        <span style="margin-left: 20px; color: #9c9c9c"
+          >Click confirm means you argee.</span
+        >
       </el-form-item>
     </el-form>
 
     <div class="x-argeement" v-if="show_agreement">
       <h5>TEA Token Loan Term Agreement</h5>
       <p>
-        Deposit CML to use as collateral for a TEA token loan.<br/>
-        Each billing cycle is 1000 blocks long (approximately 100 minutes).<br/>
-        The interest rate for every billing cycle is 0.08%.<br/>
-        The loan term is 200,000 blocks, approximately 55 hours.<br/>
-        The current loan amount is 500T regardless of the type of seed used for collateral.<br/>
+        Deposit CML to use as collateral for a TEA token loan.<br />
+        Each billing cycle is 1000 blocks long (approximately 100 minutes).<br />
+        The interest rate for every billing cycle is 0.08%.<br />
+        The loan term is 200,000 blocks, approximately 55 hours.<br />
+        The current loan amount is 500T regardless of the type of seed used for
+        collateral.<br />
       </p>
       <p>
-        <b>Loan Repayment</b><br/>
-        The borrower needs to repay the loan before the 200,000 block-term ends. If the full borrowed amount is not repaid by the end of the loan term, the loan is considered to be in default and the CML collateral will be liquidated.
+        <b>Loan Repayment</b><br />
+        The borrower needs to repay the loan before the 200,000 block-term ends.
+        If the full borrowed amount is not repaid by the end of the loan term,
+        the loan is considered to be in default and the CML collateral will be
+        liquidated.
       </p>
       <p>
-        The borrower can repay the loan at any time. If repaid before the end of the loan term, the adjusted loan term is equal to blockheight when repaid - blockheight at loan start. The adjusted loan term/billing cycle calculates the number of times the interest rate is applied. This number is always rounded up. The total interest on the loan is calculated as rounded number of billing cycles * interest rate * loan amount. The interest rate is 0.08%, and the loan amount from the Genesis bank is always 500T.
+        The borrower can repay the loan at any time. If repaid before the end of
+        the loan term, the adjusted loan term is equal to blockheight when
+        repaid - blockheight at loan start. The adjusted loan term/billing cycle
+        calculates the number of times the interest rate is applied. This number
+        is always rounded up. The total interest on the loan is calculated as
+        rounded number of billing cycles * interest rate * loan amount. The
+        interest rate is 0.08%, and the loan amount from the Genesis loan is
+        always 500T.
       </p>
       <p>
-        <b>Return of Collateral</b><br/>
-        When the borrower has repaid the loaned amount + interest, their collateral CML seed will be returned to them. Both the primary loan amount and interest in TEA token that's been repaid will be burned.
+        <b>Return of Collateral</b><br />
+        When the borrower has repaid the loaned amount + interest, their
+        collateral CML seed will be returned to them. Both the primary loan
+        amount and interest in TEA token that's been repaid will be burned.
       </p>
-      
     </div>
     <!-- <div style="text-align:right;" v-if="show_agreement">Click confirm means you argee.</div> -->
 
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="close()">Cancel</el-button>
-      <el-button size="small" type="primary" @click="confrim()">Confirm</el-button>
+      <el-button size="small" type="primary" @click="confrim()"
+        >Confirm</el-button
+      >
     </span>
-
   </el-dialog>
-
-
 </template>
 <script>
-import { mapState } from 'vuex';
-import store from '../../store/index';
-import utils from '../../tea/utils';
+import { mapState } from "vuex";
+import store from "../../store/index";
+import utils from "../../tea/utils";
 export default {
-  data(){
+  data() {
     return {
       form: {
         agree: true,
-
       },
       show_agreement: false,
     };
   },
   computed: {
-    ...mapState('modal', {
-      visible:state => store.state.modal.deposit_loan.visible,
-      param: state => store.state.modal.deposit_loan.param,
-    })
+    ...mapState("modal", {
+      visible: (state) => store.state.modal.deposit_loan.visible,
+      param: (state) => store.state.modal.deposit_loan.param,
+    }),
   },
 
   methods: {
-    close(){
-      this.$store.commit('modal/close', 'deposit_loan');
+    close() {
+      this.$store.commit("modal/close", "deposit_loan");
     },
-    toggleAgreement(){
+    toggleAgreement() {
       this.show_agreement = !this.show_agreement;
     },
-    async confrim(){
-      const cb = utils.mem.get('deposit_loan');
-      if(cb){
+    async confrim() {
+      const cb = utils.mem.get("deposit_loan");
+      if (cb) {
         const form = {
           id: this.param.cml_id,
-          asset_type: 'CML'
+          asset_type: "CML",
         };
-        await cb(form, ()=>{
+        await cb(form, () => {
           this.close();
         });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
-.tea-modal{
-  .x-argeement{
+.tea-modal {
+  .x-argeement {
     border-top: 1px solid #d9d9d9;
     border-bottom: 1px solid #d9d9d9;
 
     margin: 20px 0 2px 120px;
     padding: 24px 0 24px;
 
-    h5{
+    h5 {
       font-size: 16px;
       margin: 0;
     }
-    p{
+    p {
       margin: 10px 0;
       word-break: break-word;
     }
