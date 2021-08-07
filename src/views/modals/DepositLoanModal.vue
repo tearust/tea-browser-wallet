@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Deposit loan"
+    title="Deposit CML for loan"
     :visible="visible"
     width="70%"
     :close-on-click-modal="false"
@@ -10,39 +10,40 @@
   >
     <p
       class="c-info"
-      :inner-html.prop="'Are you sure you want to deposit CML as collateral to Genesis loan?'"
+      :inner-html.prop="'Are you sure you want to deposit CML as collateral for a Genesis loan?'"
     ></p>
 
     <el-form v-if="param" :model="form" label-width="120px">
-      <el-form-item label="Cml Id" style="margin-bottom: 0">
+      <el-form-item label="CML Id" style="margin-bottom: 0">
         <el-input v-model="param.cml_id" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="">
-        <!-- <el-checkbox v-model="form.agree" label=""></el-checkbox> -->
-        <el-button @click="toggleAgreement()" type="text" style="margin-left: 0"
-          >TEA Token Loan Term Agreement
+      <el-form-item label="Agreement">
+        <el-checkbox v-model="form.agree" label=""></el-checkbox>
+        <el-button @click="toggleAgreement()" type="text" style="margin-left: 10px;"
+          >TEA Token Loan Agreement
           <i
             style="position: relative; top: 1px"
             :class="show_agreement ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"
           ></i
         ></el-button>
 
-        <span style="margin-left: 20px; color: #9c9c9c"
+        <!-- <span style="margin-left: 20px; color: #9c9c9c"
           >Click confirm means you argee.</span
-        >
+        > -->
       </el-form-item>
     </el-form>
 
     <div class="x-argeement" v-if="show_agreement">
-      <h5>TEA Token Loan Term Agreement</h5>
+      <h5>TEA Token Loan Agreement</h5>
       <p>
         Deposit CML to use as collateral for a TEA token loan.<br />
+        The current loan amount is 500T regardless of the type of seed used for
+        collateral.<br />
         Each billing cycle is 1000 blocks long (approximately 100 minutes).<br />
         The interest rate for every billing cycle is 0.08%.<br />
         The loan term is 200,000 blocks, approximately 55 hours.<br />
-        The current loan amount is 500T regardless of the type of seed used for
-        collateral.<br />
+        
       </p>
       <p>
         <b>Loan Repayment</b><br />
@@ -100,12 +101,19 @@ export default {
 
   methods: {
     close() {
+      this.form.agree = true;
+      this.show_agreement = false;
       this.$store.commit("modal/close", "deposit_loan");
     },
     toggleAgreement() {
       this.show_agreement = !this.show_agreement;
     },
     async confrim() {
+      if(!this.form.agree){
+        this.$root.showError('Please agree the loan agreement or close modal.');
+
+        return;
+      }
       const cb = utils.mem.get("deposit_loan");
       if (cb) {
         const form = {

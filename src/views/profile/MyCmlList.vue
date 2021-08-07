@@ -134,7 +134,7 @@
             scope.row.status!=='Staking'
             && scope.row.staking_slot.length<1"
           @click="pawnCmlToGB(scope)"
-          tip="Deposit loan"
+          tip="Deposit for loan"
           icon="bank"
         />
       </template>
