@@ -25,7 +25,7 @@ Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
 
 Vue.use(VueAnalytics, {
-  id: 'G-FL13ZV631M'
+  id: 'G-JGED7HL84B'
 });
 
 router.beforeEach((to, from, next) => {
