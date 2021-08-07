@@ -27,17 +27,25 @@
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
       <div class="x-item">
-        <b>{{'Locked balance' | cardTitle}}</b>
+        <b>
+          {{'Locked balance' | cardTitle}}
+          <TeaIconButton style="position:relative; top:1px;" place="right" tip="The balance locked in staking and auction selling or bidding." icon="questionmark" />
+        </b>
         <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
       </div>
 
       <div v-if="layer1_account && layer1_account.debt" class="x-item">
-        <b>{{'Staking debt' | cardTitle}}</b>
+        <b>
+          {{'Staking debt' | cardTitle}}
+        </b>
         <span :inner-html.prop="layer1_account.debt | teaIcon"></span>
       </div>
 
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
-        <b>{{'Staking reward' | cardTitle}}</b>
+        <b>
+          {{'Staking reward' | cardTitle}}
+          <TeaIconButton style="position:relative; top:1px;" place="right" tip="Reward paid out for staking in CML-activated nodes. The first to plant a CML seed along with a 1000 TEA stake is considered the miner for that node." icon="questionmark" />
+        </b>
         <span :inner-html.prop="layer1_account.reward | teaIcon"></span>
       </div>
 
@@ -102,6 +110,7 @@ import MyPawnList from './profile/MyPawnList';
 import MyCoupon from './profile/MyCoupon';
 import PubSub from 'pubsub-js';
 import ClipboardJS from 'clipboard';
+import TeaIconButton from '../components/TeaIconButton';
 export default {
   components: {
     MyCmlList,
@@ -109,6 +118,7 @@ export default {
     MyAppList,
     MyCoupon,
     MyPawnList,
+    TeaIconButton,
   },
   data(){
     return {
