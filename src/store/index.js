@@ -282,7 +282,6 @@ const store = new Vuex.Store({
         }
       }
 
-      console.log(2, x_list);
       store.commit('set_my_bid_list', x_list);
     }
   }

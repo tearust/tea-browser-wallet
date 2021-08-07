@@ -132,12 +132,24 @@ export default {
       const min_price = await this.calculateBidMinPrice(api, scope.row);
       const msg = `You need to add at least <b>${utils.layer1.formatBalance(min_price, true)}</b> to your existing bid.`;
 
+      let buy_now_need = null;
+
+      const auction = scope.row.auction;
+      if(auction.buy_now_price){
+        buy_now_need = auction.buy_now_price;
+        
+        buy_now_need -= scope.row.price;
+        buy_now_need = utils.layer1.formatBalance(buy_now_need);
+      }
+
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
           msg,
           type: 'add',
+          buy_now_price: auction.buy_now_price,
+          buy_now_need,
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
