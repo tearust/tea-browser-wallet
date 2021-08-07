@@ -238,6 +238,11 @@ export default class {
     }
 
     const debt = await this.getAllDebtByAddress(address);
+
+    let usd = await api.query.genesisExchange.uSDStore(address);
+    usd = usd.toJSON();
+
+    usd = utils.layer1.balanceToAmount(usd);
     
     return {
       free: Math.floor(free * 10000) / 10000,
@@ -245,6 +250,7 @@ export default class {
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
       debt: debt.total ? Math.floor(debt.total * 10000) / 10000 : null,
       debt_detail: debt.details,
+      usd,
     };
   }
 
@@ -330,6 +336,7 @@ export default class {
       reward: balance.reward,
       debt: balance.debt,
       debt_detail: balance.debt_detail,
+      usd: balance.usd,
       coupons,
       pawn_cml_list,
     });

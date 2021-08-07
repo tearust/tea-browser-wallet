@@ -52,7 +52,7 @@ export default {
   state: initState(),
   mutations: {
     open(state, params){
-      const {key, cb, param} = params;
+      const {key, cb, param, open_cb} = params;
       if(!_.isUndefined(state[key])){
         const doc = {
           visible: true,
@@ -66,6 +66,7 @@ export default {
         _.set(state, key, doc);
 
         cb && utils.mem.set(key, cb);
+        open_cb && utils.mem.set(`${key}--open_cb`, open_cb);
       }
     },
     close(state, key){
@@ -76,6 +77,7 @@ export default {
         });
 
         utils.mem.remove(key);
+        utils.mem.remove(`${key}--open_cb`);
       }
     }
   },

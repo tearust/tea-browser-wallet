@@ -34,6 +34,14 @@
         <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
       </div>
 
+      <div class="x-item">
+        <b>
+          {{'My USD' | cardTitle}}
+          <TeaIconButton style="position:relative;" place="right" tip="My usd dollars" icon="questionmark" />
+        </b>
+        <span :inner-html.prop="layer1_account ? layer1_account.usd : ''"></span>
+      </div>
+
       <div v-if="layer1_account && layer1_account.debt" class="x-item">
         <b>
           {{'Staking debt' | cardTitle}}
@@ -50,7 +58,9 @@
       </div>
 
       <div class="x-bottom">
-        <!-- <el-button @click="showSelectLayer1()">CHANGE</el-button> -->
+        <el-button v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">TEA to USD</el-button>
+        <el-button v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">USD to TEA</el-button>
+
         <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
         <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
@@ -100,7 +110,7 @@
 <script>
 import SettingAccount from '../workflow/SettingAccount';
 import {_} from 'tearust_utils';
-import {helper} from 'tearust_layer1';
+import {helper, numberToHex} from 'tearust_layer1';
 import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import MyCmlList from './profile/MyCmlList';
@@ -111,6 +121,7 @@ import MyCoupon from './profile/MyCoupon';
 import PubSub from 'pubsub-js';
 import ClipboardJS from 'clipboard';
 import TeaIconButton from '../components/TeaIconButton';
+import request from '../request';
 export default {
   components: {
     MyCmlList,
@@ -320,7 +331,140 @@ export default {
         },
       });
 
-    }
+    },
+    async teaToUsd(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Exchange TEA to USD',
+          pallet: 'genesisExchange',
+          tx: 'teaToUsd',
+          text: '',
+          props: {
+            withdraw_amount: {
+              label: 'Amount',
+              type: 'number',
+              max: this.layer1_account.balance,
+              min: 0,
+              step: 0.1,
+              default: 0,
+              rules: {
+                validator: (rule, value, next)=>{
+                  if(value < 0.1){
+                    next('Min amount is 0.1');
+                    return;
+                  }
+                  
+                  next();
+                },
+              }
+            }
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+
+          const amount = form.withdraw_amount;
+          let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
+          
+          try{
+            await this.$confirm(`Estimate amount is <b>${utils.layer1.balanceToAmount(estimate)} USD</b> for this exchange. <br/> Are you sure?`, {
+              dangerouslyUseHTMLString: true,
+            });
+          }catch(e){
+            this.$root.loading(false);
+            return false;
+          }
+      
+          try{
+            const tx = api.tx.genesisExchange.teaToUsd(numberToHex(utils.layer1.amountToBalance(amount)));
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+            this.$root.success();
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+        open_cb: async(opts)=>{
+          let rate = await request.layer1_rpc('cml_currentExchangeRate', []);
+          
+          rate = utils.layer1.floorAmount(utils.layer1.amountToBalance(1)/_.toNumber(rate));
+          opts.text = `Current exchange rate is <b>${rate}</b>.`;
+
+          const tmp = await request.layer1_rpc('cml_userAssetList', []);
+          console.log('cml_userAssetList', tmp);
+
+        },
+      });
+    },
+    async usdToTea(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Exchange TEA to USD',
+          pallet: 'genesisExchange',
+          tx: 'usdToTea',
+          text: '',
+          props: {
+            withdraw_amount: {
+              label: 'Amount',
+              type: 'number',
+              max: this.layer1_account.usd,
+              min: 0,
+              step: 0.1,
+              default: 0,
+              rules: {
+                validator: (rule, value, next)=>{
+                  if(value < 0.1){
+                    next('Min amount is 0.1');
+                    return;
+                  }
+                  
+                  next();
+                },
+              }
+            }
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+
+          const amount = form.withdraw_amount;
+          let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
+          
+          try{
+            await this.$confirm(`Estimate amount is <b>${utils.layer1.balanceToAmount(estimate)} TEA</b> for this exchange. <br/> Are you sure?`, {
+              dangerouslyUseHTMLString: true,
+            });
+          }catch(e){
+            this.$root.loading(false);
+            return false;
+          }
+          try{
+            const tx = api.tx.genesisExchange.usdToTea(numberToHex(utils.layer1.amountToBalance(amount)));
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+            this.$root.success();
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+        open_cb: async(opts)=>{
+          const rate = await request.layer1_rpc('cml_currentExchangeRate', []);
+          opts.text = `Current exchange rate is <b>${utils.layer1.formatBalance(rate)}</b>.`;
+        },
+      });
+    },
   }
 
   

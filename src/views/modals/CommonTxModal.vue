@@ -28,7 +28,7 @@
           >
           </el-option>
         </el-select>
-        <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000"></el-input-number>
+        <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000" :step="props[item.name].step || 1"></el-input-number>
 
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
       </el-form-item>
@@ -95,7 +95,14 @@ export default {
       tx = tx.toJSON();
       tx.props = this.param.props || {};
 
+      const open_cb = utils.mem.get('common_tx--open_cb');
+      if(open_cb){
+        await open_cb(this.param);
+      }
+
       this.initFormByTx(tx);
+      
+      this.loading = false;
     },
     initFormByTx(tx){
       const args = tx.args;
@@ -134,6 +141,9 @@ export default {
         }
         else{
           rules[n] = [{required: true, message: `${labels[n]} is required.`}];
+          if(props[n].rules){
+            rules[n] = _.concat(props[n].rules, rules[n]);
+          }
         }
 
         
@@ -147,7 +157,7 @@ export default {
       this.args = args;
       this.props = props;
 
-      this.loading = false;
+      
     },
 
     close(){

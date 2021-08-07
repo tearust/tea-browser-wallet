@@ -99,6 +99,7 @@ const store = new Vuex.Store({
         reward: account.reward,
         debt: account.debt,
         debt_detail: account.debt_detail,
+        usd: account.usd,
         pawn_cml_list: account.pawn_cml_list,
         ...account.coupons || {},
       };

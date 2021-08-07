@@ -56,6 +56,14 @@ a, a:hover, a:focus, button:focus {
   }
 }
 
+.el-message-box__message{
+  p{
+    b{
+      color: $mainColor;
+    }
+  }
+}
+
 .tea-page{
   text-align: left;
   min-height: calc(100vh - 327px);

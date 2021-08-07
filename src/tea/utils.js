@@ -56,7 +56,7 @@ const cache = {
 // TODO move to tearust_layer1 pkgs
 const layer1 = {
   formatBalance(value, with_icon=false) {
-    value = parseInt(value, 10) / (1000000*1000000);
+    value = _.toNumber(value) / (1000000*1000000);
     value = Math.floor(value*10000)/10000;
 
     if(!with_icon) return value;
@@ -64,6 +64,15 @@ const layer1 = {
     return symbol + value;
 
     // return formatBalance(number, { decimals: 12, withSi: true, withUnit: 'TEA' });
+  },
+  amountToBalance(value){
+    return _.toNumber(value) * (1000000*1000000);
+  },
+  balanceToAmount(value){
+    return layer1.formatBalance(value);
+  },
+  floorAmount(value){
+    return Math.floor(value*10000) / 10000;
   }
 };
 
