@@ -150,8 +150,8 @@ export default {
 
       const redeem_amount = await request.layer1_rpc('cml_calculateLoanAmount', [cml_id, block]);
 
-      const info = `You need to pay ${redeem_amount/(1000000*1000000)}TEA to get your cml back.`;
-      const x = await this.$confirm(info, "Pay off").catch(()=>{});
+      const info = `You need to pay ${redeem_amount/(1000000*1000000)}TEA to get your CML back.`;
+      const x = await this.$confirm(info, "Pay off loan").catch(()=>{});
       if(!x) return;
 
       this.$root.loading(true);
