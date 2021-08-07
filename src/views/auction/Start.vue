@@ -53,7 +53,8 @@ export default {
       const x = Math.ceil(block/window_size)*window_size;
 
       let rs = x - block;
-      if(rs === window_size-1){
+
+      if(rs < 1 || rs === window_size-1){
         // publish refresh event.
         p.clickTab();
       }

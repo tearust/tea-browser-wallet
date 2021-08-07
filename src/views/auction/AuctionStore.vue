@@ -138,6 +138,12 @@ export default {
       const api = layer1_instance.getApi();
 
       const min_price = this.calculateBidMinPrice(api, scope.row);
+console.log(111, min_price);
+      if(min_price < 0){
+        this.$root.showError('This auction is completed');
+        await this.refreshList();
+        return;
+      }
 
       let msg = `You need at least <b>${utils.layer1.formatBalance(min_price)} TEA</b> to bid on this auction.`;
 

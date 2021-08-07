@@ -130,6 +130,13 @@ export default {
       const api = layer1_instance.getApi();
 
       const min_price = await this.calculateBidMinPrice(api, scope.row);
+
+      if(min_price < 0){
+        this.$root.showError('This auction is completed');
+        await this.refreshList();
+        return;
+      }
+
       const msg = `You need to add at least <b>${utils.layer1.formatBalance(min_price, true)}</b> to your existing bid.`;
 
       let buy_now_need = null;
