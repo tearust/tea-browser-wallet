@@ -10,7 +10,7 @@
   >
 
     <el-form :model="form" label-width="150px">
-      <p>{{param.msg || ''}}</p>
+      <p class="c-info">{{param.msg || ''}}</p>
       <el-form-item label="CML Id">
         <el-input :disabled="true" :value="param.cml_id"></el-input>
       </el-form-item>
