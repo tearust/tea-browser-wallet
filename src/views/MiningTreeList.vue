@@ -235,11 +235,11 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
-          title: 'Staking invest',
+          title: 'Stake',
           label_width: 200,
           pallet: 'cml',
           tx: 'startStaking',
-          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot. You should leave "Staking with CML" empty if you\'re staking with TEA.',
+          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot. You should leave "CML to stake" empty if you\'re staking TEA.',
           props: {
             staking_to: {
               type: 'Input',
@@ -248,6 +248,7 @@ export default {
               disabled: true,
             },
             staking_cml: {
+              label: 'CML to stake',
               type: 'select',
               options: _.filter(this.layer1_account.cml, (item)=>{
                 return item.generate_defrost_time < 1 && item.slot_len<1 && item.status !== 'Staking';
