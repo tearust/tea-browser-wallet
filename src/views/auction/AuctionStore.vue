@@ -139,10 +139,10 @@ export default {
 
       const min_price = this.calculateBidMinPrice(api, scope.row);
 
-      let msg = `You need at least ${utils.layer1.formatBalance(min_price)} to bid on this auction.`;
+      let msg = `You need at least <b>${utils.layer1.formatBalance(min_price, true)}</b> to bid on this auction.`;
 
       if(scope.row.for_current){
-        msg = `You need to add at least ${utils.layer1.formatBalance(min_price)} to your existing bid.`;
+        msg = `You need to add at least <b>${utils.layer1.formatBalance(min_price, true)}</b> to your existing bid.`;
       }
 
       this.$store.commit('modal/open', {

@@ -130,7 +130,7 @@ export default {
       const api = layer1_instance.getApi();
 
       const min_price = await this.calculateBidMinPrice(api, scope.row);
-      const msg = `You need to add at least ${utils.layer1.formatBalance(min_price)} to your existing bid.`;
+      const msg = `You need to add at least <b>${utils.layer1.formatBalance(min_price, true)}</b> to your existing bid.`;
 
       this.$store.commit('modal/open', {
         key: 'bid_for_auction', 
