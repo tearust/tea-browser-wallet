@@ -33,6 +33,7 @@
 
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
 
+  <el-menu-item index="/leader_board">{{'Leader Board'}}</el-menu-item>
   <el-menu-item index="/top_tree_list">{{'Mining Camellia'}}</el-menu-item>
   <el-menu-item index="/auction_store">{{'Marketplace'}}</el-menu-item>
 

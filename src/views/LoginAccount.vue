@@ -392,12 +392,9 @@ export default {
         },
         open_cb: async(opts)=>{
           let rate = await request.layer1_rpc('cml_currentExchangeRate', []);
-          
-          rate = utils.layer1.floorAmount(utils.layer1.amountToBalance(1)/_.toNumber(rate));
+          // console.log(111, rate);
+          rate = utils.layer1.roundAmount(utils.layer1.amountToBalance(1)/_.toNumber(rate));
           opts.text = `Current exchange rate is <b>${rate}</b>.`;
-
-          const tmp = await request.layer1_rpc('cml_userAssetList', []);
-          console.log('cml_userAssetList', tmp);
 
         },
       });
@@ -461,7 +458,8 @@ export default {
         },
         open_cb: async(opts)=>{
           const rate = await request.layer1_rpc('cml_currentExchangeRate', []);
-          opts.text = `Current exchange rate is <b>${utils.layer1.formatBalance(rate)}</b>.`;
+          // console.log(222, rate, utils.layer1.balanceToAmount(rate));
+          opts.text = `Current exchange rate is <b>${utils.layer1.balanceToAmount(rate)}</b>.`;
         },
       });
     },

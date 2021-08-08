@@ -71,8 +71,8 @@ const layer1 = {
   balanceToAmount(value){
     return layer1.formatBalance(value);
   },
-  floorAmount(value){
-    return Math.floor(value*10000) / 10000;
+  roundAmount(value){
+    return Math.round(value*10000) / 10000;
   }
 };
 

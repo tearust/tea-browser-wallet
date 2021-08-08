@@ -21,7 +21,7 @@
 
       <el-form-item style="margin-top:-18px;" v-if="param.buy_now_price" label="Buy it now">
         <el-checkbox v-model="form.buy_now">
-          But it now need <b>{{param.buy_now_need}} TEA</b>
+          Buy now price is <b>{{param.buy_now_need}} TEA</b>
         </el-checkbox>
       </el-form-item>
     </el-form>

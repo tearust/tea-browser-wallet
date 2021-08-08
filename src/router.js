@@ -20,6 +20,8 @@ import UserDetails from './views/UserDetails';
 
 import MiningTreeList from './views/MiningTreeList';
 
+import LeaderBoard from './views/LeaderBoard';
+
 
 Vue.use(Router);
 
@@ -93,7 +95,12 @@ let routers = [
     path: '/top_tree_list',
     name: 'top_tree_list',
     component: MiningTreeList,
-  }
+  },
+  {
+    path: '/leader_board',
+    name: 'leader_board',
+    component: LeaderBoard,
+  },
   
 ];
 

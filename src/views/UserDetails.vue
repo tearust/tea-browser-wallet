@@ -26,6 +26,10 @@
           <b>{{'Locked balance' | cardTitle}}</b>
           <span :inner-html.prop="info ? info.lock : '' | teaIcon"></span>
         </div>
+        <div class="x-item">
+          <b>{{'USD'}}</b>
+          <span :inner-html.prop="info ? info.usd : ''"></span>
+        </div>
 
       </div>
 
