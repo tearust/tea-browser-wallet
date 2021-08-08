@@ -21,7 +21,7 @@
         <el-button
           :title="scope.row.address"
           @click="
-            $root.goPath('/user_details/'+scope.row.address, 'replace')"
+            $root.goPath('/user_details/'+scope.row.address)"
           type="text">
           {{scope.row.address}}
         </el-button>
