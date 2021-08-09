@@ -406,7 +406,7 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
-          title: 'Exchange TEA to USD',
+          title: 'Exchange USD to TEA',
           pallet: 'genesisExchange',
           tx: 'usdToTea',
           text: '',
