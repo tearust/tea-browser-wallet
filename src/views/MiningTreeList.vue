@@ -251,7 +251,7 @@ export default {
               label: 'CML to stake',
               type: 'select',
               options: _.filter(this.layer1_account.cml, (item)=>{
-                return item.generate_defrost_time < 1 && item.slot_len<1 && item.status !== 'Staking';
+                return item.defrost_day === '0' && item.slot_len<1 && item.status !== 'Staking';
               }),
             },
 
