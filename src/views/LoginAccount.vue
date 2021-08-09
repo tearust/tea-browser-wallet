@@ -61,7 +61,7 @@
         <el-button v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">TEA to USD</el-button>
         <el-button v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">USD to TEA</el-button>
 
-        <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
+        <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
         <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
         <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Pay off debt</el-button>
