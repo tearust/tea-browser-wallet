@@ -98,6 +98,7 @@ query {
     first: 9999
     orderBy: AT_BLOCK_DESC
     filter: {
+      to: {in: ["${address}"]}
       name: {in: ["RewardStatements"]}
     }
     
