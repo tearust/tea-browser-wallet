@@ -39,7 +39,7 @@
           {{'My USD' | cardTitle}}
           <TeaIconButton style="position:relative;" place="right" tip="My usd dollars" icon="questionmark" />
         </b>
-        <span :inner-html.prop="layer1_account ? layer1_account.usd : ''"></span>
+        <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
       </div>
 
       <div v-if="layer1_account && layer1_account.debt" class="x-item">

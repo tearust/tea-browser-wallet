@@ -134,7 +134,13 @@ export default {
     async refreshList(){
       const list = this.layer1_account && this.layer1_account.pawn_cml_list;
       // if(!list || list.length < 1) return;
-      this.list = await this.wf.getCmlByList(list);
+      const x_list = await this.wf.getCmlByList(list);
+
+      this.list = _.map(x_list, (item)=>{
+        // item.due_day = 0;  TODO
+        return item;
+      });
+      // console.log(111, this.list);
     },
     async paybackToGB(scope){
       const layer1_instance = this.wf.getLayer1Instance();

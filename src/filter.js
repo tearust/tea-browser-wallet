@@ -16,6 +16,9 @@ Vue.filter('teaIcon', (value=0) => {
   const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
   return symbol + (_.isNull(value)?'0':value);
 });
+Vue.filter('usd', (value)=>{
+  return `$${value}`;
+})
 Vue.filter('balance', (value) => {
   if(_.isNull(value) || _.isUndefined(value)) return '';
   value = parseInt(value, 10) / (1000000*1000000);

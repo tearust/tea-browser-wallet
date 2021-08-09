@@ -28,7 +28,7 @@
         </div>
         <div class="x-item">
           <b>{{'USD'}}</b>
-          <span :inner-html.prop="info ? info.usd : ''"></span>
+          <span :inner-html.prop="info ? info.usd : '' | usd"></span>
         </div>
 
       </div>
