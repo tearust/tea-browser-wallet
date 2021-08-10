@@ -80,5 +80,5 @@ export default {
   /// Some status that can't convert to another status.
   CmlInvalidStatusConversion: 'The current CML status cannot be converted to another status',
 
-  OperationForbiddenWithCredit: 'Withdrawing rewards is not allowed with a staking debt balance',
+  OperationForbiddenWithCredit: 'Withdrawal not permitted while account has an active loan. First pay off any outstanding loans before withdrawing rewards.',
 };
