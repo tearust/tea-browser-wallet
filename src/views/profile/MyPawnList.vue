@@ -133,14 +133,16 @@ export default {
   methods: {
     async refreshList(){
       const list = this.layer1_account && this.layer1_account.pawn_cml_list;
-      // if(!list || list.length < 1) return;
-      const x_list = await this.wf.getCmlByList(list);
+      if(!list || list.length < 1) return;
 
-      this.list = _.map(x_list, (item)=>{
-        // item.due_day = 0;  TODO
+      this.list = await Promise.all(_.map(list, async (arr)=>{
+        const item = await this.wf.getCmlByList([arr[0]]);
+        item.due = arr[1];
         return item;
-      });
-      // console.log(111, this.list);
+      }));
+
+      console.log(111, this.list);
+
     },
     async paybackToGB(scope){
       const layer1_instance = this.wf.getLayer1Instance();
