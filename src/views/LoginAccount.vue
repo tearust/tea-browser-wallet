@@ -345,7 +345,7 @@ export default {
           text: '',
           props: {
             withdraw_amount: {
-              label: 'Amount',
+              label: 'Amount (TEA)',
               type: 'number',
               max: this.layer1_account.balance,
               min: 0,
@@ -360,6 +360,7 @@ export default {
                   
                   next();
                 },
+                trigger: 'none',
               }
             }
           },
@@ -371,7 +372,7 @@ export default {
           let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
           
           try{
-            await this.$confirm(`Estimate amount is <b>${utils.layer1.balanceToAmount(estimate)} USD</b> for this exchange. <br/> Are you sure?`, {
+            await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} USD</b> for this exchange. <br/> Are you sure?`, {
               dangerouslyUseHTMLString: true,
             });
           }catch(e){
@@ -394,7 +395,7 @@ export default {
           let rate = await request.layer1_rpc('cml_currentExchangeRate', []);
           // console.log(111, rate);
           rate = utils.layer1.roundAmount(utils.layer1.amountToBalance(1)/_.toNumber(rate));
-          opts.text = `Current exchange rate is <b>${rate}</b>.`;
+          opts.text = `Current exchange rate is <b>${rate} TEA/USD</b>.`;
 
         },
       });
@@ -412,7 +413,7 @@ export default {
           text: '',
           props: {
             withdraw_amount: {
-              label: 'Amount',
+              label: 'Amount (USD)',
               type: 'number',
               max: this.layer1_account.usd,
               min: 0,
@@ -427,6 +428,7 @@ export default {
                   
                   next();
                 },
+                trigger: 'none',
               }
             }
           },
@@ -438,7 +440,7 @@ export default {
           let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
           
           try{
-            await this.$confirm(`Estimate amount is <b>${utils.layer1.balanceToAmount(estimate)} TEA</b> for this exchange. <br/> Are you sure?`, {
+            await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} TEA</b> for this exchange. <br/> Are you sure?`, {
               dangerouslyUseHTMLString: true,
             });
           }catch(e){
@@ -459,7 +461,7 @@ export default {
         open_cb: async(opts)=>{
           const rate = await request.layer1_rpc('cml_currentExchangeRate', []);
           // console.log(222, rate, utils.layer1.balanceToAmount(rate));
-          opts.text = `Current exchange rate is <b>${utils.layer1.balanceToAmount(rate)}</b>.`;
+          opts.text = `Current exchange rate is <b>${utils.layer1.balanceToAmount(rate)} USD/TEA</b>.`;
         },
       });
     },
