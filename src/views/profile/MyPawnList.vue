@@ -61,6 +61,15 @@
     </el-table-column>
 
     <el-table-column
+      prop="due"
+      label="Expired day"
+      sortable
+      width="110"
+    >
+    
+    </el-table-column>
+
+    <el-table-column
       prop="status"
       label="Status"
       width="100"
@@ -133,15 +142,20 @@ export default {
   methods: {
     async refreshList(){
       const list = this.layer1_account && this.layer1_account.pawn_cml_list;
+
       if(!list || list.length < 1) return;
 
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      const current_block = await this.wf.getCurrentBlock(api);
       this.list = await Promise.all(_.map(list, async (arr)=>{
-        const item = await this.wf.getCmlByList([arr[0]]);
-        item.due = arr[1];
+        const tmp = await this.wf.getCmlByList([arr[0]]);
+        const item = tmp[0];
+        const block = arr[1] - current_block;
+        item.due = await this.wf.blockToDay(block);
         return item;
       }));
 
-      console.log(111, this.list);
 
     },
     async paybackToGB(scope){
