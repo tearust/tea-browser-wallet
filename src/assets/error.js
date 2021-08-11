@@ -82,7 +82,7 @@ export default {
 
   OperationForbiddenWithCredit: 'Withdrawal not permitted while account has an active loan. First pay off any outstanding loans before withdrawing rewards.',
 
-  // genesis bank
+  // Genesis bank
   /// Loan already exists that cannot be pawn again.
   LoanAlreadyExists: 'That CML is already being used for collateral',
   /// The given asset id not exist in collateral store.
@@ -97,8 +97,8 @@ export default {
   InvalidCloseHeight: 'The Genesis bank is no longer offering loans',
   /// Only frozen seeds are allowed to be collateral
   ShouldPawnFrozenSeed: 'Only frozen seeds can be used for collateral',
-  /// Only genesis seeds are allowed to be collateral
-  ShouldPawnGenesisSeed: 'Only genesis CML seeds can act as loan collateral',
+  /// Only Genesis seeds are allowed to be collateral
+  ShouldPawnGenesisSeed: 'Only Genesis CML seeds can be used as loan collateral',
   /// Collateral store is not empty and bank cannot shutdown.
   CollateralStoreNotEmpty: 'There is still outstanding CML loan collateral',
   /// User collateral store not empty cannot shutdown.
@@ -111,7 +111,7 @@ export default {
   /// helper. When newer Defi service tApps are ready, the Genesis Bank should be retired
   CannotApplyLoanAfterClosed: 'The Genesis bank is closed and no longer offers loans',
 
-  // genesis exchange
+  // Genesis exchange
   ExchangeInsufficientUSD: 'The exchange does not have enough USD for transaction',
   ExchangeInsufficientTEA: 'The exchange does not have enough TEA for transaction',
   UserInsufficientUSD: 'Insufficient USD for transaction',
