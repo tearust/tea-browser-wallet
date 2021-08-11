@@ -84,40 +84,40 @@ export default {
 
   // genesis bank
   /// Loan already exists that cannot be pawn again.
-  LoanAlreadyExists: 'LoanAlreadyExists',
+  LoanAlreadyExists: 'That CML is already being used for collateral',
   /// The given asset id not exist in collateral store.
-  LoanNotExists: 'LoanNotExists',
+  LoanNotExists: 'This CML is not being used for collateral',
   /// Collateral not belongs to user.
-  InvalidBorrower: 'InvalidBorrower',
+  InvalidBorrower: 'This CML is not owned by this wallet address',
   /// Loan in default
-  LoanInDefault: 'LoanInDefault',
+  LoanInDefault: 'Loan is in default',
   /// User have not enough free balance to pay off loan.
-  InsufficientRepayBalance: 'InsufficientRepayBalance',
+  InsufficientRepayBalance: 'You don not have enough to pay off the loan',
   /// Close height should larger equal than current height.
-  InvalidCloseHeight: 'InvalidCloseHeight',
+  InvalidCloseHeight: 'The Genesis bank is no longer offering loans',
   /// Only frozen seeds are allowed to be collateral
-  ShouldPawnFrozenSeed: 'ShouldPawnFrozenSeed',
+  ShouldPawnFrozenSeed: 'Only frozen seeds can be used for collateral',
   /// Only genesis seeds are allowed to be collateral
-  ShouldPawnGenesisSeed: 'ShouldPawnGenesisSeed',
+  ShouldPawnGenesisSeed: 'Only genesis CML seeds can act as loan collateral',
   /// Collateral store is not empty and bank cannot shutdown.
-  CollateralStoreNotEmpty: 'CollateralStoreNotEmpty',
+  CollateralStoreNotEmpty: 'There is still outstanding CML loan collateral',
   /// User collateral store not empty cannot shutdown.
-  UserCollateralStoreNotEmpty: 'UserCollateralStoreNotEmpty',
+  UserCollateralStoreNotEmpty: 'There is still outstanding CML loan collateral',
   /// Loan id convert to cml id with invalid length.
-  ConvertToCmlIdLengthMismatch: 'ConvertToCmlIdLengthMismatch',
+  ConvertToCmlIdLengthMismatch: 'CML collateral must match loan',
   /// Con not apply loan after current height larger equal than the close height.
   /// Close height is a preset block height that the Genesis Bank will stop operation
   /// We have such a close time because Genesis bank is supposed to be temporary cold-start
   /// helper. When newer Defi service tApps are ready, the Genesis Bank should be retired
-  CannotApplyLoanAfterClosed: 'CannotApplyLoanAfterClosed',
+  CannotApplyLoanAfterClosed: 'The Genesis bank is closed and no longer offers loans',
 
   // genesis exchange
-  ExchangeInsufficientUSD: 'ExchangeInsufficientUSD',
-  ExchangeInsufficientTEA: 'ExchangeInsufficientTEA',
-  UserInsufficientUSD: 'UserInsufficientUSD',
-  UserInsufficientTEA: 'UserInsufficientTEA',
-  InvalidDepositAmount: 'InvalidDepositAmount',
-  InvalidTransferUSDAmount: 'InvalidTransferUSDAmount',
-  WithdrawAmountShouldNotBeZero: 'WithdrawAmountShouldNotBeZero',
+  ExchangeInsufficientUSD: 'The exchange does not have enough USD for transaction',
+  ExchangeInsufficientTEA: 'The exchange does not have enough TEA for transaction',
+  UserInsufficientUSD: 'Insufficient USD for transaction',
+  UserInsufficientTEA: 'Insufficient TEA for transaction',
+  InvalidDepositAmount: 'Invalid deposit amount',
+  InvalidTransferUSDAmount: 'Invalid USD transfer amount',
+  WithdrawAmountShouldNotBeZero: 'Withdraw amount should be greater than 0',
 
 };
