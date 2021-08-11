@@ -62,7 +62,7 @@
 
     <el-table-column
       prop="due"
-      label="Expired day"
+      label="Due day"
       sortable
       width="110"
     >
