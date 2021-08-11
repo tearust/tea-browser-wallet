@@ -284,21 +284,45 @@ export default class {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
-    const coupon_investor_A = await api.query.cml.investorCouponStore(address, 'A');
-    const coupon_investor_B = await api.query.cml.investorCouponStore(address, 'B');
-    const coupon_investor_C = await api.query.cml.investorCouponStore(address, 'C');
+    let coupon_investor_A = await api.query.cml.investorCouponStore(address, 'A');
+    let coupon_investor_B = await api.query.cml.investorCouponStore(address, 'B');
+    let coupon_investor_C = await api.query.cml.investorCouponStore(address, 'C');
+    coupon_investor_A = coupon_investor_A.toJSON();
+    coupon_investor_B = coupon_investor_B.toJSON();
+    coupon_investor_C = coupon_investor_C.toJSON();
+    if(coupon_investor_A && coupon_investor_A.amount < 1){
+      coupon_investor_A = null;
+    }
+    if(coupon_investor_B && coupon_investor_B.amount < 1){
+      coupon_investor_B = null;
+    }
+    if(coupon_investor_C && coupon_investor_C.amount < 1){
+      coupon_investor_C = null;
+    }
 
-    const coupon_team_A = await api.query.cml.teamCouponStore(address, 'A');
-    const coupon_team_B = await api.query.cml.teamCouponStore(address, 'B');
-    const coupon_team_C = await api.query.cml.teamCouponStore(address, 'C');
+    let coupon_team_A = await api.query.cml.teamCouponStore(address, 'A');
+    let coupon_team_B = await api.query.cml.teamCouponStore(address, 'B');
+    let coupon_team_C = await api.query.cml.teamCouponStore(address, 'C');
+    coupon_team_A = coupon_team_A.toJSON();
+    coupon_team_B = coupon_team_B.toJSON();
+    coupon_team_C = coupon_team_C.toJSON();
+    if(coupon_team_A && coupon_team_A.amount < 1){
+      coupon_team_A = null;
+    }
+    if(coupon_team_B && coupon_team_B.amount < 1){
+      coupon_team_B = null;
+    }
+    if(coupon_team_C && coupon_team_C.amount < 1){
+      coupon_team_C = null;
+    }
 
     return {
-      coupon_investor_A: coupon_investor_A.toJSON(),
-      coupon_investor_B: coupon_investor_B.toJSON(),
-      coupon_investor_C: coupon_investor_C.toJSON(),
-      coupon_team_A: coupon_team_A.toJSON(),
-      coupon_team_B: coupon_team_B.toJSON(),
-      coupon_team_C: coupon_team_C.toJSON(),
+      coupon_investor_A: coupon_investor_A,
+      coupon_investor_B: coupon_investor_B,
+      coupon_investor_C: coupon_investor_C,
+      coupon_team_A: coupon_team_A,
+      coupon_team_B: coupon_team_B,
+      coupon_team_C: coupon_team_C,
     }
   }
 
