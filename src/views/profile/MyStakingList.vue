@@ -210,6 +210,8 @@ export default {
       }));
 
       this.list = cml_list;
+
+      
     },
 
     showStakingSlot(scope){

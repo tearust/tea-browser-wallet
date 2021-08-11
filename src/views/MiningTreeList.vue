@@ -184,6 +184,8 @@ export default {
       }, 200);
       
     });
+
+    await this.wf.refreshCurrentAccount();
   },
 
   methods: {
@@ -275,6 +277,7 @@ export default {
             const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, index);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
+            await this.wf.refreshCurrentAccount();
 
             close();
           }catch(e){
