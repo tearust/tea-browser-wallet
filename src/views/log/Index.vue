@@ -2,7 +2,7 @@
 <div class="tea-page">
   <h4>Reward Logs (Total: {{my_total_reward}})</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshPage()"></el-button>
-  <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshPage()"></el-button>
+
   <TeaTable
     :data="my_reward || []"
     name="reward_log_table"
@@ -135,7 +135,15 @@
         {{scope.row.atBlock}}
       </template>
     </el-table-column>
-    
+
+    <el-table-column
+      label="Actions"
+      width="120">
+      <template slot-scope="scope">
+        <el-link class="tea-action-icon" title="Bids" :underline="false" type="primary" icon="el-icon-view" @click="viewLogDetails(scope)"></el-link>
+        
+      </template>
+    </el-table-column>
   </TeaTable>
 
   
@@ -184,6 +192,27 @@ export default {
           value: auction_id,
         },
       });
+    },
+    async viewLogDetails(scope){
+      const param = {};
+
+      let arr = null;
+      try{
+        let str = scope.row.args.replace(/\{/g, '[').replace(/\}/g, ']');
+        arr = JSON.parse(str);
+      }catch(e){
+        arr = [];
+      }
+
+      _.each(arr, (val, i)=>{
+        _.set(param, i+1, val);
+      });
+      param.title = 'Log details';
+      this.$store.commit('modal/open', {
+        key: 'data_details',
+        param,
+      });
+      
     }
   }
   
