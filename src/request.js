@@ -67,7 +67,7 @@ const F = {
     const query = `
 query {
   logs (
-    first: 9999
+    first: 999
     orderBy: AT_BLOCK_DESC
     ${filter ? query_filter : ''}
   ) {
@@ -95,7 +95,7 @@ query {
     const query = `
 query {
   logs (
-    first: 9999
+    first: 1200
     orderBy: AT_BLOCK_DESC
     filter: {
       to: {in: ["${address}"]}

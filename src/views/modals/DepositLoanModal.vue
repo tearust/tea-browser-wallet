@@ -18,7 +18,7 @@
         <el-input v-model="param.cml_id" :disabled="true"></el-input>
       </el-form-item>
 
-      <el-form-item label="Agreement">
+      <el-form-item label="Agree">
         <el-checkbox v-model="form.agree" label=""></el-checkbox>
         <el-button @click="toggleAgreement()" type="text" style="margin-left: 10px;"
           >TEA Token Loan Agreement
@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       form: {
-        agree: true,
+        agree: false,
       },
       show_agreement: false,
     };
@@ -101,7 +101,7 @@ export default {
 
   methods: {
     close() {
-      this.form.agree = true;
+      this.form.agree = false;
       this.show_agreement = false;
       this.$store.commit("modal/close", "deposit_loan");
     },
