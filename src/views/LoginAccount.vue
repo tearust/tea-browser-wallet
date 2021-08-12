@@ -59,10 +59,10 @@
 
       <div class="x-bottom">
         <el-button v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">
-          Sell TEA ({{rate.teaToUsd}} TEA/USD)
+          Sell TEA ({{rate.teaToUsd}} USD/TEA)
         </el-button>
         <el-button v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">
-          Sell USD ({{rate.usdToTea}} USD/TEA)
+          Sell USD ({{rate.usdToTea}} TEA/USD)
         </el-button>
 
         <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
@@ -386,7 +386,7 @@ export default {
               rules: {
                 type: 'number',
                 required: true,
-                message: 'aaaa'
+                message: 'Sell amount must be number.'
               }
             }
           },
@@ -395,16 +395,16 @@ export default {
           this.$root.loading(true);
 
           const amount = form.sell_tea_amount;
-          let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
+          // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
           
-          try{
-            await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} USD</b> for this exchange. <br/> Are you sure?`, {
-              dangerouslyUseHTMLString: true,
-            });
-          }catch(e){
-            this.$root.loading(false);
-            return false;
-          }
+          // try{
+          //   await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} USD</b> for this exchange. <br/> Are you sure?`, {
+          //     dangerouslyUseHTMLString: true,
+          //   });
+          // }catch(e){
+          //   this.$root.loading(false);
+          //   return false;
+          // }
       
           try{
             const tx = api.tx.genesisExchange.teaToUsd(null, numberToHex(utils.layer1.amountToBalance(amount)));
@@ -418,8 +418,9 @@ export default {
           this.$root.loading(false);
         },
         open_cb: async(opts)=>{
+          await this.getExchangeRate('teaToUsd');
           const rate = this.rate.teaToUsd
-          opts.text = `Current exchange rate is <b>${rate} TEA/USD</b>.`;
+          opts.text = `Current exchange rate is <b>${rate} USD/TEA</b>.`;
         },
       });
     },
@@ -445,7 +446,7 @@ export default {
               rules: {
                 type: 'number',
                 required: true,
-                message: 'aaaa'
+                message: 'Sell amount must be number.'
               }
             }
           },
@@ -454,16 +455,16 @@ export default {
           this.$root.loading(true);
 
           const amount = form.sell_usd_amount;
-          let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
+          // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
           
-          try{
-            await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} TEA</b> for this exchange. <br/> Are you sure?`, {
-              dangerouslyUseHTMLString: true,
-            });
-          }catch(e){
-            this.$root.loading(false);
-            return false;
-          }
+          // try{
+          //   await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} TEA</b> for this exchange. <br/> Are you sure?`, {
+          //     dangerouslyUseHTMLString: true,
+          //   });
+          // }catch(e){
+          //   this.$root.loading(false);
+          //   return false;
+          // }
           try{
             const tx = api.tx.genesisExchange.usdToTea(null, numberToHex(utils.layer1.amountToBalance(amount)));
             await layer1_instance.sendTx(this.layer1_account.address, tx);
@@ -476,8 +477,9 @@ export default {
           this.$root.loading(false);
         },
         open_cb: async(opts)=>{
+          await this.getExchangeRate('usdToTea');
           const rate = this.rate.usdToTea;
-          opts.text = `Current exchange rate is <b>${rate} USD/TEA</b>.`;
+          opts.text = `Current exchange rate is <b>${rate} TEA/USD</b>.`;
         },
       });
 
