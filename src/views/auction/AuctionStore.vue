@@ -177,7 +177,7 @@ console.log(111, min_price);
             const price = layer1_instance.asUnit(form.price);
             
             if(price < min_price){
-              throw 'Not enough price for this bid.'
+              throw 'Insufficient bid amount.'
             }
 
             const tx = api.tx.auction.bidForAuction(auction_id, price);
