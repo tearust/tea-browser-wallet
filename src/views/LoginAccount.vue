@@ -382,12 +382,11 @@ export default {
             },
             sell_tea_amount: {
               label: 'Sell amount (TEA)',
-              type: 'Input',
-              rules: {
-                type: 'number',
-                required: true,
-                message: 'Sell amount must be number.'
-              }
+              type: 'number',
+              max: this.layer1_account.balance,
+              min: 0,
+              step: 0.1,
+              default: 0,
             }
           },
         },
@@ -396,15 +395,14 @@ export default {
 
           const amount = form.sell_tea_amount;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
-          
-          // try{
-          //   await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} USD</b> for this exchange. <br/> Are you sure?`, {
-          //     dangerouslyUseHTMLString: true,
-          //   });
-          // }catch(e){
-          //   this.$root.loading(false);
-          //   return false;
-          // }
+          try{
+            await this.$confirm(`Estimated amount is <b>${utils.layer1.roundAmount(this.rate.teaToUsd*amount)} USD</b> for this exchange. <br/> Are you sure?`, {
+              dangerouslyUseHTMLString: true,
+            });
+          }catch(e){
+            this.$root.loading(false);
+            return false;
+          }
       
           try{
             const tx = api.tx.genesisExchange.teaToUsd(null, numberToHex(utils.layer1.amountToBalance(amount)));
@@ -442,12 +440,11 @@ export default {
             },
             sell_usd_amount: {
               label: 'Sell amount (USD)',
-              type: 'Input',
-              rules: {
-                type: 'number',
-                required: true,
-                message: 'Sell amount must be number.'
-              }
+              type: 'number',
+              max: this.layer1_account.usd,
+              min: 0,
+              step: 0.1,
+              default: 0,
             }
           },
         },
@@ -457,14 +454,14 @@ export default {
           const amount = form.sell_usd_amount;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
           
-          // try{
-          //   await this.$confirm(`Estimated amount is <b>${utils.layer1.balanceToAmount(estimate)} TEA</b> for this exchange. <br/> Are you sure?`, {
-          //     dangerouslyUseHTMLString: true,
-          //   });
-          // }catch(e){
-          //   this.$root.loading(false);
-          //   return false;
-          // }
+          try{
+            await this.$confirm(`Estimated amount is <b>${utils.layer1.roundAmount(this.rate.usdToTea*amount)} TEA</b> for this exchange. <br/> Are you sure?`, {
+              dangerouslyUseHTMLString: true,
+            });
+          }catch(e){
+            this.$root.loading(false);
+            return false;
+          }
           try{
             const tx = api.tx.genesisExchange.usdToTea(null, numberToHex(utils.layer1.amountToBalance(amount)));
             await layer1_instance.sendTx(this.layer1_account.address, tx);
