@@ -37,7 +37,7 @@
     />
     <el-table-column
       prop="tea_asset"
-      label="TEA Account balance"
+      label="TEA account balance"
       width="140"
     />
     <el-table-column
@@ -47,7 +47,7 @@
     />
     <el-table-column
       prop="miner_credit"
-      label="Stake debt"
+      label="Staking debt"
     />
     <el-table-column
       prop="loan_credit"
