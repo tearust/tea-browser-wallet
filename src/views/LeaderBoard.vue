@@ -60,7 +60,7 @@
     >
       <template slot-scope="scope">
         <span v-if="scope.row.total>=0">{{scope.row.total}}</span>
-        <span v-if="scope.row.total<0" style="color:#f00;">(scope.row.total)</span>
+        <span v-if="scope.row.total<0" style="color:#f00;">({{scope.row.total}})</span>
       </template>
     </el-table-column>
       
