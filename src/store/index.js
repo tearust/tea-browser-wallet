@@ -16,6 +16,19 @@ const F = {
     const wf = new Base();
     await wf.init();
     return wf.layer1;
+  },
+
+  formatAuctionBidData(d){
+    if(d.starting_price){
+      d.starting_price = utils.toBN(d.starting_price);
+    }
+    if(d.buy_now_price){
+      d.buy_now_price = utils.toBN(d.buy_now_price);
+    }
+    if(d.price){
+      d.price = utils.toBN(d.price);
+    }
+    return d;
   }
 };
 
@@ -192,16 +205,21 @@ const store = new Vuex.Store({
       const list = await Promise.all(_.map(auction_list, async (auction_id) => {
         const tmp = await api.query.auction.auctionStore(auction_id);
 
-        const d = tmp.toJSON();
+        let d = tmp.toJSON();
+        d = F.formatAuctionBidData(d);
+
         if (d && d.id > 0) {
           if (d.bid_user) {
             let bid_item = await api.query.auction.bidStore(d.bid_user, d.id);
             bid_item = bid_item.toJSON();
+            bid_item = F.formatAuctionBidData(bid_item);
             d.bid_price = bid_item.price;
+
           }
 
           let tmp = await api.query.auction.bidStore(layer1_account.address, d.id);
           tmp = tmp.toJSON();
+          tmp = F.formatAuctionBidData(tmp);
           if (tmp && tmp.auction_id > 0) {
             d.for_current = tmp;
           }
@@ -233,12 +251,15 @@ const store = new Vuex.Store({
       if (user_auction && user_auction.length > 0) {
         for (let i = 0, len = user_auction.length; i < len; i++) {
           const tmp = await api.query.auction.auctionStore(user_auction[i]);
-          const d = tmp.toJSON();
+          let d = tmp.toJSON();
+          d = F.formatAuctionBidData(d);
+
           if (d) {
             if (d.bid_user) {
               let bid_item = await api.query.auction.bidStore(d.bid_user, user_auction[i]);
               bid_item = bid_item.toJSON();
-              d.bid_price = bid_item.price;
+              bid_item = F.formatAuctionBidData(bid_item);
+              d.bid_price = utils.toBN(bid_item.price);
             }
 
             x_list.push(d);
@@ -268,13 +289,15 @@ const store = new Vuex.Store({
       if (user_bid && user_bid.length > 0) {
         for (let i = 0, len = user_bid.length; i < len; i++) {
           const tmp = await api.query.auction.bidStore(layer1_account.address, user_bid[i]);
-          const d = tmp.toJSON();
+          let d = tmp.toJSON();
+          d = F.formatAuctionBidData(d);
           if (d) {
             const auction = await api.query.auction.auctionStore(d.auction_id);
             d.auction = auction.toJSON();
             if (d.auction.bid_user) {
               let bid_item = await api.query.auction.bidStore(d.auction.bid_user, d.auction_id);
               bid_item = bid_item.toJSON();
+              bid_item = F.formatAuctionBidData(bid_item);
               d.bid_price = bid_item.price;
             }
             d.cml_id = d.auction.cml_id;

@@ -10,6 +10,7 @@ import { hexToString, numberToHex } from 'tearust_layer1';
 
 import '../tea/moment-precise-range';
 
+window._layer1 = require('tearust_layer1');
 
 let _layer1 = null;
 let _init = false;

@@ -32,7 +32,7 @@
       label="Starting price"
     >
       <template slot-scope="scope">
-        <span :inner-html.prop="scope.row.starting_price | balance" />
+        <span :inner-html.prop="scope.row.starting_price | bn_balance" />
       </template>
     </el-table-column>
 
@@ -78,6 +78,7 @@
 
 <script>
 import {_} from 'tearust_utils';
+import {numberToHex, numberToBn, hexToBn} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import Auction from '../../workflow/Auction';
@@ -127,21 +128,26 @@ export default {
       this.$store.commit('modal/open', {
         key: 'put_to_auction_store', 
         param: {},
-        cb: async (form)=>{
+        cb: async (form, close)=>{
           this.$root.loading(true);
           try{
             const cml_id = form.cml_id;
-            const p1 = layer1_instance.asUnit(form.starting_price);
-            const p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
+            let p1 = layer1_instance.asUnit(form.starting_price);
+            let p2 = form.buy_now_price ? layer1_instance.asUnit(form.buy_now_price) : null;
 
             if(p2 && p2<=p1){
               throw 'BuyNowPriceShouldHigherThanStartingPrice';
             }
 
+            if(p2){
+              p2 = utils.toBN(p2);
+            }
+            p1 = utils.toBN(p1);
+
             const tx = api.tx.auction.putToStore(cml_id, p1, p2, form.auto_renew);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
 
-            this.$store.commit('modal/close', 'put_to_auction_store');
+            close();
 
             await this.refreshList();
           }catch(e){

@@ -119,15 +119,16 @@ export default {
     },
 
     calculateBidMinPrice(api, row){
-      let step = api.consts.auction.minPriceForBid.toJSON();
-      let min_price = row.starting_price + step;
+
+      let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
+      let min_price = row.starting_price.add(step);
 
       if(row.bid_user){
-        min_price = row.bid_price + step;
+        min_price = row.bid_price.add(step);
       }
 
       if(row.for_current){
-        min_price = min_price - row.for_current.price;
+        min_price = min_price.sub(row.for_current.price);
       }
 
       return min_price;
@@ -138,8 +139,8 @@ export default {
       const api = layer1_instance.getApi();
 
       const min_price = this.calculateBidMinPrice(api, scope.row);
-console.log(111, min_price);
-      if(min_price < 0){
+
+      if(min_price.lt(utils.toBN(0))){
         this.$root.showError('This auction is completed');
         await this.refreshList();
         return;
@@ -156,7 +157,7 @@ console.log(111, min_price);
         buy_now_need = scope.row.buy_now_price;
         
         if(scope.row.for_current){
-          buy_now_need -= scope.row.for_current.price;
+          buy_now_need = buy_now_need.sub(scope.row.for_current.price);
         }
         buy_now_need = utils.layer1.formatBalance(buy_now_need);
       }
@@ -174,9 +175,9 @@ console.log(111, min_price);
           this.$root.loading(true);
           try{
             const auction_id = scope.row.id;        
-            const price = layer1_instance.asUnit(form.price);
+            const price = utils.toBN(layer1_instance.asUnit(form.price));
             
-            if(price < min_price){
+            if(price.lt(min_price)){
               throw 'Insufficient bid amount.'
             }
 
@@ -192,18 +193,6 @@ console.log(111, min_price);
           }
           this.$root.loading(false);
         },
-      });
-    },
-    async showCmlDetails(scope){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-      const cml_data = await this.wf.getCmlByList([scope.row.cml_id]);
-      const d = cml_data[0];
-
-      d.title = 'CML Details';
-      this.$store.commit('modal/open', {
-        key: 'data_details',
-        param: _.omit(d, 'staking_slot', 'intrinsic'),
       });
     }
   }

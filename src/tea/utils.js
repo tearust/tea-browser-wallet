@@ -3,7 +3,10 @@ import http from './http';
 import Pubsub from 'pubsub-js';
 
 import * as tearust_utils from 'tearust_utils';
-import { hexToString, formatBalance } from 'tearust_layer1';
+import { 
+  hexToString, formatBalance, hexToNumber, hexToBn, numberToHex,
+  BN_MILLION, isBn, BN,
+} from 'tearust_layer1';
 
 import './index';
 
@@ -56,14 +59,14 @@ const cache = {
 // TODO move to tearust_layer1 pkgs
 const layer1 = {
   formatBalance(value, with_icon=false) {
-    value = _.toNumber(value) / (1000000*1000000);
-    value = Math.floor(value*10000)/10000;
+    value = F.toBN(value);
+    value = F.bnToBalanceNumber(value);
+    value = layer1.roundAmount(value);
 
     if(!with_icon) return value;
     const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
     return symbol + value;
 
-    // return formatBalance(number, { decimals: 12, withSi: true, withUnit: 'TEA' });
   },
   amountToBalance(value){
     return _.toNumber(value) * (1000000*1000000);
@@ -160,28 +163,25 @@ const F = {
     return _.toNumber(tmp);
   },
 
-  _toData(layer1_json) {
-    const rs = {};
-    _.each(layer1_json, (val, key) => {
-      if (_.isArray(val)) {
-        rs[key] = _.map(val, (item) => {
-          return F._toData(item);
-        });
+  toBN(val){
+    if(isBn(val)) return val;
+    if(_.isNumber(val)) return hexToBn(numberToHex(val));
+    if(_.isString(val)){
+      if(_.startsWith(val, '0x')){
+        return hexToBn(val);
       }
-      else if (_.isString(val) && _.startsWith(val, '0x')) {
-        rs[key] = hexToString(val);
-      }
-      else {
-        rs[key] = val;
-      }
-    });
 
-    return rs;
+      return new BN(val);
+    }
+
+    throw 'Can not convert to BN => '+val;
   },
-  toData(layer1_query) {
-    const tmp = layer1_query.toJSON();
-    return F._toData(tmp);
+
+  bnToBalanceNumber(bn){
+    const value = bn.div(BN_MILLION.mul(BN_MILLION)).toNumber();
+    return value;
   },
+
 
   async waitLayer1Ready(layer1) {
     while (layer1.connected !== 2) {

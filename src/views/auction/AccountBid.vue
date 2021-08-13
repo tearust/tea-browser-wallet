@@ -113,14 +113,14 @@ export default {
     },
 
     async calculateBidMinPrice(api, row){
-      let step = api.consts.auction.minPriceForBid.toJSON();
-      let min_price = 0;
+      let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
+      let min_price = utils.toBN(0);
 
       let bid_item = await api.query.auction.bidStore(row.auction.bid_user, row.auction_id);
 
       if(bid_item){
         bid_item = bid_item.toJSON();
-        min_price = bid_item.price - row.price + step;
+        min_price = utils.toBN(bid_item.price).sub(row.price).add(step);
       }
 
       return min_price;
@@ -131,7 +131,7 @@ export default {
 
       const min_price = await this.calculateBidMinPrice(api, scope.row);
 
-      if(min_price < 0){
+      if(min_price.lt(utils.toBN(0))){
         this.$root.showError('This auction is completed');
         await this.refreshList();
         return;
@@ -145,7 +145,7 @@ export default {
       if(auction.buy_now_price){
         buy_now_need = auction.buy_now_price;
         
-        buy_now_need -= scope.row.price;
+        buy_now_need = buy_now_need.sub(scope.row.price);
         buy_now_need = utils.layer1.formatBalance(buy_now_need);
       }
 
@@ -162,9 +162,9 @@ export default {
           this.$root.loading(true);
           try{
             const auction_id = scope.row.auction_id;        
-            const price = layer1_instance.asUnit(form.price);
+            const price = utils.toBN(layer1_instance.asUnit(form.price));
 
-            if(price < min_price){
+            if(price.lt(min_price)){
               throw 'Please input higher bid price'
             }
             
@@ -206,19 +206,6 @@ export default {
         this.$root.showError(e);
       }
       this.$root.loading(false);
-    },
-
-    async showCmlDetails(scope){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-      const cml_data = await api.query.cml.cmlStore(scope.row.cml_id);
-      const d = cml_data.toHuman();
-
-      d.title = 'CML Details';
-      this.$store.commit('modal/open', {
-        key: 'data_details',
-        param: _.omit(d, 'staking_slot', 'miner_id'),
-      });
     }
   }
 }
