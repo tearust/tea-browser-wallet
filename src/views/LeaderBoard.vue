@@ -1,6 +1,6 @@
 <template>
 <div class="tea-page">
-  <h4>Leader board</h4>
+  <h4>Leader board (All assets converted to USD)</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     name="leader_board_table"
@@ -8,50 +8,55 @@
   >
     <el-table-column
       prop="index"
-      label="Index"
-      width="70"
+      label="Rank"
+      width="60"
     >
     </el-table-column>
 
     <el-table-column
       prop="address"
       label="Account"
-      width="400"
+      width="200"
     >
       <template slot-scope="scope">
+        <el-tooltip effect="light" :content="scope.row.address" placement="right">
         <el-button
-          :title="scope.row.address"
           @click="
             $root.goPath('/user_details/'+scope.row.address)"
           type="text">
           {{scope.row.address}}
         </el-button>
+        </el-tooltip>
       </template>
     </el-table-column>
 
     <el-table-column
       prop="cml_asset"
-      label="CML asset"
+      label="Projected 7 day mining income"
+      width="180"
     />
     <el-table-column
       prop="tea_asset"
-      label="TEA asset"
+      label="TEA Account balance"
+      width="140"
     />
     <el-table-column
       prop="usd_asset"
-      label="USD asset"
+      label="USD account balance"
+      width="150"
     />
     <el-table-column
       prop="miner_credit"
-      label="Miner credit"
+      label="Stake debt"
     />
     <el-table-column
       prop="loan_credit"
-      label="Loan credit"
+      label="Genesis loan"
     />
     <el-table-column
       prop="total"
-      label="Total"
+      width="150"
+      label="Total account value"
     />
       
 
