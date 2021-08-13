@@ -110,7 +110,7 @@ export default {
     },
     async confrim() {
       if(!this.form.agree){
-        this.$root.showError('Please agree the loan agreement or close modal.');
+        this.$root.showError('You must click Agree before going to the next step.');
 
         return;
       }
