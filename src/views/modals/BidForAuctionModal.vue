@@ -20,13 +20,12 @@
       </el-form-item>
 
       <el-form-item style="margin-top:-18px;" v-if="param.buy_now_price" label="Buy it now">
-        <el-checkbox v-model="form.buy_now" :inner-html.prop="
-          form.buy_now ? 
-          `Buy now price is <b>${param.buy_now_price} TEA</b>.` :
-          `Buy now price is <b>${param.buy_now_price} TEA</b>. Buying it now at this price will cancel your existing bid`
-        ">
-          
-
+        <el-checkbox v-model="form.buy_now">
+          Buy now price is <b>{{param.buy_now_price | balance_number}} TEA</b>.
+          <span v-if="form.buy_now">
+            Buying it now at this price will cancel your existing bid.
+          </span>
+         
         </el-checkbox>
       </el-form-item>
     </el-form>
