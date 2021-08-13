@@ -187,7 +187,7 @@ export default {
     };
 
     loop(async ()=>{
-      if(this.wf && this.chain){
+      if(this.wf && this.chain && this.chain.metadata){
         await this.wf.init();
         const block = await this.wf.getCurrentBlock();
 

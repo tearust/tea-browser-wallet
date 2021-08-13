@@ -86,11 +86,16 @@ export default {
       const tmp = await request.layer1_rpc('cml_userAssetList', []);
       // console.log('cml_userAssetList', tmp);
 
+      const cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
+      let len = cml_list.length;
+      if(len < 1) len = 1;
+
       this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+        console.log(utils.layer1.balanceToAmount(arr[1]) +' / '+len+' = '+utils.layer1.balanceToAmount(arr[1]) / len);
         const rs = {
           index: i+1,
           address: arr[0],
-          cml_asset: utils.layer1.balanceToAmount(arr[1]),
+          cml_asset: utils.layer1.balanceToAmount(arr[1]) / len,
           tea_asset: utils.layer1.balanceToAmount(arr[2]),
           usd_asset: utils.layer1.balanceToAmount(arr[3]),
           miner_credit: utils.layer1.balanceToAmount(arr[4]),
