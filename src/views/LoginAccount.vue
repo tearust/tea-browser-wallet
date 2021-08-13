@@ -37,7 +37,9 @@
       <div class="x-item">
         <b>
           {{'My USD' | cardTitle}}
-          <TeaIconButton style="position:relative;" place="right" tip="My usd dollars" icon="questionmark" />
+          <TeaIconButton style="position:relative;" place="right" :tip="
+            (usd_interest_rate ? ('USD interest rate is '+usd_interest_rate+'.') : '')
+          " icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
       </div>
@@ -143,7 +145,9 @@ export default {
       rate: {
         usdToTea: null,
         teaToUsd: null,
-      }
+      },
+
+      usd_interest_rate: null,
     };
   },
 
@@ -182,6 +186,11 @@ export default {
         
       }
     });
+
+    const layer1_instance = this.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+    const pl = api.consts.genesisExchange.interestPeriodLength.toJSON();
+    this.usd_interest_rate = (api.consts.genesisExchange.usdInterestRate.toJSON() / pl) + ' per '+pl+' blocks';
   },
 
   methods: {
