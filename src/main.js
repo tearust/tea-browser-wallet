@@ -54,7 +54,7 @@ new Vue({
           text: 'Loading...',
           customClass: 'c-fullscreen-loading',
           spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
+          background: 'rgba(0, 0, 0, 0.05)'
         });
       }
       else {

@@ -9,13 +9,14 @@
     <el-table-column
       prop="index"
       label="Index"
-      width="120"
+      width="70"
     >
     </el-table-column>
 
     <el-table-column
       prop="address"
       label="Account"
+      width="400"
     >
       <template slot-scope="scope">
         <el-button
@@ -29,11 +30,30 @@
     </el-table-column>
 
     <el-table-column
-      prop="amount"
-      label="Asset (USD)"
-    >
+      prop="cml_asset"
+      label="CML asset"
+    />
+    <el-table-column
+      prop="tea_asset"
+      label="TEA asset"
+    />
+    <el-table-column
+      prop="usd_asset"
+      label="USD asset"
+    />
+    <el-table-column
+      prop="miner_credit"
+      label="Miner credit"
+    />
+    <el-table-column
+      prop="loan_credit"
+      label="Loan credit"
+    />
+    <el-table-column
+      prop="total"
+      label="Total"
+    />
       
-    </el-table-column>
 
   </TeaTable>
 </div>
@@ -65,7 +85,12 @@ export default {
         const rs = {
           index: i+1,
           address: arr[0],
-          amount: utils.layer1.balanceToAmount(arr[1]),
+          cml_asset: utils.layer1.balanceToAmount(arr[1]),
+          tea_asset: utils.layer1.balanceToAmount(arr[2]),
+          usd_asset: utils.layer1.balanceToAmount(arr[3]),
+          miner_credit: utils.layer1.balanceToAmount(arr[4]),
+          loan_credit: utils.layer1.balanceToAmount(arr[5]),
+          total: utils.layer1.balanceToAmount(arr[6]),
         };
         return rs;
       }));
