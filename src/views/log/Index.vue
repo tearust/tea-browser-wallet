@@ -49,7 +49,7 @@
 
   <el-divider />
 
-  <h4>Opreation Logs</h4>
+  <h4>Operation Logs</h4>
   <TeaTable
     :data="my_log || []"
     name="operation_log_table"
