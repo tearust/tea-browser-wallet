@@ -1,6 +1,6 @@
 <template>
 <div class="tea-page">
-  <h4>Leader board (All assets converted to USD)</h4>
+  <h4>Leader board (All assets are in USD value)</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     name="leader_board_table"
@@ -89,32 +89,32 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       const tmp = await request.layer1_rpc('cml_userAssetList', []);
-      console.log('cml_userAssetList', tmp);
+      // console.log('cml_userAssetList', tmp);
 
-      const cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
-      let len = cml_list.length;
-      if(len < 1) len = 1;
+      // const cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
+      // let len = cml_list.length;
+      // if(len < 1) len = 1;
 
       this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
         // console.log(utils.layer1.balanceToAmount(arr[1]) +' / '+len+' = '+utils.layer1.balanceToAmount(arr[1]) / len);
 
-        for(let j=1; j<7; j++){
-          arr[j] = _.toNumber(arr[j]);
-        }
+        // for(let j=1; j<7; j++){
+        //   arr[j] = _.toNumber(arr[j]);
+        // }
 
-        let l1 = arr[1]/len;
-        let total = l1+arr[2]+arr[3]-arr[4]-arr[5];
+        // let l1 = arr[1]/len;
+        // let total = l1+arr[2]+arr[3]-arr[4]-arr[5];
 
 
         const rs = {
           index: i+1,
           address: arr[0],
-          cml_asset: utils.layer1.balanceToAmount(l1),
+          cml_asset: utils.layer1.balanceToAmount(arr[1]),
           tea_asset: utils.layer1.balanceToAmount(arr[2]),
           usd_asset: utils.layer1.balanceToAmount(arr[3]),
           miner_credit: utils.layer1.balanceToAmount(arr[4]),
           loan_credit: utils.layer1.balanceToAmount(arr[5]),
-          total: utils.layer1.balanceToAmount(total),
+          total: utils.layer1.balanceToAmount(arr[6]),
         };
         return rs;
       }));

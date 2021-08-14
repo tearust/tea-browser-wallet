@@ -184,7 +184,7 @@ export default {
     },
     async deleteBid(scope){
       if(scope.row.auction.bid_user === this.layer1_account.address){
-        this.$root.showError('You can delete this bid until anyone bid higher.');
+        this.$root.showError('You can\'t delete this bid until someone bids higher.');
         return;
       }
 
