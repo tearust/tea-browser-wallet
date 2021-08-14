@@ -294,6 +294,7 @@ const store = new Vuex.Store({
           if (d) {
             const auction = await api.query.auction.auctionStore(d.auction_id);
             d.auction = auction.toJSON();
+            d.auction = F.formatAuctionBidData(d.auction);
             if (d.auction.bid_user) {
               let bid_item = await api.query.auction.bidStore(d.auction.bid_user, d.auction_id);
               bid_item = bid_item.toJSON();

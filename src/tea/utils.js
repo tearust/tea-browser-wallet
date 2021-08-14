@@ -178,7 +178,8 @@ const F = {
   },
 
   bnToBalanceNumber(bn){
-    const value = bn.div(BN_MILLION.mul(BN_MILLION)).toNumber();
+    const value = parseInt(bn.toString(),10)/(1000000*1000000);
+    // const value = bn.div(BN_MILLION.mul(BN_MILLION)).toNumber();
     return value;
   },
 

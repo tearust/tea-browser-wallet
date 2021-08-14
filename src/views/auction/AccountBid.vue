@@ -144,8 +144,9 @@ export default {
       const auction = scope.row.auction;
       if(auction.buy_now_price){
         buy_now_need = auction.buy_now_price;
-        
+
         buy_now_need = buy_now_need.sub(scope.row.price);
+
         buy_now_need = utils.layer1.formatBalance(buy_now_need);
       }
 
@@ -161,7 +162,7 @@ export default {
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
-            const auction_id = scope.row.auction_id;        
+            const auction_id = scope.row.auction_id;     
             const price = utils.toBN(layer1_instance.asUnit(form.price));
 
             if(price.lt(min_price)){

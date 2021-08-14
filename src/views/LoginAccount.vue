@@ -198,25 +198,13 @@ export default {
       this.wf.showSelectLayer1Modal();
     },
 
-    async getExchangeRate(type){
+    async getExchangeRate(){
       let rs = null;
-      if(type === 'teaToUsd'){
-        const rate = await request.layer1_rpc('cml_currentExchangeRate', []);
-        rs = utils.layer1.balanceToAmount(rate);
-        console.log('[cml_currentExchangeRate] tea/usd rate =>', rate, rs);
-        this.rate.teaToUsd = rs;
-      }
-      else if(type === 'usdToTea'){
-        const rate = await request.layer1_rpc('cml_reverseExchangeRate', []);
-        rs = utils.layer1.balanceToAmount(rate);
-        console.log('[cml_reverseExchangeRate] usd/tea rate =>', rate, utils.layer1.balanceToAmount(rate));
-        this.rate.usdToTea = rs;
-      }
-      else{
-        throw 'invalid exchange rate type.';
-      }
+      const tmp = await request.layer1_rpc('cml_currentExchangeRate', []);
+      console.log(`[cml_currentExchangeRate] result => ${tmp}`);
 
-      return rs;
+      this.rate.teaToUsd = utils.layer1.balanceToAmount(tmp[0]);
+      this.rate.usdToTea = utils.layer1.balanceToAmount(tmp[1]);
     },
 
     async rechargeHandler(){
@@ -252,8 +240,7 @@ export default {
         }
       }
 
-      await this.getExchangeRate('usdToTea');
-      await this.getExchangeRate('teaToUsd');
+      await this.getExchangeRate();
       
       flag && this.$root.loading(false);
     },
@@ -425,7 +412,7 @@ export default {
           this.$root.loading(false);
         },
         open_cb: async(opts)=>{
-          await this.getExchangeRate('teaToUsd');
+          await this.getExchangeRate();
           const rate = this.rate.teaToUsd
           opts.text = `Current exchange rate is <b>${rate} USD/TEA</b>.`;
         },
@@ -483,7 +470,7 @@ export default {
           this.$root.loading(false);
         },
         open_cb: async(opts)=>{
-          await this.getExchangeRate('usdToTea');
+          await this.getExchangeRate();
           const rate = this.rate.usdToTea;
           opts.text = `Current exchange rate is <b>${rate} TEA/USD</b>.`;
         },
