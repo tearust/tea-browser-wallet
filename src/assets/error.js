@@ -28,6 +28,7 @@ export default {
   // auction pallet
   NotEnoughBalance: 'Not enough balance',
   NotEnoughBalanceForBid: 'Not enough balance to bid',
+  NotEnoughBalanceForBidAndFirstStakingSlot: 'Not enough balance for bid and first staking slot',
   NotEnoughBalanceForAuction: 'Not enough balance to start an auction',
   AuctionNotExist: 'Auction does not exist',
   InvalidBidPrice: 'Bid price is invalid',
