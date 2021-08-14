@@ -35,7 +35,7 @@
     <el-table-column
       prop="machine_id"
       label="Miner ID"
-      width="110"
+      width="90"
     > 
       <template slot-scope="scope">
         <el-button
@@ -86,7 +86,7 @@
 
     <el-table-column
       label="Staking status"
-      width="180">
+      width="160">
       <template slot-scope="scope">
         <el-button
           v-if="scope.row.staking_slot.length === 1"
@@ -127,6 +127,14 @@
           @click="clickPlantAction(scope)"
           tip="Plant"
           icon="plant"
+        />
+        <TeaIconButton
+          :disabled="
+            scope.row.staking_slot.length<1
+          "
+          @click="clickUnplantAction(scope)"
+          tip="Reverse of planting"
+          icon="stop"
         />
 
         <TeaIconButton
@@ -246,6 +254,30 @@ export default {
           this.$root.loading(false);
         },
       });
+    },
+
+    async clickUnplantAction(scope){
+      try{
+        await this.$confirm('Are you sure to reverse of planting?', 'Info');
+      }catch(e){
+        return;
+      }
+
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$root.loading(true);
+      try{
+
+        const tx = api.tx.cml.stopMining(scope.row.id, scope.row.machine_id);
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        this.$root.success();
+        utils.publish('refresh-current-account__account');
+      }catch(e){
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
     }
 
     

@@ -23,13 +23,13 @@
 
       </div>
       <div class="x-item">
-        <b>{{'Total balance' | cardTitle}}</b>
+        <b>{{'My TEA' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
       <div class="x-item">
         <b>
-          {{'Locked balance' | cardTitle}}
-          <TeaIconButton style="position:relative; top:1px;" place="right" tip="The balance locked in staking and auction selling or bidding." icon="questionmark" />
+          {{'Locked TEA' | cardTitle}}
+          <TeaIconButton style="position:relative; top:0;" place="right" tip="The balance locked in staking and auction selling or bidding." icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
       </div>
