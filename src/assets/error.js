@@ -28,6 +28,7 @@ export default {
   // auction pallet
   NotEnoughBalance: 'Not enough balance',
   NotEnoughBalanceForBid: 'Not enough balance to bid',
+  NotEnoughBalanceForBidAndFirstStakingSlot: 'Not enough balance for bid and first staking slot',
   NotEnoughBalanceForAuction: 'Not enough balance to start an auction',
   AuctionNotExist: 'Auction does not exist',
   InvalidBidPrice: 'Bid price is invalid',
@@ -45,15 +46,16 @@ export default {
   BuyNowPriceShouldHigherThanStartingPrice: 'Buy now price should be higher than starting price',
   CmlNoNeedToPayOff: 'This CML is already paid off',
   CmlDefrostTimeIsNone: 'Please select a defrost time',
-  /// 
+  CannotSellACollateral: 'Cannot sell a collateral',
+  ///
   CmlShouldBeFrozenSeed: 'The CML should be a frozen seed',
-  /// 
+  ///
   CmlStillInFrozenLockedPeriod: 'Defrost time is in the future. Cannot defrost now',
-  /// 
+  ///
   CmlShouldBeFreshSeed: 'The CML should be a fresh seed',
-  /// 
+  ///
   CmlFreshSeedExpired: 'CML in fresh seed state has a shelf life. This CML has expired',
-  /// CML is tree means that cannot be frozen seed or fresh seed 
+  /// CML is tree means that cannot be frozen seed or fresh seed
   CmlShouldBeTree: 'The CML should be in "Tree" status',
   /// Cml has over the lifespan
   CmlShouldDead: "This CML should have already reached its end of life",
