@@ -133,7 +133,7 @@
             scope.row.staking_slot.length<1
           "
           @click="clickUnplantAction(scope)"
-          tip="Reverse of planting"
+          tip="Unplant"
           icon="stop"
         />
 
@@ -258,7 +258,7 @@ export default {
 
     async clickUnplantAction(scope){
       try{
-        await this.$confirm('Are you sure to reverse of planting?', 'Info');
+        await this.$confirm('Are you sure that you want to unplant this CML?', 'Info');
       }catch(e){
         return;
       }
