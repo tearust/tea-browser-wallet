@@ -20,6 +20,7 @@ export default {
   InvalidStaker: 'Invalid Staker',
   InvalidStakee: 'Invalid Stakee',
   InvalidStakingIndex: 'Staking slot index is invalid',
+  CannotUnstakeTheFirstSlot: 'The first staking slot cannot be unstake, if do want to unstake it please stop mining instead',
   InvalidStakingOwner: 'Staking owner is invalid',
   InvalidUnstaking: 'Unstaking operation is invalid',
   NotFoundRewardAccount: 'Reward account not found',
