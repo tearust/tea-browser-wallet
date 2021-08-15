@@ -52,3 +52,8 @@ Vue.filter('upper', (value)=>{
   return _.toUpper(value);
 });
 
+Vue.filter('percent', (value)=>{
+  console.log(11, value);
+  return (value*100) + '%';
+});
+

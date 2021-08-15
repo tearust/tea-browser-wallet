@@ -38,7 +38,7 @@
         <b>
           {{'My USD' | cardTitle}}
           <TeaIconButton style="position:relative;" place="right" :tip="
-            (usd_interest_rate ? ('USD interest rate is '+usd_interest_rate+'.') : '')
+            (usd_interest_rate ? ('USD interest rate is '+(usd_interest_rate)+'.') : '')
           " icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
@@ -114,6 +114,7 @@
 </div>
 </template>
 <script>
+import Vue from 'vue';
 import SettingAccount from '../workflow/SettingAccount';
 import {_} from 'tearust_utils';
 import {helper, numberToHex} from 'tearust_layer1';
@@ -190,7 +191,8 @@ export default {
     const layer1_instance = this.wf.getLayer1Instance();
     const api = layer1_instance.getApi();
     const pl = api.consts.genesisExchange.interestPeriodLength.toJSON();
-    this.usd_interest_rate = (api.consts.genesisExchange.usdInterestRate.toJSON() / pl) + ' per '+pl+' blocks';
+    const usd_interest_rate = (api.consts.genesisExchange.usdInterestRate.toJSON() / pl);
+    this.usd_interest_rate = (Vue.filter('percent')(usd_interest_rate)) + ' per '+pl+' blocks';
   },
 
   methods: {
