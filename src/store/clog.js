@@ -55,8 +55,8 @@ export default {
       }
 
       const rs = await request.getLog({
-        from: `in: ["${layer1_account.address}"]`,
-        type: `in: ["tx"]`
+        from: `in: ["${layer1_account.address}", "system"]`,
+        type: `in: ["tx", "event"]`
       });
 
       store.commit('set_my_log', help.formatLogs(rs.nodes));

@@ -163,5 +163,10 @@
   "Loan": {
     "start_at": "BlockNumber",
     "owner": "AccountId"
+  },
+  "StakingSnapshotItem": {
+    "owner": "AccountId",
+    "weight": "u32",
+    "staking_at": "u32"
   }
 }
