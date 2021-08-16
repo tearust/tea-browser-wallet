@@ -237,6 +237,9 @@ a, a:hover, a:focus, button:focus {
   height: 40px !important;
 }
 
+.el-table th>.cell{
+  word-break: break-word;
+}
 
 @import './css/tea-notify.scss';
 @import './css/tea-toast.scss';

@@ -17,7 +17,7 @@ Vue.filter('teaIcon', (value=0) => {
   return symbol + (_.isNull(value)?'0':value);
 });
 Vue.filter('usd', (value)=>{
-  const symbol = '<span style="margin-right: 0;" class="iconfont icon-dollar"></span>'
+  const symbol = '<span style="margin-right: 4px;" class="iconfont icon-kafei"></span>'
   return symbol + (_.isNull(value)?'0':value);
 })
 Vue.filter('balance', (value) => {

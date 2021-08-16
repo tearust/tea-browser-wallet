@@ -423,6 +423,9 @@ export default class {
       cml.liferemaining = remaining;
       cml.life_day = this.blockToDay(remaining);
 
+      const ttp = await request.layer1_rpc('cml_cmlPerformance', [_.toNumber(cml_id)]);
+      const performance = ttp[0]+'/'+ttp[1];
+
       cml.staking_slot = _.map(cml.staking_slot, (item) => {
         item.category = _.toUpper(item.category);
         return item;
@@ -446,10 +449,11 @@ export default class {
       return {
         ...cml,
         ...cml.intrinsic,
+        performance,
         machine_id: hexToString(cml.machine_id),
       };
     }));
-
+// console.log(1, list);
     return list;
 
   }

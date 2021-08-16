@@ -36,9 +36,9 @@
 
       <div class="x-item">
         <b>
-          {{'My USD' | cardTitle}}
+          {{'My COFFEE' | cardTitle}}
           <TeaIconButton style="position:relative;" place="right" :tip="
-            (usd_interest_rate ? ('USD interest rate is '+(usd_interest_rate)+'.') : '')
+            (usd_interest_rate ? ('COFFEE interest rate is '+(usd_interest_rate)+'.') : '')
           " icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
@@ -61,10 +61,10 @@
 
       <div class="x-bottom">
         <el-button v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">
-          Sell TEA ({{rate.teaToUsd}} USD/TEA)
+          Sell TEA ({{rate.teaToUsd}} COFFEE/TEA)
         </el-button>
         <el-button v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">
-          Sell USD ({{rate.usdToTea}} TEA/USD)
+          Sell COFFEE ({{rate.usdToTea}} TEA/COFFEE)
         </el-button>
 
         <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
@@ -394,7 +394,7 @@ export default {
           const amount = form.sell_tea_amount;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
           try{
-            await this.$confirm(`Estimated amount is <b>${utils.layer1.roundAmount(this.rate.teaToUsd*amount)} USD</b> for this exchange. <br/> Are you sure?`, {
+            await this.$confirm(`Estimated amount is <b>${utils.layer1.roundAmount(this.rate.teaToUsd*amount)} COFFEE</b> for this exchange. <br/> Are you sure?`, {
               dangerouslyUseHTMLString: true,
             });
           }catch(e){
@@ -416,7 +416,7 @@ export default {
         open_cb: async(opts)=>{
           await this.getExchangeRate();
           const rate = this.rate.teaToUsd
-          opts.text = `Current exchange rate is <b>${rate} USD/TEA</b>.`;
+          opts.text = `Current exchange rate is <b>${rate} COFFEE/TEA</b>.`;
         },
       });
     },
@@ -428,7 +428,7 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
-          title: 'Sell USD',
+          title: 'Sell COFFEE',
           pallet: 'genesisExchange',
           tx: 'usdToTea',
           text: '',
@@ -437,7 +437,7 @@ export default {
               class: 'hidden',
             },
             sell_usd_amount: {
-              label: 'Sell amount (USD)',
+              label: 'Sell amount (COFFEE)',
               type: 'number',
               max: this.layer1_account.usd,
               min: 0,
@@ -474,7 +474,7 @@ export default {
         open_cb: async(opts)=>{
           await this.getExchangeRate();
           const rate = this.rate.usdToTea;
-          opts.text = `Current exchange rate is <b>${rate} TEA/USD</b>.`;
+          opts.text = `Current exchange rate is <b>${rate} TEA/COFFEE</b>.`;
         },
       });
 

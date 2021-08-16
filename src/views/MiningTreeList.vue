@@ -59,9 +59,8 @@
 
     <el-table-column
       prop="performance"
-      label="Performance"
-      sortable
-      width="110"
+      label="Current / Peak performance"
+      width="160"
     />
 
     <el-table-column

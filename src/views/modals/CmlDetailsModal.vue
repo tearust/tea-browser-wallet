@@ -38,8 +38,8 @@
 
       <el-table-column
         prop="performance"
-        label="Performance"
-        width="120"
+        label="Current / Peak performance"
+        width="160"
       />
 
       <el-table-column
