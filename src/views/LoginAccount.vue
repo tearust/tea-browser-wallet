@@ -191,7 +191,8 @@ export default {
     const layer1_instance = this.wf.getLayer1Instance();
     const api = layer1_instance.getApi();
     const pl = api.consts.genesisExchange.interestPeriodLength.toJSON();
-    const usd_interest_rate = (api.consts.genesisExchange.usdInterestRate.toJSON() / 30);
+    const query_rate = (await api.query.genesisExchange.uSDInterestRate()).toJSON()
+    const usd_interest_rate = query_rate / 30;
     this.usd_interest_rate = (usd_interest_rate/100) + '% per '+pl+' blocks';
   },
 
