@@ -59,9 +59,19 @@ const cache = {
 // TODO move to tearust_layer1 pkgs
 const layer1 = {
   formatBalance(value, with_icon=false) {
+    let is_negative = false;
+    if(_.isNumber(value) && value < 0){
+      value = Math.abs(value);
+      is_negative = true;
+    }
+
     value = F.toBN(value);
     value = F.bnToBalanceNumber(value);
     value = layer1.roundAmount(value);
+
+    if(is_negative){
+      return value * -1;
+    }
 
     if(!with_icon) return value;
     const symbol = '<span style="margin-right: 0;" class="iconfont icon-a-TeaProject-T"></span>'
@@ -165,7 +175,9 @@ const F = {
 
   toBN(val){
     if(isBn(val)) return val;
-    if(_.isNumber(val)) return hexToBn(numberToHex(val));
+    if(_.isNumber(val)){
+      return hexToBn(numberToHex(val));
+    }
     if(_.isString(val)){
       if(_.startsWith(val, '0x')){
         return hexToBn(val);

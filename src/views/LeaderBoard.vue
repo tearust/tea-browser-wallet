@@ -1,6 +1,8 @@
 <template>
 <div class="tea-page">
-  <h4>Leader board (All assets are in USD value)</h4>
+  <h4 @click="changeShowType()" style="cursor:pointer;">
+    {{show_for_coffee ? 'Leader board (All assets are in COFFEE, change to TEA?)' : 'Leader board (All assets are in TEA, change to COFFEE?)'}}
+  </h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     name="leader_board_table"
@@ -42,7 +44,7 @@
     />
     <el-table-column
       prop="usd_asset"
-      label="USD account balance"
+      label="COFFEE account balance"
       width="150"
     />
     <el-table-column
@@ -73,6 +75,7 @@ import request from '../request';
 import TeaTable from '../components/TeaTable';
 import {_} from 'tearust_utils';
 import utils from '../tea/utils';
+
 export default {
   components: {
     TeaTable,
@@ -80,6 +83,8 @@ export default {
   data(){
     return {
       list: null,
+
+      show_for_coffee: true,
     };
   },
   async mounted(){
@@ -89,36 +94,63 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       const tmp = await request.layer1_rpc('cml_userAssetList', []);
-      // console.log('cml_userAssetList', tmp);
 
-      // const cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
-      // let len = cml_list.length;
-      // if(len < 1) len = 1;
+      const rtmp = await request.layer1_rpc('cml_currentExchangeRate', []);
+      const usdToTea = utils.layer1.balanceToAmount(rtmp[1]);
 
-      this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
-        // console.log(utils.layer1.balanceToAmount(arr[1]) +' / '+len+' = '+utils.layer1.balanceToAmount(arr[1]) / len);
+      if(this.show_for_coffee){
+        this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+          for(let j=1; j<7; j++){
+            arr[j] = _.toNumber(arr[j]);
+          }
+          const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          const rs = {
+            index: i+1,
+            address: arr[0],
+            cml_asset: utils.layer1.balanceToAmount(arr[1]),
+            tea_asset: utils.layer1.balanceToAmount(arr[2]),
+            usd_asset: utils.layer1.balanceToAmount(arr[3]),
+            miner_credit: utils.layer1.balanceToAmount(arr[4]),
+            loan_credit: utils.layer1.balanceToAmount(arr[5]),
+            total: utils.layer1.balanceToAmount(total),
+          };
+          return rs;
+        }));
+      }
+      else{
+        this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+          arr[1] = utils.layer1.balanceToAmount(arr[1])*usdToTea;
+          arr[2] = utils.layer1.balanceToAmount(arr[2])*usdToTea;
+          arr[3] = utils.layer1.balanceToAmount(arr[3])*usdToTea;
+          arr[4] = utils.layer1.balanceToAmount(arr[4])*usdToTea;
+          arr[5] = utils.layer1.balanceToAmount(arr[5])*usdToTea;
+          arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
 
-        // for(let j=1; j<7; j++){
-        //   arr[j] = _.toNumber(arr[j]);
-        // }
-
-        // let l1 = arr[1]/len;
-        // let total = l1+arr[2]+arr[3]-arr[4]-arr[5];
-
-
-        const rs = {
-          index: i+1,
-          address: arr[0],
-          cml_asset: utils.layer1.balanceToAmount(arr[1]),
-          tea_asset: utils.layer1.balanceToAmount(arr[2]),
-          usd_asset: utils.layer1.balanceToAmount(arr[3]),
-          miner_credit: utils.layer1.balanceToAmount(arr[4]),
-          loan_credit: utils.layer1.balanceToAmount(arr[5]),
-          total: utils.layer1.balanceToAmount(arr[6]),
-        };
-        return rs;
-      }));
+          for(let j=1; j<7; j++){
+            arr[j] = _.toNumber(arr[j]);
+          }
+          const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          const rs = {
+            index: i+1,
+            address: arr[0],
+            cml_asset: utils.layer1.roundAmount(arr[1]),
+            tea_asset: utils.layer1.roundAmount(arr[2]),
+            usd_asset: utils.layer1.roundAmount(arr[3]),
+            miner_credit: utils.layer1.roundAmount(arr[4]),
+            loan_credit: utils.layer1.roundAmount(arr[5]),
+            total: utils.layer1.roundAmount(total),
+          };
+          return rs;
+        }));
+      }
+      
       this.$root.loading(false);
+    },
+
+    async changeShowType(){
+      this.show_for_coffee = !this.show_for_coffee;
+      await this.refreshList();
+      
     }
   }
 }

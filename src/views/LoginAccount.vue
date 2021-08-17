@@ -80,6 +80,12 @@
     </div> -->
 
   </div>
+  <div class="t-major-financial" v-if="loan_amount && loan_rate" :inner-html.prop="
+    'Genesis loan prime is <b>' + (loan_amount) + '</b> <span>|</span>'+
+    'Genesis loan interest rate is <b>'+loan_rate + '</b> <span>|</span>'+
+    'Coffee interest rate is <b>'+usd_interest_rate+'</b>'
+  ">
+  </div>
 
 
 
@@ -149,6 +155,9 @@ export default {
       },
 
       usd_interest_rate: null,
+
+      loan_rate: null,
+      loan_amount: null,
     };
   },
 
@@ -194,6 +203,8 @@ export default {
     const query_rate = (await api.query.genesisExchange.uSDInterestRate()).toJSON()
     const usd_interest_rate = query_rate / 30;
     this.usd_interest_rate = (usd_interest_rate/100) + '% per '+pl+' blocks';
+
+    await this.getMajorFinancial();
   },
 
   methods: {
@@ -480,8 +491,42 @@ export default {
       });
 
     },
+
+    async getMajorFinancial(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const loan_rate = api.consts.genesisBank.interestRate.toJSON();
+      const pl = api.consts.genesisBank.loanTermDuration.toJSON();
+      this.loan_rate = (loan_rate/100) + '% per '+pl+' blocks';
+
+      this.loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.genesisCmlLoanAmount.toJSON(), true);
+    },
   }
 
   
 }
 </script>
+
+<style lang="scss">
+.tea-page{
+  .t-major-financial{
+    margin-top: 5px;
+    text-align: right;
+    padding-right: 8px;
+
+    b{
+      color: #35a696;
+    }
+    span{
+      margin: 0 5px;
+      color: #c9c9c9;
+    }
+    span.iconfont{
+      color: #35a696;
+      margin: 0;
+    }
+  }
+}
+
+</style>
