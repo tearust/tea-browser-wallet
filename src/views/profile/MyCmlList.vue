@@ -257,7 +257,11 @@ export default {
 
     async clickUnplantAction(scope){
       try{
-        await this.$confirm('Are you sure that you want to unplant this CML?', 'Info');
+        await this.$confirm(
+          'Are you sure that you want to unplant this CML? <br/>Please notice that you need to compensate each staker 100 TEA.', {
+          title: 'Info',
+          dangerouslyUseHTMLString: true,
+        });
       }catch(e){
         return;
       }
