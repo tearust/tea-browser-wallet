@@ -1,9 +1,12 @@
 <template>
 <div class="tea-page">
-  <h4 @click="changeShowType()" style="cursor:pointer;">
-    {{show_for_coffee ? 'Leader board (All assets are in COFFEE, change to TEA?)' : 'Leader board (All assets are in TEA, change to COFFEE?)'}}
+  <h4>
+    Leader board
   </h4>
-  <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
+  <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
+    {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
+  </el-button>
+  <el-button size="small" style="top: 50px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     name="leader_board_table"
     :data="list || []"
@@ -84,7 +87,7 @@ export default {
     return {
       list: null,
 
-      show_for_coffee: true,
+      show_for_coffee: false,
     };
   },
   async mounted(){
