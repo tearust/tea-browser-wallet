@@ -27,7 +27,7 @@
           <span :inner-html.prop="info ? info.lock : '' | teaIcon"></span>
         </div>
         <div class="x-item">
-          <b>{{'USD'}}</b>
+          <b>{{'COFFEE'}}</b>
           <span :inner-html.prop="info ? info.usd : '' | usd"></span>
         </div>
 
