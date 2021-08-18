@@ -1,28 +1,26 @@
 <template>
 <section class="t-footer bg_2 js_footer">
-  <div class="c-m" style="width:960px;margin:0 auto;">
+  <div class="c-m" style="width:1080px;margin:0 auto; position:releative;">
 
-    <!-- <el-row>
+    <el-row>
       <el-col :span="6">
         <h4 class="t-h">Resources</h4>
-        <a class="t-a" target="_blank" href="http://tearust.com">Tearust</a> -->
-        <!-- <a class="t-a" target="_blank" href="https://medium.com/@pushbar">Medium</a> -->
-        <!-- <a class="t-a" target="_blank" href="https://github.com/tearust/tea-docs/discussions">Discussions</a> -->
-        
-      <!-- </el-col>
-      <el-col :span="12">
-        <h4 class="t-h">Tools</h4>
-        <a class="t-a" href="javascript:void(0)" @click="$router.push('/tools/calculate_staking_profit');">Staking收益计算器</a>
+        <a class="t-a" target="_blank" href="https://teaproject.org">Website</a>
+        <a class="t-a" target="_blank" href="https://github.com/tearust/teaproject/discussions">Discussions</a>
+        <a class="t-a" target="_blank" href="https://github.com/tearust/teaproject/wiki">Wiki</a>
+        <a class="t-a" target="_blank" href="https://github.com/tearust">Github</a>
       </el-col>
-    </el-row> -->
 
-    <div>
-      <b class="lg">Block Height : {{chain.current_block_hash ? chain.current_block : ''}}</b>
-      <b class="lg" style="margin-left: 15px;">Epoch version : {{epoch_version}}</b>
-    </div>
-    <div style="margin-top: 5px;">
-      <b class="lg">Wallet version : {{version}}</b>
-    </div>
+      <el-col :span="18">
+        <h4 class="t-h">&nbsp;</h4>
+        <b class="lg">Block Height : {{chain.current_block_hash ? chain.current_block : ''}}</b>
+        <b class="lg" style="margin-left: 15px;">Epoch version : {{epoch_version}}</b>
+        <b class="lg">Wallet version : {{version}}</b>
+      </el-col>
+      
+    </el-row>
+
+    
     
     <el-divider></el-divider>
     <p style="margin:0 auto;text-align:center;font-size:16px;">Copyright © 2019-2021 <b>TeaProject.org</b> All Rights Reserved</p>
@@ -78,6 +76,13 @@ export default {
     &:hover{
       color: #ec7259;
     }
+  }
+
+  b.lg{
+    font-size: 19px;
+    display: block;
+    text-align: right;
+    font-weight: normal;
   }
 }
 @media screen and (max-width : 600px) {
