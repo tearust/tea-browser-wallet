@@ -38,6 +38,9 @@
   <el-menu-item index="/auction_store">{{'Marketplace'}}</el-menu-item>
 
   <el-menu-item v-if="has_seed_pool" index="/lucky_draw">{{'Seed pool'}}</el-menu-item>
+
+  <el-menu-item index="/tapps_list">TApps</el-menu-item>
+
   <el-menu-item index="/login_account">My assets</el-menu-item>
   <el-menu-item index="/home">{{'Welcome'}}</el-menu-item>
 

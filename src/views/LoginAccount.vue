@@ -107,7 +107,7 @@
         <MyPawnList />
       </el-tab-pane>
 
-      <el-tab-pane label="My investment on Apps" name="my_app" :lazy="true">
+      <el-tab-pane label="My investment in TApps" name="my_app" :lazy="true">
         <MyAppList />
       </el-tab-pane>
   

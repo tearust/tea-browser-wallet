@@ -1,5 +1,6 @@
 <template>
 <div class="tea-page">
+  <h4>TApps list</h4>
 
   <TeaTable
     :data="list || []"
@@ -22,14 +23,28 @@
     />
 
     <el-table-column
-      prop="amount"
-      label="My holding tokens"
+      prop="total_supply"
+      label="Total supply"
+    />
+
+    <el-table-column
+      prop="buy_price"
+      label="Buy price"
     />
 
     <el-table-column
       prop="sell_price"
       label="Sell price"
     />
+
+    <el-table-column
+      label="Market cap"
+    >
+      <template slot-scope="scope">
+        {{scope.row.sell_price * scope.row.total_supply}}
+      </template>
+    </el-table-column>
+
 
     <el-table-column
       label="Actions"
@@ -45,24 +60,32 @@
 
 
   </TeaTable>
+  
+  <div style="display:flex; justify-content: flex-end;">
+    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="createNewTApp()">Create new TApp</el-button>
+  </div>
 
 </div>
 </template>
 <script>
-import SettingAccount from '../../workflow/SettingAccount';
+import Base from '../workflow/Base';
 import {_} from 'tearust_utils';
 import {helper} from 'tearust_layer1';
-import utils from '../../tea/utils';
+import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
-import TeaTable from '../../components/TeaTable';
-import TeaIconButton from '../../components/TeaIconButton';
+import {hexToString} from 'tearust_layer1';
+import TeaTable from '../components/TeaTable';
+import TeaIconButton from '../components/TeaIconButton';
+import request from '../request';
+
 
 const DATA = [
   {
     id: '001',
     name: 'First App',
     token_symbol: 'FTA',
-    amount: 10,
+    total_supply: 10000000,
+    buy_price: 100,
     sell_price: 110,
     detail: 'This is the first tapp',
     link: 'https://teaproject.org',
@@ -79,23 +102,11 @@ export default {
       list: null,
     }
   },
-
-  computed: {
-    ...mapGetters([
-      'layer1_account'
-    ]),
-  },
-  
-
   async mounted(){
-    this.wf = new SettingAccount();
+    this.wf = new Base();
     await this.wf.init();
 
     await this.refreshList();
-
-    utils.register('refresh-current-account__my_app', async (key, param)=>{
-      await this.refreshList();   
-    });
   },
 
   methods: {
@@ -134,7 +145,9 @@ export default {
       
     }
   }
+};
 
-  
-}
 </script>
+<style lang="scss">
+
+</style>

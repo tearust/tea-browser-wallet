@@ -21,6 +21,7 @@ import UserDetails from './views/UserDetails';
 import MiningTreeList from './views/MiningTreeList';
 
 import LeaderBoard from './views/LeaderBoard';
+import TAppsList from './views/TAppsList';
 
 
 Vue.use(Router);
@@ -101,6 +102,11 @@ let routers = [
     name: 'leader_board',
     component: LeaderBoard,
   },
+  {
+    path: '/tapps_list',
+    name: 'tapps_list',
+    component: TAppsList,
+  }
   
 ];
 
