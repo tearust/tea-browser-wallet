@@ -2,7 +2,7 @@
 <section class="t-footer bg_2 js_footer">
   <div class="c-m" style="width:1080px;margin:0 auto; position:releative;">
 
-    <el-row>
+    <el-row style="position:relative;">
       <el-col :span="6">
         <h4 class="t-h">Resources</h4>
         <a class="t-a" target="_blank" href="https://teaproject.org">Website</a>
@@ -11,12 +11,21 @@
         <a class="t-a" target="_blank" href="https://github.com/tearust">Github</a>
       </el-col>
 
-      <el-col :span="18">
-        <h4 class="t-h">&nbsp;</h4>
-        <b class="lg">Block Height : {{chain.current_block_hash ? chain.current_block : ''}}</b>
-        <b class="lg" style="margin-left: 15px;">Epoch version : {{epoch_version}}</b>
-        <b class="lg">Wallet version : {{version}}</b>
-      </el-col>
+      <div style="position:absolute;right:0;bottom:0;">
+
+        <b class="lg">
+          <span>Block Height :</span> 
+          <b>{{chain.current_block_hash ? chain.current_block : ''}}</b>
+        </b>
+        <b class="lg">
+          <span>Epoch version :</span> 
+          <b>{{epoch_version}}</b>
+        </b>
+        <b class="lg">
+          <span>Wallet version : </span> 
+          <b>{{version}}</b>
+        </b>
+      </div>
       
     </el-row>
 
@@ -79,10 +88,22 @@ export default {
   }
 
   b.lg{
+    display: flex;
+    justify-content: space-between;
+    width: 240px;
     font-size: 19px;
-    display: block;
-    text-align: right;
     font-weight: normal;
+
+    span{
+      width:150px;
+      display: inline-block;
+      text-align: right;
+    }
+    b{
+      display: inline-flex;
+      margin-left: 12px;
+      flex: 1;
+    }
   }
 }
 @media screen and (max-width : 600px) {
