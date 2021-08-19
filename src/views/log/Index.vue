@@ -180,8 +180,10 @@ export default {
   },
   methods: {
     async refreshPage(){
+      this.$root.loading(true);
       await this.$store.dispatch('clog/init_my_auction_log', {});
       await this.$store.dispatch('clog/fetch_my_reward_log', {});
+      this.$root.loading(false);
     },
 
     showAuctionDetails(auction_id){
