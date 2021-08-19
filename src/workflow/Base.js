@@ -139,11 +139,11 @@ export default class {
   }
 
   blockToDay(block) {
-    const day = 60 * 60 * 24 / 6;
-    const d = Math.ceil(block / day);
+    const hour = 60 * 60 / 6;
+    const d = Math.ceil(block / hour);
     if(d < 0) return '0';
 
-    const tmp = moment.utc().preciseDiff(moment.utc().add(d*24, 'h'), true);
+    const tmp = moment.utc().preciseDiff(moment.utc().add(d, 'h'), true);
     let rs = '';
     if (tmp.years) {
       rs += tmp.years + 'y';
