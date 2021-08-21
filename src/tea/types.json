@@ -168,5 +168,17 @@
     "owner": "AccountId",
     "weight": "u32",
     "staking_at": "u32"
+  },
+
+  "TAppId": "u64",
+  "CurveType": {
+    "_enum": ["Linear", "SquareRoot"]
+  },
+  "TAppItem": {
+    "id": "TAppId",
+    "name": "Bytes",
+    "owner": "AccountId",
+    "buy_curve": "CurveType",
+    "sell_curve": "CurveType"
   }
 }

@@ -22,7 +22,8 @@ const { _, uuid, forge } = tearust_utils;
 
 const consts = {
   CmlType: { A: 'A', B: 'B', C: 'C' },
-  DefrostScheduleType: { Investor: 'Investor', Team: 'Team' }
+  DefrostScheduleType: { Investor: 'Investor', Team: 'Team' },
+  CurveType: {Linear: 'Linear', SquareRoot: 'SquareRoot'},
 };
 
 const _MEM = {};

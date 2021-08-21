@@ -70,14 +70,14 @@
 <script>
 import Base from '../workflow/Base';
 import {_} from 'tearust_utils';
-import {helper} from 'tearust_layer1';
+import {stringToHex} from 'tearust_layer1';
 import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
 import TeaTable from '../components/TeaTable';
 import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
-
+import helper from './helper';
 
 const DATA = [
   {
@@ -101,6 +101,11 @@ export default {
     return {
       list: null,
     }
+  },
+  computed: {
+    ...mapGetters([
+      'layer1_account'
+    ]),
   },
   async mounted(){
     this.wf = new Base();
@@ -136,13 +141,66 @@ export default {
       });
     },
     async buyHandler(scope){
-      this.$alert('TODO');
+      await helper.tapps_buyToken(this, scope.row);
     },
     async sellHandler(scope){
-      this.$alert('TODO');
+      await helper.tapps_sellToken(this, scope.row);
     },
     async createNewTApp(){
-      
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const curve_option = [];
+      _.each(utils.consts.CurveType, (val, key)=>{
+        const tmp = {
+          key,
+          label: key,
+          value: val
+        };
+        curve_option.push(tmp);
+      });
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Create new TApp',
+          pallet: 'boundingCurve',
+          tx: 'createNewTapp',
+          text: '',
+          props: {
+            buy_curve: {
+              type: 'select',
+              options: curve_option,
+            },
+            sell_curve: {
+              type: 'select',
+              options: curve_option,
+            },
+            init_fund: {
+              type: 'number',
+              default: 1
+            }
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+            // console.log(111, form);
+
+            const name = stringToHex(form.name);
+            const fund = utils.layer1.amountToBalance(form.init_fund);
+
+            const tx = api.tx.boundingCurve.createNewTapp(name, fund, form.buy_curve, form.sell_curve);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            // await this.refreshList();
+
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
     }
   }
 };
