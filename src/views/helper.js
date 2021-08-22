@@ -5,6 +5,18 @@ import request from '../request';
 
 // self means vue instance, required.
 const F = {
+  tableLoading(self, flag=false){
+    if(flag){
+      self.$root.loading(true);
+      self.table_loading = true;
+    }
+    else{
+      self.$root.loading(false);
+      self.table_loading = false;
+    }
+    
+  },
+
   async tapps_buyToken(self, data, succ_cb){
     const layer1_instance = self.wf.getLayer1Instance();
     const api = layer1_instance.getApi();

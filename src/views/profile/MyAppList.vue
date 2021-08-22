@@ -3,12 +3,14 @@
 
   <TeaTable
     :data="list || []"
+    v-loading="table_loading"
     name="tapps_list_table"
   >
     <el-table-column
       prop="id"
       width="90"
       label="ID"
+      sortable
     />
 
     <el-table-column
@@ -24,6 +26,12 @@
     <el-table-column
       prop="amount"
       label="My holding tokens"
+      sortable
+    />
+
+    <el-table-column
+      prop="buy_price"
+      label="Buy price"
     />
 
     <el-table-column
@@ -51,11 +59,13 @@
 <script>
 import SettingAccount from '../../workflow/SettingAccount';
 import {_} from 'tearust_utils';
-import {helper} from 'tearust_layer1';
+// import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import TeaTable from '../../components/TeaTable';
 import TeaIconButton from '../../components/TeaIconButton';
+import request from '../../request';
+import helper from '../helper';
 
 const DATA = [
   {
@@ -77,6 +87,8 @@ export default {
   data(){
     return {
       list: null,
+
+      table_loading: false,
     }
   },
 
@@ -100,12 +112,30 @@ export default {
 
   methods: {
     async refreshList(){
-      this.$root.loading(true);
-      await utils.sleep(1000);
+      helper.tableLoading(this, true);
 
-      this.list = DATA;
+      const list = await request.layer1_rpc('bounding_listUserAssets', [
+        this.layer1_account.address
+      ]);
+      console.log(111, list);
 
-      this.$root.loading(false);
+      this.list = _.map(list, (arr)=>{
+        const item = {
+          id: _.toNumber(arr[1]),
+          name: utils.rpcArrayToString(arr[0]),
+          token_symbol: utils.rpcArrayToString(arr[2]),
+
+          buy_price: _.toNumber(arr[3]),
+          sell_price: _.toNumber(arr[4]),
+          detail: utils.rpcArrayToString(arr[5]),
+          link: utils.rpcArrayToString(arr[6]),
+        };
+        item.amount = 100;
+
+        return item;
+      });
+
+      helper.tableLoading(this, false);
     },
     openTo(url){
       window.open(url, '_blank');
@@ -125,14 +155,16 @@ export default {
       });
     },
     async buyHandler(scope){
-      this.$alert('TODO');
+      await helper.tapps_buyToken(this, scope.row, async ()=>{
+        this.refreshList();
+      });
     },
     async sellHandler(scope){
-      this.$alert('TODO');
+      await helper.tapps_sellToken(this, scope.row, async ()=>{
+        this.refreshList();
+      });
     },
-    async createNewTApp(){
-      
-    }
+
   }
 
   
