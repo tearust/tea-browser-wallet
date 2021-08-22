@@ -1,7 +1,7 @@
 <template>
 <div class="tea-page">
   <h4>TApps list</h4>
-
+  <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     :data="list || []"
     name="tapps_list_table"
@@ -10,6 +10,7 @@
       prop="id"
       width="90"
       label="ID"
+      sortable
     />
 
     <el-table-column
@@ -25,25 +26,26 @@
     <el-table-column
       prop="total_supply"
       label="Total supply"
+      sortable
     />
 
     <el-table-column
       prop="buy_price"
       label="Buy price"
+      sortable
     />
 
     <el-table-column
       prop="sell_price"
       label="Sell price"
+      sortable
     />
 
     <el-table-column
       label="Market cap"
-    >
-      <template slot-scope="scope">
-        {{scope.row.sell_price * scope.row.total_supply}}
-      </template>
-    </el-table-column>
+      prop="market_cap"
+      sortable
+    />
 
 
     <el-table-column
@@ -54,7 +56,7 @@
         <TeaIconButton tip="View details" icon="el-icon-view" @click="showDetails(scope)" />
         <TeaIconButton tip="Buy" icon="buy" @click="buyHandler(scope)" />
         <TeaIconButton tip="Sell" icon="sell" @click="sellHandler(scope)" />
-        <TeaIconButton :tip="'Visit TApp homepage'" icon="link" @click="openTo(scope.row.link)" />
+        <TeaIconButton :tip="'Visit '+scope.row.link" icon="link" @click="openTo(scope.row.link)" />
       </template>
     </el-table-column>
 
@@ -70,7 +72,7 @@
 <script>
 import Base from '../workflow/Base';
 import {_} from 'tearust_utils';
-import {stringToHex} from 'tearust_layer1';
+import {stringToHex, u8aToString} from 'tearust_layer1';
 import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
@@ -78,19 +80,6 @@ import TeaTable from '../components/TeaTable';
 import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
 import helper from './helper';
-
-const DATA = [
-  {
-    id: '001',
-    name: 'First App',
-    token_symbol: 'FTA',
-    total_supply: 10000000,
-    buy_price: 100,
-    sell_price: 110,
-    detail: 'This is the first tapp',
-    link: 'https://teaproject.org',
-  }
-];
 
 export default {
   components: {
@@ -119,7 +108,27 @@ export default {
       this.$root.loading(true);
       await utils.sleep(1000);
 
-      this.list = DATA;
+      const list = await request.layer1_rpc('bounding_listTApps', []);
+      // console.log(111, list);
+
+      this.list = _.map(list, (arr)=>{
+        const item = {
+          id: _.toNumber(arr[1]),
+          name: utils.rpcArrayToString(arr[0]),
+          token_symbol: utils.rpcArrayToString(arr[2]),
+          // total_supply: utils.layer1.balanceToAmount(arr[2]),
+          // buy_price: utils.layer1.balanceToAmount(arr[3]),
+          // sell_price: utils.layer1.balanceToAmount(arr[4]),
+          total_supply: _.toNumber(arr[3]),
+          buy_price: _.toNumber(arr[4]),
+          sell_price: _.toNumber(arr[5]),
+          detail: utils.rpcArrayToString(arr[6]),
+          link: utils.rpcArrayToString(arr[7]),
+        };
+        item.market_cap = item.sell_price * item.total_supply;
+
+        return item;
+      });
 
       this.$root.loading(false);
     },
@@ -141,10 +150,14 @@ export default {
       });
     },
     async buyHandler(scope){
-      await helper.tapps_buyToken(this, scope.row);
+      await helper.tapps_buyToken(this, scope.row, async ()=>{
+        this.refreshList();
+      });
     },
     async sellHandler(scope){
-      await helper.tapps_sellToken(this, scope.row);
+      await helper.tapps_sellToken(this, scope.row, async ()=>{
+        this.refreshList();
+      });
     },
     async createNewTApp(){
       const layer1_instance = this.wf.getLayer1Instance();
@@ -168,17 +181,27 @@ export default {
           tx: 'createNewTapp',
           text: '',
           props: {
-            buy_curve: {
-              type: 'select',
-              options: curve_option,
+            tapp_name: {
+              type: 'Input',
+              label: 'Name',
             },
-            sell_curve: {
-              type: 'select',
-              options: curve_option,
+            ticker: {
+              type: 'Input',
+              label: 'TApp symbol',
+              tip: '3-5 uppercase character.',
             },
             init_fund: {
               type: 'number',
-              default: 1
+              default: 1,
+              max: 10000000,
+            },
+            detail: {
+              label: 'Details',
+              type: 'Input',
+            },
+            link: {
+              label: 'Link',
+              type: 'Input',
             }
           },
         },
@@ -187,12 +210,13 @@ export default {
           try{
             // console.log(111, form);
 
-            const name = stringToHex(form.name);
-            const fund = utils.layer1.amountToBalance(form.init_fund);
+            const name = stringToHex(form.tapp_name);
+            const fund = form.init_fund;
+            const ticker = stringToHex(_.toUpper(form.ticker));
 
-            const tx = api.tx.boundingCurve.createNewTapp(name, fund, form.buy_curve, form.sell_curve);
+            const tx = api.tx.boundingCurve.createNewTapp(name, ticker, fund, stringToHex(form.detail), stringToHex(form.link));
             await layer1_instance.sendTx(this.layer1_account.address, tx);
-            // await this.refreshList();
+            await this.refreshList();
 
             close();
           }catch(e){

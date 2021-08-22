@@ -191,6 +191,15 @@ a, a:hover, a:focus, button:focus {
     font-size: 19px;
     font-weight: bold;
   }
+
+  .el-form-item__content{
+    &>.el-input{
+      width: 90%;
+      margin-right: 10px;
+    }
+  }
+
+  
 }
 
 .tea-table{

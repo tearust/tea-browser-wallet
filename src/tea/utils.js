@@ -5,7 +5,8 @@ import Pubsub from 'pubsub-js';
 import * as tearust_utils from 'tearust_utils';
 import { 
   hexToString, formatBalance, hexToNumber, hexToBn, numberToHex,
-  BN_MILLION, isBn, BN,
+  BN_MILLION, isBn, BN, u8aToHex,
+
 } from 'tearust_layer1';
 
 import './index';
@@ -225,7 +226,11 @@ const F = {
     const total = _.sum(xt);
 
     return (Math.round((table[index] / total) * 100000) / 1000) + '%';
-  }
+  },
+
+  rpcArrayToString(arr){
+    return hexToString(u8aToHex(arr));
+  },
 
 
 };

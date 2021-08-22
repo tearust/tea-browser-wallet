@@ -126,4 +126,22 @@ export default {
   InvalidTransferUSDAmount: 'Invalid USD transfer amount',
   WithdrawAmountShouldNotBeZero: 'Withdraw amount should be greater than 0',
 
+
+  // bounding curve
+  TAppNameIsTooLong: 'TApp name is too long',
+  TAppTickerIsTooLong: 'TApp ticker symbol is too long',
+  TAppTickerIsTooShort: 'TApp ticker symbol is too short',
+  TAppDetailIsTooLong: 'TApp details is too long',
+  TAppLinkIsTooLong: 'TApp link is too long',
+  TAppNameAlreadyExist: 'TApp name already exist',
+  TAppTickerAlreadyExist: 'TApp ticker symbol already exist',
+  // InsufficientFreeBalance: 'Insufficient account balance',
+  InsufficientTAppToken: 'Insufficient token balance',
+  /// Sell amount more than total supply
+  InsufficientTotalSupply: 'Insufficient total supply',
+  TAppIdNotExist: 'TApp is not exist',
+  /// Sell amount more than total reserved pool tea token
+  TAppInsufficientFreeBalance: 'Insufficient TApp account balance',
+  OperationAmountCanNotBeZero: 'Operation amount can not be 0',
+
 };
