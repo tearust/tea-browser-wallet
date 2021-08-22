@@ -36,6 +36,7 @@ const F = {
           tapp_amount: {
             label: 'Amount token',
             type: 'number',
+            max: 100000000,
           }
         },
       },
@@ -93,6 +94,7 @@ const F = {
           tapp_amount: {
             label: 'Amount',
             type: 'number',
+            max: 100000000,
           }
         },
       },

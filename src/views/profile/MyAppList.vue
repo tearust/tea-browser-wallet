@@ -29,10 +29,6 @@
       sortable
     />
 
-    <el-table-column
-      prop="buy_price"
-      label="Buy price"
-    />
 
     <el-table-column
       prop="sell_price"
@@ -66,18 +62,6 @@ import TeaTable from '../../components/TeaTable';
 import TeaIconButton from '../../components/TeaIconButton';
 import request from '../../request';
 import helper from '../helper';
-
-const DATA = [
-  {
-    id: '001',
-    name: 'First App',
-    token_symbol: 'FTA',
-    amount: 10,
-    sell_price: 110,
-    detail: 'This is the first tapp',
-    link: 'https://teaproject.org',
-  }
-];
 
 export default {
   components: {
@@ -125,12 +109,11 @@ export default {
           name: utils.rpcArrayToString(arr[0]),
           token_symbol: utils.rpcArrayToString(arr[2]),
 
-          buy_price: _.toNumber(arr[3]),
+          amount: _.toNumber(arr[3]),
           sell_price: _.toNumber(arr[4]),
           detail: utils.rpcArrayToString(arr[5]),
           link: utils.rpcArrayToString(arr[6]),
         };
-        item.amount = 100;
 
         return item;
       });

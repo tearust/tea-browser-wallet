@@ -211,7 +211,8 @@ export default {
             // console.log(111, form);
 
             const name = stringToHex(form.tapp_name);
-            const fund = form.init_fund;
+            // const fund = utils.toBN(utils.layer1.amountToBalance(form.init_fund));
+            const fund = (form.init_fund);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
             const tx = api.tx.boundingCurve.createNewTapp(name, ticker, fund, stringToHex(form.detail), stringToHex(form.link));
