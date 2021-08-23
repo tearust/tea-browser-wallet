@@ -109,19 +109,18 @@ export default {
       await utils.sleep(1000);
 
       const list = await request.layer1_rpc('bounding_listTApps', []);
-      // console.log(111, list);
+      console.log(11, list);
 
       this.list = _.map(list, (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
           name: utils.rpcArrayToString(arr[0]),
           token_symbol: utils.rpcArrayToString(arr[2]),
-          // total_supply: utils.layer1.balanceToAmount(arr[2]),
-          // buy_price: utils.layer1.balanceToAmount(arr[3]),
-          // sell_price: utils.layer1.balanceToAmount(arr[4]),
-          total_supply: _.toNumber(arr[3]),
-          buy_price: _.toNumber(arr[4]),
-          sell_price: _.toNumber(arr[5]),
+
+          total_supply: utils.layer1.balanceToAmount(arr[3]),
+          buy_price: utils.layer1.balanceToAmount(arr[4]),
+          sell_price: utils.layer1.balanceToAmount(arr[5]),
+     
           detail: utils.rpcArrayToString(arr[6]),
           link: utils.rpcArrayToString(arr[7]),
         };
@@ -211,8 +210,7 @@ export default {
             // console.log(111, form);
 
             const name = stringToHex(form.tapp_name);
-            // const fund = utils.toBN(utils.layer1.amountToBalance(form.init_fund));
-            const fund = (form.init_fund);
+            const fund = utils.toBN(utils.layer1.amountToBalance(form.init_fund));
             const ticker = stringToHex(_.toUpper(form.ticker));
 
             const tx = api.tx.boundingCurve.createNewTapp(name, ticker, fund, stringToHex(form.detail), stringToHex(form.link));

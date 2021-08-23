@@ -44,11 +44,11 @@ const F = {
         self.$root.loading(true);
         
         const id = form.tapp_id;
-        // const amount = utils.layer1.amountToBalance(form.tapp_amount);
-        const amount = (form.tapp_amount);
-        const estimate = await request.layer1_rpc('bounding_estimateTeaRequiredToBuyGivenToken', [
+        const amount = utils.layer1.amountToBalance(form.tapp_amount);
+        let estimate = await request.layer1_rpc('bounding_estimateTeaRequiredToBuyGivenToken', [
           id, amount
         ]);
+        estimate = utils.layer1.balanceToAmount(estimate);
 
         try{
           await self.$confirm(`You will pay <b>${estimate} TEA</b> <br/> Are you sure?`, {
@@ -62,7 +62,7 @@ const F = {
       
         try{
 
-          const tx = api.tx.boundingCurve.buyToken(id, amount);
+          const tx = api.tx.boundingCurve.buyToken(id, utils.toBN(amount));
           await layer1_instance.sendTx(self.layer1_account.address, tx);
 
           close();
@@ -101,11 +101,11 @@ const F = {
       cb: async (form, close)=>{
         self.$root.loading(true);
         const id = form.tapp_id;
-        // const amount = utils.layer1.amountToBalance(form.tapp_amount);
-        const amount = (form.tapp_amount);
-        const estimate = await request.layer1_rpc('bounding_estimateReceivedTeaBySellGivenToken', [
+        const amount = utils.layer1.amountToBalance(form.tapp_amount);
+        let estimate = await request.layer1_rpc('bounding_estimateReceivedTeaBySellGivenToken', [
           id, amount
         ]);
+        estimate = utils.layer1.balanceToAmount(estimate);
 
         try{
           await self.$confirm(`You will receive <b>${estimate} TEA</b> <br/> Are you sure?`, {
@@ -119,7 +119,7 @@ const F = {
 
         try{
 
-          const tx = api.tx.boundingCurve.sellToken(id, amount);
+          const tx = api.tx.boundingCurve.sellToken(id, utils.toBN(amount));
           await layer1_instance.sendTx(self.layer1_account.address, tx);
 
           close();
