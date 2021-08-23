@@ -5,7 +5,7 @@ services:
     image: tearust/tea-browser-wallet:0.1.5
     container_name: wallet
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/proxy.conf
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf
       - ./dist:/www/dist
     ports:
       - 80:80
