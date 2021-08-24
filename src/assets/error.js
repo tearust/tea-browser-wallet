@@ -128,7 +128,13 @@ export default {
   BuyAndSellAmountShouldNotBothExist: 'BuyAndSellAmountShouldNotBothExist',
 	BuyOrSellAmountShouldExist: 'BuyOrSellAmountShouldExist',
   USDInterestRateShouldLargerThanCompetitionsCount: 'USDInterestRateShouldLargerThanCompetitionsCount',
-	InsufficientUSDToPayMiningMachineCost: 'Insufficient COFFEE to pay the mining machine.',
+  InsufficientUSDToPayMiningMachineCost: 'Insufficient COFFEE to pay the mining machine.',
+  BorrowAmountShouldNotBeZero: 'Borrow amount should not be 0.',
+  BorrowAmountHasOverflow: 'Borrow amount has overflow',
+  InsufficientUSDToRepayDebts: 'Insufficient COFFEE to pay off.',
+  NoNeedToRepayUSDDebts: 'No need to pay off COFFEE debt.',
+  RepayUSDAmountShouldNotBeZero: 'Pay off COFFEE should not be 0.',
+  RepayUSDAmountMoreThanDebtAmount: 'Pay off COFFEE more than debt.',
 
 
   // bounding curve

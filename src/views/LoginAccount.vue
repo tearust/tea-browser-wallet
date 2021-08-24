@@ -44,6 +44,16 @@
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
       </div>
 
+      <div class="x-item" v-if="layer1_account && layer1_account.usd_debt">
+        <b>
+          {{'My COFFEE debt'}}
+          <TeaIconButton style="position:relative;" place="right" :tip="
+            (usd_interest_rate ? ('COFFEE debt interest rate is '+(usd_interest_rate)+'.') : '')
+          " icon="questionmark" />
+        </b>
+        <span :inner-html.prop="layer1_account.usd_debt | usd"></span>
+      </div>
+
       <!-- <div v-if="layer1_account && layer1_account.debt" class="x-item">
         <b>
           {{'Staking debt' | cardTitle}}
@@ -70,7 +80,9 @@
         <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
 
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
-        <!-- <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Pay off debt</el-button> -->
+        
+        <el-button @click="borrowButtonHandler()">Borrow COFFEE</el-button>
+        <el-button v-if="layer1_account && layer1_account.usd_debt" @click="payOffButtonhandler()">Pay off COFFEE debt</el-button>
 
         <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest."><div style="margin-left: 10px;">
         <el-button v-if="layer1_account" :disabled="true" @click="transferBalance()">Send</el-button>
@@ -506,6 +518,83 @@ export default {
 
       this.loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.genesisCmlLoanAmount.toJSON(), true);
     },
+
+    async borrowButtonHandler(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Borrow COFFEE',
+          pallet: 'genesisExchange',
+          tx: 'borrowUsd',
+          text: 'Borrow COFFEE interest rate is <b>'+(this.usd_interest_rate)+'</b>',
+          props: {
+            amount: {
+              type: 'number',
+              label: 'Amount (COFFEE)',
+            }
+            
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+
+            const amount = utils.toBN(utils.layer1.amountToBalance(form.amount));
+
+            const tx = api.tx.genesisExchange.borrowUsd(amount);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+    },
+    async payOffButtonhandler(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Pay off COFFEE debt',
+          pallet: 'genesisExchange',
+          tx: 'repayUsdDebts',
+          text: '',
+          props: {
+            amount: {
+              type: 'number',
+              label: 'Amount (COFFEE)',
+              max: this.layer1_account.usd_debt,
+              default: 1,
+            }
+            
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+
+            const amount = utils.toBN(utils.layer1.amountToBalance(form.amount));
+
+            const tx = api.tx.genesisExchange.repayUsdDebts(amount);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+    }
   }
 
   

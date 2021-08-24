@@ -238,24 +238,22 @@ export default class {
       reward = reward / layer1_instance.asUnit();
     }
 
-    // const debt = await this.getAllDebtByAddress(address);
-    const debt = {
-      details: [],
-      total: null,
-    };
+    
 
     let usd = await api.query.genesisExchange.uSDStore(address);
     usd = usd.toJSON();
-
     usd = utils.layer1.balanceToAmount(usd);
+
+    let usd_debt = await api.query.genesisExchange.uSDDebt(address);
+    usd_debt = usd_debt.toJSON();
+    usd_debt = utils.layer1.balanceToAmount(usd_debt);
     
     return {
       free: Math.floor(free * 10000) / 10000,
       lock: Math.floor(lock * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
-      debt: debt.total ? Math.floor(debt.total * 10000) / 10000 : null,
-      debt_detail: debt.details,
       usd,
+      usd_debt,
     };
   }
 
@@ -363,9 +361,10 @@ export default class {
       ori_name: layer1_account.name,
       cml: cml_data,
       reward: balance.reward,
-      debt: balance.debt,
-      debt_detail: balance.debt_detail,
+      
       usd: balance.usd,
+      usd_debt: balance.usd_debt,
+
       coupons,
       pawn_cml_list,
     });
