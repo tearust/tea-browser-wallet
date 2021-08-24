@@ -15,7 +15,7 @@
 
         <div v-for="(val, key) in param" :key="key" class="x-item">
           <b>{{key}}</b>
-          <span>{{val}}</span>
+          <span :inner-html.prop="val"></span>
         </div>
 
       </div>

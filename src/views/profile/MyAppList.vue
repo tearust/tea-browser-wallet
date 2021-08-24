@@ -28,7 +28,7 @@
 
     <el-table-column
       prop="token_symbol"
-      label="Token ticker symbol"
+      label="Ticker"
     />
 
     <el-table-column
@@ -40,7 +40,7 @@
 
     <el-table-column
       prop="sell_price"
-      label="Token sell price (TEA/TOKEN)"
+      label="Sell price (TEA)"
     />
 
     <el-table-column

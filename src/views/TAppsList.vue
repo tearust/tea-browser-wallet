@@ -28,26 +28,24 @@
 
     <el-table-column
       prop="token_symbol"
-      label="Token ticker symbol"
+      label="Ticker"
     />
 
     <el-table-column
       prop="total_supply"
-      label="Token total supply"
+      label="Total supply"
       sortable
     />
 
     <el-table-column
       prop="buy_price"
-      label="Token buy price (TEA/TOKEN)"
-      width="200"
+      label="Buy price (TEA)"
       sortable
     />
 
     <el-table-column
       prop="sell_price"
-      label="Token sell price (TEA/TOKEN)"
-      width="200"
+      label="Sell price (TEA)"
       sortable
     />
 

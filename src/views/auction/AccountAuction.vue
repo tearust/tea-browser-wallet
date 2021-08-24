@@ -208,8 +208,10 @@ export default {
 
       const param = {};
       _.each(list, (item)=>{
-        _.set(param, item.user, item.price);
+        const price = utils.layer1.formatBalance(item.ori_price, true);
+        _.set(param, item.user, price);
       });
+
       param.title = 'Active bids';
       this.$store.commit('modal/open', {
         key: 'data_details',
