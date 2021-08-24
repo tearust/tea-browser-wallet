@@ -130,12 +130,8 @@ import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
-import TeaIconButton from '../../components/TeaIconButton';
 
 export default {
-  components: {
-    TeaIconButton
-  },
   data(){
     return {
       has_team: false,
