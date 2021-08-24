@@ -238,7 +238,11 @@ export default class {
       reward = reward / layer1_instance.asUnit();
     }
 
-    const debt = await this.getAllDebtByAddress(address);
+    // const debt = await this.getAllDebtByAddress(address);
+    const debt = {
+      details: [],
+      total: null,
+    };
 
     let usd = await api.query.genesisExchange.uSDStore(address);
     usd = usd.toJSON();

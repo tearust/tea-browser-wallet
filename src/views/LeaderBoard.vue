@@ -50,10 +50,10 @@
       label="COFFEE account balance"
       width="150"
     />
-    <el-table-column
+    <!-- <el-table-column
       prop="miner_credit"
       label="Staking debt"
-    />
+    /> -->
     <el-table-column
       prop="loan_credit"
       label="Genesis loan"
@@ -110,15 +110,15 @@ export default {
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
-          const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          const total = arr[1]+arr[2]+arr[3]-arr[4];
           const rs = {
             index: i+1,
             address: arr[0],
             cml_asset: utils.layer1.balanceToAmount(arr[1]),
             tea_asset: utils.layer1.balanceToAmount(arr[2]),
             usd_asset: utils.layer1.balanceToAmount(arr[3]),
-            miner_credit: utils.layer1.balanceToAmount(arr[4]),
-            loan_credit: utils.layer1.balanceToAmount(arr[5]),
+            // miner_credit: utils.layer1.balanceToAmount(arr[4]),
+            loan_credit: utils.layer1.balanceToAmount(arr[4]),
             total: utils.layer1.balanceToAmount(total),
           };
           return rs;
@@ -130,21 +130,21 @@ export default {
           arr[2] = utils.layer1.balanceToAmount(arr[2])*usdToTea;
           arr[3] = utils.layer1.balanceToAmount(arr[3])*usdToTea;
           arr[4] = utils.layer1.balanceToAmount(arr[4])*usdToTea;
-          arr[5] = utils.layer1.balanceToAmount(arr[5])*usdToTea;
-          arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
+          // arr[5] = utils.layer1.balanceToAmount(arr[5])*usdToTea;
+          // arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
 
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
-          const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          const total = arr[1]+arr[2]+arr[3]-arr[4];
           const rs = {
             index: i+1,
             address: arr[0],
             cml_asset: utils.layer1.roundAmount(arr[1]),
             tea_asset: utils.layer1.roundAmount(arr[2]),
             usd_asset: utils.layer1.roundAmount(arr[3]),
-            miner_credit: utils.layer1.roundAmount(arr[4]),
-            loan_credit: utils.layer1.roundAmount(arr[5]),
+            // miner_credit: utils.layer1.roundAmount(arr[4]),
+            loan_credit: utils.layer1.roundAmount(arr[4]),
             total: utils.layer1.roundAmount(total),
           };
           return rs;

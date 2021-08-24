@@ -44,12 +44,12 @@
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
       </div>
 
-      <div v-if="layer1_account && layer1_account.debt" class="x-item">
+      <!-- <div v-if="layer1_account && layer1_account.debt" class="x-item">
         <b>
           {{'Staking debt' | cardTitle}}
         </b>
         <span :inner-html.prop="layer1_account.debt | teaIcon"></span>
-      </div>
+      </div> -->
 
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
         <b>
@@ -70,7 +70,7 @@
         <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
 
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
-        <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Pay off debt</el-button>
+        <!-- <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Pay off debt</el-button> -->
 
         <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest."><div style="margin-left: 10px;">
         <el-button v-if="layer1_account" :disabled="true" @click="transferBalance()">Send</el-button>
