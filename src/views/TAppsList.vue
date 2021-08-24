@@ -11,12 +11,20 @@
       width="90"
       label="ID"
       sortable
-    />
+    >
+      <template slot-scope="scope">
+        <el-button size="small" type="text" @click="showDetails(scope)">{{scope.row.id}}</el-button>
+      </template>
+    </el-table-column>
 
     <el-table-column
       prop="name"
       label="Name"
-    />
+    >
+      <template slot-scope="scope">
+        <el-button size="small" type="text" @click="openTo(scope.row.link)">{{scope.row.name}}</el-button>
+      </template>
+    </el-table-column>
 
     <el-table-column
       prop="token_symbol"
@@ -53,10 +61,8 @@
       width="150"
     >
       <template slot-scope="scope">
-        <TeaIconButton tip="View details" icon="el-icon-view" @click="showDetails(scope)" />
         <TeaIconButton tip="Buy" icon="buy" @click="buyHandler(scope)" />
         <TeaIconButton tip="Sell" icon="sell" @click="sellHandler(scope)" />
-        <TeaIconButton :tip="'Visit '+scope.row.link" icon="link" @click="openTo(scope.row.link)" />
       </template>
     </el-table-column>
 
