@@ -96,13 +96,17 @@ export default {
   methods: {
     async refreshList(){
       this.$root.loading(true);
-      const tmp = await request.layer1_rpc('cml_userAssetList', []);
+      let tmp = await request.layer1_rpc('cml_userAssetList', []);
+      tmp = _.filter(tmp, (arr)=>{
+        return arr[0] !== utils.consts.SUDO_ACCOUNT;
+      });
 
       const rtmp = await request.layer1_rpc('cml_currentExchangeRate', []);
       const usdToTea = utils.layer1.balanceToAmount(rtmp[1]);
 
+      let x_list = null;
       if(this.show_for_coffee){
-        this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+        x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
@@ -121,7 +125,7 @@ export default {
         }));
       }
       else{
-        this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+        x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           arr[1] = utils.layer1.balanceToAmount(arr[1])*usdToTea;
           arr[2] = utils.layer1.balanceToAmount(arr[2])*usdToTea;
           arr[3] = utils.layer1.balanceToAmount(arr[3])*usdToTea;
@@ -146,6 +150,8 @@ export default {
           return rs;
         }));
       }
+
+      this.list = x_list;
       
       this.$root.loading(false);
     },

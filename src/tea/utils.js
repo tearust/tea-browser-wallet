@@ -25,6 +25,8 @@ const consts = {
   CmlType: { A: 'A', B: 'B', C: 'C' },
   DefrostScheduleType: { Investor: 'Investor', Team: 'Team' },
   CurveType: {Linear: 'Linear', SquareRoot: 'SquareRoot'},
+
+  SUDO_ACCOUNT: '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP',
 };
 
 const _MEM = {};
