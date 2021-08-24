@@ -19,7 +19,7 @@
 
     <el-table-column
       prop="name"
-      label="Name"
+      label="TApp Name"
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="openTo(scope.row.link)">{{scope.row.name}}</el-button>
@@ -28,24 +28,24 @@
 
     <el-table-column
       prop="token_symbol"
-      label="Token"
+      label="Token ticker symbol"
     />
 
     <el-table-column
       prop="total_supply"
-      label="Total supply"
+      label="Token total supply"
       sortable
     />
 
     <el-table-column
       prop="buy_price"
-      label="Buy price"
+      label="Token buy price"
       sortable
     />
 
     <el-table-column
       prop="sell_price"
-      label="Sell price"
+      label="Token sell price"
       sortable
     />
 
