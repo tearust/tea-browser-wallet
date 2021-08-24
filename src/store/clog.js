@@ -72,6 +72,7 @@ export default {
           }}
           
         ]`,
+        name: `notIn: ["RewardStatements"]`,
         type: `in: ["tx", "event"]`
       });
 
