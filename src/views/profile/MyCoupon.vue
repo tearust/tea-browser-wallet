@@ -30,12 +30,22 @@
   </el-table>
 
   <div v-if="expired_block > 0" style="display:flex; justify-content: flex-end; margin-top: 40px;">
-    <el-button style="padding-left: 15px; padding-right: 15px;" 
+    <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest.">
+      <div style="padding-left: 15px; padding-right: 15px;"><el-button 
+        :disabled="true"
+        plain
+        type="default">
+        Transfer coupon
+      </el-button></div>
+    </el-tooltip>
+
+    <!-- <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="dai_modal.visible=true"
+      :disabled="false"
       plain
-      type="primary">
+      type="default">
       Transfer coupon
-    </el-button>
+    </el-button> -->
 
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="lotteryHandler(0)"
@@ -120,7 +130,12 @@ import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
+import TeaIconButton from '../../components/TeaIconButton';
+
 export default {
+  components: {
+    TeaIconButton
+  },
   data(){
     return {
       has_team: false,
