@@ -8,7 +8,7 @@
   >
     <el-table-column
       prop="id"
-      width="90"
+      width="70"
       label="ID"
       sortable
     >
@@ -27,8 +27,26 @@
     </el-table-column>
 
     <el-table-column
+      prop="owner"
+      label="Owner"
+      width="200"
+    >
+      <template slot-scope="scope">
+        <el-tooltip effect="light" :content="scope.row.owner" placement="right">
+        <el-button
+          @click="
+            $root.goPath('/user_details/'+scope.row.owner)"
+          type="text">
+          {{scope.row.owner}}
+        </el-button>
+        </el-tooltip>
+      </template>
+    </el-table-column>
+
+    <el-table-column
       prop="token_symbol"
       label="Ticker"
+      width="70"
     />
 
     <el-table-column
@@ -58,7 +76,7 @@
 
     <el-table-column
       label="Actions"
-      width="150"
+      width="120"
     >
       <template slot-scope="scope">
         <TeaIconButton tip="Buy" icon="buy" @click="buyHandler(scope)" />
@@ -126,9 +144,9 @@ export default {
           total_supply: utils.layer1.balanceToAmount(arr[3]),
           buy_price: utils.layer1.balanceToAmount(arr[4]),
           sell_price: utils.layer1.balanceToAmount(arr[5]),
-     
-          detail: utils.rpcArrayToString(arr[6]),
-          link: utils.rpcArrayToString(arr[7]),
+          owner: arr[6],
+          detail: utils.rpcArrayToString(arr[7]),
+          link: utils.rpcArrayToString(arr[8]),
         };
         item.market_cap = item.sell_price * item.total_supply;
 
