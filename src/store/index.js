@@ -224,6 +224,10 @@ const store = new Vuex.Store({
             d.for_current = tmp;
           }
 
+          let cml = await api.query.cml.cmlStore(d.cml_id);
+          cml = cml.toJSON();
+
+          d.cml_type = cml.intrinsic.cml_type;
 
           return d;
         }
@@ -262,12 +266,16 @@ const store = new Vuex.Store({
               d.bid_price = utils.toBN(bid_item.price);
             }
 
+            let cml = await api.query.cml.cmlStore(d.cml_id);
+            cml = cml.toJSON();
+
+            d.cml_type = cml.intrinsic.cml_type;
+
             x_list.push(d);
           }
         }
       }
 
-      // console.log(1, x_list);
       store.commit('set_my_auction_list', x_list);
     },
 
@@ -302,6 +310,11 @@ const store = new Vuex.Store({
               d.bid_price = bid_item.price;
             }
             d.cml_id = d.auction.cml_id;
+
+            let cml = await api.query.cml.cmlStore(d.cml_id);
+            cml = cml.toJSON();
+
+            d.cml_type = cml.intrinsic.cml_type;
             x_list.push(d);
           }
         }

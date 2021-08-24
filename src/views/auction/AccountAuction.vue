@@ -22,10 +22,10 @@
         <el-button size="small" type="text" @click="$root.goPath('/cml_details/'+scope.row.cml_id)">{{scope.row.cml_id}}</el-button>
       </template>
     </el-table-column>
-    <!-- <el-table-column
-      prop="cml_owner"
-      label="CML Owner"
-    /> -->
+    <el-table-column
+      prop="cml_type"
+      label="Type"
+    />
 
     <el-table-column
       prop="starting_price"

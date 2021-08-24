@@ -28,6 +28,10 @@
         </el-button>
       </template>
     </el-table-column>
+    <el-table-column
+      prop="cml_type"
+      label="Type"
+    />
 
     <el-table-column
       prop="bid_price"
