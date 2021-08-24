@@ -39,7 +39,13 @@ const help = {
 
     let str = '';
     _.each(filter, (val, key)=>{
-      str += key+': {'+val+'}\n';
+      if(key === 'or'){
+        str += key+': '+val+'\n';
+      }
+      else{
+        str += key+': {'+val+'}\n';
+      }
+      
     });
 
     return `filter: {

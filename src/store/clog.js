@@ -62,7 +62,16 @@ export default {
       }
 
       const rs = await request.getLog({
-        from: `in: ["${layer1_account.address}", "system"]`,
+        // from: `in: ["${layer1_account.address}", "system"]`,
+        or: `[
+          {from: {
+            in: ["${layer1_account.address}", "system"]
+          }},
+          {to: {
+            in: ["${layer1_account.address}"]
+          }}
+          
+        ]`,
         type: `in: ["tx", "event"]`
       });
 
