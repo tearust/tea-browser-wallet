@@ -40,7 +40,7 @@
 
     <el-table-column
       prop="sell_price"
-      label="Token sell price"
+      label="Token sell price (TEA/TOKEN)"
     />
 
     <el-table-column

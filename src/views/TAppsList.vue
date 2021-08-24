@@ -39,13 +39,15 @@
 
     <el-table-column
       prop="buy_price"
-      label="Token buy price"
+      label="Token buy price (TEA/TOKEN)"
+      width="200"
       sortable
     />
 
     <el-table-column
       prop="sell_price"
-      label="Token sell price"
+      label="Token sell price (TEA/TOKEN)"
+      width="200"
       sortable
     />
 
