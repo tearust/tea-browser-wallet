@@ -124,7 +124,11 @@ export default {
   UserInsufficientTEA: 'Insufficient TEA for transaction',
   InvalidDepositAmount: 'Invalid deposit amount',
   InvalidTransferUSDAmount: 'Invalid USD transfer amount',
-  WithdrawAmountShouldNotBeZero: 'Withdraw amount should be greater than 0',
+  AmountShouldNotBeZero: 'Withdraw amount should be greater than 0',
+  BuyAndSellAmountShouldNotBothExist: 'BuyAndSellAmountShouldNotBothExist',
+	BuyOrSellAmountShouldExist: 'BuyOrSellAmountShouldExist',
+  USDInterestRateShouldLargerThanCompetitionsCount: 'USDInterestRateShouldLargerThanCompetitionsCount',
+	InsufficientUSDToPayMiningMachineCost: 'Insufficient COFFEE to pay the mining machine.',
 
 
   // bounding curve

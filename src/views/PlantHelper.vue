@@ -1,9 +1,16 @@
 <template>
 <div class="tea-page">
   <h4>Plant my Camellia</h4>
-  <p>Please fill out the form below to generate the mining shell.</p>
+  <p>
+    Please fill out the form below to generate the mining shell. <br/>
+    Notice that you need <b class="block">{{form.miner_price}} COFFEE</b> to buy the miner machine.
+    <br/>
+    The machine is not reusable if unplant in the future.
+    If you agree, {{form.miner_price}} COFFEE will be burned from your account.
+  </p>
 
-  <el-form :model="form" label-width="120px" :rules="rules" ref="form">
+
+  <el-form :model="form" label-width="180px" :rules="rules" ref="form">
     <el-form-item label="CML Id" prop="cml_id">
       <el-input v-model="form.cml_id"></el-input>
     </el-form-item>
@@ -14,6 +21,10 @@
 
     <el-form-item label="Miner Ip" prop="miner_ip">
       <el-input v-model="form.miner_ip"></el-input>
+    </el-form-item>
+
+    <el-form-item label="Miner price (COFFEE)" prop="miner_price">
+      <el-input :disabled="true" v-model="form.miner_price"></el-input>
     </el-form-item>
 
     <el-form-item label="Account" prop="account">
@@ -65,6 +76,7 @@ export default {
         cml_id: null,
         miner_id: null,
         miner_ip: null,
+        miner_price: null,
         account: null,
       },
       rules: {
@@ -89,6 +101,25 @@ export default {
 
     this.wf = new Base();
     await this.wf.init();
+
+    this.$root.loading(true);
+
+    const layer1_instance = this.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    let cml = await api.query.cml.cmlStore(this.form.cml_id);
+    cml = cml.toJSON();
+
+    const map = {
+      A: 'cmlAMiningMachineCost',
+      B: 'cmlBMiningMachineCost',
+      C: 'cmlCMiningMachineCost'
+    };
+
+    const price = api.consts.genesisExchange[map[cml.intrinsic.cml_type]].toJSON();
+    this.form.miner_price = utils.layer1.formatBalance(price);
+
+    this.$root.loading(false);
   },
   methods: {
     async generateShell(){
