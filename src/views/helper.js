@@ -27,6 +27,7 @@ const F = {
         title: 'Buy token',
         pallet: 'boundingCurve',
         tx: 'buyToken',
+        confirm_text: 'Next',
         text: `You are buying the ${data.name}'s token ${data.token_symbol}`,
         props: {
           tapp_id: {
@@ -83,6 +84,7 @@ const F = {
       key: 'common_tx', 
       param: {
         title: 'Sell token',
+        confirm_text: 'Next',
         pallet: 'boundingCurve',
         tx: 'sellToken',
         text: `You are selling the ${data.name}'s token ${data.token_symbol}`,
