@@ -27,6 +27,7 @@ const consts = {
   CurveType: {Linear: 'Linear', SquareRoot: 'SquareRoot'},
 
   SUDO_ACCOUNT: '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP',
+  TOTAL_REWARD: 1500,
 };
 
 const _MEM = {};

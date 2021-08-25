@@ -38,7 +38,7 @@
     <el-table-column
       prop="cml_asset"
       label="Projected 7 day mining income"
-      width="180"
+      width="120"
     />
     <el-table-column
       prop="tea_asset"
@@ -64,12 +64,21 @@
     />
     <el-table-column
       prop="total"
-      width="150"
+      width="120"
       label="Total account value"
     >
       <template slot-scope="scope">
         <span v-if="scope.row.total>=0">{{scope.row.total}}</span>
         <span v-if="scope.row.total<0" style="color:#f00;">({{scope.row.total}})</span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="reward"
+      label="Prize share"
+    >
+      <template slot-scope="scope">
+        <span style="color: #35a696;font-weight:bold;" :inner-html.prop="`<i class='iconfont icon-dollar'></i>${scope.row.reward}`"></span>
       </template>
     </el-table-column>
       
@@ -104,11 +113,12 @@ export default {
       tmp = _.filter(tmp, (arr)=>{
         return arr[0] !== utils.consts.SUDO_ACCOUNT;
       });
-console.log(1, tmp);
+
       const rtmp = await request.layer1_rpc('cml_currentExchangeRate', []);
       const usdToTea = utils.layer1.balanceToAmount(rtmp[1]);
 
       let x_list = null;
+      let sum = 0;
       if(this.show_for_coffee){
         x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           for(let j=1; j<7; j++){
@@ -126,6 +136,7 @@ console.log(1, tmp);
             usd_debt: utils.layer1.balanceToAmount(arr[5]),
             total: utils.layer1.balanceToAmount(total),
           };
+          sum += rs.total;
           return rs;
         }));
       }
@@ -142,6 +153,7 @@ console.log(1, tmp);
             arr[j] = _.toNumber(arr[j]);
           }
           const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          sum += total;
           const rs = {
             index: i+1,
             address: arr[0],
@@ -156,7 +168,10 @@ console.log(1, tmp);
         }));
       }
 
-      this.list = x_list;
+      this.list = _.map(x_list, (item)=>{
+        item.reward = utils.layer1.roundAmount(utils.consts.TOTAL_REWARD*(item.total / sum));
+        return item;
+      });
       
       this.$root.loading(false);
     },
