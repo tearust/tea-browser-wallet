@@ -2,12 +2,10 @@
   <div class="tea-page">
     <h4>Plant my Camellia</h4>
     <p>
-      Please fill out the form below to generate the mining shell. <br />
-      Notice that you need <b class="block">{{ form.miner_price }} COFFEE</b> to
-      buy the miner machine.
+      Please fill out the form below to generate the shell mining commands. <br />
+      Note that you need <b class="block">{{ form.miner_price }} COFFEE</b> to buy a mining machine.
       <br />
-      The machine is not reusable if unplant in the future. If you agree,
-      {{ form.miner_price }} COFFEE will be burned from your account.
+      The machine is not reusable if you decide to unplant your CML in the future. If you agree, {{ form.miner_price }} COFFEE will be burned from your account.
     </p>
 
     <el-form :model="form" label-width="180px" :rules="rules" ref="form">
