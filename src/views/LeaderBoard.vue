@@ -38,7 +38,7 @@
     <el-table-column
       prop="cml_asset"
       label="Projected 7 day mining income"
-      width="180"
+      width="120"
     />
     <el-table-column
       prop="tea_asset"
@@ -60,12 +60,21 @@
     />
     <el-table-column
       prop="total"
-      width="150"
+      width="120"
       label="Total account value"
     >
       <template slot-scope="scope">
         <span v-if="scope.row.total>=0">{{scope.row.total}}</span>
         <span v-if="scope.row.total<0" style="color:#f00;">({{scope.row.total}})</span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="reward"
+      label="Prize share"
+    >
+      <template slot-scope="scope">
+        <span style="color: #35a696;font-weight:bold;" :inner-html.prop="`<i class='iconfont icon-dollar'></i>${scope.row.reward}`"></span>
       </template>
     </el-table-column>
       
@@ -96,17 +105,23 @@ export default {
   methods: {
     async refreshList(){
       this.$root.loading(true);
-      const tmp = await request.layer1_rpc('cml_userAssetList', []);
+      let tmp = await request.layer1_rpc('cml_userAssetList', []);
+      tmp = _.filter(tmp, (arr)=>{
+        return arr[0] !== '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP';
+      });
 
       const rtmp = await request.layer1_rpc('cml_currentExchangeRate', []);
       const usdToTea = utils.layer1.balanceToAmount(rtmp[1]);
 
+      let x_list = null;
+      let sum = 0;
       if(this.show_for_coffee){
-        this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+        x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
           const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          
           const rs = {
             index: i+1,
             address: arr[0],
@@ -117,11 +132,12 @@ export default {
             loan_credit: utils.layer1.balanceToAmount(arr[5]),
             total: utils.layer1.balanceToAmount(total),
           };
+          sum += rs.total;
           return rs;
         }));
       }
       else{
-        this.list = await Promise.all(_.map(tmp, async (arr, i)=>{
+        x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           arr[1] = utils.layer1.balanceToAmount(arr[1])*usdToTea;
           arr[2] = utils.layer1.balanceToAmount(arr[2])*usdToTea;
           arr[3] = utils.layer1.balanceToAmount(arr[3])*usdToTea;
@@ -133,6 +149,7 @@ export default {
             arr[j] = _.toNumber(arr[j]);
           }
           const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          sum += total;
           const rs = {
             index: i+1,
             address: arr[0],
@@ -146,7 +163,12 @@ export default {
           return rs;
         }));
       }
-      
+
+
+      this.list = _.map(x_list, (item)=>{
+        item.reward = utils.layer1.roundAmount(1500*(item.total / sum));
+        return item;
+      });
       this.$root.loading(false);
     },
 
