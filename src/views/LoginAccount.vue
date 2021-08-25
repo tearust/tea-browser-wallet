@@ -77,7 +77,7 @@
           Sell COFFEE ({{rate.usdToTea}} TEA/COFFEE)
         </el-button>
 
-        <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
+        <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button>
 
         <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
         
