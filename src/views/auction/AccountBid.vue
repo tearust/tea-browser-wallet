@@ -193,7 +193,7 @@ export default {
         return;
       }
 
-      const x = await this.$confirm("Are you sure to delete this bid?", "Danger operation").catch(()=>{});
+      const x = await this.$confirm("Are you sure to delete this bid?", "Delete bid").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();

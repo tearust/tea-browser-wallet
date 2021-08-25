@@ -167,7 +167,7 @@ export default {
       const len = tmp ? tmp.length : 0;
       const penalty = api.consts.auction.auctionOwnerPenaltyForEachBid.toJSON() * len;
 
-      const msg = penalty > 0 ? `Remove this auction will charge you ${utils.layer1.formatBalance(penalty)} TEA, Are you sure?` : 'Are you sure to delete this auction?';
+      const msg = penalty > 0 ? `Removing this auction will charge you ${utils.layer1.formatBalance(penalty)} TEA, Are you sure?` : 'Are you sure you want to delete this auction?';
 
       const x = await this.$confirm(msg, "Delete Auction").catch(()=>{});
       if(!x) return false;
