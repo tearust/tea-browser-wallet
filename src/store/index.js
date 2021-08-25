@@ -11,11 +11,17 @@ import request from '../request';
 
 Vue.use(Vuex);
 
+let wf = null;
 const F = {
   async getLayer1() {
-    const wf = new Base();
+    wf = new Base();
     await wf.init();
     return wf.layer1;
+  },
+  async getWF() {
+    if(wf) return wf;
+    await F.getLayer1();
+    return wf;
   },
 
   formatAuctionBidData(d){
@@ -225,9 +231,9 @@ const store = new Vuex.Store({
             d.for_current = tmp;
           }
 
-          let cml = await api.query.cml.cmlStore(d.cml_id);
-          cml = cml.toJSON();
-
+          const wf = await F.getWF();
+          let cml = (await wf.getCmlByList([d.cml_id]))[0];
+          d.cml = cml;
           d.cml_type = cml.intrinsic.cml_type;
 
           return d;

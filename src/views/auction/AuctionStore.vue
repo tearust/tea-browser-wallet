@@ -14,10 +14,12 @@
     <el-table-column
       prop="id"
       label="Auction ID"
+      width="80"
     />
     <el-table-column
       prop="cml_id"
       label="CML ID"
+      width="60"
     >
       <template slot-scope="scope">
         <el-button
@@ -32,7 +34,32 @@
     <el-table-column
       prop="cml_type"
       label="Type"
+      width="50"
     />
+
+    <el-table-column
+      prop="liferemaining"
+      label="Life remaining"
+      width="100"
+    >
+      <template slot-scope="scope">
+        {{scope.row.cml.life_day}}
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="cml.performance"
+      label="Current / Peak performance"
+      width="110"
+    />
+    <el-table-column
+      prop="generate_defrost_time"
+      label="Defrost day"
+      width="100"
+    >
+      <template slot-scope="scope">
+        {{scope.row.cml.defrost_day}}
+      </template>
+    </el-table-column>
 
     <el-table-column
       prop="starting_price"
@@ -116,7 +143,7 @@ export default {
       }catch(e){
         this.$root.showError(e);
       }
-      await utils.sleep(1000)
+      console.log(111, this.auction.auction_list);
       this.$root.loading(false);
     },
 
