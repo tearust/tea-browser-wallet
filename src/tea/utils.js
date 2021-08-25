@@ -91,6 +91,12 @@ const layer1 = {
   },
   roundAmount(value){
     return Math.round(value*10000) / 10000;
+  },
+  toRealBalance(value){
+    value = F.toBN(value);
+    value = F.bnToBalanceNumber(value);
+    const unit = 1000000*1000000;
+    return Math.round(value * unit) / unit;
   }
 };
 
@@ -234,6 +240,14 @@ const F = {
   rpcArrayToString(arr){
     return hexToString(u8aToHex(arr));
   },
+
+  urlToLink(url){
+    if(!_.startsWith(url, 'https://') && !_.startsWith(url, 'http://')){
+      url = 'http://'+url; 
+    }
+
+    return url;
+  }
 
 
 };
