@@ -116,6 +116,9 @@ export default {
   /// We have such a close time because Genesis bank is supposed to be temporary cold-start
   /// helper. When newer Defi service tApps are ready, the Genesis Bank should be retired
   CannotApplyLoanAfterClosed: 'The Genesis bank is closed and no longer offers loans',
+  GenesisBankInsufficientFreeBalance: 'GenesisBankInsufficientFreeBalance',
+	NoNeedToRepayInterest: 'NoNeedToRepayInterest',
+	RepayAmountCanNotBeZero: 'RepayAmountCanNotBeZero',
 
   // Genesis exchange
   ExchangeInsufficientUSD: 'The exchange does not have enough USD for transaction',
@@ -154,4 +157,10 @@ export default {
   TAppInsufficientFreeBalance: 'Insufficient TApp account balance',
   OperationAmountCanNotBeZero: 'Operation amount can not be 0',
 
+  BuyTeaAmountCanNotBeZero: 'BuyTeaAmountCanNotBeZero',
+  SellTeaAmountCanNotBeZero: 'SellTeaAmountCanNotBeZero',
+  SubtractionOverflow: 'SubtractionOverflow',
+  AddOverflow: 'AddOverflow',
+  NotAllowedNormalUserCreateTApp: 'NotAllowedNormalUserCreateTApp',
+  OnlyTAppOwnerAllowedToExpense: 'OnlyTAppOwnerAllowedToExpense',
 };
