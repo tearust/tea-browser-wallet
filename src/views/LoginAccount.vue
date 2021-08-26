@@ -27,7 +27,7 @@
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
 
-      <div class="x-item" v-if="layer1_account && layer1_account.tea_debt && layer1_account.tea_debt.total">
+      <div class="x-item" v-if="tea_debt_str">
         <b>
           {{'My TEA debt'}}
           <TeaIconButton style="position:relative;" place="right" tip="
@@ -188,7 +188,6 @@ export default {
       loan_rate: null,
       loan_amount: null,
 
-      tea_debt_str: null,
     };
   },
 
@@ -196,6 +195,15 @@ export default {
     ...mapGetters([
       'layer1_account'
     ]),
+    tea_debt_str: (p)=>{
+      if(p.layer1_account && p.layer1_account.tea_debt){
+        return utils.layer1.formatBalance(p.layer1_account.tea_debt.prime, true)
+          +' / '+ utils.layer1.formatBalance(p.layer1_account.tea_debt.interest)
+          +' / '+ utils.layer1.formatBalance(p.layer1_account.tea_debt.total)
+      }
+
+      return null;
+    }
   },
 
   async created(){
@@ -237,11 +245,7 @@ export default {
 
     await this.getMajorFinancial();
 
-    if(this.layer1_account && this.layer1_account.tea_debt){
-      this.tea_debt_str = utils.layer1.formatBalance(this.layer1_account.tea_debt.prime, true)
-          +' / '+ utils.layer1.formatBalance(this.layer1_account.tea_debt.interest)
-          +' / '+ utils.layer1.formatBalance(this.layer1_account.tea_debt.total)
-    }
+    
   },
 
   methods: {
