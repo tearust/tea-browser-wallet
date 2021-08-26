@@ -181,36 +181,23 @@ export default class {
     utils.publish('tea-select-layer1-modal', true);
   }
 
-  async getAllDebtByAddress(address){
-    const cml_list = await request.layer1_rpc('cml_userCreditList', [
-      address
-    ]);
-
-    const layer1_instance = this.getLayer1Instance();
-    const api = layer1_instance.getApi();
-
-    let total = 0;
-    const debt_map = {};
+  async getTeaDebtByPawnList(cml_list){
+    const rs = {
+      prime: 0,
+      interest: 0,
+      total: 0,
+    };
 
     await Promise.all(_.map(cml_list, async (arr)=>{
       const cml_id = arr[0];
-      let debt = parseInt(arr[1], 10);
-      // let debt = await api.query.cml.genesisMinerCreditStore(address, cml_id);
-      // debt = debt.toJSON();
-      if (debt) {
-        total += debt;
-      }
-      _.set(debt_map, cml_id, (debt / layer1_instance.asUnit()))
+      let tmp = await request.layer1_rpc('cml_calculateLoanAmount', [cml_id]);
+      rs.prime += _.toNumber(tmp[0]);
+      rs.interest += _.toNumber(tmp[1]);
+      rs.total += _.toNumber(tmp[2]);
       return null;
     }));
 
-    total = total / layer1_instance.asUnit();
-
-    
-    return {
-      total,
-      details: debt_map
-    };
+    return rs;
 
   }
 
@@ -344,6 +331,7 @@ export default class {
     const coupons = await this.getCoupons(layer1_account.address);
 
     const pawn_cml_list = await this.getAllPawnByAddress(layer1_account.address);
+    const tea_debt = await this.getTeaDebtByPawnList(pawn_cml_list);
 
     // reset all state
     store.commit('reset_state');
@@ -367,6 +355,7 @@ export default class {
 
       coupons,
       pawn_cml_list,
+      tea_debt,
     });
 
 

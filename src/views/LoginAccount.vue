@@ -26,6 +26,19 @@
         <b>{{'My TEA' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
+
+      <div class="x-item" v-if="layer1_account && layer1_account.tea_debt && layer1_account.tea_debt.total">
+        <b>
+          {{'My TEA debt'}}
+          <TeaIconButton style="position:relative;" place="right" tip="
+            Prime / Interest / Total
+          " icon="questionmark" />
+        </b>
+        <span :inner-html.prop="
+          tea_debt_str
+        "></span>
+      </div>
+
       <div class="x-item">
         <b>
           {{'Locked TEA' | cardTitle}}
@@ -174,6 +187,8 @@ export default {
 
       loan_rate: null,
       loan_amount: null,
+
+      tea_debt_str: null,
     };
   },
 
@@ -221,6 +236,12 @@ export default {
     this.usd_interest_rate = (usd_interest_rate/100) + '% per '+pl+' blocks';
 
     await this.getMajorFinancial();
+
+    if(this.layer1_account && this.layer1_account.tea_debt){
+      this.tea_debt_str = utils.layer1.formatBalance(this.layer1_account.tea_debt.prime, true)
+          +' / '+ utils.layer1.formatBalance(this.layer1_account.tea_debt.interest)
+          +' / '+ utils.layer1.formatBalance(this.layer1_account.tea_debt.total)
+    }
   },
 
   methods: {
