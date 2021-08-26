@@ -512,11 +512,14 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const loan_rate = api.consts.genesisBank.interestRate.toJSON();
+      const loan_rate = (await api.query.genesisBank.interestRate()).toJSON();
       const pl = api.consts.genesisBank.loanTermDuration.toJSON();
       this.loan_rate = (loan_rate/100) + '% per '+pl+' blocks';
 
-      this.loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.genesisCmlLoanAmount.toJSON(), true);
+      let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
+      loan_amount += '/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
+      loan_amount += '/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON());
+      this.loan_amount = loan_amount;
     },
 
     async borrowButtonHandler(){

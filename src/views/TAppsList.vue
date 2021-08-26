@@ -215,9 +215,9 @@ export default {
               tip: '3-5 uppercase character.',
             },
             init_fund: {
+              label: 'Initial token',
               type: 'number',
               default: 1,
-              max: 10000000,
             },
             detail: {
               label: 'Details',
@@ -231,11 +231,27 @@ export default {
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
+
+          
+          const amount = utils.layer1.amountToBalance(form.init_fund)
+          let estimate = await request.layer1_rpc('bounding_estimateTeaRequiredToBuyGivenToken', [
+            null, amount
+          ]);
+          estimate = utils.layer1.balanceToAmount(estimate);
+
           try{
-            // console.log(111, form);
+            await this.$confirm(`You will pay <b>${estimate} TEA</b> <br/> Are you sure?`, {
+              dangerouslyUseHTMLString: true,
+            });
+          }catch(e){
+            this.$root.loading(false);
+            return false;
+          }
+
+          try{
 
             const name = stringToHex(form.tapp_name);
-            const fund = utils.toBN(utils.layer1.amountToBalance(form.init_fund));
+            const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
             const tx = api.tx.boundingCurve.createNewTapp(name, ticker, fund, stringToHex(form.detail), stringToHex(form.link));
