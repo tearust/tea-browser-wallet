@@ -202,6 +202,7 @@ export default {
         param: {
           title: 'Create new TApp',
           pallet: 'boundingCurve',
+          confirm_text: 'Next',
           tx: 'createNewTapp',
           text: '',
           props: {
