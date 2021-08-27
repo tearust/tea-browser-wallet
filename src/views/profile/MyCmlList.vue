@@ -138,7 +138,7 @@
 
         <TeaIconButton
           v-if="
-            scope.row.status!=='Staking'
+            scope.row.status==='Frozen seed'
             && scope.row.staking_slot.length<1"
           @click="pawnCmlToGB(scope)"
           tip="Deposit for loan"
