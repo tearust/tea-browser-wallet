@@ -163,4 +163,12 @@ export default {
   AddOverflow: 'AddOverflow',
   NotAllowedNormalUserCreateTApp: 'NotAllowedNormalUserCreateTApp',
   OnlyTAppOwnerAllowedToExpense: 'OnlyTAppOwnerAllowedToExpense',
+
+  HostPerformanceAndMaxAllowedHostMustBePaired: 'HostPerformanceAndMaxAllowedHostMustBePaired',
+  PerformanceValueShouldNotBeZero: 'PerformanceValueShouldNotBeZero',
+  MaxAllowedHostShouldNotBeZero: 'MaxAllowedHostShouldNotBeZero',
+  TAppNotSupportToHost: 'TAppNotSupportToHost',
+  TAppHostMachineIsFull: 'TAppHostMachineIsFull',
+  CmlMachineIsFullLoad: 'CmlMachineIsFullLoad',
+  CmlNotHostTheTApp: 'CmlNotHostTheTApp',
 };
