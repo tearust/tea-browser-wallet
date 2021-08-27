@@ -219,6 +219,15 @@ a, a:hover, a:focus, button:focus {
   span>.el-button--text{
     width: auto;
   }
+
+  .tea-icon-button{
+    padding: 0;
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+    .iconfont{
+      font-size: 15px;
+    }
+  }
 }
 
 
