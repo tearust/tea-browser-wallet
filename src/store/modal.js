@@ -41,6 +41,10 @@ const initState = ()=>{
     deposit_loan: {
       visible: false,
       param: {},
+    },
+    host_tapp: {
+      visible: false,
+      param: {},
     }
 
   };

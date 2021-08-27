@@ -23,6 +23,7 @@
     <StakingSlotModal />
     <CmlDetailsModal />
     <DepositLoanModal />
+    <HostTAppModal />
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import CommonTxModal from './views/modals/CommonTxModal';
 import StakingSlotModal from './views/modals/StakingSlotModal';
 import CmlDetailsModal from './views/modals/CmlDetailsModal';
 import DepositLoanModal from './views/modals/DepositLoanModal';
+import HostTAppModal from './views/modals/HostTAppModal';
 
 export default {
   components: {
@@ -59,6 +61,7 @@ export default {
     StakingSlotModal,
     CmlDetailsModal,
     DepositLoanModal,
+    HostTAppModal,
   }
 }
 </script>
