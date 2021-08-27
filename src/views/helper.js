@@ -25,7 +25,7 @@ const F = {
       key: 'common_tx', 
       param: {
         title: 'Buy token',
-        pallet: 'boundingCurve',
+        pallet: 'bondingCurve',
         tx: 'buyToken',
         confirm_text: 'Next',
         text: `You are buying the ${data.name}'s token ${data.token_symbol}`,
@@ -46,7 +46,7 @@ const F = {
         
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
-        let estimate = await request.layer1_rpc('bounding_estimateTeaRequiredToBuyGivenToken', [
+        let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
           id, amount
         ]);
         estimate = utils.layer1.balanceToAmount(estimate);
@@ -63,7 +63,7 @@ const F = {
       
         try{
 
-          const tx = api.tx.boundingCurve.buyToken(id, utils.toBN(amount));
+          const tx = api.tx.bondingCurve.buyToken(id, utils.toBN(amount));
           await layer1_instance.sendTx(self.layer1_account.address, tx);
 
           close();
@@ -85,7 +85,7 @@ const F = {
       param: {
         title: 'Sell token',
         confirm_text: 'Next',
-        pallet: 'boundingCurve',
+        pallet: 'bondingCurve',
         tx: 'sellToken',
         text: `You are selling the ${data.name}'s token ${data.token_symbol}`,
         props: {
@@ -104,7 +104,7 @@ const F = {
         self.$root.loading(true);
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
-        let estimate = await request.layer1_rpc('bounding_estimateReceivedTeaBySellGivenToken', [
+        let estimate = await request.layer1_rpc('bonding_estimateReceivedTeaBySellGivenToken', [
           id, amount
         ]);
         estimate = utils.layer1.balanceToAmount(estimate);
@@ -121,7 +121,7 @@ const F = {
 
         try{
 
-          const tx = api.tx.boundingCurve.sellToken(id, utils.toBN(amount));
+          const tx = api.tx.bondingCurve.sellToken(id, utils.toBN(amount));
           await layer1_instance.sendTx(self.layer1_account.address, tx);
 
           close();

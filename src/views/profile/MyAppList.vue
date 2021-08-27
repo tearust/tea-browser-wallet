@@ -124,7 +124,7 @@ export default {
     async refreshList(){
       helper.tableLoading(this, true);
 
-      const list = await request.layer1_rpc('bounding_listUserAssets', [
+      const list = await request.layer1_rpc('bonding_listUserAssets', [
         this.layer1_account.address
       ]);
 console.log(11, list);
