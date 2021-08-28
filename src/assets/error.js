@@ -161,7 +161,7 @@ export default {
   SellTeaAmountCanNotBeZero: 'Tea amount sold must be greater than 0',
   SubtractionOverflow: 'Error: subtraction overflow',
   AddOverflow: 'Error: addition overflow',
-  NotAllowedNormalUserCreateTApp: 'You don't have enough permission to creat a TApp',
+  NotAllowedNormalUserCreateTApp: 'You don\'t have enough permission to creat a TApp',
   OnlyTAppOwnerAllowedToExpense: 'Error: only TApp owner allowed to expense',
 
   HostPerformanceAndMaxAllowedHostMustBePaired: 'HostPerformanceAndMaxAllowedHostMustBePaired',
