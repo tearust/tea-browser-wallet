@@ -2,6 +2,7 @@
 import {_} from 'tearust_utils';
 import utils from '../tea/utils';
 import request from '../request';
+import { result } from 'lodash';
 
 // self means vue instance, required.
 const F = {
@@ -147,6 +148,48 @@ const F = {
         }
       }
     });
+  },
+
+  async bonding_listCandidateMiners(self, tapp_id){
+    const cml_list = await request.layer1_rpc('bonding_listCandidateMiners', []);
+    const list = await Promise.all(_.map(cml_list, async (arr)=>{
+      const item = {
+        id: arr[0],
+        current: arr[1],
+        remaining: arr[2],
+        life_day: self.wf.blockToDay(arr[3]),
+        is_on: true, //!!_.find(arr[4], (xd)=>xd===tapp_id),
+      };
+
+      return item;
+    }));
+
+    return list;
+  },
+  async unhostTApp(self, data, succ_cb){
+    const tapp_id = data.tapp_id;
+    const cml_id = data.cml_id;
+
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    try{
+      await self.$confirm(`Your CML ${cml_id} will no longer host this TApp, continue?`, 'Unhost');
+    }catch(e){
+      self.$root.loading(false);
+    }
+
+    self.$root.loading(true);
+    try{
+      const tx = api.tx.bondingCurve.unhost(cml_id, tapp_id);
+      await layer1_instance.sendTx(self.layer1_account.address, tx);
+
+      await succ_cb();
+
+    }catch(e){
+      self.$root.showError(e);
+    }
+    self.$root.loading(false);
   }
 };
 

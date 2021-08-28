@@ -149,8 +149,8 @@ export default {
           token_symbol: utils.rpcArrayToString(arr[2]),
 
           total_supply: utils.layer1.balanceToAmount(arr[3]),
-          buy_price: utils.layer1.toRealBalance(arr[4]),
-          sell_price: utils.layer1.toRealBalance(arr[5]),
+          buy_price: utils.layer1.balanceToAmount(arr[4]),
+          sell_price: utils.layer1.balanceToAmount(arr[5]),
           owner: arr[6],
           detail: utils.rpcArrayToString(arr[7]),
           link: utils.rpcArrayToString(arr[8]),

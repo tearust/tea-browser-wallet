@@ -29,7 +29,7 @@
     <el-table-column
       prop="owner"
       label="Owner"
-      width="200"
+      width="100"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.owner" placement="right">
@@ -146,7 +146,7 @@ console.log(11, list);
           token_symbol: utils.rpcArrayToString(arr[2]),
 
           amount: utils.layer1.balanceToAmount(arr[3]),
-          sell_price: utils.layer1.toRealBalance(arr[4]),
+          sell_price: utils.layer1.balanceToAmount(arr[4]),
           owner: arr[5],
           detail: utils.rpcArrayToString(arr[6]),
           link: utils.rpcArrayToString(arr[7]),

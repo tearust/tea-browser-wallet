@@ -143,25 +143,72 @@
       
     </el-table>
 
+    <el-divider />
+
+    <h4>TApps list</h4>
+    <el-table 
+      :data="tapp_list || []"
+      stripe
+      class="tea-table"
+      size="small"
+      border
+    >
+      <el-table-column
+        label="TApp ID"
+        prop="id"
+      />
+      
+      <el-table-column
+        label="Actions"
+        width="200">
+        <template slot-scope="scope">
+
+          <TeaIconButton 
+            style="position:relative;top:1px;" 
+            :disabled="!cml || !layer1_account || cml.owner !== layer1_account.address" 
+            tip="Hosting this TApp now. Unhost?" 
+            icon="upload" 
+            icon_style="font-size:20px;" 
+            @click="unhostApp(scope)" 
+          />
+          
+        </template>
+      </el-table-column>
+      
+      
+    </el-table>
 
 
 
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import store from '../store/index';
 import utils from '../tea/utils';
 import Base from '../workflow/Base';
 import {hexToString} from 'tearust_layer1';
 import {_} from 'tearust_utils';
+import helper from './helper';
+import TeaIconButton from '../components/TeaIconButton';
+
 export default {
+  components: {
+    TeaIconButton,
+  },
   data(){
     return {
       cml: null,
       id: null,
       is_staking: false,
+
+      tapp_list: null,
     };
+  },
+  computed: {
+    ...mapGetters([
+      'layer1_account'
+    ]),
   },
   async mounted(){
     this.id = this.$route.params.id;
@@ -177,6 +224,7 @@ export default {
 
   methods: {
     async refresh(){
+      this.$root.loading(true);
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
       const cml_data = await this.wf.getCmlByList([this.id]);
@@ -187,6 +235,18 @@ export default {
         return item;
       }));
       this.is_staking = this.cml.status === 'Staking';
+
+
+      const app_list = (await api.query.bondingCurve.cmlHostingTApps(this.cml.id)).toJSON();
+      this.tapp_list = await Promise.all(_.map(app_list), async (tapp_id)=>{
+        const item = {
+          id: tapp_id
+        };
+
+        return item;
+      });
+
+      this.$root.loading(false);
     },
     async showMinerInfo(miner_id){
       const layer1_instance = this.wf.getLayer1Instance();
@@ -210,10 +270,20 @@ export default {
       this.$root.goPath('/cml_details/'+cml_id, 'replace');
       this.id = cml_id
 
-      this.$root.loading(true);
       await this.refresh();
-      this.$root.loading(false);
-    }
+    },
+
+    async unhostApp(scope){
+      const tapp_id = scope.id;
+      const cml_id = this.cml.id
+
+      helper.unhostTApp(this, {
+        tapp_id, cml_id,
+      }, async ()=>{
+        
+        await this.refresh();
+      });
+    },
   }
 }
 </script>

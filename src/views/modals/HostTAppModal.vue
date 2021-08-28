@@ -50,9 +50,9 @@
         width="200">
         <template slot-scope="scope">
 
-          <span v-if="!scope.row.is_on"><el-button type="text" @click="hostApp(scope)">Host</el-button></span>
-          
-          <span v-if="scope.row.is_on">Hosting this TApp now. <el-button type="text" @click="unhostApp(scope)">Unhost?</el-button></span>
+          <TeaIconButton :disabled="scope.row.is_on" tip="Host" icon="download" icon_style="font-size:20px;" @click="hostApp(scope)" />
+
+          <TeaIconButton style="position:relative;top:1px;" :disabled="!scope.row.is_on" tip="Hosting this TApp now. Unhost?" icon="upload" icon_style="font-size:20px;" @click="unhostApp(scope)" />
           
         </template>
       </el-table-column>
@@ -78,8 +78,13 @@ import utils from '../../tea/utils';
 import Base from '../../workflow/Base';
 import {_} from 'tearust_utils';
 import request from '../../request';
+import TeaIconButton from '../../components/TeaIconButton';
+import helper from '../helper';
 
 export default {
+  components: {
+    TeaIconButton
+  },
   data(){
     return {
       cml_list: null,
@@ -100,18 +105,7 @@ export default {
     async init_cml_list(){
       const tapp_id = this.param.tapp.id;
 
-      const cml_list = await request.layer1_rpc('bounding_listCandidateMiners', []);
-      this.cml_list = await Promise.all(_.map(cml_list, async (arr)=>{
-        const item = {
-          id: arr[0],
-          current: arr[1],
-          remaining: arr[2],
-          life_day: this.wf.blockToDay(arr[3]),
-          is_on: !!_.find(arr[4], (xd)=>xd===tapp_id),
-        };
-
-        return item;
-      }));
+      this.cml_list = await helper.bonding_listCandidateMiners(this, tapp_id);
 
       console.log(111, this.cml_list);
 
@@ -138,15 +132,11 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const sig = await layer1_instance.signWithExtension(this.layer1_account.address, 'aaa');
-      console.log(111, sig);
-      return;
-
       const cb = utils.mem.get('host_tapp');
 
       this.$root.loading(true);
       try{
-        const tx = api.tx.boundingCurve.host(cml_id, tapp_id);
+        const tx = api.tx.bondingCurve.host(cml_id, tapp_id);
         await layer1_instance.sendTx(this.layer1_account.address, tx);
 
         if(cb){
@@ -164,31 +154,15 @@ export default {
       const tapp_id = this.param.tapp.id;
       const cml_id = scope.row.id;
 
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-
       const cb = utils.mem.get('host_tapp');
-
-      this.$root.loading(true);
-      try{
-        await this.$confirm(`Your CML ${cml_id} will no longer host this TApp, continue?`, 'Unhost');
-      }catch(e){
-        this.$root.loading(false);
-      }
-
-      try{
-        const tx = api.tx.boundingCurve.unhost(cml_id, tapp_id);
-        await layer1_instance.sendTx(this.layer1_account.address, tx);
-
+      helper.unhostTApp(this, {
+        tapp_id, cml_id,
+      }, async ()=>{
         if(cb){
           await cb();
         }
         this.close();
-
-      }catch(e){
-        this.$root.showError(e);
-      }
-      this.$root.loading(false);
+      });
     },
 
     

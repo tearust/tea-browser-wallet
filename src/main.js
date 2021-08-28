@@ -49,16 +49,21 @@ new Vue({
     },
     loading(f, text = 'Loading...') {
       if (f) {
-        C._loading = Loading.service({
-          lock: true,
-          text: 'Loading...',
-          customClass: 'c-fullscreen-loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.05)'
-        });
+        if(!C._loading){
+          C._loading = Loading.service({
+            lock: true,
+            text: 'Loading...',
+            customClass: 'c-fullscreen-loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.05)'
+          });
+        }
       }
       else {
-        C._loading && C._loading.close();
+        if(C._loading){
+          C._loading.close();
+          C._loading = null;
+        }
       }
     },
     showError(e, title = 'Error message') {
