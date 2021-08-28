@@ -139,7 +139,7 @@ export default {
       this.$root.loading(true);
       await utils.sleep(1000);
 
-      const list = await request.layer1_rpc('bounding_listTApps', []);
+      const list = await request.layer1_rpc('bonding_listTApps', []);
       console.log(11, list);
 
       this.list = _.map(list, (arr)=>{
@@ -212,7 +212,7 @@ export default {
         key: 'common_tx', 
         param: {
           title: 'Create new TApp',
-          pallet: 'boundingCurve',
+          pallet: 'bondingCurve',
           confirm_text: 'Next',
           tx: 'createNewTapp',
           text: '',
@@ -254,7 +254,7 @@ export default {
 
           
           const amount = utils.layer1.amountToBalance(form.init_fund)
-          let estimate = await request.layer1_rpc('bounding_estimateTeaRequiredToBuyGivenToken', [
+          let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
             null, amount
           ]);
           estimate = utils.layer1.balanceToAmount(estimate);
@@ -274,9 +274,10 @@ export default {
             const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
-            const tx = api.tx.boundingCurve.createNewTapp(
+            const tx = api.tx.bondingCurve.createNewTapp(
               name, ticker, fund, stringToHex(form.detail), stringToHex(form.link), form.host_performance, form.max_allowed_hosts
             );
+
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 

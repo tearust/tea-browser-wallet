@@ -140,7 +140,7 @@ export default {
   RepayUSDAmountMoreThanDebtAmount: 'Pay off COFFEE more than debt.',
 
 
-  // bounding curve
+  // bonding curve
   TAppNameIsTooLong: 'TApp name is too long',
   TAppTickerIsTooLong: 'TApp ticker symbol is too long',
   TAppTickerIsTooShort: 'TApp ticker symbol is too short',
