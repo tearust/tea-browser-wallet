@@ -132,6 +132,21 @@ const F = {
         self.$root.loading(false);
       },
     });
+  },
+
+  async openHostTappModal(self, data, succ_cb){
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    self.$store.commit('modal/open', {
+      key: 'host_tapp',
+      param: {
+        tapp: data,
+        cb: async ()=>{
+          await succ_cb();
+        }
+      }
+    });
   }
 };
 

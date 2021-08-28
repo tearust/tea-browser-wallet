@@ -62,6 +62,16 @@
     />
 
     <el-table-column
+      prop="host_performance"
+      label="Host performance requirement"
+      width="120"
+    />
+    <el-table-column
+      prop="host_n"
+      label="Current/Max hosts"
+    />
+
+    <el-table-column
       label="Actions"
       width="120"
     >
@@ -69,7 +79,8 @@
         <!-- <TeaIconButton tip="View details" icon="el-icon-view" @click="showDetails(scope)" /> -->
         <TeaIconButton tip="Buy" icon="buy" @click="buyHandler(scope)" />
         <TeaIconButton tip="Sell" icon="sell" @click="sellHandler(scope)" />
-        <!-- <TeaIconButton :tip="'Visit '+scope.row.link" icon="link" @click="openTo(scope.row.link)" /> -->
+
+        <TeaIconButton tip="Host/Unhost" icon="host" @click="hostHandler(scope)" />
       </template>
     </el-table-column>
 
@@ -139,6 +150,10 @@ console.log(11, list);
           owner: arr[5],
           detail: utils.rpcArrayToString(arr[6]),
           link: utils.rpcArrayToString(arr[7]),
+
+          host_performance: arr[8],
+          host_n: `${arr[9]}/${arr[10]}`,
+          is_full: arr[9] >= arr[10],
         };
 
         return item;
@@ -176,6 +191,12 @@ console.log(11, list);
         utils.publish('refresh-current-account__account', {});
       });
     },
+
+    async hostHandler(scope){
+      await helper.openHostTappModal(this, scope.row, async ()=>{
+        await this.refreshList();
+      });
+    }
 
   }
 

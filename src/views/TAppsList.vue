@@ -29,7 +29,7 @@
     <el-table-column
       prop="owner"
       label="Owner"
-      width="200"
+      width="100"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.owner" placement="right">
@@ -52,25 +52,30 @@
     <el-table-column
       prop="total_supply"
       label="Total supply"
-      sortable
     />
 
     <el-table-column
       prop="buy_price"
       label="Buy price (TEA)"
-      sortable
     />
 
     <el-table-column
       prop="sell_price"
       label="Sell price (TEA)"
-      sortable
     />
 
     <el-table-column
       label="Market cap"
       prop="market_cap"
-      sortable
+    />
+    <el-table-column
+      prop="host_performance"
+      label="Host performance requirement"
+      width="120"
+    />
+    <el-table-column
+      prop="host_n"
+      label="Current/Max hosts"
     />
 
 
@@ -81,6 +86,8 @@
       <template slot-scope="scope">
         <TeaIconButton tip="Buy" icon="buy" @click="buyHandler(scope)" />
         <TeaIconButton tip="Sell" icon="sell" @click="sellHandler(scope)" />
+
+        <TeaIconButton tip="Host/Unhost" icon="host" @click="hostHandler(scope)" />
       </template>
     </el-table-column>
 
@@ -147,6 +154,10 @@ export default {
           owner: arr[6],
           detail: utils.rpcArrayToString(arr[7]),
           link: utils.rpcArrayToString(arr[8]),
+
+          host_performance: arr[9],
+          host_n: `${arr[10]}/${arr[11]}`,
+          is_full: arr[10] >= arr[11],
         };
         item.market_cap = item.sell_price * item.total_supply;
 
@@ -227,6 +238,14 @@ export default {
             link: {
               label: 'Link',
               type: 'Input',
+            },
+            host_performance: {
+              type: 'number',
+              default: 500
+            },
+            max_allowed_hosts: {
+              type: 'number',
+              default: 10
             }
           },
         },
@@ -255,7 +274,10 @@ export default {
             const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
-            const tx = api.tx.bondingCurve.createNewTapp(name, ticker, fund, stringToHex(form.detail), stringToHex(form.link));
+            const tx = api.tx.bondingCurve.createNewTapp(
+              name, ticker, fund, stringToHex(form.detail), stringToHex(form.link), form.host_performance, form.max_allowed_hosts
+            );
+
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 
@@ -265,6 +287,12 @@ export default {
           }
           this.$root.loading(false);
         },
+      });
+    },
+
+    async hostHandler(scope){
+      await helper.openHostTappModal(this, scope.row, async ()=>{
+        await this.refreshList();
       });
     }
   }
