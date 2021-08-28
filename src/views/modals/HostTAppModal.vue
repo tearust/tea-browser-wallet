@@ -138,6 +138,10 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
+      const sig = await layer1_instance.signWithExtension(this.layer1_account.address, 'aaa');
+      console.log(111, sig);
+      return;
+
       const cb = utils.mem.get('host_tapp');
 
       this.$root.loading(true);
