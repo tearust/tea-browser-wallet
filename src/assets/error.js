@@ -116,9 +116,9 @@ export default {
   /// We have such a close time because Genesis bank is supposed to be temporary cold-start
   /// helper. When newer Defi service tApps are ready, the Genesis Bank should be retired
   CannotApplyLoanAfterClosed: 'The Genesis bank is closed and no longer offers loans',
-  GenesisBankInsufficientFreeBalance: 'GenesisBankInsufficientFreeBalance',
-	NoNeedToRepayInterest: 'NoNeedToRepayInterest',
-	RepayAmountCanNotBeZero: 'RepayAmountCanNotBeZero',
+  GenesisBankInsufficientFreeBalance: 'The Genesis bank has insufficient free balance for this operation',
+	NoNeedToRepayInterest: 'Interest payment not needed',
+	RepayAmountCanNotBeZero: 'Repayment amount must be greater than 0',
 
   // Genesis exchange
   ExchangeInsufficientUSD: 'The exchange does not have enough USD for transaction',
@@ -157,12 +157,12 @@ export default {
   TAppInsufficientFreeBalance: 'Insufficient TApp account balance',
   OperationAmountCanNotBeZero: 'Operation amount can not be 0',
 
-  BuyTeaAmountCanNotBeZero: 'BuyTeaAmountCanNotBeZero',
-  SellTeaAmountCanNotBeZero: 'SellTeaAmountCanNotBeZero',
-  SubtractionOverflow: 'SubtractionOverflow',
-  AddOverflow: 'AddOverflow',
-  NotAllowedNormalUserCreateTApp: 'NotAllowedNormalUserCreateTApp',
-  OnlyTAppOwnerAllowedToExpense: 'OnlyTAppOwnerAllowedToExpense',
+  BuyTeaAmountCanNotBeZero: 'Tea amount bought must be greater than 0',
+  SellTeaAmountCanNotBeZero: 'Tea amount sold must be greater than 0',
+  SubtractionOverflow: 'Error: subtraction overflow',
+  AddOverflow: 'Error: addition overflow',
+  NotAllowedNormalUserCreateTApp: 'You don't have enough permission to creat a TApp',
+  OnlyTAppOwnerAllowedToExpense: 'Error: only TApp owner allowed to expense',
 
   HostPerformanceAndMaxAllowedHostMustBePaired: 'HostPerformanceAndMaxAllowedHostMustBePaired',
   PerformanceValueShouldNotBeZero: 'PerformanceValueShouldNotBeZero',
