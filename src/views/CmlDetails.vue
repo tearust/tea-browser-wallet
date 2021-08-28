@@ -191,6 +191,7 @@ import {hexToString} from 'tearust_layer1';
 import {_} from 'tearust_utils';
 import helper from './helper';
 import TeaIconButton from '../components/TeaIconButton';
+import request from '../request';
 
 export default {
   components: {
@@ -238,13 +239,16 @@ export default {
 
 
       const app_list = (await api.query.bondingCurve.cmlHostingTApps(this.cml.id)).toJSON();
-      this.tapp_list = await Promise.all(_.map(app_list), async (tapp_id)=>{
+      this.tapp_list = await Promise.all(_.map(app_list, async (tapp_id)=>{
         const item = {
           id: tapp_id
         };
 
+        // const tmp = await request.layer1_rpc('bonding_tappDetails', [tapp_id]);
+        // console.log(3, tmp);
+
         return item;
-      });
+      }));
 
       this.$root.loading(false);
     },
@@ -274,7 +278,7 @@ export default {
     },
 
     async unhostApp(scope){
-      const tapp_id = scope.id;
+      const tapp_id = scope.row.id;
       const cml_id = this.cml.id
 
       helper.unhostTApp(this, {

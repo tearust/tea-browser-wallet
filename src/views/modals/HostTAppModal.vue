@@ -139,10 +139,12 @@ export default {
         const tx = api.tx.bondingCurve.host(cml_id, tapp_id);
         await layer1_instance.sendTx(this.layer1_account.address, tx);
 
+        
+        this.close();
+
         if(cb){
           await cb();
         }
-        this.close();
 
       }catch(e){
         this.$root.showError(e);
@@ -158,10 +160,11 @@ export default {
       helper.unhostTApp(this, {
         tapp_id, cml_id,
       }, async ()=>{
+        
+        this.close();
         if(cb){
           await cb();
         }
-        this.close();
       });
     },
 

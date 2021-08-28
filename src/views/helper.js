@@ -143,22 +143,25 @@ const F = {
       key: 'host_tapp',
       param: {
         tapp: data,
-        cb: async ()=>{
-          await succ_cb();
-        }
+        
+      },
+      cb: async ()=>{
+        await succ_cb();
       }
     });
   },
 
   async bonding_listCandidateMiners(self, tapp_id){
-    const cml_list = await request.layer1_rpc('bonding_listCandidateMiners', []);
+    const cml_list = await request.layer1_rpc('bonding_listCandidateMiners', [
+      self.layer1_account.address,
+    ]);
     const list = await Promise.all(_.map(cml_list, async (arr)=>{
       const item = {
         id: arr[0],
         current: arr[1],
         remaining: arr[2],
         life_day: self.wf.blockToDay(arr[3]),
-        is_on: true, //!!_.find(arr[4], (xd)=>xd===tapp_id),
+        is_on: !!_.find(arr[4], (xd)=>xd===tapp_id),
       };
 
       return item;
