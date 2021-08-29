@@ -74,6 +74,14 @@
     </el-table-column>
 
     <el-table-column
+      label="CML ID"
+    >
+      <template slot-scope="scope">
+        {{scope.row.cmlId}}
+      </template>
+    </el-table-column>
+
+    <el-table-column
       label="Auction ID"
     >
       <template slot-scope="scope">
@@ -87,10 +95,10 @@
     </el-table-column>
 
     <el-table-column
-      label="CML ID"
+      label="TApp ID"
     >
       <template slot-scope="scope">
-        {{scope.row.cmlId}}
+        {{scope.row.tappId}}
       </template>
     </el-table-column>
 
@@ -196,19 +204,27 @@ export default {
       });
     },
     async viewLogDetails(scope){
-      const param = {};
+      let param = {};
 
-      let arr = null;
-      try{
-        let str = scope.row.args.replace(/\{/g, '[').replace(/\}/g, ']');
-        arr = JSON.parse(str);
-      }catch(e){
-        arr = [];
+      if(scope.row.json && _.size(scope.row.json)>2){
+        const json = JSON.parse(scope.row.json);
+        param = json;
+      }
+      else{
+        let arr = null;
+        try{
+          let str = scope.row.args.replace(/\{/g, '[').replace(/\}/g, ']');
+          arr = JSON.parse(str);
+        }catch(e){
+          arr = [];
+        }
+
+        _.each(arr, (val, i)=>{
+          _.set(param, i+1, val);
+        });
       }
 
-      _.each(arr, (val, i)=>{
-        _.set(param, i+1, val);
-      });
+      
       param.title = 'Log details';
       this.$store.commit('modal/open', {
         key: 'data_details',

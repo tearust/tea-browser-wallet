@@ -89,6 +89,8 @@ query {
       cmlId
       price
       amount
+      tappId
+      json
     }
   }
 }

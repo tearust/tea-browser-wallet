@@ -28,10 +28,19 @@
       size="small"
       border
     >
+      
       <el-table-column
         prop="id"
         label="CML ID"
-      />
+      >
+        <template slot-scope="scope">
+          <el-button type="text" @click="
+            close();
+            $router.push('/cml_details/'+scope.row.id);
+          ">{{scope.row.id}}</el-button>
+        </template>
+      </el-table-column>
+
       <el-table-column
         prop="current"
         label="Current performance"
