@@ -416,6 +416,7 @@ export default class {
       cml.life_day = this.blockToDay(remaining);
 
       const ttp = await request.layer1_rpc('cml_cmlPerformance', [_.toNumber(cml_id)]);
+      // console.log(111, ttp);
       const performance = (ttp[0]||0)+'/'+ttp[1];
 
       cml.staking_slot = _.map(cml.staking_slot, (item) => {

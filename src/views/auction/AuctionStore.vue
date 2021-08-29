@@ -111,6 +111,7 @@ import {_} from 'tearust_utils';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import Auction from '../../workflow/Auction';
+import request from '../../request';
 export default {
   data(){
     return {};
@@ -147,19 +148,16 @@ export default {
       this.$root.loading(false);
     },
 
-    calculateBidMinPrice(api, row){
+    async calculateBidMinPrice(api, row){
+      // let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
 
-      let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
-      let min_price = row.starting_price.add(step);
-
-      if(row.bid_user){
-        min_price = row.bid_price.add(step);
-      }
-
+      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.id]);
+      let min_price = utils.toBN(rs[0]);
       if(row.for_current){
         min_price = min_price.sub(row.for_current.price);
       }
-
+      console.log('min-price => ', min_price.toString());
+      
       return min_price;
     },
 
@@ -167,7 +165,7 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const min_price = this.calculateBidMinPrice(api, scope.row);
+      const min_price = await this.calculateBidMinPrice(api, scope.row);
 
       if(min_price.lt(utils.toBN(0))){
         this.$root.showError('This auction is completed');

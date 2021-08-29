@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "npm run dapp",
-    "dapp": "vue-cli-service serve --mode test",
-    "local": "vue-cli-service serve --mode dapp",
+    "start": "npm run local",
+    "local": "vue-cli-service serve --mode test",
+    "local:testnet": "vue-cli-service serve --mode stage",
     "build": "vue-cli-service build --mode prod",
     "testnet": "vue-cli-service build --mode stage",
     "test": "jest",

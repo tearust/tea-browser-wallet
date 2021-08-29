@@ -80,6 +80,8 @@ import {_} from 'tearust_utils';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import Auction from '../../workflow/Auction';
+import request from '../../request';
+
 export default {
   data(){
     return {};
@@ -117,15 +119,12 @@ export default {
     },
 
     async calculateBidMinPrice(api, row){
-      let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
-      let min_price = utils.toBN(0);
+      // let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
 
-      let bid_item = await api.query.auction.bidStore(row.auction.bid_user, row.auction_id);
-
-      if(bid_item){
-        bid_item = bid_item.toJSON();
-        min_price = utils.toBN(bid_item.price).sub(row.price).add(step);
-      }
+      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.auction_id]);
+      let min_price = utils.toBN(rs[0]);
+      min_price = min_price.sub(row.price);
+      console.log('min-price => ', min_price.toString());
 
       return min_price;
     },
@@ -188,12 +187,18 @@ export default {
       });
     },
     async deleteBid(scope){
+      let is_highest = false;
       if(scope.row.auction.bid_user === this.layer1_account.address){
-        this.$root.showError('You can\'t delete this bid until someone bids higher.');
-        return;
+        // this.$root.showError('You can\'t delete this bid until someone bids higher.');
+        // return;
+        is_highest = true;
       }
 
-      const x = await this.$confirm("Are you sure to delete this bid?", "Delete bid").catch(()=>{});
+      let title = 'Are you sure to delete this bid?';
+      if(is_highest){
+        title = 'You need to pay penalty due to you are the highest bider, Are you sure?';
+      }
+      const x = await this.$confirm(title, "Delete bid").catch(()=>{});
       if(!x) return;
 
       const layer1_instance = this.wf.getLayer1Instance();

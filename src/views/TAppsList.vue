@@ -159,7 +159,7 @@ export default {
           host_n: `${arr[10]}/${arr[11]}`,
           is_full: arr[10] >= arr[11],
         };
-        item.market_cap = item.sell_price * item.total_supply;
+        item.market_cap = utils.layer1.roundAmount(item.sell_price * item.total_supply);
 
         return item;
       });
