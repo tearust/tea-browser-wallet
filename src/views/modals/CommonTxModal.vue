@@ -48,6 +48,7 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex';
+import Vue from 'vue';
 import store from '../../store/index';
 import utils from '../../tea/utils';
 import Base from '../../workflow/Base';
@@ -119,7 +120,7 @@ export default {
         const n = item.name;
         labels[n] = utils.form.nameToLabel(n);
         form[n] = '';
-
+        
         let type = item.type;
         
         types[n] = 'Input';
@@ -130,6 +131,9 @@ export default {
 
           if(props[n].default){
             form[n] = props[n].default;
+          }
+          else if(types[n] === 'number'){
+            form[n] = undefined;
           }
 
           if(props[n].label){
@@ -180,7 +184,8 @@ export default {
         });
       }
 
-    }
+    },
+    
   }
 }
 </script>

@@ -9,12 +9,12 @@
     @close="close()"
   >
 
-    <el-form :model="form" label-width="120px">
-      <el-form-item label="CML Id">
+    <el-form ref="tx_form" :model="form" :rules="rules" label-width="120px">
+      <el-form-item label="CML Id" prop="cml_id">
         <el-input v-model="form.cml_id"></el-input>
       </el-form-item>
       <el-form-item label="Starting price">
-        <el-input-number v-model="form.starting_price" :min="0" :max="500000"></el-input-number>
+        <el-input-number v-model="form.starting_price" :min="1" :max="500000"></el-input-number>
       </el-form-item>
       <el-form-item label="Buy now price">
         <el-input-number v-model="form.buy_now_price" :min="0" :max="1000000"></el-input-number>
@@ -41,10 +41,13 @@ export default {
   data(){
     return {
       form: {
-        starting_price: null,
-        buy_now_price: null,
+        starting_price: 1,
+        buy_now_price: undefined,
         cml_id: null,
         auto_renew: false,
+      },
+      rules: {
+        cml_id: [{required: true}],
       }
     };
   },
@@ -65,7 +68,10 @@ export default {
         auto_renew: false,
       };
     },
-    confrim(){
+    async confrim(){
+      const ref = this.$refs['tx_form'];
+      await ref.validate();
+
       const cb = utils.mem.get('put_to_auction_store');
       if(cb){
         cb(this.form, this.close);

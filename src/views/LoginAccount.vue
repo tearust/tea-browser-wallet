@@ -437,7 +437,7 @@ export default {
               max: this.layer1_account.balance,
               min: 0,
               step: 0.1,
-              default: 0,
+              default: 1,
             }
           },
         },
