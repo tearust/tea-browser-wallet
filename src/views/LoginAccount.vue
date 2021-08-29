@@ -495,7 +495,7 @@ export default {
               max: this.layer1_account.usd,
               min: 0,
               step: 0.1,
-              default: 0,
+              default: 1,
             }
           },
         },
