@@ -165,8 +165,8 @@ export default {
   OnlyTAppOwnerAllowedToExpense: 'Error: only TApp owner allowed to expense',
 
   HostPerformanceAndMaxAllowedHostMustBePaired: 'Host performance and Max allowed hosts should both have a value if both aren\'t 0',
-  PerformanceValueShouldNotBeZero: 'Performance value shouldnot be 0',
-  MaxAllowedHostShouldNotBeZero: 'Max allowed hosts should not be 0',
+  PerformanceValueShouldNotBeZero: 'Performance value shouldn\'t be 0',
+  MaxAllowedHostShouldNotBeZero: 'Max allowed hosts shouldn\'t be 0',
   TAppNotSupportToHost: 'This TApp no longer supports being hosted',
   TAppHostMachineIsFull: 'This TApp has reached its max desired hosts',
   CmlMachineIsFullLoad: 'CML machine is already at full load',
