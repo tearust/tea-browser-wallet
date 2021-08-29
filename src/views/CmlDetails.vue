@@ -157,6 +157,28 @@
         label="TApp ID"
         prop="id"
       />
+      <el-table-column
+        prop="name"
+        label="TApp Name"
+      >
+        <template slot-scope="scope">
+          <el-button size="small" type="text" @click="openTo(scope.row.link)">{{scope.row.name}}</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="token_symbol"
+        label="Ticker"
+        width="70"
+      />
+      <el-table-column
+        prop="host_performance"
+        label="Host performance requirement"
+        width="120"
+      />
+      <el-table-column
+        prop="host_n"
+        label="Current/Max hosts"
+      />
       
       <el-table-column
         label="Actions"
@@ -244,10 +266,22 @@ export default {
           id: tapp_id
         };
 
-        // const tmp = await request.layer1_rpc('bonding_tappDetails', [tapp_id]);
-        // console.log(3, tmp);
+        const arr = await request.layer1_rpc('bonding_tappDetails', [tapp_id]);
+        const tmp = {
+          name: utils.rpcArrayToString(arr[0]),
+          token_symbol: utils.rpcArrayToString(arr[2]),
+          owner: arr[3],
+          detail: utils.rpcArrayToString(arr[4]),
+          link: utils.rpcArrayToString(arr[5]),
+          host_performance: arr[6],
+          host_n: `${arr[7]}/${arr[8]}`,
+          is_full: arr[7] >= arr[8],
+        };
 
-        return item;
+        return {
+          ...item,
+          ...tmp,
+        };
       }));
 
       this.$root.loading(false);
@@ -288,6 +322,10 @@ export default {
         await this.refresh();
       });
     },
+    openTo(url){
+      url = utils.urlToLink(url);
+      window.open(url, '_blank');
+    }
   }
 }
 </script>

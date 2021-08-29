@@ -193,7 +193,8 @@ const F = {
       self.$root.showError(e);
     }
     self.$root.loading(false);
-  }
+  },
+
 };
 
 
