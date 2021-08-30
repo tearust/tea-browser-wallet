@@ -162,7 +162,7 @@
         label="TApp Name"
       >
         <template slot-scope="scope">
-          <el-button size="small" type="text" @click="openTo(scope.row.link)">{{scope.row.name}}</el-button>
+          <el-button size="small" type="text" @click="openTo(scope.row)">{{scope.row.name}}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -322,8 +322,10 @@ export default {
         await this.refresh();
       });
     },
-    openTo(url){
+    openTo(row){
+      let url = row.link;
       url = utils.urlToLink(url);
+      url += '&id='+row.id;
       window.open(url, '_blank');
     }
   }

@@ -437,14 +437,14 @@ export default {
               max: this.layer1_account.balance,
               min: 0,
               step: 0.1,
-              default: 1,
+              default: undefined,
             }
           },
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
 
-          const amount = form.sell_tea_amount;
+          const amount = form.sell_tea_amount || 0;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
           try{
             await this.$confirm(`Estimated amount is <b>${utils.layer1.roundAmount(this.rate.teaToUsd*amount)} COFFEE</b> for this exchange. <br/> Are you sure?`, {
@@ -495,14 +495,14 @@ export default {
               max: this.layer1_account.usd,
               min: 0,
               step: 0.1,
-              default: 1,
+              default: undefined,
             }
           },
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
 
-          const amount = form.sell_usd_amount;
+          const amount = form.sell_usd_amount || 0;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
           
           try{
