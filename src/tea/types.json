@@ -185,6 +185,7 @@
     "detail": "Bytes",
     "link": "Bytes",
     "host_performance": "Option<Performance>",
-    "max_allowed_hosts": "Option<u32>"
+    "max_allowed_hosts": "Option<u32>",
+    "current_cost": "Balance"
   }
 }

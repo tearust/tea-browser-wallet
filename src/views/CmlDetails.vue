@@ -145,7 +145,7 @@
 
     <el-divider />
 
-    <h4>TApps list</h4>
+    <h4>Hosting TApps</h4>
     <el-table 
       :data="tapp_list || []"
       stripe
@@ -156,6 +156,7 @@
       <el-table-column
         label="TApp ID"
         prop="id"
+        width="90"
       />
       <el-table-column
         prop="name"
@@ -173,7 +174,6 @@
       <el-table-column
         prop="host_performance"
         label="Host performance requirement"
-        width="120"
       />
       <el-table-column
         prop="host_n"
@@ -200,7 +200,42 @@
       
     </el-table>
 
+    <el-divider />
+    <h4>Accepted FaaS list</h4>
 
+    <el-table 
+      :data="faas_list || []"
+      stripe
+      class="tea-table"
+      size="small"
+      border
+    >
+      <el-table-column
+        label="FaaS ID"
+        prop="id"
+        width="90"
+      />
+      <el-table-column
+        prop="name"
+        label="Name"
+      />
+      <el-table-column
+        prop="detail"
+        label="Detail"
+        width="500"
+      >
+        <template slot-scope="scope">
+          <span style="word-break:break-word;">{{scope.row.detail}}</span>
+        </template>
+      
+      </el-table-column>
+      <el-table-column
+        prop="estimate"
+        label="Estimate (TEA)"
+      />
+
+    </el-table> 
+      
 
   </div>
 </template>
@@ -226,6 +261,20 @@ export default {
       is_staking: false,
 
       tapp_list: null,
+      faas_list: [
+        {
+          id: '0',
+          name: 'Remote attestation',
+          detail: 'Blockchain randomly select a CML to run remote attestation to verify other random CML\'s security',
+          estimate: ''
+        },
+        {
+          id: '1',
+          name: 'Image recognization',
+          detail: 'Give any input image, use AI to figure out what it is on the picture',
+          estimate: '300'
+        }
+      ],
     };
   },
   computed: {
@@ -259,6 +308,7 @@ export default {
       }));
       this.is_staking = this.cml.status === 'Staking';
 
+      this.faas_list[0].estimate = this.cml.slot_len;
 
       const app_list = (await api.query.bondingCurve.cmlHostingTApps(this.cml.id)).toJSON();
       this.tapp_list = await Promise.all(_.map(app_list, async (tapp_id)=>{
