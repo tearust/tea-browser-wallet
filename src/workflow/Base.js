@@ -417,7 +417,8 @@ export default class {
 
       const ttp = await request.layer1_rpc('cml_cmlPerformance', [_.toNumber(cml_id)]);
       // console.log(111, ttp);
-      const performance = (ttp[0]||0)+'/'+ttp[1];
+      const performance = (ttp[0]||0)+'/'+ttp[2];
+      const remaining_performance = ttp[1] || 0;
 
       cml.staking_slot = _.map(cml.staking_slot, (item) => {
         item.category = _.toUpper(item.category);
@@ -443,6 +444,7 @@ export default class {
         ...cml,
         ...cml.intrinsic,
         performance,
+        remaining_performance,
         machine_id: hexToString(cml.machine_id),
       };
     }));

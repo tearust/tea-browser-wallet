@@ -99,7 +99,7 @@ export default {
         account: [{ required: true }],
       },
 
-      shell: true,
+      shell: false,
     };
   },
   computed: {

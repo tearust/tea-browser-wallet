@@ -139,6 +139,11 @@
       <el-tab-pane label="My investment in TApps" name="my_app" :lazy="true">
         <MyAppList />
       </el-tab-pane>
+
+      <el-tab-pane label="My hosting TApps" name="my_hosting" :lazy="true">
+        <MyHostingAppList />
+      </el-tab-pane>
+
   
     </el-tabs>
 
@@ -160,6 +165,7 @@ import MyStakingList from './profile/MyStakingList';
 import MyAppList from './profile/MyAppList';
 import MyPawnList from './profile/MyPawnList';
 import MyCoupon from './profile/MyCoupon';
+import MyHostingAppList from './profile/MyHostingAppList';
 import PubSub from 'pubsub-js';
 import ClipboardJS from 'clipboard';
 import TeaIconButton from '../components/TeaIconButton';
@@ -171,6 +177,7 @@ export default {
     MyAppList,
     MyCoupon,
     MyPawnList,
+    MyHostingAppList,
     TeaIconButton,
   },
   data(){

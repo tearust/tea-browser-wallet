@@ -151,11 +151,11 @@ export default {
     async calculateBidMinPrice(api, row){
       // let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
 
-      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.id]);
+      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.id, this.layer1_account.address]);
       let min_price = utils.toBN(rs[0]);
-      if(row.for_current){
-        min_price = min_price.sub(row.for_current.price);
-      }
+      // if(row.for_current){
+      //   min_price = min_price.sub(row.for_current.price);
+      // }
       console.log('min-price => ', min_price.toString());
       
       return min_price;
