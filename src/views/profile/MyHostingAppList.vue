@@ -120,7 +120,8 @@ export default {
             tapp_name: utils.rpcArrayToString(arr[4]),
             tapp_ticker: utils.rpcArrayToString(arr[3]),
             tapp_detail: utils.rpcArrayToString(arr[5]),
-            host_performance: arr[6],
+            tapp_link: utils.rpcArrayToString(arr[6]),
+            host_performance: arr[7],
           };
 
           x_list.push(x_item);
@@ -131,16 +132,16 @@ export default {
         return null;
       }));
 
-      console.log(111, x_list);
+      // console.log(111, x_list);
       this.list = x_list;
 
       // await utils.sleep(3000);
       helper.tableLoading(this, false);
     },
     openTo(row){
-      let url = row.link;
+      let url = row.tapp_link;
       url = utils.urlToLink(url);
-      url += '&id='+row.id;
+      url += '&id='+row.tapp_id;
       window.open(url, '_blank');
     },
     async showDetails(scope){
