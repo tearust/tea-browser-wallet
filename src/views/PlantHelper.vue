@@ -51,6 +51,17 @@
     <div class="c-shell" v-if="shell">
       <p>run >./start_tea_node.sh</p>
     </div>
+    <p v-if="shell" style="margin-top:5px;">
+      The command above is a placeholder for the contest. <br/>
+      The Plant button below only simulates performing the mining process for you. <br/>
+      Real TEA mining will eventually require the following steps: 
+      <ol>
+        <li>Setup compatible hardware</li>
+        <li>Download the mining scripts from <a href="https://github.com/tearust/teaproject" target="_blank">https://github.com/tearust/teaproject</a></li>
+        <li>Replace some placeholders in the scripts with your own wallet address and credential keys</li>
+        <li>Run the scripts on your hardware</li>
+      </ol>
+    </p>
     <div
       v-if="shell"
       style="display: flex; justify-content: flex-end; margin-top: 10px"
@@ -88,7 +99,7 @@ export default {
         account: [{ required: true }],
       },
 
-      shell: false,
+      shell: true,
     };
   },
   computed: {
@@ -166,7 +177,7 @@ export default {
 .c-shell {
   padding: 5px 15px;
   margin-top: 20px;
-  height: 140px;
+  height: 40px;
   background: #000;
 
   p {
