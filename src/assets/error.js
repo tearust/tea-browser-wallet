@@ -56,7 +56,7 @@ export default {
   /// Cml staking index over than staking slot length, that means point to not exist staking.
   CmlStakingIndexOverflow: 'The staking slots are full, cannot take any more stakes',
   /// Cml staking item owner is none, that can't identify staking belongs.
-  CmlOwnerIsNone: 'The CML staking owner does not exist',
+  CmlOwnerIsNone: 'The CML owner does not exist',
   /// Cml staking item owner and the owner field of cml item not match.
   CmlOwnerMismatch: 'The CML staking owner does not match the recorded owner',
   /// Cml is not staking that can't unstake.
@@ -171,7 +171,6 @@ export default {
   TAppHostMachineIsFull: 'This TApp has reached its max desired hosts',
   CmlMachineIsFullLoad: 'CML machine is already at full load',
   CmlNotHostTheTApp: 'CML machine is not hosting this TApp',
-  CmlOwnerIsNone: 'Cml owner is invalid',
 	OnlyMiningCmlCanHost: 'It\'s not allowed for the CML that not start mining to host',
 	CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
 };
