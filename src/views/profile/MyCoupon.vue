@@ -265,10 +265,11 @@ export default {
       if(!x) return false;
 
       this.$root.loading(true);
-      try{
-        const layer1_instance = this.wf.getLayer1Instance();
-        const api = layer1_instance.getApi();
 
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      try{
+      
         const tx = api.tx.cml.drawCmlsFromCoupon(defrost);
 
         await layer1_instance.sendTx(this.layer1_account.address, tx);
@@ -277,7 +278,14 @@ export default {
         this.$root.success();
 
       }catch(e){
-        this.$root.showError(e);
+        if(e === 'InsufficientUSDToRedeemCoupons'){
+          const msg = `Insufficient COFFEE to redeem CML seed coupons. The amount of COFFEE needed to redeem each coupon depends on the seed class: A = ${utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON())}, B = ${utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON())}, C = ${utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON())}.`;
+          this.$root.showError(msg);
+        }
+        else{
+          this.$root.showError(e);
+        }
+        
       }
       this.$root.loading(false);
       

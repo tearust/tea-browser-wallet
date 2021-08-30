@@ -136,8 +136,16 @@ export default {
 
       this.$root.loading(true);
       try {
-        // console.log(111, this.form);
         const form = this.form;
+
+        // validate tea and coffee balance
+        if(this.layer1_account.balance <= 1000){
+          throw 'You need 1000 TEA for the first staking slot.';
+        }
+        if(this.layer1_account.usd <= form.miner_price){
+          throw 'You don\'t have '+form.miner_price+' COFFEE to pay the mining machine.';
+        }
+
         const tx = api.tx.cml.startMining(
           form.cml_id,
           form.miner_id,
