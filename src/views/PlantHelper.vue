@@ -143,7 +143,7 @@ export default {
           throw 'You need 1000 TEA for the first staking slot.';
         }
         if(this.layer1_account.usd <= form.miner_price){
-          throw 'You don\'t have '+form.miner_price+' COFFEE to pay the mining machine.';
+          throw 'You need '+form.miner_price+' COFFEE to pay for this mining machine.';
         }
 
         const tx = api.tx.cml.startMining(
