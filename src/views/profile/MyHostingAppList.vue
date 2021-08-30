@@ -72,7 +72,7 @@ import helper from '../helper';
 export default {
   components: {
     TeaTable,
-    TeaIconButton,
+    // TeaIconButton,
   },
   data(){
     return {
