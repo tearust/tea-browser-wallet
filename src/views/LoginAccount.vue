@@ -98,7 +98,7 @@
         <el-button v-if="layer1_account && layer1_account.usd_debt" @click="payOffButtonhandler()">Pay off COFFEE debt</el-button>
 
         <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest."><div style="margin-left: 10px;">
-        <el-button v-if="layer1_account" :disabled="false" @click="transferBalance()">Send</el-button>
+        <el-button v-if="layer1_account" :disabled="true" @click="transferBalance()">Send</el-button>
         </div></el-tooltip>
       </div>
 
