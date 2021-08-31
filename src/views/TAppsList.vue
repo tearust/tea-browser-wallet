@@ -210,6 +210,11 @@ export default {
         curve_option.push(tmp);
       });
 
+      const name_max_len = api.consts.bondingCurve.tAppNameMaxLength.toJSON();
+      const ticker_min_len = api.consts.bondingCurve.tAppTickerMinLength.toJSON();
+      const ticker_max_len = api.consts.bondingCurve.tAppTickerMaxLength.toJSON();
+      const detail_max_len = api.consts.bondingCurve.tAppDetailMaxLength.toJSON();
+      const link_max_len = api.consts.bondingCurve.tAppLinkMaxLength.toJSON();
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
@@ -222,11 +227,25 @@ export default {
             tapp_name: {
               type: 'Input',
               label: 'Name',
+              rules: {
+                max: name_max_len,
+                message: `Name cannot be longer than ${name_max_len} characters.`,
+              }
             },
             ticker: {
               type: 'Input',
               label: 'TApp symbol',
-              tip: '3-5 uppercase character.',
+              // tip: `${ticker_min_len}-${ticker_max_len} uppercase character.`,
+              rules: [
+                {
+                  min: ticker_min_len,
+                  message: `TApp symbol must be at least ${ticker_min_len} characters.`
+                },
+                {
+                  max: ticker_max_len,
+                  message: `TApp symbol cannot be longer than ${ticker_max_len} characters.`
+                }
+              ]
             },
             init_fund: {
               label: 'Initial token',
@@ -236,10 +255,18 @@ export default {
             detail: {
               label: 'Details',
               type: 'Input',
+              rules: {
+                max: detail_max_len,
+                message: `Details symbol cannot be longer than ${detail_max_len} characters.`,
+              }
             },
             link: {
               label: 'Link',
               type: 'Input',
+              rules: {
+                max: link_max_len,
+                message: `Link symbol cannot be longer than ${link_max_len} characters.`,
+              }
             },
             host_performance: {
               type: 'number',
