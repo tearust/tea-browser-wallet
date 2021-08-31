@@ -9,7 +9,7 @@
       The machine is not reusable if you decide to unplant your CML in the future. If you agree, {{ form.miner_price }} COFFEE will be burned from your account.
     </p>
 
-    <el-form :model="form" label-width="180px" :rules="rules" ref="form">
+    <el-form :model="form" label-width="220px" :rules="rules" ref="form">
       <el-form-item label="CML Id" prop="cml_id">
         <el-input v-model="form.cml_id"></el-input>
       </el-form-item>
@@ -22,8 +22,11 @@
         <el-input v-model="form.miner_ip"></el-input>
       </el-form-item>
 
-      <el-form-item label="Machine cost in COFFEE" prop="miner_price">
+      <el-form-item label="Machine cost in COFFEE">
         <el-input :disabled="true" v-model="form.miner_price"></el-input>
+      </el-form-item>
+      <el-form-item label="Mining stake slot 0 requires TEA">
+        <el-input :disabled="true" value="1000"></el-input>
       </el-form-item>
 
       <el-form-item label="Account" prop="account">
