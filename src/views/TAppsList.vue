@@ -156,6 +156,7 @@ export default {
           link: utils.rpcArrayToString(arr[8]),
 
           host_performance: arr[9],
+          host_current: arr[10],
           host_n: `${arr[10]}/${arr[11]}`,
           is_full: arr[10] >= arr[11],
         };
@@ -167,10 +168,7 @@ export default {
       this.$root.loading(false);
     },
     openTo(row){
-      let url = row.link;
-      url = utils.urlToLink(url);
-      url += '&id='+row.id;
-      window.open(url, '_blank');
+      helper.openToTApp(this, row);
     },
     async showDetails(scope){
       const layer1_instance = this.wf.getLayer1Instance();

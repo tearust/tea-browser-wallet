@@ -324,6 +324,7 @@ export default {
           detail: utils.rpcArrayToString(arr[4]),
           link: utils.rpcArrayToString(arr[5]),
           host_performance: arr[6],
+          host_current: arr[7],
           host_n: `${arr[7]}/${arr[8]}`,
           is_full: arr[7] >= arr[8],
         };
@@ -373,10 +374,7 @@ export default {
       });
     },
     openTo(row){
-      let url = row.link;
-      url = utils.urlToLink(url);
-      url += '&id='+row.id;
-      window.open(url, '_blank');
+      helper.openToTApp(this, row);
     }
   }
 }

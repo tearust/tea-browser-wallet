@@ -195,6 +195,18 @@ const F = {
     self.$root.loading(false);
   },
 
+  openToTApp(self, row){
+    if(row.host_current < 1){
+      self.$root.showError('This TApp has zero host at this moment. It has not been deployed yet.');
+      return;
+    }
+
+    let url = row.link;
+    url = utils.urlToLink(url);
+    url += '&id='+row.id;
+    window.open(url, '_blank');
+  }
+
 };
 
 

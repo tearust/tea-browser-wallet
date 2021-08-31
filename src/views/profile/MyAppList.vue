@@ -152,6 +152,7 @@ console.log(11, list);
           link: utils.rpcArrayToString(arr[7]),
 
           host_performance: arr[8],
+          host_current: arr[9],
           host_n: `${arr[9]}/${arr[10]}`,
           is_full: arr[9] >= arr[10],
         };
@@ -162,10 +163,7 @@ console.log(11, list);
       helper.tableLoading(this, false);
     },
     openTo(row){
-      let url = row.link;
-      url = utils.urlToLink(url);
-      url += '&id='+row.id;
-      window.open(url, '_blank');
+      helper.openToTApp(this, row);
     },
     async showDetails(scope){
       const layer1_instance = this.wf.getLayer1Instance();
