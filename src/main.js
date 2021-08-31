@@ -70,7 +70,8 @@ new Vue({
       const err = e.message || e.toString();
       const ex = _.get(layer1_error_tips, err, err);
       this.$alert(ex, title, {
-        type: 'error'
+        type: 'error',
+        dangerouslyUseHTMLString: true,
       });
     },
     success(message='', type='success'){

@@ -279,7 +279,7 @@ export default {
 
       }catch(e){
         if(e === 'InsufficientUSDToRedeemCoupons'){
-          const msg = `Insufficient COFFEE to redeem CML seed coupons. The amount of COFFEE needed to redeem each coupon depends on the seed class: A = ${utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON())}, B = ${utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON())}, C = ${utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON())}.`;
+          const msg = `Insufficient COFFEE to redeem CML seed coupons. <br/>The amount of COFFEE needed to redeem each coupon depends on the seed class: class A needs ${utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON())} COFFEE; class B needs ${utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON())} COFFEE; class C needs ${utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON())} COFFEE.`;
           this.$root.showError(msg);
         }
         else{
