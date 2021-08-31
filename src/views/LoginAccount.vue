@@ -334,7 +334,8 @@ export default {
 
     
     clickTab(tab){
-      utils.publish(tab, {});
+      // utils.publish(tab, {});
+      utils.publish('refresh-current-account__'+tab);
     },
 
     clickRefreshBtn(){

@@ -143,6 +143,10 @@ export default {
     this.wf = new SettingAccount();
     await this.wf.init();
 
+    utils.register('refresh-current-account__my_pawn', async (key, param)=>{
+      await this.refreshList();   
+    });
+
     await this.refreshList();
   },
 

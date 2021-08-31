@@ -131,6 +131,10 @@ export default {
     this.wf = new Base();
     await this.wf.init();
 
+    utils.register('refresh-current-account__my_app', async (key, param)=>{
+      await this.refreshList();   
+    });
+
     await this.refreshList();
   },
 

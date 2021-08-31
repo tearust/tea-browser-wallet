@@ -2,7 +2,6 @@
 import {_} from 'tearust_utils';
 import utils from '../tea/utils';
 import request from '../request';
-import { result } from 'lodash';
 
 // self means vue instance, required.
 const F = {
@@ -205,6 +204,33 @@ const F = {
     url = utils.urlToLink(url);
     url += '&id='+row.id;
     window.open(url, '_blank');
+  },
+
+  async getHostingReward(account_id, cml_id, tapp_id){
+    const query = `
+query {
+  hostingTappRewards (
+    first: 100,
+    filter: {
+      accountId: {equalTo: "${account_id}"},
+      cmlId: {equalTo: "${cml_id}"},
+      tappId: {equalTo: "${tapp_id}"}
+    }
+  ) {
+    nodes {
+      id
+      cmlId
+      tappId
+      accountId
+      total
+      
+    }
+  }
+}
+    `;
+
+    const rs = await request.queryGraphQL(query);
+    return rs.hostingTappRewards.nodes[0];
   }
 
 };

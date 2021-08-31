@@ -53,6 +53,15 @@
       label="Host performance requirement"
     />
 
+    <el-table-column
+      prop="total_income"
+      label="Total income (TEA)"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.total_income | balance"></span>
+      </template>
+    </el-table-column>
+
 
   </TeaTable>
 
@@ -112,7 +121,7 @@ export default {
       await Promise.all(_.map(cml_list, async (item)=>{
         const tapps = await request.layer1_rpc('bonding_listCmlHostingTapps', [item.id]);
 
-        _.map(tapps, (arr)=>{
+        await Promise.all(_.map(tapps, async (arr)=>{
           const x_item = {
             cml_id: arr[0],
             remaining: item.remaining_performance, //arr[1],
@@ -124,10 +133,12 @@ export default {
             host_performance: arr[7],
           };
 
-          x_list.push(x_item);
+          const tmp = await helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id);
+          x_item.total_income = tmp.total;
 
+          x_list.push(x_item);
           return null;
-        });
+        }));
 
         return null;
       }));
