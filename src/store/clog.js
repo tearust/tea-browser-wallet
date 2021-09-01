@@ -72,7 +72,7 @@ export default {
           }}
           
         ]`,
-        name: `notIn: ["RewardStatements", "Transfer"]`,
+        name: `notIn: ["RewardStatements", "Transfer", "TAppExpense"]`,
         type: `in: ["tx", "event"]`
       });
 
