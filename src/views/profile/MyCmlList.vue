@@ -55,10 +55,9 @@
     />
 
     <el-table-column
-      prop="defrost_schedule"
-      label="Defrost schedule"
-      sortable
-      width="130"
+      prop="remaining_performance"
+      label="Remaining performance"
+      width="110"
     />
 
     <el-table-column
