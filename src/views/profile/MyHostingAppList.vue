@@ -6,23 +6,11 @@
     v-loading="table_loading"
     name="my_hosting_tapps_list_table"
   >
-    <el-table-column
-      prop="cml_id"
-      width="80"
-      label="CML ID"
-    >
-      <template slot-scope="scope">
-        <el-button type="text" @click="$router.push('/cml_details/'+scope.row.cml_id)">{{scope.row.cml_id}}</el-button>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      prop="remaining"
-      label="Remaining performance"
-    />
+    
     <el-table-column
       prop="tapp_id"
-      width="70"
+      width="90"
+      sortable
       label="TApp ID"
     >
       <template slot-scope="scope">
@@ -46,11 +34,25 @@
       </template>
     </el-table-column>
 
-
-  
     <el-table-column
       prop="host_performance"
       label="Host performance requirement"
+    />
+
+    <el-table-column
+      prop="cml_id"
+      width="100"
+      sortable
+      label="CML ID"
+    >
+      <template slot-scope="scope">
+        <el-button type="text" @click="$router.push('/cml_details/'+scope.row.cml_id)">{{scope.row.cml_id}}</el-button>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="remaining"
+      label="Remaining performance"
     />
 
     <el-table-column
@@ -59,6 +61,22 @@
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.total_income | balance"></span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      label="Actions"
+      width="200">
+      <template slot-scope="scope">
+
+        <TeaIconButton 
+          style="position:relative;top:1px;" 
+          tip="Hosting this TApp now. Unhost?" 
+          icon="upload" 
+          icon_style="font-size:20px;" 
+          @click="unhostApp(scope)" 
+        />
+        
       </template>
     </el-table-column>
 
@@ -81,7 +99,7 @@ import helper from '../helper';
 export default {
   components: {
     TeaTable,
-    // TeaIconButton,
+    TeaIconButton,
   },
   data(){
     return {
@@ -169,6 +187,18 @@ export default {
         },
       });
     },
+
+    async unhostApp(scope){
+      const tapp_id = scope.row.tapp_id;
+      const cml_id = scope.row.cml_id;
+
+      helper.unhostTApp(this, {
+        tapp_id, cml_id,
+      }, async ()=>{
+        
+        await this.refreshList();
+      });
+    }
     
 
   }
