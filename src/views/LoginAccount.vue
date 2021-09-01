@@ -31,7 +31,7 @@
         <b>
           {{'My TEA debt'}}
           <TeaIconButton style="position:relative;" place="right" tip="
-            Prime / Interest / Total
+            Principle / Interest / Total
           " icon="questionmark" />
         </b>
         <span :inner-html.prop="
@@ -111,7 +111,7 @@
 
   </div>
   <div class="t-major-financial" v-if="loan_amount && loan_rate" :inner-html.prop="
-    'Genesis loan prime is <b>' + (loan_amount) + '</b> <span>|</span>'+
+    'Genesis loan principle is <b>' + (loan_amount) + '</b> <span>|</span>'+
     'Genesis loan interest rate is <b>'+loan_rate + '</b> <span>|</span>'+
     'Coffee interest rate is <b>'+usd_interest_rate+'</b>'
   ">
