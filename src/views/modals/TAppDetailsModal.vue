@@ -14,7 +14,7 @@
 
     <div class="tea-modal-card" v-if="!loading" style="margin: 0 -20px; display:block;">
       <!-- <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">{{tapp.name}}</h4> -->
-      <el-row class="x-list">
+      <el-row class="x-list" style="flex-direction: row;">
         <el-col :span="12" style="padding-right: 10px;">
           <div class="x-item">
             <b>Ticker :</b>
@@ -37,7 +37,7 @@
             <span>{{tapp.host_performance}}</span>
           </div>
           <div class="x-item">
-            <b>Hosting status :</b>
+            <b>Current/Max hosts:</b>
             <span>{{tapp.host_n}}</span>
           </div>
         </el-col>
