@@ -9,17 +9,21 @@
       The machine is not reusable if you decide to unplant your CML in the future. If you agree, {{ form.miner_price }} COFFEE will be burned from your account.
     </p>
 
-    <el-form :model="form" label-width="220px" :rules="rules" ref="form">
+    <el-form :model="form" label-width="220px" :rules="rules" ref="form" class="tea-modal">
       <el-form-item label="CML Id" prop="cml_id">
         <el-input v-model="form.cml_id"></el-input>
       </el-form-item>
 
       <el-form-item label="Miner Id" prop="miner_id">
         <el-input v-model="form.miner_id"></el-input>
+
+        <TeaIconButton icon_style="font-size:18px;" tip="A name for your mining machine (must be unique)" icon="questionmark" />
       </el-form-item>
 
-      <el-form-item label="Miner Ip" prop="miner_ip">
+      <el-form-item label="Miner IP" prop="miner_ip">
         <el-input v-model="form.miner_ip"></el-input>
+
+        <TeaIconButton icon_style="font-size:18px;" tip="The IP address of your mining machine (can be anything - not checked during contest)" icon="questionmark" />
       </el-form-item>
 
       <el-form-item label="Machine cost in COFFEE">
@@ -85,7 +89,11 @@ import Base from "../workflow/Base";
 import { _ } from "tearust_utils";
 import utils from "../tea/utils";
 import { mapGetters } from "vuex";
+import TeaIconButton from '../components/TeaIconButton';
 export default {
+  components: {
+    TeaIconButton,
+  },
   data() {
     return {
       form: {
