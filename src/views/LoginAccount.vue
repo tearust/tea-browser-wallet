@@ -571,6 +571,7 @@ export default {
             amount: {
               type: 'number',
               label: 'Amount (COFFEE)',
+              remove_required_rule: true,
             }
             
           },
@@ -578,6 +579,10 @@ export default {
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
+
+            if(!form.amount){
+              throw 'Amount (COFFEE) is required.';
+            }
 
             const amount = utils.toBN(utils.layer1.amountToBalance(form.amount));
 

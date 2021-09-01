@@ -146,7 +146,10 @@ export default {
           rules[n] = [];
         }
         else{
-          rules[n] = [{required: true, message: `${labels[n]} is required.`}];
+          rules[n] = [{required: true, message: `${labels[n]} is required.`,}];
+          if(props[n].remove_required_rule){
+            rules[n] = [];
+          }
           if(props[n].rules){
             rules[n] = _.concat(props[n].rules, rules[n]);
           }
@@ -184,7 +187,7 @@ export default {
         });
       }
 
-    },
+    }
     
   }
 }

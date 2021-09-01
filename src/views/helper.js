@@ -38,12 +38,18 @@ const F = {
             label: 'Amount token',
             type: 'number',
             max: 100000000,
+            remove_required_rule: true,
           }
         },
       },
       cb: async (form, close)=>{
+        if(!form.tapp_amount){
+          self.$root.showError('Amount token is required.');
+          return;
+        }
+
         self.$root.loading(true);
-        
+  
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
         let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
@@ -94,14 +100,20 @@ const F = {
             default: data.id,
           },
           tapp_amount: {
-            label: 'Amount',
+            label: 'Amount token',
             type: 'number',
             max: 100000000,
+            remove_required_rule: true
           }
         },
       },
       cb: async (form, close)=>{
+        if(!form.tapp_amount){
+          self.$root.showError('Amount token is required.');
+          return;
+        }
         self.$root.loading(true);
+
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
         let estimate = await request.layer1_rpc('bonding_estimateReceivedTeaBySellGivenToken', [
