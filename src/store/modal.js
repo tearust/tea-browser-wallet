@@ -45,6 +45,10 @@ const initState = ()=>{
     host_tapp: {
       visible: false,
       param: {},
+    },
+    tapp_details: {
+      visible: false,
+      param: {},
     }
 
   };

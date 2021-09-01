@@ -174,18 +174,7 @@ export default {
       window.open(url, '_blank');
     },
     async showDetails(scope){
-
-      const data = _.clone(scope.row);
-      delete data.cml_id;
-      delete data.remaining;
-      
-      this.$store.commit('modal/open', {
-        key: 'data_details',
-        param: {
-          ...data,
-          title: 'TApp details',
-        },
-      });
+      helper.showTAppDetails(this, scope.row.tapp_id);
     },
 
     async unhostApp(scope){

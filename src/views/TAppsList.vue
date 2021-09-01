@@ -175,18 +175,7 @@ export default {
       helper.openToTApp(this, row);
     },
     async showDetails(scope){
-      const layer1_instance = this.wf.getLayer1Instance();
-      const api = layer1_instance.getApi();
-
-      const data = _.clone(scope.row);
-      
-      this.$store.commit('modal/open', {
-        key: 'data_details',
-        param: {
-          ...data,
-          title: 'TApp details',
-        },
-      });
+      helper.showTAppDetails(this, scope.row.id);
     },
     async buyHandler(scope){
       await helper.tapps_buyToken(this, scope.row, async ()=>{

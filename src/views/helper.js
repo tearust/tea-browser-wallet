@@ -243,6 +243,15 @@ query {
 
     const rs = await request.queryGraphQL(query);
     return rs.hostingTappRewards.nodes[0];
+  },
+
+  async showTAppDetails(self, tapp_id,){
+    self.$store.commit('modal/open', {
+      key: 'tapp_details',
+      param: {
+        id: tapp_id,
+      },
+    });
   }
 
 };
