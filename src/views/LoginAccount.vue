@@ -597,6 +597,13 @@ export default {
           }
           this.$root.loading(false);
         },
+        open_cb: async(opts)=>{
+          const borrow_rate = await request.layer1_rpc('cml_usdBorrowedRatio', [this.layer1_account.address]);
+          console.log(111, borrow_rate);
+          if(borrow_rate){
+            opts.text += `<br/>Debt ratio is <b>${borrow_rate}</b>`;
+          }
+        }
       });
     },
     async payOffButtonhandler(){

@@ -140,7 +140,9 @@ export default {
   RepayUSDAmountShouldNotBeZero: 'Amount repaid should not be 0.',
   RepayUSDAmountMoreThanDebtAmount: 'Can\'t repay more than you owe.',
   // InsufficientUSDToRedeemCoupons: 'Insufficient COFFEE to redeem coupons.',
-
+  BorrowedDebtAmountHasOverThanMaxAllowed: 'BorrowedDebtAmountHasOverThanMaxAllowed',
+  UsdDebtReferenceAssetAmountIsLowerThanBorrowAllowance: 'UsdDebtReferenceAssetAmountIsLowerThanBorrowAllowance',
+  InitialBorrowAmountShouldLessThanBorrowAllowance: 'InitialBorrowAmountShouldLessThanBorrowAllowance',
 
   // bonding curve
   TAppNameIsTooLong: 'TApp name is too long',
@@ -176,5 +178,5 @@ export default {
 	OnlyMiningCmlCanHost: 'It\'s not allowed for the CML that not start mining to host',
   CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
   NoHostingToDistributeMiner: 'Distribution not needed: there are no miners hosting this TApp',
-  ConsumeNoteIsTooLong: 'Consume note is too long.'
+  ConsumeNoteIsTooLong: 'Consume note is too long.',
 };

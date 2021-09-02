@@ -110,6 +110,7 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       let tmp = await request.layer1_rpc('cml_userAssetList', []);
+      console.log(11, tmp);
       tmp = _.filter(tmp, (arr)=>{
         return arr[0] !== utils.consts.SUDO_ACCOUNT;
       });
