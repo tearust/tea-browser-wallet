@@ -174,5 +174,7 @@ export default {
   CmlMachineIsFullLoad: 'CML machine is already at full load',
   CmlNotHostTheTApp: 'CML machine is not hosting this TApp',
 	OnlyMiningCmlCanHost: 'It\'s not allowed for the CML that not start mining to host',
-	CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
+  CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
+  NoHostingToDistributeMiner: 'Distribution not needed: there are no miners hosting this TApp',
+  ConsumeNoteIsTooLong: 'Consume note is too long.'
 };
