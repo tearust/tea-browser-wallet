@@ -561,6 +561,8 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
+      let max_borrow = null;
+
       this.$store.commit('modal/open', {
         key: 'common_tx', 
         param: {
@@ -585,6 +587,10 @@ export default {
               throw 'Amount (COFFEE) is required.';
             }
 
+            if(max_borrow && form.amount > max_borrow){
+              throw `You can only borrow <b>${max_borrow} COFFEE</b> at most.`;
+            }
+
             const amount = utils.toBN(utils.layer1.amountToBalance(form.amount));
 
             const tx = api.tx.genesisExchange.borrowUsd(amount);
@@ -598,11 +604,10 @@ export default {
           this.$root.loading(false);
         },
         open_cb: async(opts)=>{
-          const borrow_rate = await request.layer1_rpc('cml_usdBorrowedRatio', [this.layer1_account.address]);
-          console.log(111, borrow_rate);
-          if(borrow_rate){
-            opts.text += `<br/>Debt ratio is <b>${borrow_rate}</b>`;
-          }
+          const borrow_rate = await request.layer1_rpc('cml_userBorrowingUsdMargin', [this.layer1_account.address]);
+          max_borrow = utils.layer1.balanceToAmount(borrow_rate);
+          opts.text += `<br/>You can only borrow <b>${max_borrow} COFFEE</b> at most.`;
+
         }
       });
     },
