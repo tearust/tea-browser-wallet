@@ -55,10 +55,9 @@
     />
 
     <el-table-column
-      prop="defrost_schedule"
-      label="Defrost schedule"
-      sortable
-      width="130"
+      prop="remaining_performance"
+      label="Remaining performance"
+      width="110"
     />
 
     <el-table-column
@@ -138,7 +137,7 @@
 
         <TeaIconButton
           v-if="
-            scope.row.status!=='Staking'
+            scope.row.status==='FrozenSeed'
             && scope.row.staking_slot.length<1"
           @click="pawnCmlToGB(scope)"
           tip="Deposit for loan"
@@ -258,7 +257,8 @@ export default {
     async clickUnplantAction(scope){
       try{
         await this.$confirm(
-          'Are you sure that you want to unplant this CML? <br/>Please notice that you need to compensate each staker 100 TEA.', {
+          `Are you sure you want to unplant this CML? <br/>
+          Please note that you'll need to compensate each staker 100 TEA.`, {
           title: 'Info',
           dangerouslyUseHTMLString: true,
         });

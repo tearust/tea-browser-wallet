@@ -1,10 +1,17 @@
 import _, { template } from 'lodash';
+import {hexToString} from 'tearust_layer1';
 import utils from '../tea/utils';
 import request from '../request';
 
 const help = {
   formatLogs(nodes=[]){
     const list = _.map(nodes, (item)=>{
+      _.each(item, (val, key)=>{
+        if(_.startsWith(val, '0x')){
+          item[key] = hexToString(val);
+        }
+      })
+
       const tmp = {
         ...item,
         price: item.price ? utils.layer1.formatBalance(item.price) : '',
@@ -55,7 +62,17 @@ export default {
       }
 
       const rs = await request.getLog({
-        from: `in: ["${layer1_account.address}", "system"]`,
+        // from: `in: ["${layer1_account.address}", "system"]`,
+        or: `[
+          {from: {
+            in: ["${layer1_account.address}", "system"]
+          }},
+          {to: {
+            in: ["${layer1_account.address}"]
+          }}
+          
+        ]`,
+        name: `notIn: ["RewardStatements", "Transfer", "TAppExpense"]`,
         type: `in: ["tx", "event"]`
       });
 

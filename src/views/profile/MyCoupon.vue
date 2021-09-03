@@ -30,12 +30,22 @@
   </el-table>
 
   <div v-if="expired_block > 0" style="display:flex; justify-content: flex-end; margin-top: 40px;">
-    <el-button style="padding-left: 15px; padding-right: 15px;" 
+    <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest.">
+      <div style="padding-left: 15px; padding-right: 15px;"><el-button 
+        :disabled="true"
+        plain
+        type="default">
+        Transfer coupon
+      </el-button></div>
+    </el-tooltip>
+
+    <!-- <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="dai_modal.visible=true"
+      :disabled="false"
       plain
-      type="primary">
+      type="default">
       Transfer coupon
-    </el-button>
+    </el-button> -->
 
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="lotteryHandler(0)"
@@ -120,6 +130,7 @@ import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
+
 export default {
   data(){
     return {
@@ -254,10 +265,11 @@ export default {
       if(!x) return false;
 
       this.$root.loading(true);
-      try{
-        const layer1_instance = this.wf.getLayer1Instance();
-        const api = layer1_instance.getApi();
 
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+      try{
+      
         const tx = api.tx.cml.drawCmlsFromCoupon(defrost);
 
         await layer1_instance.sendTx(this.layer1_account.address, tx);
@@ -266,7 +278,14 @@ export default {
         this.$root.success();
 
       }catch(e){
-        this.$root.showError(e);
+        if(e === 'InsufficientUSDToRedeemCoupons'){
+          const msg = `Insufficient COFFEE to redeem CML seed coupons. <br/>The amount of COFFEE needed to redeem each coupon depends on the seed class: class A needs ${utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON())} COFFEE; class B needs ${utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON())} COFFEE; class C needs ${utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON())} COFFEE.`;
+          this.$root.showError(msg);
+        }
+        else{
+          this.$root.showError(e);
+        }
+        
       }
       this.$root.loading(false);
       

@@ -26,6 +26,19 @@
         <b>{{'My TEA' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
+
+      <div class="x-item" v-if="tea_debt_str">
+        <b>
+          {{'My TEA debt'}}
+          <TeaIconButton style="position:relative;" place="right" tip="
+            Principle / Interest / Total
+          " icon="questionmark" />
+        </b>
+        <span :inner-html.prop="
+          tea_debt_str
+        "></span>
+      </div>
+
       <div class="x-item">
         <b>
           {{'Locked TEA' | cardTitle}}
@@ -44,12 +57,22 @@
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
       </div>
 
-      <div v-if="layer1_account && layer1_account.debt" class="x-item">
+      <div class="x-item" v-if="layer1_account && layer1_account.usd_debt">
+        <b>
+          {{'My COFFEE debt'}}
+          <TeaIconButton style="position:relative;" place="right" :tip="
+            (usd_interest_rate ? ('COFFEE debt interest rate is '+(usd_interest_rate)+'.') : '')
+          " icon="questionmark" />
+        </b>
+        <span :inner-html.prop="layer1_account.usd_debt | usd"></span>
+      </div>
+
+      <!-- <div v-if="layer1_account && layer1_account.debt" class="x-item">
         <b>
           {{'Staking debt' | cardTitle}}
         </b>
         <span :inner-html.prop="layer1_account.debt | teaIcon"></span>
-      </div>
+      </div> -->
 
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
         <b>
@@ -67,10 +90,17 @@
           Sell COFFEE ({{rate.usdToTea}} TEA/COFFEE)
         </el-button>
 
-        <!-- <el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button> -->
-        <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
-        <el-button v-if="layer1_account && layer1_account.reward" @click="withdrawStakingReward()">Withdraw reward</el-button>
-        <el-button v-if="layer1_account && layer1_account.debt" @click="repaymentHandler()">Pay off debt</el-button>
+        <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button></el-tooltip>
+
+        <el-tooltip v-if="layer1_account && layer1_account.reward" effect="light" placement="top" content="Send your staking reward to your TEA wallet balance"><el-button @click="withdrawStakingReward()">Withdraw reward</el-button></el-tooltip>
+        
+        <el-tooltip effect="light" placement="top" content="Borrow COFFEE at the interest rate listed below"><el-button @click="borrowButtonHandler()">Borrow COFFEE</el-button></el-tooltip>
+
+        <el-button v-if="layer1_account && layer1_account.usd_debt" @click="payOffButtonhandler()">Pay off COFFEE debt</el-button>
+
+        <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest."><div style="margin-left: 10px;">
+        <el-button v-if="layer1_account" :disabled="true" @click="transferBalance()">Send</el-button>
+        </div></el-tooltip>
       </div>
 
     </div>
@@ -81,7 +111,7 @@
 
   </div>
   <div class="t-major-financial" v-if="loan_amount && loan_rate" :inner-html.prop="
-    'Genesis loan prime is <b>' + (loan_amount) + '</b> <span>|</span>'+
+    'Genesis loan principle is <b>' + (loan_amount) + '</b> <span>|</span>'+
     'Genesis loan interest rate is <b>'+loan_rate + '</b> <span>|</span>'+
     'Coffee interest rate is <b>'+usd_interest_rate+'</b>'
   ">
@@ -107,9 +137,14 @@
         <MyPawnList />
       </el-tab-pane>
 
-      <el-tab-pane label="My investment on Apps" name="my_app" :lazy="true">
+      <el-tab-pane label="My investment in TApps" name="my_app" :lazy="true">
         <MyAppList />
       </el-tab-pane>
+
+      <el-tab-pane label="My hosting TApps" name="my_hosting" :lazy="true">
+        <MyHostingAppList />
+      </el-tab-pane>
+
   
     </el-tabs>
 
@@ -131,6 +166,7 @@ import MyStakingList from './profile/MyStakingList';
 import MyAppList from './profile/MyAppList';
 import MyPawnList from './profile/MyPawnList';
 import MyCoupon from './profile/MyCoupon';
+import MyHostingAppList from './profile/MyHostingAppList';
 import PubSub from 'pubsub-js';
 import ClipboardJS from 'clipboard';
 import TeaIconButton from '../components/TeaIconButton';
@@ -142,6 +178,7 @@ export default {
     MyAppList,
     MyCoupon,
     MyPawnList,
+    MyHostingAppList,
     TeaIconButton,
   },
   data(){
@@ -158,6 +195,7 @@ export default {
 
       loan_rate: null,
       loan_amount: null,
+
     };
   },
 
@@ -165,6 +203,15 @@ export default {
     ...mapGetters([
       'layer1_account'
     ]),
+    tea_debt_str: (p)=>{
+      if(p.layer1_account && p.layer1_account.tea_debt){
+        return utils.layer1.formatBalance(p.layer1_account.tea_debt.prime, true)
+          +' / '+ utils.layer1.formatBalance(p.layer1_account.tea_debt.interest)
+          +' / '+ utils.layer1.formatBalance(p.layer1_account.tea_debt.total)
+      }
+
+      return null;
+    }
   },
 
   async created(){
@@ -205,6 +252,8 @@ export default {
     this.usd_interest_rate = (usd_interest_rate/100) + '% per '+pl+' blocks';
 
     await this.getMajorFinancial();
+
+    
   },
 
   methods: {
@@ -286,7 +335,8 @@ export default {
 
     
     clickTab(tab){
-      utils.publish(tab, {});
+      // utils.publish(tab, {});
+      utils.publish('refresh-current-account__'+tab);
     },
 
     clickRefreshBtn(){
@@ -396,14 +446,14 @@ export default {
               max: this.layer1_account.balance,
               min: 0,
               step: 0.1,
-              default: 0,
+              default: undefined,
             }
           },
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
 
-          const amount = form.sell_tea_amount;
+          const amount = form.sell_tea_amount || 0;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), false]);
           try{
             await this.$confirm(`Estimated amount is <b>${utils.layer1.roundAmount(this.rate.teaToUsd*amount)} COFFEE</b> for this exchange. <br/> Are you sure?`, {
@@ -454,14 +504,14 @@ export default {
               max: this.layer1_account.usd,
               min: 0,
               step: 0.1,
-              default: 0,
+              default: undefined,
             }
           },
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
 
-          const amount = form.sell_usd_amount;
+          const amount = form.sell_usd_amount || 0;
           // let estimate = await request.layer1_rpc('cml_estimateAmount', [utils.layer1.amountToBalance(amount), true]);
           
           try{
@@ -496,12 +546,110 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const loan_rate = api.consts.genesisBank.interestRate.toJSON();
+      const loan_rate = (await api.query.genesisBank.interestRate()).toJSON();
       const pl = api.consts.genesisBank.loanTermDuration.toJSON();
       this.loan_rate = (loan_rate/100) + '% per '+pl+' blocks';
 
-      this.loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.genesisCmlLoanAmount.toJSON(), true);
+      let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
+      loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
+      loan_amount += '(B)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON());
+      loan_amount += '(C)';
+      this.loan_amount = loan_amount;
     },
+
+    async borrowButtonHandler(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      let max_borrow = null;
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Borrow COFFEE',
+          pallet: 'genesisExchange',
+          tx: 'borrowUsd',
+          text: 'Borrow COFFEE interest rate is <b>'+(this.usd_interest_rate)+'</b>',
+          props: {
+            amount: {
+              type: 'number',
+              label: 'Amount (COFFEE)',
+              remove_required_rule: true,
+            }
+            
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+
+            if(!form.amount){
+              throw 'Amount (COFFEE) is required.';
+            }
+
+            if(max_borrow && form.amount > max_borrow){
+              throw `You can only borrow <b>${max_borrow} COFFEE</b> at most.`;
+            }
+
+            const amount = utils.toBN(utils.layer1.amountToBalance(form.amount));
+
+            const tx = api.tx.genesisExchange.borrowUsd(amount);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+        open_cb: async(opts)=>{
+          const borrow_rate = await request.layer1_rpc('cml_userBorrowingUsdMargin', [this.layer1_account.address]);
+          max_borrow = utils.layer1.balanceToAmount(borrow_rate);
+          opts.text += `<br/>You can only borrow <b>${max_borrow} COFFEE</b> at most.`;
+
+        }
+      });
+    },
+    async payOffButtonhandler(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Pay off COFFEE debt',
+          pallet: 'genesisExchange',
+          tx: 'repayUsdDebts',
+          text: '',
+          props: {
+            amount: {
+              type: 'number',
+              label: 'Amount (COFFEE)',
+              max: this.layer1_account.usd_debt,
+              default: 1,
+            }
+            
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+
+            const amount = utils.toBN(utils.layer1.amountToBalance(form.amount));
+
+            const tx = api.tx.genesisExchange.repayUsdDebts(amount);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshAccount();
+
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+    }
   }
 
   

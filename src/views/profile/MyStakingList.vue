@@ -123,9 +123,9 @@ export default {
     await this.wf.init();
 
     await this.refreshList();
-    utils.register('my_staking', async ()=>{
-      await this.refreshList();
-    });
+    // utils.register('my_staking', async ()=>{
+    //   await this.refreshList();
+    // });
 
     utils.register('refresh-current-account__my_staking', async (key, param)=>{
       await this.refreshList();   

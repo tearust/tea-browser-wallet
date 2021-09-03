@@ -14,10 +14,12 @@
     <el-table-column
       prop="id"
       label="Auction ID"
+      width="80"
     />
     <el-table-column
       prop="cml_id"
       label="CML ID"
+      width="60"
     >
       <template slot-scope="scope">
         <el-button
@@ -28,10 +30,37 @@
         </el-button>
       </template>
     </el-table-column>
-    <!-- <el-table-column
-      prop="cml_owner"
-      label="CML Owner"
-    /> -->
+    
+    <el-table-column
+      prop="cml_type"
+      label="Type"
+      width="50"
+    />
+
+    <el-table-column
+      prop="liferemaining"
+      label="Life remaining"
+      width="100"
+    >
+      <template slot-scope="scope">
+        {{scope.row.cml.life_day}}
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="cml.performance"
+      label="Current / Peak performance"
+      width="110"
+    />
+    <el-table-column
+      prop="generate_defrost_time"
+      label="Defrost day"
+      width="100"
+    >
+      <template slot-scope="scope">
+        {{scope.row.cml.defrost_day}}
+      </template>
+    </el-table-column>
+
     <el-table-column
       prop="starting_price"
       label="Starting price"
@@ -82,6 +111,7 @@ import {_} from 'tearust_utils';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import Auction from '../../workflow/Auction';
+import request from '../../request';
 export default {
   data(){
     return {};
@@ -114,23 +144,20 @@ export default {
       }catch(e){
         this.$root.showError(e);
       }
-      await utils.sleep(1000)
+      console.log(111, this.auction.auction_list);
       this.$root.loading(false);
     },
 
-    calculateBidMinPrice(api, row){
+    async calculateBidMinPrice(api, row){
+      // let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
 
-      let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
-      let min_price = row.starting_price.add(step);
-
-      if(row.bid_user){
-        min_price = row.bid_price.add(step);
-      }
-
-      if(row.for_current){
-        min_price = min_price.sub(row.for_current.price);
-      }
-
+      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.id, this.layer1_account.address]);
+      let min_price = utils.toBN(rs[0]);
+      // if(row.for_current){
+      //   min_price = min_price.sub(row.for_current.price);
+      // }
+      console.log('min-price => ', min_price.toString());
+      
       return min_price;
     },
 
@@ -138,7 +165,7 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const min_price = this.calculateBidMinPrice(api, scope.row);
+      const min_price = await this.calculateBidMinPrice(api, scope.row);
 
       if(min_price.lt(utils.toBN(0))){
         this.$root.showError('This auction is completed');

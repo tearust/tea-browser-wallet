@@ -22,10 +22,10 @@
         <el-button size="small" type="text" @click="$root.goPath('/cml_details/'+scope.row.cml_id)">{{scope.row.cml_id}}</el-button>
       </template>
     </el-table-column>
-    <!-- <el-table-column
-      prop="cml_owner"
-      label="CML Owner"
-    /> -->
+    <el-table-column
+      prop="cml_type"
+      label="Type"
+    />
 
     <el-table-column
       prop="starting_price"
@@ -167,7 +167,7 @@ export default {
       const len = tmp ? tmp.length : 0;
       const penalty = api.consts.auction.auctionOwnerPenaltyForEachBid.toJSON() * len;
 
-      const msg = penalty > 0 ? `Remove this auction need pay ${utils.layer1.formatBalance(penalty)} as penalty, Are you sure?` : 'Are you sure to delete this auction?';
+      const msg = penalty > 0 ? `Removing this auction will charge you ${utils.layer1.formatBalance(penalty)} TEA. Are you sure?` : 'Are you sure you want to delete this auction?';
 
       const x = await this.$confirm(msg, "Delete Auction").catch(()=>{});
       if(!x) return false;
@@ -208,8 +208,10 @@ export default {
 
       const param = {};
       _.each(list, (item)=>{
-        _.set(param, item.user, item.price);
+        const price = utils.layer1.formatBalance(item.ori_price, true);
+        _.set(param, item.user, price);
       });
+
       param.title = 'Active bids';
       this.$store.commit('modal/open', {
         key: 'data_details',

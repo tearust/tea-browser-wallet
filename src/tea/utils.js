@@ -5,7 +5,8 @@ import Pubsub from 'pubsub-js';
 import * as tearust_utils from 'tearust_utils';
 import { 
   hexToString, formatBalance, hexToNumber, hexToBn, numberToHex,
-  BN_MILLION, isBn, BN,
+  BN_MILLION, isBn, BN, u8aToHex,
+
 } from 'tearust_layer1';
 
 import './index';
@@ -22,7 +23,11 @@ const { _, uuid, forge } = tearust_utils;
 
 const consts = {
   CmlType: { A: 'A', B: 'B', C: 'C' },
-  DefrostScheduleType: { Investor: 'Investor', Team: 'Team' }
+  DefrostScheduleType: { Investor: 'Investor', Team: 'Team' },
+  CurveType: {Linear: 'Linear', SquareRoot: 'SquareRoot'},
+
+  SUDO_ACCOUNT: '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP',
+  TOTAL_REWARD: 1500,
 };
 
 const _MEM = {};
@@ -86,6 +91,12 @@ const layer1 = {
   },
   roundAmount(value){
     return Math.round(value*10000) / 10000;
+  },
+  toRealBalance(value){
+    value = F.toBN(value);
+    value = F.bnToBalanceNumber(value);
+    const unit = 1000000*1000000;
+    return Math.round(value * unit) / unit;
   }
 };
 
@@ -224,6 +235,18 @@ const F = {
     const total = _.sum(xt);
 
     return (Math.round((table[index] / total) * 100000) / 1000) + '%';
+  },
+
+  rpcArrayToString(arr){
+    return hexToString(u8aToHex(arr));
+  },
+
+  urlToLink(url){
+    if(!_.startsWith(url, 'https://') && !_.startsWith(url, 'http://')){
+      url = 'http://'+url; 
+    }
+
+    return url;
   }
 
 

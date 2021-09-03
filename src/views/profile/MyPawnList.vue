@@ -89,8 +89,16 @@
           v-if="
             scope.row.status!=='Staking'
             && scope.row.staking_slot.length<1"
-          @click="paybackToGB(scope)"
-          tip="Pay off"
+          @click="paybackToGB(scope, true)"
+          tip="Pay interest to extend"
+          icon="pay-back"
+        />
+        <TeaIconButton
+          v-if="
+            scope.row.status!=='Staking'
+            && scope.row.staking_slot.length<1"
+          @click="paybackToGB(scope, false)"
+          tip="Pay off loan"
           icon="pay-back"
         />
       </template>
@@ -135,6 +143,10 @@ export default {
     this.wf = new SettingAccount();
     await this.wf.init();
 
+    utils.register('refresh-current-account__my_pawn', async (key, param)=>{
+      await this.refreshList();   
+    });
+
     await this.refreshList();
   },
 
@@ -155,34 +167,49 @@ export default {
         return item;
       }));
 
-
     },
-    async paybackToGB(scope){
+    async paybackToGB(scope, only_interest){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      let block = this.chain.current_block.toJSON();
-      block += 2;
-
       const cml_id = scope.row.id;
+      
 
       let asset_id = api.registry.createType('u64', cml_id);
       asset_id = u8aToHex(asset_id.toU8a());
 
-      const redeem_amount = await request.layer1_rpc('cml_calculateLoanAmount', [cml_id, block]);
+      let redeem_amount = await request.layer1_rpc('cml_calculateLoanAmount', [cml_id]);
+      redeem_amount = only_interest ? redeem_amount[1] : redeem_amount[2];
 
-      const info = `You need to pay ${redeem_amount/(1000000*1000000)}TEA to get your CML back.`;
-      const x = await this.$confirm(info, "Pay off loan").catch(()=>{});
+      let an = utils.layer1.balanceToAmount(redeem_amount);
+      let info = `You need to pay ${an} TEA to get your CML back.`;
+      if(only_interest){
+        info = `You need to pay ${an} TEA for the loan interest to extend the due day.`;
+      }
+
+      const title = only_interest ? 'Pay interest to extend' : 'Pay off loan';
+
+      const x = await this.$confirm(info, title).catch(()=>{});
       if(!x) return;
 
       this.$root.loading(true);
       try{
-        const tx = api.tx.genesisBank.payoffLoan(asset_id, 'CML');
+        const tx = api.tx.genesisBank.payoffLoan(asset_id, 'CML', utils.toBN(redeem_amount));
         await layer1_instance.sendTx(this.layer1_account.address, tx);
         this.$root.success();
-        utils.publish('refresh-current-account__account', {
-          tab: 'my_cml',
-        });
+
+        if(only_interest){
+          utils.publish('refresh-current-account__account', {
+            tab: 'my_pawn',
+          });
+          await this.refreshList();
+        }
+        else{
+          utils.publish('refresh-current-account__account', {
+            tab: 'my_cml',
+          });
+        }
+        
       }catch(e){
         this.$root.showError(e);
       }

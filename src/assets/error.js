@@ -56,7 +56,7 @@ export default {
   /// Cml staking index over than staking slot length, that means point to not exist staking.
   CmlStakingIndexOverflow: 'The staking slots are full, cannot take any more stakes',
   /// Cml staking item owner is none, that can't identify staking belongs.
-  CmlOwnerIsNone: 'The CML staking owner does not exist',
+  CmlOwnerIsNone: 'The CML owner does not exist',
   /// Cml staking item owner and the owner field of cml item not match.
   CmlOwnerMismatch: 'The CML staking owner does not match the recorded owner',
   /// Cml is not staking that can't unstake.
@@ -116,14 +116,67 @@ export default {
   /// We have such a close time because Genesis bank is supposed to be temporary cold-start
   /// helper. When newer Defi service tApps are ready, the Genesis Bank should be retired
   CannotApplyLoanAfterClosed: 'The Genesis bank is closed and no longer offers loans',
+  GenesisBankInsufficientFreeBalance: 'The Genesis bank has insufficient free balance for this operation',
+	NoNeedToRepayInterest: 'Interest payment not needed',
+	RepayAmountCanNotBeZero: 'Repayment amount must be greater than 0',
 
   // Genesis exchange
-  ExchangeInsufficientUSD: 'The exchange does not have enough USD for transaction',
+  ExchangeInsufficientUSD: 'The exchange does not have enough COFFEE for transaction',
   ExchangeInsufficientTEA: 'The exchange does not have enough TEA for transaction',
-  UserInsufficientUSD: 'Insufficient USD for transaction',
+  UserInsufficientUSD: 'Insufficient COFFEE for transaction',
   UserInsufficientTEA: 'Insufficient TEA for transaction',
   InvalidDepositAmount: 'Invalid deposit amount',
-  InvalidTransferUSDAmount: 'Invalid USD transfer amount',
-  WithdrawAmountShouldNotBeZero: 'Withdraw amount should be greater than 0',
+  InvalidTransferUSDAmount: 'Invalid COFFEE transfer amount',
+  AmountShouldNotBeZero: 'Withdraw amount should be greater than 0',
+  BuyAndSellAmountShouldNotBothExist: 'BuyAndSellAmountShouldNotBothExist',
+	BuyOrSellAmountShouldExist: 'BuyOrSellAmountShouldExist',
+  USDInterestRateShouldLargerThanCompetitionsCount: 'COFFEE interest rate should larger than competitions count',
+  InsufficientUSDToPayMiningMachineCost: 'Insufficient COFFEE to pay the mining machine.',
+  BorrowAmountShouldNotBeZero: 'Borrow amount should not be 0.',
+  BorrowDebtHasOverflow: 'Requested amount to borrow is too high.',
+  BorrowAmountHasOverflow: 'Borrowed amount exceeds max amount holdable in wallet.',
+  InsufficientUSDToRepayDebts: 'Insufficient COFFEE for this payment.',
+  NoNeedToRepayUSDDebts: 'No outstanding debt to repay.',
+  RepayUSDAmountShouldNotBeZero: 'Amount repaid should not be 0.',
+  RepayUSDAmountMoreThanDebtAmount: 'Can\'t repay more than you owe.',
+  // InsufficientUSDToRedeemCoupons: 'Insufficient COFFEE to redeem coupons.',
+  BorrowedDebtAmountHasOverThanMaxAllowed: 'Debt utilization is too high to borrow any more funds',
+  UsdDebtReferenceAssetAmountIsLowerThanBorrowAllowance: 'Your total asset valuation must be higher than your available borrowing allowance',
+  InitialBorrowAmountShouldLessThanBorrowAllowance: 'Your total asset valuation constrains the loan to be below your available borrowing allowance',
 
+  // bonding curve
+  TAppNameIsTooLong: 'TApp name is too long',
+  TAppTickerIsTooLong: 'TApp ticker symbol is too long',
+  TAppTickerIsTooShort: 'TApp ticker symbol is too short',
+  TAppDetailIsTooLong: 'TApp details is too long',
+  TAppLinkIsTooLong: 'TApp link is too long',
+  TAppNameAlreadyExist: 'TApp name already exist',
+  TAppTickerAlreadyExist: 'TApp ticker symbol already exist',
+  // InsufficientFreeBalance: 'Insufficient account balance',
+  InsufficientTAppToken: 'Insufficient token balance',
+  /// Sell amount more than total supply
+  InsufficientTotalSupply: 'Insufficient total supply',
+  TAppIdNotExist: 'TApp is not exist',
+  /// Sell amount more than total reserved pool tea token
+  TAppInsufficientFreeBalance: 'Insufficient TApp account balance',
+  OperationAmountCanNotBeZero: 'Operation amount can not be 0',
+
+  BuyTeaAmountCanNotBeZero: 'Tea amount bought must be greater than 0',
+  SellTeaAmountCanNotBeZero: 'Tea amount sold must be greater than 0',
+  SubtractionOverflow: 'Error: subtraction overflow',
+  AddOverflow: 'Error: addition overflow',
+  NotAllowedNormalUserCreateTApp: 'You don\'t have enough permission to creat a TApp',
+  OnlyTAppOwnerAllowedToExpense: 'Error: only TApp owner allowed to expense',
+
+  HostPerformanceAndMaxAllowedHostMustBePaired: 'Host performance and Max allowed hosts should both have a value if both aren\'t 0',
+  PerformanceValueShouldNotBeZero: 'Performance value shouldn\'t be 0',
+  MaxAllowedHostShouldNotBeZero: 'Max allowed hosts shouldn\'t be 0',
+  TAppNotSupportToHost: 'This TApp no longer supports being hosted',
+  TAppHostMachineIsFull: 'This TApp has reached its max desired hosts',
+  CmlMachineIsFullLoad: 'CML machine is already at full load',
+  CmlNotHostTheTApp: 'CML machine is not hosting this TApp',
+	OnlyMiningCmlCanHost: 'It\'s not allowed for the CML that not start mining to host',
+  CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
+  NoHostingToDistributeMiner: 'Distribution not needed: there are no miners hosting this TApp',
+  ConsumeNoteIsTooLong: 'The consume note is too long.',
 };

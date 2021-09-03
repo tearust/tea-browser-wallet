@@ -37,7 +37,9 @@
 
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="close()">Close</el-button>
-      <el-button size="small" :disabled="loading" type="primary" @click="confrim()">Confirm</el-button>
+      <el-button size="small" :disabled="loading" type="primary" @click="confrim()">
+        {{param.confirm_text || 'Confirm'}}
+      </el-button>
     </span>
 
   </el-dialog>
@@ -46,6 +48,7 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex';
+import Vue from 'vue';
 import store from '../../store/index';
 import utils from '../../tea/utils';
 import Base from '../../workflow/Base';
@@ -117,7 +120,7 @@ export default {
         const n = item.name;
         labels[n] = utils.form.nameToLabel(n);
         form[n] = '';
-
+        
         let type = item.type;
         
         types[n] = 'Input';
@@ -128,6 +131,9 @@ export default {
 
           if(props[n].default){
             form[n] = props[n].default;
+          }
+          else if(types[n] === 'number'){
+            form[n] = undefined;
           }
 
           if(props[n].label){
@@ -140,7 +146,10 @@ export default {
           rules[n] = [];
         }
         else{
-          rules[n] = [{required: true, message: `${labels[n]} is required.`}];
+          rules[n] = [{required: true, message: `${labels[n]} is required.`,}];
+          if(props[n].remove_required_rule){
+            rules[n] = [];
+          }
           if(props[n].rules){
             rules[n] = _.concat(props[n].rules, rules[n]);
           }
@@ -179,6 +188,7 @@ export default {
       }
 
     }
+    
   }
 }
 </script>

@@ -191,6 +191,15 @@ a, a:hover, a:focus, button:focus {
     font-size: 19px;
     font-weight: bold;
   }
+
+  .el-form-item__content{
+    &>.el-input{
+      width: 90%;
+      margin-right: 10px;
+    }
+  }
+
+  
 }
 
 .tea-table{
@@ -198,7 +207,6 @@ a, a:hover, a:focus, button:focus {
     font-size: 12px;
   }
   .c-btn{
-    word-break: break-all;
     white-space: normal;
   }
   .el-button--text{
@@ -210,13 +218,17 @@ a, a:hover, a:focus, button:focus {
   span>.el-button--text{
     width: auto;
   }
-}
-.tea-icon-button{
-  padding: 0;
-  .iconfont{
-    font-size: 14px;
+
+  .tea-icon-button{
+    padding: 0;
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+    .iconfont{
+      font-size: 15px;
+    }
   }
 }
+
 
 
 

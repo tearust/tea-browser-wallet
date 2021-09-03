@@ -50,13 +50,17 @@
       label="COFFEE account balance"
       width="150"
     />
-    <el-table-column
+    <!-- <el-table-column
       prop="miner_credit"
       label="Staking debt"
-    />
+    /> -->
     <el-table-column
       prop="loan_credit"
       label="Genesis loan"
+    />
+    <el-table-column
+      prop="usd_debt"
+      label="COFFEE debt"
     />
     <el-table-column
       prop="total"
@@ -106,8 +110,9 @@ export default {
     async refreshList(){
       this.$root.loading(true);
       let tmp = await request.layer1_rpc('cml_userAssetList', []);
+      console.log(11, tmp);
       tmp = _.filter(tmp, (arr)=>{
-        return arr[0] !== '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP';
+        return arr[0] !== utils.consts.SUDO_ACCOUNT;
       });
 
       const rtmp = await request.layer1_rpc('cml_currentExchangeRate', []);
@@ -128,8 +133,9 @@ export default {
             cml_asset: utils.layer1.balanceToAmount(arr[1]),
             tea_asset: utils.layer1.balanceToAmount(arr[2]),
             usd_asset: utils.layer1.balanceToAmount(arr[3]),
-            miner_credit: utils.layer1.balanceToAmount(arr[4]),
-            loan_credit: utils.layer1.balanceToAmount(arr[5]),
+            // miner_credit: utils.layer1.balanceToAmount(arr[4]),
+            loan_credit: utils.layer1.balanceToAmount(arr[4]),
+            usd_debt: utils.layer1.balanceToAmount(arr[5]),
             total: utils.layer1.balanceToAmount(total),
           };
           sum += rs.total;
@@ -143,7 +149,7 @@ export default {
           arr[3] = utils.layer1.balanceToAmount(arr[3])*usdToTea;
           arr[4] = utils.layer1.balanceToAmount(arr[4])*usdToTea;
           arr[5] = utils.layer1.balanceToAmount(arr[5])*usdToTea;
-          arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
+          // arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
 
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
@@ -156,19 +162,19 @@ export default {
             cml_asset: utils.layer1.roundAmount(arr[1]),
             tea_asset: utils.layer1.roundAmount(arr[2]),
             usd_asset: utils.layer1.roundAmount(arr[3]),
-            miner_credit: utils.layer1.roundAmount(arr[4]),
-            loan_credit: utils.layer1.roundAmount(arr[5]),
+            loan_credit: utils.layer1.roundAmount(arr[4]),
+            usd_debt: utils.layer1.roundAmount(arr[5]),
             total: utils.layer1.roundAmount(total),
           };
           return rs;
         }));
       }
 
-
       this.list = _.map(x_list, (item)=>{
-        item.reward = utils.layer1.roundAmount(1500*(item.total / sum));
+        item.reward = utils.layer1.roundAmount(utils.consts.TOTAL_REWARD*(item.total / sum));
         return item;
       });
+      
       this.$root.loading(false);
     },
 

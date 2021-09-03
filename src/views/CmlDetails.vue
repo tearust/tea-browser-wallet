@@ -143,25 +143,144 @@
       
     </el-table>
 
+    <el-divider />
 
+    <h4>Hosting TApps</h4>
+    <el-table 
+      :data="tapp_list || []"
+      stripe
+      class="tea-table"
+      size="small"
+      border
+    >
+      <el-table-column
+        label="TApp ID"
+        prop="id"
+        width="90"
+      />
+      <el-table-column
+        prop="name"
+        label="TApp Name"
+      >
+        <template slot-scope="scope">
+          <el-button size="small" type="text" @click="openTo(scope.row)">{{scope.row.name}}</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="token_symbol"
+        label="Ticker"
+        width="70"
+      />
+      <el-table-column
+        prop="host_performance"
+        label="Host performance requirement"
+      />
+      <el-table-column
+        prop="host_n"
+        label="Current/Max hosts"
+      />
+      
+      <el-table-column
+        label="Actions"
+        width="200">
+        <template slot-scope="scope">
 
+          <TeaIconButton 
+            style="position:relative;top:1px;" 
+            :disabled="!cml || !layer1_account || cml.owner !== layer1_account.address" 
+            tip="Hosting this TApp now. Unhost?" 
+            icon="upload" 
+            icon_style="font-size:20px;" 
+            @click="unhostApp(scope)" 
+          />
+          
+        </template>
+      </el-table-column>
+      
+      
+    </el-table>
+
+    <el-divider />
+    <h4>Accepted FaaS list</h4>
+
+    <el-table 
+      :data="faas_list || []"
+      stripe
+      class="tea-table"
+      size="small"
+      border
+    >
+      <el-table-column
+        label="FaaS ID"
+        prop="id"
+        width="90"
+      />
+      <el-table-column
+        prop="name"
+        label="Name"
+      />
+      <el-table-column
+        prop="detail"
+        label="Detail"
+        width="500"
+      >
+        <template slot-scope="scope">
+          <span style="word-break:break-word;">{{scope.row.detail}}</span>
+        </template>
+      
+      </el-table-column>
+      <el-table-column
+        prop="estimate"
+        label="Estimate (TEA)"
+      />
+
+    </el-table> 
+      
 
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import store from '../store/index';
 import utils from '../tea/utils';
 import Base from '../workflow/Base';
 import {hexToString} from 'tearust_layer1';
 import {_} from 'tearust_utils';
+import helper from './helper';
+import TeaIconButton from '../components/TeaIconButton';
+import request from '../request';
+
 export default {
+  components: {
+    TeaIconButton,
+  },
   data(){
     return {
       cml: null,
       id: null,
       is_staking: false,
+
+      tapp_list: null,
+      faas_list: [
+        {
+          id: '0',
+          name: 'Remote attestation',
+          detail: 'Blockchain randomly select a CML to run remote attestation to verify other random CML\'s security',
+          estimate: ''
+        },
+        {
+          id: '1',
+          name: 'Image recognization',
+          detail: 'Give any input image, use AI to figure out what it is on the picture',
+          estimate: '300'
+        }
+      ],
     };
+  },
+  computed: {
+    ...mapGetters([
+      'layer1_account'
+    ]),
   },
   async mounted(){
     this.id = this.$route.params.id;
@@ -177,6 +296,7 @@ export default {
 
   methods: {
     async refresh(){
+      this.$root.loading(true);
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
       const cml_data = await this.wf.getCmlByList([this.id]);
@@ -187,6 +307,35 @@ export default {
         return item;
       }));
       this.is_staking = this.cml.status === 'Staking';
+
+      this.faas_list[0].estimate = this.cml.slot_len;
+
+      const app_list = (await api.query.bondingCurve.cmlHostingTApps(this.cml.id)).toJSON();
+      this.tapp_list = await Promise.all(_.map(app_list, async (tapp_id)=>{
+        const item = {
+          id: tapp_id
+        };
+
+        const arr = await request.layer1_rpc('bonding_tappDetails', [tapp_id]);
+        const tmp = {
+          name: utils.rpcArrayToString(arr[0]),
+          token_symbol: utils.rpcArrayToString(arr[2]),
+          owner: arr[3],
+          detail: utils.rpcArrayToString(arr[4]),
+          link: utils.rpcArrayToString(arr[5]),
+          host_performance: arr[6],
+          host_current: arr[7],
+          host_n: `${arr[7]}/${arr[8]}`,
+          is_full: arr[7] >= arr[8],
+        };
+
+        return {
+          ...item,
+          ...tmp,
+        };
+      }));
+
+      this.$root.loading(false);
     },
     async showMinerInfo(miner_id){
       const layer1_instance = this.wf.getLayer1Instance();
@@ -210,9 +359,22 @@ export default {
       this.$root.goPath('/cml_details/'+cml_id, 'replace');
       this.id = cml_id
 
-      this.$root.loading(true);
       await this.refresh();
-      this.$root.loading(false);
+    },
+
+    async unhostApp(scope){
+      const tapp_id = scope.row.id;
+      const cml_id = this.cml.id
+
+      helper.unhostTApp(this, {
+        tapp_id, cml_id,
+      }, async ()=>{
+        
+        await this.refresh();
+      });
+    },
+    openTo(row){
+      helper.openToTApp(this, row);
     }
   }
 }

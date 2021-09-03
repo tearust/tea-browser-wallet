@@ -14,8 +14,8 @@
       <div class="x-list">
 
         <div v-for="(val, key) in param" :key="key" class="x-item">
-          <b>{{key}}</b>
-          <span>{{val}}</span>
+          <b style="width: 400px;">{{key}}</b>
+          <span :inner-html.prop="toVal(val)"></span>
         </div>
 
       </div>
@@ -34,6 +34,8 @@
 import { mapState } from 'vuex';
 import store from '../../store/index';
 import utils from '../../tea/utils';
+import {_} from 'tearust_utils';
+import {hexToString} from 'tearust_layer1';
 export default {
   data(){
     return {
@@ -51,7 +53,13 @@ export default {
   },
 
   methods: {
-    
+    toVal(val){
+      if(_.isString(val) && _.startsWith(val, '0x')){
+        return hexToString(val);
+      }
+
+      return val;
+    }
   }
 }
 </script>

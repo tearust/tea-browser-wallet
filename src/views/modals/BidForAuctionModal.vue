@@ -48,7 +48,7 @@ export default {
   data(){
     return {
       form: {
-        price: null,
+        price: undefined,
 
         buy_now: false,
       }

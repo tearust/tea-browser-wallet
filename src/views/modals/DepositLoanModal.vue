@@ -6,6 +6,7 @@
     :close-on-click-modal="false"
     custom-class="tea-modal"
     :destroy-on-close="true"
+    @opened="openHandler()"
     @close="close()"
   >
     <p
@@ -38,10 +39,9 @@
       <h5>TEA Token Loan Agreement</h5>
       <p>
         Deposit CML to use as collateral for a TEA token loan.<br />
-        The current loan amount is 500T regardless of the type of seed used for
-        collateral.<br />
+        The current loan amount depends on the type of seed used for collateral: 2000T for A seeds, 1000T for B seeds, and 500T for C seeds.<br />
         Each billing cycle is 1000 blocks long (approximately 100 minutes).<br />
-        The interest rate for every billing cycle is 0.08%.<br />
+        The interest rate for every billing cycle is {{loan_rate}}.<br />
         The loan term is 200,000 blocks, approximately 55 hours.<br />
         
       </p>
@@ -50,7 +50,8 @@
         The borrower needs to repay the loan before the 200,000 block-term ends.
         If the full borrowed amount is not repaid by the end of the loan term,
         the loan is considered to be in default and the CML collateral will be
-        liquidated.
+        liquidated. There's also the option to only pay the interest due.<br/>
+        Paying the outstanding interest due will renew the loan for another term.
       </p>
       <p>
         The borrower can repay the loan at any time. If repaid before the end of
@@ -59,8 +60,8 @@
         calculates the number of times the interest rate is applied. This number
         is always rounded up. The total interest on the loan is calculated as
         rounded number of billing cycles * interest rate * loan amount. The
-        interest rate is 0.08%, and the loan amount from the Genesis loan is
-        always 500T.
+        interest rate is {{loan_rate}}, and the loan amount from the Genesis loan is
+        2000T for A seeds, 1000T for B seeds, and 500T for C seeds.
       </p>
       <p>
         <b>Return of Collateral</b><br />
@@ -83,6 +84,7 @@
 import { mapState } from "vuex";
 import store from "../../store/index";
 import utils from "../../tea/utils";
+import Base from '../../workflow/Base';
 export default {
   data() {
     return {
@@ -90,6 +92,7 @@ export default {
         agree: false,
       },
       show_agreement: false,
+      loan_rate: '',
     };
   },
   computed: {
@@ -125,6 +128,16 @@ export default {
         });
       }
     },
+    async openHandler(){
+      this.wf = new Base();
+      await this.wf.init();
+      const layer1_instance = this.wf.getLayer1Instance();
+
+      const api = layer1_instance.getApi();
+      const loan_rate = (await api.query.genesisBank.interestRate()).toJSON();
+      // const pl = api.consts.genesisBank.loanTermDuration.toJSON();
+      this.loan_rate = (loan_rate/100)+'%';
+    }
   },
 };
 </script>

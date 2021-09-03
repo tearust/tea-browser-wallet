@@ -181,36 +181,23 @@ export default class {
     utils.publish('tea-select-layer1-modal', true);
   }
 
-  async getAllDebtByAddress(address){
-    const cml_list = await request.layer1_rpc('cml_userCreditList', [
-      address
-    ]);
-
-    const layer1_instance = this.getLayer1Instance();
-    const api = layer1_instance.getApi();
-
-    let total = 0;
-    const debt_map = {};
+  async getTeaDebtByPawnList(cml_list){
+    const rs = {
+      prime: 0,
+      interest: 0,
+      total: 0,
+    };
 
     await Promise.all(_.map(cml_list, async (arr)=>{
       const cml_id = arr[0];
-      let debt = parseInt(arr[1], 10);
-      // let debt = await api.query.cml.genesisMinerCreditStore(address, cml_id);
-      // debt = debt.toJSON();
-      if (debt) {
-        total += debt;
-      }
-      _.set(debt_map, cml_id, (debt / layer1_instance.asUnit()))
+      let tmp = await request.layer1_rpc('cml_calculateLoanAmount', [cml_id]);
+      rs.prime += _.toNumber(tmp[0]);
+      rs.interest += _.toNumber(tmp[1]);
+      rs.total += _.toNumber(tmp[2]);
       return null;
     }));
 
-    total = total / layer1_instance.asUnit();
-
-    
-    return {
-      total,
-      details: debt_map
-    };
+    return rs;
 
   }
 
@@ -238,20 +225,22 @@ export default class {
       reward = reward / layer1_instance.asUnit();
     }
 
-    const debt = await this.getAllDebtByAddress(address);
+    
 
     let usd = await api.query.genesisExchange.uSDStore(address);
     usd = usd.toJSON();
-
     usd = utils.layer1.balanceToAmount(usd);
+
+    let usd_debt = await api.query.genesisExchange.uSDDebt(address);
+    usd_debt = usd_debt.toJSON();
+    usd_debt = utils.layer1.balanceToAmount(usd_debt);
     
     return {
       free: Math.floor(free * 10000) / 10000,
       lock: Math.floor(lock * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
-      debt: debt.total ? Math.floor(debt.total * 10000) / 10000 : null,
-      debt_detail: debt.details,
       usd,
+      usd_debt,
     };
   }
 
@@ -342,6 +331,7 @@ export default class {
     const coupons = await this.getCoupons(layer1_account.address);
 
     const pawn_cml_list = await this.getAllPawnByAddress(layer1_account.address);
+    const tea_debt = await this.getTeaDebtByPawnList(pawn_cml_list);
 
     // reset all state
     store.commit('reset_state');
@@ -359,11 +349,13 @@ export default class {
       ori_name: layer1_account.name,
       cml: cml_data,
       reward: balance.reward,
-      debt: balance.debt,
-      debt_detail: balance.debt_detail,
+      
       usd: balance.usd,
+      usd_debt: balance.usd_debt,
+
       coupons,
       pawn_cml_list,
+      tea_debt,
     });
 
 
@@ -424,7 +416,9 @@ export default class {
       cml.life_day = this.blockToDay(remaining);
 
       const ttp = await request.layer1_rpc('cml_cmlPerformance', [_.toNumber(cml_id)]);
-      const performance = ttp[0]+'/'+ttp[1];
+      // console.log(111, ttp);
+      const performance = (ttp[0]||0)+'/'+ttp[2];
+      const remaining_performance = ttp[1] || 0;
 
       cml.staking_slot = _.map(cml.staking_slot, (item) => {
         item.category = _.toUpper(item.category);
@@ -450,6 +444,7 @@ export default class {
         ...cml,
         ...cml.intrinsic,
         performance,
+        remaining_performance,
         machine_id: hexToString(cml.machine_id),
       };
     }));
