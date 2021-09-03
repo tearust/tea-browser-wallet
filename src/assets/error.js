@@ -140,9 +140,9 @@ export default {
   RepayUSDAmountShouldNotBeZero: 'Amount repaid should not be 0.',
   RepayUSDAmountMoreThanDebtAmount: 'Can\'t repay more than you owe.',
   // InsufficientUSDToRedeemCoupons: 'Insufficient COFFEE to redeem coupons.',
-  BorrowedDebtAmountHasOverThanMaxAllowed: 'BorrowedDebtAmountHasOverThanMaxAllowed',
-  UsdDebtReferenceAssetAmountIsLowerThanBorrowAllowance: 'UsdDebtReferenceAssetAmountIsLowerThanBorrowAllowance',
-  InitialBorrowAmountShouldLessThanBorrowAllowance: 'InitialBorrowAmountShouldLessThanBorrowAllowance',
+  BorrowedDebtAmountHasOverThanMaxAllowed: 'Debt utilization is too high to borrow any more funds',
+  UsdDebtReferenceAssetAmountIsLowerThanBorrowAllowance: 'Your total asset valuation must be higher than your available borrowing allowance',
+  InitialBorrowAmountShouldLessThanBorrowAllowance: 'Your total asset valuation constrains the loan to be below your available borrowing allowance',
 
   // bonding curve
   TAppNameIsTooLong: 'TApp name is too long',
