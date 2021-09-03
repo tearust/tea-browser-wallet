@@ -178,5 +178,5 @@ export default {
 	OnlyMiningCmlCanHost: 'It\'s not allowed for the CML that not start mining to host',
   CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
   NoHostingToDistributeMiner: 'Distribution not needed: there are no miners hosting this TApp',
-  ConsumeNoteIsTooLong: 'Consume note is too long.',
+  ConsumeNoteIsTooLong: 'The consume note is too long.',
 };
