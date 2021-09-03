@@ -49,33 +49,44 @@
       width="70"
     />
 
-    <el-table-column
+    <TeaTableColumn
       prop="total_supply"
       label="Total supply"
+      tip="Total number of tokens issued"
+      width="100"
     />
 
-    <el-table-column
+    <TeaTableColumn
       prop="buy_price"
       label="Buy price (TEA)"
+      tip="Price at which you can buy the token from the bonding curve"
+      width="120"
     />
 
-    <el-table-column
+    <TeaTableColumn
       prop="sell_price"
       label="Sell price (TEA)"
+      tip="Price at which you can sell the token into the bonding curve"
+      width="120"
     />
 
-    <el-table-column
+    <TeaTableColumn
       label="Market cap"
       prop="market_cap"
+      tip="The current sell price multiplied by the number of tokens outstanding"
+      width="100"
     />
-    <el-table-column
+    <TeaTableColumn
       prop="host_performance"
       label="Host performance requirement"
       width="120"
+      tip="A mining machine must be at least this powerful to host this TApp"
     />
-    <el-table-column
+    <TeaTableColumn
       prop="host_n"
       label="Current/Max hosts"
+      width="90"
+      tip="The maximum number of hosts that can be hosting this TApp"
     />
 
 
@@ -93,10 +104,39 @@
 
 
   </TeaTable>
-  
-  <div style="display:flex; justify-content: flex-end;">
-    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="createNewTApp()">Create new TApp</el-button>
+
+  <div class="tea-legend" style="
+    margin-top: 40px;
+    position: relative;
+  ">
+    <ul style="width: 600px; margin-left: -20px;">
+      <li>
+        The 
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#total-supply" target="_blank">total supply</a> 
+        and 
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#buy-price" target="_blank">token price </a> 
+        are determined by 
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#sell-price" target="_blank">the bonding curve.</a> 
+      </li>
+      <li>
+        The 
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#host-performance-requirement" target="_blank">host performance requirement </a> 
+        is the minimum power required for a mining machine to host this TApp.
+      </li>
+      <li>
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#current-and-max-hosts" target="_blank">Current / max hosts </a>
+        is the maximum number of CML miners that can be hosting this TApp.
+      </li>
+      <li>
+        In the actions section, you can buy or sell the TApp's token as well as
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#host-and-unhost-tapp" target="_blank">host (or unhost) the TApp.</a> 
+      </li>
+    </ul>
+
+    <el-button style="width:400px;position:absolute;top:0; right:0;" type="primary" @click="createNewTApp()">Create new TApp</el-button>
   </div>
+  
+  
 
 </div>
 </template>
@@ -108,6 +148,7 @@ import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString} from 'tearust_layer1';
 import TeaTable from '../components/TeaTable';
+import TeaTableColumn from '../components/TeaTableColumn';
 import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
 import helper from './helper';
@@ -116,6 +157,7 @@ export default {
   components: {
     TeaTable,
     TeaIconButton,
+    TeaTableColumn,
   },
   data(){
     return {
@@ -314,7 +356,8 @@ export default {
       await helper.openHostTappModal(this, scope.row, async ()=>{
         await this.refreshList();
       });
-    }
+    },
+
   }
 };
 
