@@ -569,7 +569,7 @@ export default {
           title: 'Borrow COFFEE',
           pallet: 'genesisExchange',
           tx: 'borrowUsd',
-          text: 'Borrow COFFEE interest rate is <b>'+(this.usd_interest_rate)+'</b>',
+          text: 'COFFEE interest rate is <b>'+(this.usd_interest_rate)+'</b>',
           props: {
             amount: {
               type: 'number',
@@ -606,7 +606,7 @@ export default {
         open_cb: async(opts)=>{
           const borrow_rate = await request.layer1_rpc('cml_userBorrowingUsdMargin', [this.layer1_account.address]);
           max_borrow = utils.layer1.balanceToAmount(borrow_rate);
-          opts.text += `<br/>You can only borrow <b>${max_borrow} COFFEE</b> at most.`;
+          opts.text += `<br/>You can borrow at most <b>${max_borrow} COFFEE</b>.<br/>More info about COFFEE interest compounding is available <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Epoch-3-COFFEE#coffee-loans" target="_blank">on our wiki</a>.`;
 
         }
       });

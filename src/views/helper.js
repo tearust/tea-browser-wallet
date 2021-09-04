@@ -28,7 +28,7 @@ const F = {
         pallet: 'bondingCurve',
         tx: 'buyToken',
         confirm_text: 'Next',
-        text: `You are buying the ${data.name}'s token ${data.token_symbol}`,
+        text: `You are buying the ${data.name}'s token ${data.token_symbol}. For more information on how to invest in TApp tokens, <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#tapp-token-strategy" class="t-wiki" target="_blank">visit our wiki</a>.`,
         props: {
           tapp_id: {
             class: 'hidden',

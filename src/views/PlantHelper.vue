@@ -4,7 +4,7 @@
     <p>
       Please fill out the form below to generate the shell mining commands. 
       <br/>
-      Note that you need <b class="block">{{ form.miner_price }} COFFEE</b> to buy a mining machine and <b class="block">1000 TEA</b> available for your initial stake. 
+      Note that you need <b class="block">{{ form.miner_price }} COFFEE</b> to buy a mining machine and <b class="block">1000 TEA</b> available for your initial stake. More info is available <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#mining-machines-are-no-longer-free" class="t-wiki" target="_blank">on our wiki.</a>
       <br/>
       The machine is not reusable if you decide to unplant your CML in the future. If you agree, {{ form.miner_price }} COFFEE will be burned from your account.
     </p>

@@ -9,10 +9,11 @@
     @opened="openHandler()"
     @close="close()"
   >
-    <p
-      class="c-info"
-      :inner-html.prop="'Are you sure you want to deposit CML as collateral for a Genesis loan?'"
-    ></p>
+    <p class="c-info"
+    >
+      Are you sure you want to deposit CML as collateral for a Genesis loan? <br/>
+      For more info on how to use these loans, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Epoch-3-TEA-Loans#genesis-tea-loans" target="_blank">visit our wiki</a>.
+    </p>
 
     <el-form v-if="param" :model="form" label-width="120px">
       <el-form-item label="CML Id" style="margin-bottom: 0">
