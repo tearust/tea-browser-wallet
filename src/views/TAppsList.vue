@@ -283,7 +283,7 @@ export default {
             init_fund: {
               label: 'Initial token',
               type: 'number',
-              default: 1,
+              default: 1000,
             },
             detail: {
               label: 'Details',
@@ -303,7 +303,7 @@ export default {
             },
             host_performance: {
               type: 'number',
-              default: 500
+              default: 2000
             },
             max_allowed_hosts: {
               type: 'number',
