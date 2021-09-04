@@ -84,6 +84,11 @@
       
 
   </TeaTable>
+
+  <div style="display:flex; justify-content: flex-end;">
+    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="registerHandler()">Register for competition</el-button>
+  </div>
+
 </div>
 </template>
 <script>
@@ -91,6 +96,9 @@ import request from '../request';
 import TeaTable from '../components/TeaTable';
 import {_} from 'tearust_utils';
 import utils from '../tea/utils';
+import Base from '../workflow/Base';
+import {stringToHex} from 'tearust_layer1';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   components: {
@@ -103,14 +111,22 @@ export default {
       show_for_coffee: false,
     };
   },
+  computed: {
+    ...mapGetters([
+      'layer1_account'
+    ]),
+  },
   async mounted(){
+    this.wf = new Base();
+    await this.wf.init();
+
     await this.refreshList();
   },
   methods: {
     async refreshList(){
       this.$root.loading(true);
       let tmp = await request.layer1_rpc('cml_userAssetList', []);
-      console.log(11, tmp);
+
       tmp = _.filter(tmp, (arr)=>{
         return arr[0] !== utils.consts.SUDO_ACCOUNT;
       });
@@ -182,6 +198,46 @@ export default {
       this.show_for_coffee = !this.show_for_coffee;
       await this.refreshList();
       
+    },
+    async registerHandler(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Register for competition',
+          pallet: 'genesisExchange',
+          tx: 'registerForCompetition',
+          text: '',
+          props: {
+            user: {
+              label: 'Account',
+              type: 'Input',
+            }
+          },
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+          try{
+            const account = form.user;
+            const erc20_address = form.erc20Address;
+            const email_address = form.email_address;
+
+            const tx = api.tx.genesisExchange.registerForCompetition(
+              account, erc20_address, email_address
+            );
+
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.refreshList();
+
+            close();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
     }
   }
 }
