@@ -37,7 +37,7 @@
             <span>{{tapp.host_performance}}</span>
           </div>
           <div class="x-item">
-            <b>Current/Max hosts:</b>
+            <b>Current/Max hosts :</b>
             <span>{{tapp.host_n}}</span>
           </div>
         </el-col>
