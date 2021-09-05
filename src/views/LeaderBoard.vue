@@ -21,7 +21,7 @@
     <el-table-column
       prop="address"
       label="Account"
-      width="200"
+      width="100"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.address" placement="right">
@@ -43,17 +43,18 @@
     <el-table-column
       prop="tea_asset"
       label="TEA account balance"
-      width="140"
+      width="100"
     />
     <el-table-column
       prop="usd_asset"
       label="COFFEE account balance"
-      width="150"
+      width="110"
     />
-    <!-- <el-table-column
-      prop="miner_credit"
-      label="Staking debt"
-    /> -->
+    <el-table-column
+      prop="token_asset"
+      label="TApp token balance"
+      width="100"
+    />
     <el-table-column
       prop="loan_credit"
       label="Genesis loan"
@@ -141,7 +142,7 @@ export default {
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
-          const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
           
           const rs = {
             index: i+1,
@@ -149,9 +150,10 @@ export default {
             cml_asset: utils.layer1.balanceToAmount(arr[1]),
             tea_asset: utils.layer1.balanceToAmount(arr[2]),
             usd_asset: utils.layer1.balanceToAmount(arr[3]),
-            // miner_credit: utils.layer1.balanceToAmount(arr[4]),
-            loan_credit: utils.layer1.balanceToAmount(arr[4]),
-            usd_debt: utils.layer1.balanceToAmount(arr[5]),
+            token_asset: utils.layer1.balanceToAmount(arr[4]),
+
+            loan_credit: utils.layer1.balanceToAmount(arr[5]),
+            usd_debt: utils.layer1.balanceToAmount(arr[6]),
             total: utils.layer1.balanceToAmount(total),
           };
           sum += rs.total;
@@ -165,12 +167,12 @@ export default {
           arr[3] = utils.layer1.balanceToAmount(arr[3])*usdToTea;
           arr[4] = utils.layer1.balanceToAmount(arr[4])*usdToTea;
           arr[5] = utils.layer1.balanceToAmount(arr[5])*usdToTea;
-          // arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
+          arr[6] = utils.layer1.balanceToAmount(arr[6])*usdToTea;
 
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
-          const total = arr[1]+arr[2]+arr[3]-arr[4]-arr[5];
+          const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
           sum += total;
           const rs = {
             index: i+1,
@@ -178,8 +180,9 @@ export default {
             cml_asset: utils.layer1.roundAmount(arr[1]),
             tea_asset: utils.layer1.roundAmount(arr[2]),
             usd_asset: utils.layer1.roundAmount(arr[3]),
-            loan_credit: utils.layer1.roundAmount(arr[4]),
-            usd_debt: utils.layer1.roundAmount(arr[5]),
+            token_asset: utils.layer1.roundAmount(arr[4]),
+            loan_credit: utils.layer1.roundAmount(arr[5]),
+            usd_debt: utils.layer1.roundAmount(arr[6]),
             total: utils.layer1.roundAmount(total),
           };
           return rs;

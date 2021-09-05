@@ -60,7 +60,7 @@
       label="Total income (TEA)"
     >
       <template slot-scope="scope">
-        <span :inner-html.prop="scope.row.total_income | balance"></span>
+        <span :inner-html.prop="scope.row.total_income"></span>
       </template>
     </el-table-column>
 
@@ -136,7 +136,7 @@ export default {
       });
 
       const x_list = [];
-      await Promise.all(_.map(cml_list, async (item)=>{
+      await Promise.all(_.map(cml_list, async (item, index)=>{
         const tapps = await request.layer1_rpc('bonding_listCmlHostingTapps', [item.id]);
 
         await Promise.all(_.map(tapps, async (arr)=>{
@@ -151,8 +151,12 @@ export default {
             host_performance: arr[7],
           };
 
-          const tmp = await helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id);
-          x_item.total_income = tmp.total;
+          x_item.total_income = '...';
+
+          helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
+            const value = tmp ? tmp.total : 0;
+            this.list[index].total_income = utils.layer1.formatBalance(value, true);
+          });
 
           x_list.push(x_item);
           return null;
