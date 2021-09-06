@@ -41,6 +41,19 @@
             <span>{{tapp.host_n}}</span>
           </div>
         </el-col>
+
+      </el-row>
+      <el-row class="x-list" style="flex-direction: row; margin-top:10px;">
+        <el-col :span="24">
+          <div class="x-item">
+            <b>Resource Cid :</b>
+            <span>{{tapp.cid}}</span>
+          </div>
+          <div style="margin-top:8px;text-align:right;">
+            <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" size="small" plain type="primary" @click="updateResourceCid()">Update Cid</el-button>
+            <el-button style="margin-left: 15px;" size="small" plain type="primary" @click="visitIpfs()">Visit</el-button>
+          </div>
+        </el-col>
       </el-row>
       
       <h4 style="font-size: 18px;color: #666; margin: 20px 0 5px 0;">Hosting CML list</h4>
@@ -102,7 +115,7 @@
     </div>
     
     <span slot="footer" class="dialog-footer">
-      <!-- <el-button style="float:left;" size="small" type="primary" @click="close()">Goto TApp</el-button> -->
+      <!-- <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="float:left;" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button> -->
 
       <el-button size="small" @click="close()">Close</el-button>
     </span>
@@ -118,6 +131,8 @@ import Base from '../../workflow/Base';
 import {_} from 'tearust_utils';
 import request from '../../request';
 import TeaTable from '../../components/TeaTable';
+import {hexToString} from 'tearust_layer1';
+import helper from '../helper';
 export default {
   components: {
     TeaTable,
@@ -163,6 +178,9 @@ export default {
     },
 
     async initDetailInfo(tapp_id){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
       const arr = await request.layer1_rpc('bonding_tappDetails', [tapp_id]);
       const tmp = {
         name: utils.rpcArrayToString(arr[0]),
@@ -175,6 +193,9 @@ export default {
         host_n: `${arr[7]}/${arr[8]}`,
         is_full: arr[7] >= arr[8],
       };
+
+      const cid = (await api.query.bondingCurve.tAppResourceMap(tapp_id)).toJSON();
+      tmp.cid = hexToString(cid);
 
       // console.log(tmp);
       this.tapp = tmp;
@@ -241,6 +262,52 @@ query {
 
     openTo(){
       
+    },
+    async updateResourceCid(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const tapp_id = this.param.id;
+
+      this.$store.commit('modal/open', {
+        key: 'common_tx', 
+        param: {
+          title: 'Update resource Cid',
+          pallet: 'bondingCurve',
+          tx: 'updateTappResource',
+          text: '',
+          props: {
+            tapp_id: {
+              label: 'TApp Id',
+              type: 'Input',
+              default: tapp_id,
+              disabled: true,
+            },
+            cid: {
+              label: 'IPFS Cid',
+              type: 'Input',
+            }
+          },
+        },
+        cb: async (form, mclose)=>{
+          this.$root.loading(true);
+
+          try{
+
+            const tx = api.tx.bondingCurve.updateTappResource(tapp_id, form.cid);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+            await this.initDetailInfo(tapp_id);
+            mclose();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+    },
+    visitIpfs(){
+      const cid = this.tapp.cid;
+      helper.goToTAppWithIpfsCid(cid);
     }
   }
 }

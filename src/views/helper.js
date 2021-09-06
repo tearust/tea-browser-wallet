@@ -252,6 +252,12 @@ query {
         id: tapp_id,
       },
     });
+  },
+
+  goToTAppWithIpfsCid(cid){
+    const ss = utils.get_env('ipfs_url');
+
+    window.open(ss+'/ipfs/'+cid, '_blank');
   }
 
 };
