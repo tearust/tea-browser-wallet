@@ -60,7 +60,7 @@
         width="200">
         <template slot-scope="scope">
 
-          <TeaIconButton :disabled="scope.row.is_on" tip="Host" icon="download" icon_style="font-size:20px;" @click="hostApp(scope)" />
+          <TeaIconButton :disabled="scope.row.is_on || param.tapp.is_full || scope.row.remaining<param.tapp.host_performance" tip="Host" icon="download" icon_style="font-size:20px;" @click="hostApp(scope)" />
 
           <TeaIconButton style="position:relative;top:1px;" :disabled="!scope.row.is_on" tip="Hosting this TApp now. Unhost?" icon="upload" icon_style="font-size:20px;" @click="unhostApp(scope)" />
           
@@ -99,6 +99,8 @@ export default {
     return {
       cml_list: null,
       loading: true,
+
+      tapp: null,
     };
   },
   computed: {
@@ -116,8 +118,6 @@ export default {
       const tapp_id = this.param.tapp.id;
 
       this.cml_list = await helper.bonding_listCandidateMiners(this, tapp_id);
-
-      console.log(111, this.cml_list);
 
       this.loading = false;
     },
