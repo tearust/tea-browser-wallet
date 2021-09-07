@@ -112,8 +112,8 @@
   </div>
   <div class="t-major-financial" v-if="loan_amount && loan_rate" :inner-html.prop="
     'Genesis loan principle is <b>' + (loan_amount) + '</b> <span>|</span>'+
-    'Genesis loan interest rate is <b>'+loan_rate + '</b> <span>|</span>'+
-    'Coffee interest rate is <b>'+usd_interest_rate+'</b>'
+    'Coffee interest rate is <b>'+usd_interest_rate+'</b>'+
+    '<br/>Genesis loan interest rate is '+loan_rate + ''
   ">
   </div>
 
@@ -548,7 +548,7 @@ export default {
 
       const loan_rate = (await api.query.genesisBank.interestRate()).toJSON();
       const pl = api.consts.genesisBank.loanTermDuration.toJSON();
-      this.loan_rate = (loan_rate/100) + '% per '+pl+' blocks';
+      this.loan_rate = '<b>'+(loan_rate/100) + '% </b> per 100 blocks. Loan term is <b>'+pl+'</b> blocks';
 
       let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
       loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
