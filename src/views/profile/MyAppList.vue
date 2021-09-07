@@ -29,7 +29,7 @@
     <el-table-column
       prop="owner"
       label="Owner"
-      width="100"
+      width="200"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.owner" placement="right">
@@ -62,6 +62,11 @@
     />
 
     <el-table-column
+      prop="market_value"
+      label="Market value (TEA)"
+    />
+
+    <!-- <el-table-column
       prop="host_performance"
       label="Host performance requirement"
       width="120"
@@ -69,7 +74,7 @@
     <el-table-column
       prop="host_n"
       label="Current/Max hosts"
-    />
+    /> -->
 
     <el-table-column
       label="Actions"
@@ -156,6 +161,8 @@ console.log(11, list);
           host_n: `${arr[9]}/${arr[10]}`,
           is_full: arr[9] >= arr[10],
         };
+
+        item.market_value = utils.layer1.roundAmount(item.amount*item.sell_price);
 
         return item;
       });
