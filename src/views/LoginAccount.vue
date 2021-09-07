@@ -110,10 +110,16 @@
     </div> -->
 
   </div>
-  <div class="t-major-financial" v-if="loan_amount && loan_rate" :inner-html.prop="
+
+
+  <div class="t-major-financial" v-if="loan_amount && loan_rate && !show_other">
+    Interest rate: Genesis loan <b>{{loan_rate}}</b>, COFFEE <b>{{usd_interest_rate_number}}</b>. 
+    <a href="javascript:void(0)" @click="show_other=true;" style="margin-left: 5px;">others ...</a>
+  </div>
+  <div class="t-major-financial" v-if="loan_amount && loan_rate && show_other" :inner-html.prop="
     'Genesis loan principle is <b>' + (loan_amount) + '</b> <span>|</span>'+
     'Coffee interest rate is <b>'+usd_interest_rate+'</b>'+
-    '<br/>Genesis loan interest rate is '+loan_rate + ''
+    '<br/>Genesis loan interest rate is '+loan_rate_str + ''
   ">
   </div>
 
@@ -192,9 +198,13 @@ export default {
       },
 
       usd_interest_rate: null,
+      usd_interest_rate_number: null,
 
       loan_rate: null,
+      loan_rate_str: null,
       loan_amount: null,
+
+      show_other: false,
 
     };
   },
@@ -250,6 +260,7 @@ export default {
     const query_rate = (await api.query.genesisExchange.uSDInterestRate()).toJSON()
     const usd_interest_rate = query_rate / 30;
     this.usd_interest_rate = (usd_interest_rate/100) + '% per '+pl+' blocks';
+    this.usd_interest_rate_number = (usd_interest_rate/100)+'%';
 
     await this.getMajorFinancial();
 
@@ -548,7 +559,8 @@ export default {
 
       const loan_rate = (await api.query.genesisBank.interestRate()).toJSON();
       const pl = api.consts.genesisBank.loanTermDuration.toJSON();
-      this.loan_rate = '<b>'+(loan_rate/100) + '% </b> per 100 blocks. Loan term is <b>'+pl+'</b> blocks';
+      this.loan_rate_str = '<b>'+(loan_rate/100) + '% per 100 blocks</b>. Loan term is <b>'+pl+'</b> blocks';
+      this.loan_rate = (loan_rate/100)+'%';
 
       let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
       loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
