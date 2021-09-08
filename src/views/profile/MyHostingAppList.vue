@@ -156,7 +156,6 @@ export default {
           helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
               
             const value = tmp ? tmp.total : 0;
-            console.log(111, index, value);
             this.list[index].total_income = utils.layer1.formatBalance(value, true);
           });
 
