@@ -17,7 +17,7 @@ const str = (key) => {
   return _.get(strings, key, key);
 };
 
-const { _, uuid, forge } = tearust_utils;
+const { _, uuid, forge, axios } = tearust_utils;
 
 // window.L = require('tearust_layer1');
 
@@ -168,7 +168,6 @@ const F = {
     return _.get(process.env, x_key, null);
   },
 
-
   register: (key, cb) => {
     Pubsub.unsubscribe(key);
     Pubsub.subscribe(key, cb);
@@ -250,6 +249,61 @@ const F = {
   }
 
 
+};
+
+F.safe = {
+  layer1_url: null,
+  layer1_rpc: null,
+  _index: 0,
+
+
+  async getForLayer1(){
+    if(F.safe.layer1_url && F.safe.layer1_rpc){
+      return [F.safe.layer1_url, F.safe.layer1_rpc];
+    }
+
+    const arr1 = F.get_env('layer1_url') ? F.get_env('layer1_url').split(',') : ['ws://127.0.0.1:9944'];
+    const arr2 = F.get_env('layer1_rpc') ? F.get_env('layer1_rpc').split(',') : ['http://127.0.0.1:9933'];
+
+    if(arr1.length !== arr2.length){
+      throw 'invalid layer1 env config.';
+    }
+
+    if(F.safe._index > arr1.length-1){
+      F.safe._index = 0;
+    }
+
+    const url = arr1[F.safe._index];
+    const rpc = arr2[F.safe._index];
+
+    try{
+      const rs = await axios.get(rpc+'/health', {});
+      if(rs.data){
+
+        F.safe.layer1_url = url;
+        F.safe.layer1_rpc = rpc;
+
+        console.log('layer1_url => '+url);
+        console.log('layer1_rpc => '+rpc);
+
+        return [F.safe.layer1_url, F.safe.layer1_rpc];
+      }
+
+      console.log('health result => ', rs);
+      throw 'health check fail.';
+
+    }catch(e){
+      console.error('layer1 health check error => ', e);
+    }
+
+    F.safe.layer1_url = null;
+    F.safe.layer1_rpc = null;
+    F.safe._index += 1;
+    
+    return await F.safe.getForLayer1();
+
+
+  }
 };
 
 window.utils = F;

@@ -1,6 +1,4 @@
 import utils from './utils';
-const LAYER1_URL = utils.get_env('layer1_url') || 'ws://127.0.0.1:9944';
-const LAYER1_HTTP = utils.get_env('layer1_http') || 'http://127.0.0.1:9933';
 
 import types from './types.json';
 
@@ -25,9 +23,12 @@ class Layer1 {
     if(this.connected > 0) return;
 
     this.connected = 1;
+
+    const [LAYER1_URL, LAYER1_RPC] = await utils.safe.getForLayer1();
+    
     const _layer1 = new TeaLayer1({
       ws_url: LAYER1_URL,
-      http_url: LAYER1_HTTP,
+      http_url: LAYER1_RPC,
       system_top_up_account: 'Alice',
       env: 'browser',
       types,
