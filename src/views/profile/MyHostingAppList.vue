@@ -136,7 +136,7 @@ export default {
       });
 
       const x_list = [];
-      await Promise.all(_.map(cml_list, async (item, index)=>{
+      await Promise.all(_.map(cml_list, async (item)=>{
         const tapps = await request.layer1_rpc('bonding_listCmlHostingTapps', [item.id]);
 
         await Promise.all(_.map(tapps, async (arr)=>{
@@ -152,13 +152,17 @@ export default {
           };
 
           x_item.total_income = '...';
-
-          helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
-            const value = tmp ? tmp.total : 0;
-            this.list[index].total_income = utils.layer1.formatBalance(value, true);
-          });
-
           x_list.push(x_item);
+
+          ((index)=>{
+              helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
+                
+              const value = tmp ? tmp.total : 0;
+              console.log('from indexer', index, value);
+              this.list[index].total_income = utils.layer1.formatBalance(value, true);
+            });
+          })(x_list.length - 1);
+          
           return null;
         }));
 

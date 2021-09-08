@@ -2,8 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import utils from './tea/utils';
 
-const SERVER_URL = utils.get_env('SERVER_URL');
-const LAYER1_RPC = utils.get_env('LAYER1_RPC');
+const SERVER_URL = utils.get_env('server_url');
 const BASE_URL = `${SERVER_URL}/`;
 
 console.log("server_url => "+BASE_URL);
@@ -162,7 +161,9 @@ query {
       params,
       id: 9999
     };
-    const rs = await axios.post(LAYER1_RPC, data, {
+
+    const arr = await utils.safe.getForLayer1();
+    const rs = await axios.post(arr[1], data, {
       headers: {
         'Content-Type': 'application/json',
       }
