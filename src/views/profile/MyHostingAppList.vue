@@ -136,10 +136,10 @@ export default {
       });
 
       const x_list = [];
-      await Promise.all(_.map(cml_list, async (item, index)=>{
+      await Promise.all(_.map(cml_list, async (item)=>{
         const tapps = await request.layer1_rpc('bonding_listCmlHostingTapps', [item.id]);
 
-        await Promise.all(_.map(tapps, async (arr)=>{
+        await Promise.all(_.map(tapps, async (arr, index)=>{
           const x_item = {
             cml_id: arr[0],
             remaining: item.remaining_performance, //arr[1],
@@ -154,7 +154,9 @@ export default {
           x_item.total_income = '...';
 
           helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
+              
             const value = tmp ? tmp.total : 0;
+            console.log(111, index, value);
             this.list[index].total_income = utils.layer1.formatBalance(value, true);
           });
 
