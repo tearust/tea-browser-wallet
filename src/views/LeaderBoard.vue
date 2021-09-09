@@ -217,6 +217,10 @@ export default {
             user: {
               label: 'Account',
               type: 'Input',
+            },
+            account: {
+              label: 'Polkadot{.js} address',
+              type: 'Input',
             }
           },
         },
