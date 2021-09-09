@@ -215,13 +215,9 @@ export default {
           text: '',
           props: {
             user: {
-              label: 'Account',
-              type: 'Input',
-            },
-            account: {
               label: 'Polkadot{.js} address',
               type: 'Input',
-            }
+            },
           },
         },
         cb: async (form, close)=>{
