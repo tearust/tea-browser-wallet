@@ -14,7 +14,7 @@
     <i v-if="!param || loading" class="el-icon-loading" style="display: block; width: 40px; height: 40px;font-size: 40px; margin: 0 auto;"></i>
 
   <div v-if="!loading && param && param.tapp">
-      <p class="c-info" v-if="param.tapp.is_full">This TApp no longer accepts new host</p>
+      <p class="c-info" v-if="param.tapp.is_full">This TApp no longer accepts new hosts</p>
       <p class="c-info" v-if="!param.tapp.is_full">
         {{param.tapp.name}} requires {{param.tapp.host_performance}} performance to host. Please select one of the CML which is qualified to host. <br/>
         For more info about maximizing your hosting revenue, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#host-and-unhost-tapp" target="_blank">visit our wiki</a>.

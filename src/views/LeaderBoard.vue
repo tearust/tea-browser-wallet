@@ -79,7 +79,7 @@
       label="Prize share"
     >
       <template slot-scope="scope">
-        <span style="color: #35a696;font-weight:bold;" :inner-html.prop="`<i class='iconfont icon-dollar'></i>${scope.row.reward}`"></span>
+        <span style="color: #35a696;font-weight:bold;" :inner-html.prop="scope.row.reward>0?`<i class='iconfont icon-dollar'></i>${scope.row.reward}`:'0'"></span>
       </template>
     </el-table-column>
       
@@ -136,6 +136,7 @@ export default {
       const usdToTea = utils.layer1.balanceToAmount(rtmp[1]);
 
       let x_list = null;
+      const sum_arr = [];
       let sum = 0;
       if(this.show_for_coffee){
         x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
@@ -156,7 +157,12 @@ export default {
             usd_debt: utils.layer1.balanceToAmount(arr[6]),
             total: utils.layer1.balanceToAmount(total),
           };
-          sum += rs.total;
+
+          if(rs.total > 0 && _.size(sum_arr)<20){
+            sum += rs.total;
+            sum_arr.push(rs.index);
+          }
+          
           return rs;
         }));
       }
@@ -173,7 +179,7 @@ export default {
             arr[j] = _.toNumber(arr[j]);
           }
           const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
-          sum += total;
+          
           const rs = {
             index: i+1,
             address: arr[0],
@@ -185,12 +191,24 @@ export default {
             usd_debt: utils.layer1.roundAmount(arr[6]),
             total: utils.layer1.roundAmount(total),
           };
+
+          if(rs.total > 0 && _.size(sum_arr)<20){
+            sum += rs.total;
+            sum_arr.push(rs.index);
+          }
+
           return rs;
         }));
       }
 
       this.list = _.map(x_list, (item)=>{
-        item.reward = utils.layer1.roundAmount(utils.consts.TOTAL_REWARD*(item.total / sum));
+        if(_.includes(sum_arr, item.index)){
+          item.reward = utils.layer1.roundAmount(utils.consts.TOTAL_REWARD*(item.total / sum));
+        }
+        else{
+          item.reward = 0;
+        }
+        
         return item;
       });
       
@@ -215,9 +233,9 @@ export default {
           text: '',
           props: {
             user: {
-              label: 'Account',
+              label: 'Polkadot{.js} address',
               type: 'Input',
-            }
+            },
           },
         },
         cb: async (form, close)=>{

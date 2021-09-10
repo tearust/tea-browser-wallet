@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="tapp ? tapp.name : '...'"
+    :title="tapp ? tapp.name : '---'"
     :visible="visible"
     width="1080px"
     :close-on-click-modal="false"
@@ -105,7 +105,7 @@
           width="120"
         >
           <template slot-scope="scope">
-            <span :inner-html.prop="scope.row.reward?scope.row.reward:'...'"></span>
+            <span :inner-html.prop="scope.row.reward?scope.row.reward:'---'"></span>
           </template>
         </el-table-column>
 

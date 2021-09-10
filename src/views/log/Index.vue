@@ -155,13 +155,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column
+    <!-- <el-table-column
       label="Price"
     >
       <template slot-scope="scope">
         {{scope.row.price}}
       </template>
-    </el-table-column>
+    </el-table-column> -->
     
     <el-table-column
       label="Amount"
@@ -171,13 +171,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column
+    <!-- <el-table-column
       label="Target user"
     >
       <template slot-scope="scope">
         {{scope.row.target}}
       </template>
-    </el-table-column>
+    </el-table-column> -->
 
     <!-- <el-table-column
       prop="args"
