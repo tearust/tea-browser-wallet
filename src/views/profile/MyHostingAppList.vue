@@ -151,16 +151,20 @@ export default {
             host_performance: arr[7],
           };
 
-          x_item.total_income = '...';
+          x_item.total_income = '---';
           x_list.push(x_item);
 
           ((index)=>{
+            _.delay(()=>{
               helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
+                  
+                const value = tmp ? tmp.total : 0;
+                console.log('from indexer', index, value);
+                this.list[index].total_income = utils.layer1.formatBalance(value, true);
                 
-              const value = tmp ? tmp.total : 0;
-              console.log('from indexer', index, value);
-              this.list[index].total_income = utils.layer1.formatBalance(value, true);
-            });
+              });
+            }, 500+index*100);
+            
           })(x_list.length - 1);
           
           return null;

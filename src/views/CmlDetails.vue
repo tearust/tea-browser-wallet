@@ -270,9 +270,9 @@ export default {
         },
         {
           id: '1',
-          name: 'Image recognization',
-          detail: 'Give any input image, use AI to figure out what it is on the picture',
-          estimate: '300'
+          name: 'Delegator(upcoming epoch4)',
+          detail: 'This service is counterpart of traditional "web server" that serve web client. Note: host needs to public IP address',
+          estimate: '---'
         }
       ],
     };
