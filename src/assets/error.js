@@ -179,4 +179,10 @@ export default {
   CmlIsAlreadyHosting: 'The CML is already hosting the given TApp',
   NoHostingToDistributeMiner: 'Distribution not needed: there are no miners hosting this TApp',
   ConsumeNoteIsTooLong: 'The consume note is too long.',
+
+
+
+  
+  OnlyAllowedNpcAccountToRegister: 'Only NPC user can add contestant.',
+  OnlyAllowedCompetitionUserBorrowUSD: 'You are not in the contestants list. please join <a href="https://t.me/teaprojectorg" target="_blank">https://t.me/teaprojectorg</a> group and ask the admin to add you in first',
 };
