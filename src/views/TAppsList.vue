@@ -117,6 +117,9 @@
         <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#buy-price" target="_blank">token price </a> 
         are determined by 
         <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#sell-price" target="_blank">the bonding curve.</a> 
+        Your TApp tokens in your wallet will expand or contract based on 
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#tapp-tokens-in-wallet-expand-on-consume-contract-on-expense" target="_blank">consume and expense actions </a> 
+        on the TApp's bonding curve.
       </li>
       <li>
         The 
