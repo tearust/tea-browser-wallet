@@ -45,7 +45,7 @@
     <el-table-column
       prop="machine_id"
       label="Miner ID"
-      width="150"
+      width="120"
     > 
       <template slot-scope="scope">
         <el-button
@@ -64,10 +64,10 @@
     />
 
     <el-table-column
-      prop="defrost_schedule"
-      label="Defrost schedule"
+      prop="remaining_performance"
+      label="Remaining performance"
       sortable
-      width="130"
+      width="170"
     />
 
     <!-- <el-table-column
