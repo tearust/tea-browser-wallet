@@ -155,6 +155,7 @@ import TeaTableColumn from '../components/TeaTableColumn';
 import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
 import helper from './helper';
+import tapp from './tapp';
 
 export default {
   components: {
@@ -251,18 +252,20 @@ export default {
       const ticker_max_len = api.consts.bondingCurve.tAppTickerMaxLength.toJSON();
       const detail_max_len = api.consts.bondingCurve.tAppDetailMaxLength.toJSON();
       const link_max_len = api.consts.bondingCurve.tAppLinkMaxLength.toJSON();
+
       this.$store.commit('modal/open', {
-        key: 'common_tx', 
+        key: 'common_form', 
         param: {
           title: 'Create new TApp',
-          pallet: 'bondingCurve',
+          // pallet: 'bondingCurve',
           confirm_text: 'Next',
-          tx: 'createNewTapp',
+          // tx: 'createNewTapp',
           text: '',
           props: {
             tapp_name: {
               type: 'Input',
               label: 'Name',
+              required: true,
               rules: {
                 max: name_max_len,
                 message: `Name cannot be longer than ${name_max_len} characters.`,
@@ -271,6 +274,7 @@ export default {
             ticker: {
               type: 'Input',
               label: 'TApp symbol',
+              required: true,
               // tip: `${ticker_min_len}-${ticker_max_len} uppercase character.`,
               rules: [
                 {
@@ -286,24 +290,55 @@ export default {
             init_fund: {
               label: 'Initial token',
               type: 'number',
+              required: true,
               default: 1000,
             },
             detail: {
               label: 'Details',
               type: 'Input',
+              required: true,
               rules: {
                 max: detail_max_len,
                 message: `Details symbol cannot be longer than ${detail_max_len} characters.`,
               }
             },
-            link: {
-              label: 'Link',
+            // link: {
+            //   label: 'Link',
+            //   type: 'Input',
+            //   required: true,
+            //   rules: {
+            //     max: link_max_len,
+            //     message: `Link symbol cannot be longer than ${link_max_len} characters.`,
+            //   }
+            // },
+            template: {
+              label: 'Type',
+              type: 'select',
+              required: true,
+              options: _.map(tapp.template.list(), (v)=>{
+                return {
+                  label: tapp.template.getLabel(v),
+                  value: v,
+                }
+              }),
+            },
+            youtube: {
               type: 'Input',
-              rules: {
-                max: link_max_len,
-                message: `Link symbol cannot be longer than ${link_max_len} characters.`,
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'youtube'
               }
             },
+            channel: {
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'bbs',
+              }
+            },
+
             host_performance: {
               type: 'number',
               default: 2000
@@ -339,8 +374,15 @@ export default {
             const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
+            let link_param = form.youtube;
+            if(form.template === 'bbs'){
+              link_param = form.channel;
+            }
+            const link = tapp.template.genLink(form.template, link_param);
+            // console.log(111, link, form);
+
             const tx = api.tx.bondingCurve.createNewTapp(
-              name, ticker, fund, stringToHex(form.detail), stringToHex(form.link), form.host_performance, form.max_allowed_hosts
+              name, ticker, fund, stringToHex(form.detail), stringToHex(link), form.host_performance, form.max_allowed_hosts
             );
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);

@@ -30,6 +30,10 @@ const initState = ()=>{
       visible: false,
       param: {},
     },
+    common_form: {
+      visible: false,
+      param: {},
+    },
     staking_slot: {
       visible: false,
       param: {},

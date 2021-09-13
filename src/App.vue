@@ -20,6 +20,7 @@
     <TransferBalanceModal />
     <LogDetailsModal />
     <CommonTxModal />
+    <CommonFormModal />
     <StakingSlotModal />
     <CmlDetailsModal />
     <DepositLoanModal />
@@ -41,6 +42,7 @@ import DataDetailsModal from './views/modals/DataDetailsModal';
 import TransferBalanceModal from './views/modals/TransferBalanceModal';
 import LogDetailsModal from './views/modals/LogDetailsModal';
 import CommonTxModal from './views/modals/CommonTxModal';
+import CommonFormModal from './views/modals/CommonFormModal';
 import StakingSlotModal from './views/modals/StakingSlotModal';
 import CmlDetailsModal from './views/modals/CmlDetailsModal';
 import DepositLoanModal from './views/modals/DepositLoanModal';
@@ -60,6 +62,7 @@ export default {
     TransferBalanceModal,
     LogDetailsModal,
     CommonTxModal,
+    CommonFormModal,
     StakingSlotModal,
     CmlDetailsModal,
     DepositLoanModal,
