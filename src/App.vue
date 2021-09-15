@@ -26,6 +26,7 @@
     <DepositLoanModal />
     <HostTAppModal />
     <TAppDetailsModal />
+    <TAppLinkModal />
   </div>
 </template>
 
@@ -48,6 +49,7 @@ import CmlDetailsModal from './views/modals/CmlDetailsModal';
 import DepositLoanModal from './views/modals/DepositLoanModal';
 import HostTAppModal from './views/modals/HostTAppModal';
 import TAppDetailsModal from './views/modals/TAppDetailsModal';
+import TAppLinkModal from './views/modals/TAppLinkModal';
 
 export default {
   components: {
@@ -68,6 +70,7 @@ export default {
     DepositLoanModal,
     HostTAppModal,
     TAppDetailsModal,
+    TAppLinkModal,
   }
 }
 </script>

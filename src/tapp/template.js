@@ -1,22 +1,23 @@
 import {_} from 'tearust_utils';
 
-const F = {
-  
-};
-
 const TEM_LIST = [
   {
     key: 'youtube',
     label: 'Youtube',
     link(video_id){
-      return 'aa-'+video_id;
+      return JSON.stringify({
+        type: 'youtube',
+        v: video_id,
+      });
     }
   }, 
   {
     key: 'bbs',
     label: 'Tea Party',
-    link(channel_id){
-      return 'bb-'+channel_id
+    link(){
+      return JSON.stringify({
+        type: 'bbs',
+      });
     }
   }
 ];
@@ -25,7 +26,7 @@ _.each(TEM_LIST, (item)=>{
   _.set(TEM_MAP, item.key, item);
 });
 
-F.template = {
+export default {
   list(){
     return _.map(TEM_LIST, (item)=>{
       return item.key;
@@ -39,5 +40,3 @@ F.template = {
     return item.link.call(null, param);
   }
 };
-
-export default F;

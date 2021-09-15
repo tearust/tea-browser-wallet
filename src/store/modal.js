@@ -53,7 +53,11 @@ const initState = ()=>{
     tapp_details: {
       visible: false,
       param: {},
-    }
+    },
+    tapp_link: {
+      visible: false,
+      param: {},
+    },
 
   };
 }

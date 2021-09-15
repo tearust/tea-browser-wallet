@@ -22,7 +22,7 @@
       label="TApp Name"
     >
       <template slot-scope="scope">
-        <el-button size="small" type="text" @click="openTo(scope.row)">{{scope.row.name}}</el-button>
+        <el-button size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
       </template>
     </el-table-column>
 
@@ -155,7 +155,7 @@ import TeaTableColumn from '../components/TeaTableColumn';
 import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
 import helper from './helper';
-import tapp from './tapp';
+import tapp from '../tapp';
 
 export default {
   components: {
@@ -217,10 +217,10 @@ export default {
 
       this.$root.loading(false);
     },
-    openTo(row){
-      helper.openToTApp(this, row);
+    showLink(scope){
+      helper.showTAppLink(this, scope.row.id);
     },
-    async showDetails(scope){
+    showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);
     },
     async buyHandler(scope){
@@ -330,14 +330,14 @@ export default {
                 value: 'youtube'
               }
             },
-            channel: {
-              type: 'Input',
-              required: true,
-              condition: {
-                target: 'template',
-                value: 'bbs',
-              }
-            },
+            // channel: {
+            //   type: 'Input',
+            //   required: true,
+            //   condition: {
+            //     target: 'template',
+            //     value: 'bbs',
+            //   }
+            // },
 
             host_performance: {
               type: 'number',
@@ -376,10 +376,10 @@ export default {
 
             let link_param = form.youtube;
             if(form.template === 'bbs'){
-              link_param = form.channel;
+              link_param = null;
             }
             const link = tapp.template.genLink(form.template, link_param);
-            // console.log(111, link, form);
+            console.log(111, link, form);
 
             const tx = api.tx.bondingCurve.createNewTapp(
               name, ticker, fund, stringToHex(form.detail), stringToHex(link), form.host_performance, form.max_allowed_hosts

@@ -245,9 +245,17 @@ query {
     return rs.hostingTappRewards.nodes[0];
   },
 
-  async showTAppDetails(self, tapp_id,){
+  async showTAppDetails(self, tapp_id){
     self.$store.commit('modal/open', {
       key: 'tapp_details',
+      param: {
+        id: tapp_id,
+      },
+    });
+  },
+  async showTAppLink(self, tapp_id){
+    self.$store.commit('modal/open', {
+      key: 'tapp_link',
       param: {
         id: tapp_id,
       },
