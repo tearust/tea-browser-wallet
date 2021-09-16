@@ -1,5 +1,7 @@
 import {_} from 'tearust_utils';
+import utils from '../tea/utils';
 
+const http = 'http://'+utils.get_env('TAPP_BASE_IP');
 const TEM_LIST = [
   {
     key: 'YouTube',
@@ -8,7 +10,10 @@ const TEM_LIST = [
       return JSON.stringify({
         v: tid,
       });
-    }
+    },
+    url(id, tid){
+      return `${http}:3200?v=${tid}&id=${id}`;
+    },
   }, 
   {
     key: 'Reddit',
@@ -17,7 +22,10 @@ const TEM_LIST = [
       return JSON.stringify({
         v: tid,
       });
-    }
+    },
+    url(id, tid){
+      throw 'TODO';
+    },
   }, 
   {
     key: 'Twitter',
@@ -26,7 +34,10 @@ const TEM_LIST = [
       return JSON.stringify({
         v: tid,
       });
-    }
+    },
+    url(id, tid){
+      throw 'TODO';
+    },
   }, 
   // {
   //   key: 'bbs',
@@ -55,5 +66,11 @@ export default {
   genLink(value, param){
     const item = TEM_MAP[value];
     return item.link.call(null, _.trim(param));
+  },
+  call(value, key, args){
+    const item = TEM_MAP[value];
+    const cb = item[key];
+
+    return cb.apply(null, args);
   }
 };

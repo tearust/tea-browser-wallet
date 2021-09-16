@@ -2,6 +2,7 @@
 import {_} from 'tearust_utils';
 import utils from '../tea/utils';
 import request from '../request';
+import tapp from '../tapp';
 
 // self means vue instance, required.
 const F = {
@@ -212,10 +213,17 @@ const F = {
       return;
     }
 
-    let url = _.trim(row.link);
-    url = utils.urlToLink(url);
-    url += '&id='+row.id;
-    window.open(url, '_blank');
+    try{
+      const json = JSON.parse(row.link);
+      let url = tapp.template.call(row.type, 'url', [row.id, json.v]);
+      url = utils.urlToLink(url);
+
+      window.open(url, '_blank');
+
+    }catch(e){
+      self.$root.showError(e);
+    }
+
   },
 
   async getHostingReward(account_id, cml_id, tapp_id){

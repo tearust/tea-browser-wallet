@@ -221,6 +221,7 @@ export default {
 
         item.ori = (await api.query.bondingCurve.tAppBondingCurve(item.id)).toJSON();
         item.status = item.ori.status;
+        item.type = item.ori.tapp_type;
 
         return item;
       }));
@@ -230,7 +231,8 @@ export default {
       this.$root.loading(false);
     },
     showLink(scope){
-      helper.showTAppLink(this, scope.row.id);
+      // helper.showTAppLink(this, scope.row.id);
+      helper.openToTApp(this, scope.row);
     },
     showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);
