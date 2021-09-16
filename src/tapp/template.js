@@ -2,24 +2,41 @@ import {_} from 'tearust_utils';
 
 const TEM_LIST = [
   {
-    key: 'youtube',
+    key: 'YouTube',
     label: 'Youtube',
-    link(video_id){
+    link(tid){
       return JSON.stringify({
-        type: 'youtube',
-        v: video_id,
+        v: tid,
       });
     }
   }, 
   {
-    key: 'bbs',
-    label: 'Tea Party',
-    link(){
+    key: 'Reddit',
+    label: 'Reddit',
+    link(tid){
       return JSON.stringify({
-        type: 'bbs',
+        v: tid,
       });
     }
-  }
+  }, 
+  {
+    key: 'Twitter',
+    label: 'Twitter',
+    link(tid){
+      return JSON.stringify({
+        v: tid,
+      });
+    }
+  }, 
+  // {
+  //   key: 'bbs',
+  //   label: 'Tea Party',
+  //   link(){
+  //     return JSON.stringify({
+  //       type: 'bbs',
+  //     });
+  //   }
+  // }
 ];
 const TEM_MAP = {};
 _.each(TEM_LIST, (item)=>{
@@ -37,6 +54,6 @@ export default {
   },
   genLink(value, param){
     const item = TEM_MAP[value];
-    return item.link.call(null, param);
+    return item.link.call(null, _.trim(param));
   }
 };

@@ -1,6 +1,9 @@
 <template>
 <div class="tea-page">
   <h4>TApps list</h4>
+
+  <el-button v-if="layer1_account && layer1_account.address==='5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP'" style="right: 50px;" size="small" class="tea-refresh-btn" type="primary" @click="$root.goPath('/admin/approve_links')">Approve links</el-button>
+
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     :data="list || []"
@@ -8,9 +11,8 @@
   >
     <el-table-column
       prop="id"
-      width="70"
+      width="60"
       label="ID"
-      sortable
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="showDetails(scope)">{{scope.row.id}}</el-button>
@@ -19,7 +21,8 @@
 
     <el-table-column
       prop="name"
-      label="TApp Name"
+      label="Name"
+      width="80"
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
@@ -29,7 +32,7 @@
     <el-table-column
       prop="owner"
       label="Owner"
-      width="100"
+      width="80"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.owner" placement="right">
@@ -53,28 +56,28 @@
       prop="total_supply"
       label="Total supply"
       tip="Total number of tokens issued"
-      width="100"
+      width="90"
     />
 
     <TeaTableColumn
       prop="buy_price"
       label="Buy price (TEA)"
       tip="Price at which you can buy the token from the bonding curve"
-      width="120"
+      width="100"
     />
 
     <TeaTableColumn
       prop="sell_price"
       label="Sell price (TEA)"
       tip="Price at which you can sell the token into the bonding curve"
-      width="120"
+      width="100"
     />
 
     <TeaTableColumn
       label="Market cap"
       prop="market_cap"
       tip="The current sell price multiplied by the number of tokens outstanding"
-      width="100"
+      width="90"
     />
     <TeaTableColumn
       prop="host_performance"
@@ -87,6 +90,11 @@
       label="Current/Max hosts"
       width="90"
       tip="The maximum number of hosts that can be hosting this TApp"
+    />
+
+    <TeaTableColumn
+      prop="status"
+      label="Status"
     />
 
 
@@ -177,22 +185,21 @@ export default {
     this.wf = new Base();
     await this.wf.init();
 
-    utils.register('refresh-current-account__my_app', async (key, param)=>{
-      await this.refreshList();   
-    });
 
     await this.refreshList();
   },
 
   methods: {
     async refreshList(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
       this.$root.loading(true);
-      await utils.sleep(1000);
+      // await utils.sleep(1000);
 
-      const list = await request.layer1_rpc('bonding_listTApps', []);
-      console.log(11, list);
+      const list = await request.layer1_rpc('bonding_listTApps', [false]);
 
-      this.list = _.map(list, (arr)=>{
+      this.list = await Promise.all(_.map(list, async (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
           name: utils.rpcArrayToString(arr[0]),
@@ -212,8 +219,13 @@ export default {
         };
         item.market_cap = utils.layer1.roundAmount(item.sell_price * item.total_supply);
 
+        item.ori = (await api.query.bondingCurve.tAppBondingCurve(item.id)).toJSON();
+        item.status = item.ori.status;
+
         return item;
-      });
+      }));
+
+      console.log(11, this.list);
 
       this.$root.loading(false);
     },
@@ -257,10 +269,9 @@ export default {
         key: 'common_form', 
         param: {
           title: 'Create new TApp',
-          // pallet: 'bondingCurve',
           confirm_text: 'Next',
-          // tx: 'createNewTapp',
           text: '',
+          label_width: 180,
           props: {
             tapp_name: {
               type: 'Input',
@@ -322,31 +333,55 @@ export default {
                 }
               }),
             },
-            youtube: {
+            YouTube: {
+              label: 'Youtube Id',
               type: 'Input',
               required: true,
               condition: {
                 target: 'template',
-                value: 'youtube'
+                value: 'YouTube'
               }
             },
-            // channel: {
-            //   type: 'Input',
-            //   required: true,
-            //   condition: {
-            //     target: 'template',
-            //     value: 'bbs',
-            //   }
-            // },
-
-            host_performance: {
-              type: 'number',
-              default: 2000
+            Reddit: {
+              label: 'Reddit Id',
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'Reddit'
+              }
             },
+            Twitter: {
+              label: 'Twitter Id',
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'Twitter'
+              }
+            },
+            
+
             max_allowed_hosts: {
               type: 'number',
+              required: true,
               default: 10
+            },
+
+            reward_per_performance: {
+              type: 'number',
+              default: 1,
+            },
+            stake_token_amount: {
+              type: 'number',
+              default: 100,
+            },
+
+            fixed_token_mode: {
+              type: 'checkbox',
+              default: true,
             }
+            
           },
         },
         cb: async (form, close)=>{
@@ -374,15 +409,21 @@ export default {
             const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
-            let link_param = form.youtube;
-            if(form.template === 'bbs'){
-              link_param = null;
-            }
+            let link_param = form[form.template];
             const link = tapp.template.genLink(form.template, link_param);
             console.log(111, link, form);
 
             const tx = api.tx.bondingCurve.createNewTapp(
-              name, ticker, fund, stringToHex(form.detail), stringToHex(link), form.host_performance, form.max_allowed_hosts
+              name, 
+              ticker, 
+              fund, 
+              stringToHex(form.detail), 
+              stringToHex(link), 
+              form.max_allowed_hosts,
+              form.template,
+              form.fixed_token_mode,
+              utils.layer1.amountToBalance(form.reward_per_performance),
+              utils.layer1.amountToBalance(form.stake_token_amount),
             );
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);

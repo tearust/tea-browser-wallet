@@ -23,6 +23,8 @@ import MiningTreeList from './views/MiningTreeList';
 import LeaderBoard from './views/LeaderBoard';
 import TAppsList from './views/TAppsList';
 
+import ApproveLinks from './views/admin/ApproveLinks';
+
 
 Vue.use(Router);
 
@@ -106,6 +108,12 @@ let routers = [
     path: '/tapps_list',
     name: 'tapps_list',
     component: TAppsList,
+  },
+
+
+  {
+    path: '/admin/approve_links',
+    component: ApproveLinks,
   }
   
 ];

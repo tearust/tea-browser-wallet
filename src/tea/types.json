@@ -173,7 +173,25 @@
   "TAppId": "u64",
   "Performance": "u32",
   "CurveType": {
-    "_enum": ["UnsignedLinear", "UnsignedSquareRoot_1000_0", "UnsignedSquareRoot_700_0"]
+    "_enum": ["UnsignedLinear", "UnsignedSquareRoot_10", "UnsignedSquareRoot_7"]
+  },
+  "TAppType": {
+    "_enum": ["YouTube", "Reddit", "Twitter"]
+  },
+  "BillingMode": {
+    "_enum": {
+      "FixedHostingFee": "BillingModeFixedHostingFee",
+      "FixedHostingToken": "BillingModeFixedHostingToken"
+    }
+  },
+  "BillingModeFixedHostingFee": {
+    "FixedHostingFee": "Balance"
+  },
+  "BillingModeFixedHostingToken": {
+    "FixedHostingToken": "Balance"
+  },
+  "TAppStatus": {
+    "_enum": ["Active", "Pending"]
   },
   "TAppItem": {
     "id": "TAppId",
@@ -184,8 +202,10 @@
     "sell_curve": "CurveType",
     "detail": "Bytes",
     "link": "Bytes",
-    "host_performance": "Option<Performance>",
-    "max_allowed_hosts": "Option<u32>",
-    "current_cost": "Balance"
+    "max_allowed_hosts": "u32",
+    "current_cost": "Balance",
+    "status": "TAppStatus",
+    "tapp_type": "TAppType",
+    "billing_mode": "BillingMode"
   }
 }

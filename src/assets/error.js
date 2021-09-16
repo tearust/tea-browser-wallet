@@ -166,6 +166,7 @@ export default {
   SubtractionOverflow: 'Error: subtraction overflow',
   AddOverflow: 'Error: addition overflow',
   NotAllowedNormalUserCreateTApp: 'You don\'t have enough permission to creat a TApp',
+  
   OnlyTAppOwnerAllowedToExpense: 'Error: only TApp owner allowed to expense',
 
   HostPerformanceAndMaxAllowedHostMustBePaired: 'Host performance and Max allowed hosts should both have a value if both aren\'t 0',
@@ -180,9 +181,24 @@ export default {
   NoHostingToDistributeMiner: 'Distribution not needed: there are no miners hosting this TApp',
   ConsumeNoteIsTooLong: 'The consume note is too long.',
 
+  NotAllowedNPCCreateTApp: 'NotAllowedNPCCreateTApp',
+  OnlyTAppOwnerAllowedToUpdateResource: 'OnlyTAppOwnerAllowedToUpdateResource',
+  CidIsToLong: 'CidIsToLong',
+  TotalSupplyOverTheMaxValue: 'TotalSupplyOverTheMaxValue',
+  RewardPerPerformanceShouldNotBeZero: 'RewardPerPerformanceShouldNotBeZero',
+  StakeTokenShouldNotBeZero: 'StakeTokenShouldNotBeZero',
+  StakeTokenIsNoneInFixedTokenMode: 'StakeTokenIsNoneInFixedTokenMode',
+  RewardPerPerformanceIsNoneInFixedFeeMode: 'RewardPerPerformanceIsNoneInFixedFeeMode',
+  HostLockingBlockHeightNotReached: 'HostLockingBlockHeightNotReached',
+  OnlyNPCAccountAllowedToRegisterLinkUrl: 'OnlyNPCAccountAllowedToRegisterLinkUrl',
+  LinkUrlAlreadyExist: 'LinkUrlAlreadyExist',
+  LinkDescriptionIsTooLong: 'LinkDescriptionIsTooLong',
+  LinkNotInApprovedList: 'LinkNotInApprovedList',
+  LinkAlreadyBeUsed: 'LinkAlreadyBeUsed',
+  OnlyNPCAccountAllowedToUpdateActivity: 'OnlyNPCAccountAllowedToUpdateActivity',
 
 
-  
+
   OnlyAllowedNpcAccountToRegister: 'Only NPC user can add contestant.',
   OnlyAllowedCompetitionUserBorrowUSD: 'You are not in the contestants list. please join <a href="https://t.me/teaprojectorg" target="_blank">https://t.me/teaprojectorg</a> group and ask the admin to add you in first',
 };

@@ -40,6 +40,8 @@
         </el-select>
         <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000" :step="props[item.name].step || 1"></el-input-number>
 
+        <el-checkbox v-if="types[item.name]==='checkbox'" v-model="form[item.name]"></el-checkbox>
+
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
       </el-form-item>
       </div>
