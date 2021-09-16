@@ -212,7 +212,7 @@ const F = {
       return;
     }
 
-    let url = row.link;
+    let url = _.trim(row.link);
     url = utils.urlToLink(url);
     url += '&id='+row.id;
     window.open(url, '_blank');
