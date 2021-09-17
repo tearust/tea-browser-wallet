@@ -70,6 +70,10 @@
           <el-button class="s2" size="mini" :loading="props[item.name].action.loading||false" type="primary" plain @click="actionHandler(form[item.name], props[item.name].action)">{{props[item.name].action.button_text || 'Action'}}</el-button>
         </div>
 
+        <div class="t-action" v-if="props[item.name].model_action">
+          <el-button class="s2" size="mini" :loading="props[item.name].model_action.loading||false" type="primary" plain @click="modelActionHandler(form[item.name], item.name, props[item.name].model_action)">{{props[item.name].model_action.button_text || 'Action'}}</el-button>
+        </div>
+
       </el-form-item>
       </div>
     </el-form>
@@ -193,6 +197,7 @@ export default {
 
     },
     async actionHandler(val, action){
+      
       vue.set(action, 'loading', true);
 
       const cb = action.handler;
@@ -201,6 +206,15 @@ export default {
       await utils.sleep(500);
       action.html = html;
       
+      vue.set(action, 'loading', false);
+    },
+    async modelActionHandler(val, name, action){
+      vue.set(action, 'loading', true);
+
+      const cb = action.handler;
+      const value = await cb(val);
+
+      this.form[name] = value;
       vue.set(action, 'loading', false);
     }
   }

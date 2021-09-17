@@ -628,11 +628,9 @@ export default {
       const api = layer1_instance.getApi();
 
       this.$store.commit('modal/open', {
-        key: 'common_tx', 
+        key: 'common_form', 
         param: {
           title: 'Pay off COFFEE debt',
-          pallet: 'genesisExchange',
-          tx: 'repayUsdDebts',
           text: '',
           props: {
             amount: {
@@ -640,6 +638,14 @@ export default {
               label: 'Amount (COFFEE)',
               max: this.layer1_account.usd_debt,
               default: 1,
+              model_action: {
+                button_text: 'Pay off all coffee in balance',
+                handler: async (v)=>{
+                  const {usd, usd_debt} = this.layer1_account;
+
+                  return usd > usd_debt ? usd_debt : usd;
+                }
+              }
             }
             
           },
