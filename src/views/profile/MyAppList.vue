@@ -1,6 +1,9 @@
 <template>
 <div class="tea-page">
 
+  <span>
+    My total investment value in TEA : <b style="color: #35a696;">{{total_investment_tea}}</b>
+  </span>
   <TeaTable
     :data="list || []"
     v-loading="table_loading"
@@ -115,6 +118,8 @@ export default {
       list: null,
 
       table_loading: false,
+
+      total_investment_tea: 0,
     }
   },
 
@@ -143,7 +148,9 @@ export default {
       const list = await request.layer1_rpc('bonding_listUserAssets', [
         this.layer1_account.address
       ]);
-console.log(11, list);
+// console.log(11, list);
+
+      let sum = 0;
       this.list = _.map(list, (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
@@ -163,9 +170,12 @@ console.log(11, list);
         };
 
         item.market_value = utils.layer1.roundAmount(item.amount*item.sell_price);
+        sum += item.market_value;
 
         return item;
       });
+
+      this.total_investment_tea = sum;
 
       helper.tableLoading(this, false);
     },
