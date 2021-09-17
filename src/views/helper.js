@@ -274,6 +274,16 @@ query {
     const ss = utils.get_env('ipfs_url');
 
     window.open(ss+'/ipfs/'+cid, '_blank');
+  },
+
+  async calculateTEAByToken(token_amount){
+    const amount = utils.layer1.amountToBalance(token_amount)
+    let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
+      null, amount
+    ]);
+    estimate = utils.layer1.balanceToAmount(estimate);
+
+    return estimate;
   }
 
 };

@@ -27,9 +27,9 @@
         :prop="item.name" 
         :class="(props[item.name] && props[item.name].class) || ''"
       >
-        <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]"></el-input>
+        <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}"></el-input>
 
-        <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select.">
+        <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select." v-bind="{...props[item.name].el_props||{}}">
           <el-option
             v-for="item in props[item.name].options || []"
             :key="item.key || item.id"
@@ -38,13 +38,24 @@
           >
           </el-option>
         </el-select>
-        <el-input-number v-if="types[item.name]==='number'" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000" :step="props[item.name].step || 1"></el-input-number>
+        <el-select v-if="types[item.name]==='select_number'" v-model.number="form[item.name]" placeholder="Please select." v-bind="{...props[item.name].el_props||{}}">
+          <el-option
+            v-for="item in props[item.name].options || []"
+            :key="item.key || item.id"
+            :label="item.label || item.id"
+            :value="item.value || item.id"
+          >
+          </el-option>
+        </el-select>
 
-        <el-checkbox v-if="types[item.name]==='checkbox'" v-model="form[item.name]"></el-checkbox>
+        <el-input-number v-if="types[item.name]==='number'" :disabled="props[item.name].disabled||false" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000" :step="props[item.name].step || 1" v-bind="{...props[item.name].el_props||{}}"></el-input-number>
 
-        <el-radio-group v-if="types[item.name]==='radio-group'" v-model="form[item.name]">
+        <el-checkbox v-if="types[item.name]==='checkbox'" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}"></el-checkbox>
+
+        <el-radio-group v-if="types[item.name]==='radio-group'" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}">
           <el-radio-button 
             v-for="item in props[item.name].options || []"
+            :disabled="item.disabled || false"
             :key="item.key || item.id"
             :label="item.value || item.id"
           >
@@ -53,6 +64,12 @@
         </el-radio-group>
 
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
+
+        <div class="t-action" v-if="props[item.name].action">
+          <span class="s1" :inner-html.prop="props[item.name].action.html"></span>
+          <el-button class="s2" size="mini" :loading="props[item.name].action.loading||false" type="primary" plain @click="actionHandler(form[item.name], props[item.name].action)">{{props[item.name].action.button_text || 'Action'}}</el-button>
+        </div>
+
       </el-form-item>
       </div>
     </el-form>
@@ -69,6 +86,7 @@
 
 </template>
 <script>
+import vue from 'vue';
 import { mapState, mapGetters } from 'vuex';
 import store from '../../store/index';
 import utils from '../../tea/utils';
@@ -126,7 +144,7 @@ export default {
 
       _.each(this.param.props, (item, name)=>{
         const n = name;
-        labels[n] = utils.form.nameToLabel(item.label || n);
+        labels[n] = item.label || utils.form.nameToLabel(n);
         form[n] = item.default || null;
         const type = item.type;
         types[n] = type;
@@ -173,6 +191,17 @@ export default {
         });
       }
 
+    },
+    async actionHandler(val, action){
+      vue.set(action, 'loading', true);
+
+      const cb = action.handler;
+      const html = await cb(val);
+
+      await utils.sleep(500);
+      action.html = html;
+      
+      vue.set(action, 'loading', false);
     }
   }
 }

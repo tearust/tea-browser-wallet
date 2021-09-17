@@ -271,14 +271,18 @@ export default {
         key: 'common_form', 
         param: {
           title: 'Create new TApp',
-          confirm_text: 'Next',
+          // confirm_text: 'Next',
           text: '',
-          label_width: 180,
+          label_width: 200,
           props: {
             tapp_name: {
               type: 'Input',
               label: 'Name',
               required: true,
+              el_props: {
+                'show-word-limit': true,
+                maxlength: name_max_len,
+              },
               rules: {
                 max: name_max_len,
                 message: `Name cannot be longer than ${name_max_len} characters.`,
@@ -288,6 +292,11 @@ export default {
               type: 'Input',
               label: 'TApp symbol',
               required: true,
+              el_props: {
+                'show-word-limit': true,
+                maxlength: ticker_max_len,
+                minlength: ticker_min_len,
+              },
               // tip: `${ticker_min_len}-${ticker_max_len} uppercase character.`,
               rules: [
                 {
@@ -302,38 +311,65 @@ export default {
             },
             init_fund: {
               label: 'Initial token',
-              type: 'number',
+              type: 'select_number',
+              el_props: {
+                'allow-create': true,
+                'filterable': true,
+              },
               required: true,
               default: 1000,
+              options: [
+                {id: 10}, {id: 100}, {id: 1000}, {id: 2000}, {id: 5000}, {id: 10000}
+              ],
+              rules: {
+                type: 'number',
+                message: 'Initial token must be number.',
+              },
+              action: {
+                button_text: 'Calculate',
+                html: 'Required <b>...</b> TEA',
+                handler: async (val)=>{
+                  const v = await helper.calculateTEAByToken(val);
+                  return `Required <b>${v}</b> TEA`;
+                }
+              }
             },
             detail: {
               label: 'Details',
               type: 'Input',
               required: true,
+              el_props: {
+                'show-word-limit': true,
+                maxlength: detail_max_len,
+              },
               rules: {
                 max: detail_max_len,
                 message: `Details symbol cannot be longer than ${detail_max_len} characters.`,
               }
             },
-            // link: {
-            //   label: 'Link',
-            //   type: 'Input',
-            //   required: true,
-            //   rules: {
-            //     max: link_max_len,
-            //     message: `Link symbol cannot be longer than ${link_max_len} characters.`,
-            //   }
-            // },
+
             template: {
-              label: 'Type',
-              type: 'select',
+              label: 'TApp template',
+              type: 'radio-group',
               required: true,
-              options: _.map(tapp.template.list(), (v)=>{
-                return {
-                  label: tapp.template.getLabel(v),
-                  value: v,
+              options: [
+                ..._.map(tapp.template.list(), (v)=>{
+                  return {
+                    label: tapp.template.getLabel(v),
+                    value: v,
+                  }
+                }),
+                {
+                  label: 'TEA Party',
+                  value: 'tea_party',
+                  disabled: true,
+                },
+                {
+                  label: 'Create your own TApp',
+                  value: 'own',
+                  disabled: true,
                 }
-              }),
+              ],
             },
             YouTube: {
               label: 'Youtube Id',
@@ -363,6 +399,12 @@ export default {
               }
             },
             
+            min_hosts: {
+              label: 'Min hosts',
+              type: 'number',
+              default: 3,
+              disabled: true,
+            },
 
             max_allowed_hosts: {
               type: 'number',
@@ -370,19 +412,58 @@ export default {
               default: 10
             },
 
-            reward_per_performance: {
-              type: 'number',
-              default: 1,
-            },
-            stake_token_amount: {
-              type: 'number',
-              default: 100,
-            },
 
             fixed_token_mode: {
-              type: 'checkbox',
-              default: true,
-            }
+              label: 'Billing model',
+              type: 'radio-group',
+              required: true,
+              default: 1,
+              options: [
+                {
+                  label: 'Fixed TEA payment per 100 blocks',
+                  value: 2,
+                },
+                {
+                  label: 'Fixed TApp token and dividend payment per 100 blocks',
+                  value: 1,
+                }
+              ]
+            },
+
+            reward_per_performance: {
+              condition: {
+                target: 'fixed_token_mode',
+                value: 1
+              },
+              label: 'Reward per 1000 performance',
+              type: 'select_number',
+              el_props: {
+                'allow-create': true,
+                'filterable': true,
+              },
+              options: [
+                {id: 0.1}, {id: 0.5}, {id: 1.5}, {id: 10}, {id: 100},
+              ],
+              rules: {
+                type: 'number',
+                message: 'Reward per 1000 performance must be number.',
+              },
+            },
+            stake_token_amount: {
+              type: 'select_number',
+              condition: {
+                target: 'fixed_token_mode',
+                value: 1
+              },
+              options: [
+                {id: 10}, {id: 50}, {id: 100}, {id: 200}, {id: 500}, {id: 1000}, {id: 2000},
+                {id: 5000}, {id: 10000},
+              ],
+              rules: {
+                type: 'number',
+                message: 'Stake token amount must be number.',
+              },
+            },
             
           },
         },
@@ -391,19 +472,19 @@ export default {
 
           
           const amount = utils.layer1.amountToBalance(form.init_fund)
-          let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
-            null, amount
-          ]);
-          estimate = utils.layer1.balanceToAmount(estimate);
+          // let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
+          //   null, amount
+          // ]);
+          // estimate = utils.layer1.balanceToAmount(estimate);
 
-          try{
-            await this.$confirm(`You will pay <b>${estimate} TEA</b> <br/> Are you sure?`, {
-              dangerouslyUseHTMLString: true,
-            });
-          }catch(e){
-            this.$root.loading(false);
-            return false;
-          }
+          // try{
+          //   await this.$confirm(`You will pay <b>${estimate} TEA</b> <br/> Are you sure?`, {
+          //     dangerouslyUseHTMLString: true,
+          //   });
+          // }catch(e){
+          //   this.$root.loading(false);
+          //   return false;
+          // }
 
           try{
 
@@ -423,7 +504,7 @@ export default {
               stringToHex(link), 
               form.max_allowed_hosts,
               form.template,
-              form.fixed_token_mode,
+              form.fixed_token_mode===1,
               utils.layer1.amountToBalance(form.reward_per_performance),
               utils.layer1.amountToBalance(form.stake_token_amount),
             );

@@ -199,7 +199,20 @@ a, a:hover, a:focus, button:focus {
     }
   }
 
-  
+  .t-action{
+    position: relative;
+    display: inline-block;
+    margin-left: 25px;
+
+    .s1{
+      b{
+        color: $mainColor;
+      }
+    }
+    .s2{
+      margin-left: 12px;
+    }
+  }
 }
 
 .tea-table{
