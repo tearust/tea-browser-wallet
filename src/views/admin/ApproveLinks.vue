@@ -8,8 +8,16 @@
     :data="list"
   >
     <TeaTableColumn
-      prop="link"
-      label="Link"
+      prop="tapp_id"
+      label="TApp Id"
+    />
+    <TeaTableColumn
+      prop="type"
+      label="Type"
+    />
+    <TeaTableColumn
+      prop="tid"
+      label="Social media id"
     />
     <TeaTableColumn
       prop="desc"
@@ -21,6 +29,7 @@
   <div class="tea-legend" style="
     margin-top: 20px;
     position: relative;
+    height: 80px;
   ">
     <el-button style="width:400px;position:absolute;top:0; right:0;" type="primary" @click="addLink()">Add approve link</el-button>
   </div>
@@ -36,6 +45,7 @@ import { mapGetters, mapState } from 'vuex';
 import TeaTable from '../../components/TeaTable';
 import TeaTableColumn from '../../components/TeaTableColumn';
 import tapp from '../../tapp';
+import request from '../../request';
 
 export default {
   components: {
@@ -63,6 +73,24 @@ export default {
     async refreshList(){
       this.$root.loading(true);
 
+      const xl = await request.layer1_rpc('cml_approvedLinks', []);
+
+      
+      this.list = await Promise.all(_.map(xl, async (arr)=>{
+        const link = utils.rpcArrayToString(arr[0]);
+        const tapp_id = arr[1];
+        const desc = utils.rpcArrayToString(arr[2]);
+
+        let json = utils.parseJSON(link, {});
+        return {
+          tapp_id,
+          desc,
+          type: json.t || '',
+          tid: json.v || ''
+        }
+        
+      }));
+      console.log(11, this.list);
 
       this.$root.loading(false);
     },
@@ -127,9 +155,8 @@ export default {
 
             let link_param = form[form.template];
             const link = tapp.template.genLink(form.template, link_param);
-            console.log(111, link);
 
-            const tx = api.tx.bondingCurve.registerTappLink(stringToHex(link), stringToHex(form.desc));
+            const tx = api.tx.bondingCurve.registerTappLink(stringToHex(link), stringToHex(form.description));
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();

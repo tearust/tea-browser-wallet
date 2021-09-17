@@ -246,6 +246,17 @@ const F = {
     }
 
     return url;
+  },
+
+  parseJSON(str, default_value=null){
+    let rs;
+    try{
+      rs = JSON.parse(str);
+    }catch(e){
+      rs = default_value
+    }
+
+    return rs;
   }
 
 
