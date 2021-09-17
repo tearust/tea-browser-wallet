@@ -443,9 +443,10 @@ console.log(111, list);
                 'filterable': true,
               },
               options: [
+                {id:0.01}, {id: 0.02}, {id: 0.05}, 
                 {id: 0.1}, {id: 0.5}, {id: 1}, {id: 5}, {id: 10}, {id: 100},
               ],
-              default: 10,
+              default: 0.1,
               rules: {
                 type: 'number',
                 message: 'Reward per 1000 performance must be number.',
