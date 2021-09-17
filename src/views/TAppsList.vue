@@ -25,7 +25,8 @@
       width="80"
     >
       <template slot-scope="scope">
-        <el-button size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
+        <span v-if="scope.row.status==='Pending'">{{scope.row.name}}</span>
+        <el-button v-if="scope.row.status!=='Pending'" size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
       </template>
     </el-table-column>
 
@@ -410,7 +411,8 @@ console.log(111, list);
             max_allowed_hosts: {
               type: 'number',
               required: true,
-              default: 10
+              default: 10,
+              min: 3,
             },
 
 
