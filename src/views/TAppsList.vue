@@ -198,7 +198,7 @@ export default {
       // await utils.sleep(1000);
 
       const list = await request.layer1_rpc('bonding_listTApps', [false]);
-
+console.log(111, list);
       this.list = await Promise.all(_.map(list, async (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
@@ -213,9 +213,11 @@ export default {
           link: utils.rpcArrayToString(arr[8]),
 
           host_performance: arr[9],
-          host_current: arr[10],
-          host_n: `${arr[10]}/${arr[11]}`,
-          is_full: arr[10] >= arr[11],
+          host_current: arr[10][0],
+          host_n: `${arr[10][0]}/${arr[10][1]}`,
+          is_full: arr[10][0] >= arr[10][1],
+
+          active_block: arr[11],
         };
         item.market_cap = utils.layer1.roundAmount(item.sell_price * item.total_supply);
 
@@ -225,8 +227,6 @@ export default {
 
         return item;
       }));
-
-      console.log(11, this.list);
 
       this.$root.loading(false);
     },
@@ -444,6 +444,7 @@ export default {
               options: [
                 {id: 0.1}, {id: 0.5}, {id: 1.5}, {id: 10}, {id: 100},
               ],
+              default: 10,
               rules: {
                 type: 'number',
                 message: 'Reward per 1000 performance must be number.',
@@ -459,6 +460,7 @@ export default {
                 {id: 10}, {id: 50}, {id: 100}, {id: 200}, {id: 500}, {id: 1000}, {id: 2000},
                 {id: 5000}, {id: 10000},
               ],
+              default: 100,
               rules: {
                 type: 'number',
                 message: 'Stake token amount must be number.',
