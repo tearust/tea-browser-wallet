@@ -267,7 +267,7 @@ console.log(111, list);
       const detail_max_len = api.consts.bondingCurve.tAppDetailMaxLength.toJSON();
       const link_max_len = api.consts.bondingCurve.tAppLinkMaxLength.toJSON();
 
-      const default_init_fund_need_tea = await helper.calculateTEAByToken(1000);
+      // const default_init_fund_need_tea = await helper.calculateTEAByToken(1000);
       this.$store.commit('modal/open', {
         key: 'common_form', 
         param: {
@@ -328,7 +328,7 @@ console.log(111, list);
               },
               action: {
                 button_text: 'Calculate',
-                html: 'Required <b>'+default_init_fund_need_tea+'</b> TEA',
+                html: '<b>Please click calcalute</b>',
                 handler: async (val)=>{
                   const v = await helper.calculateTEAByToken(val);
                   return `Required <b>${v}</b> TEA`;
