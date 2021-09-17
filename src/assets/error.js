@@ -194,7 +194,7 @@ export default {
   OnlyNPCAccountAllowedToRegisterLinkUrl: 'You don\'t have permission to register links',
   LinkUrlAlreadyExist: 'This link has already been registered',
   LinkDescriptionIsTooLong: 'The link description is too long',
-  LinkNotInApprovedList: 'TApps can only be created for registered links',
+  LinkNotInApprovedList: 'TApps can only be created for registered links. <a href="https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#tapps-topic-list" target="_blank">See the wiki</a> for more information.',
   LinkAlreadyBeUsed: 'This link is already in use by another TApp',
   OnlyNPCAccountAllowedToUpdateActivity: 'You don\'t have permission to update activity',
 
