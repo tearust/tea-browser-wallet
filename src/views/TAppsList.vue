@@ -267,6 +267,7 @@ console.log(111, list);
       const detail_max_len = api.consts.bondingCurve.tAppDetailMaxLength.toJSON();
       const link_max_len = api.consts.bondingCurve.tAppLinkMaxLength.toJSON();
 
+      const default_init_fund_need_tea = await helper.calculateTEAByToken(1000);
       this.$store.commit('modal/open', {
         key: 'common_form', 
         param: {
@@ -327,7 +328,7 @@ console.log(111, list);
               },
               action: {
                 button_text: 'Calculate',
-                html: 'Required <b>...</b> TEA',
+                html: 'Required <b>'+default_init_fund_need_tea+'</b> TEA',
                 handler: async (val)=>{
                   const v = await helper.calculateTEAByToken(val);
                   return `Required <b>${v}</b> TEA`;
@@ -433,7 +434,7 @@ console.log(111, list);
             reward_per_performance: {
               condition: {
                 target: 'fixed_token_mode',
-                value: 1
+                value: 2
               },
               label: 'Reward per 1000 performance',
               type: 'select_number',
@@ -442,7 +443,7 @@ console.log(111, list);
                 'filterable': true,
               },
               options: [
-                {id: 0.1}, {id: 0.5}, {id: 1.5}, {id: 10}, {id: 100},
+                {id: 0.1}, {id: 0.5}, {id: 1}, {id: 5}, {id: 10}, {id: 100},
               ],
               default: 10,
               rules: {
