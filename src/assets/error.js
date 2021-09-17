@@ -189,13 +189,14 @@ export default {
   StakeTokenShouldNotBeZero: 'StakeTokenShouldNotBeZero',
   StakeTokenIsNoneInFixedTokenMode: 'StakeTokenIsNoneInFixedTokenMode',
   RewardPerPerformanceIsNoneInFixedFeeMode: 'RewardPerPerformanceIsNoneInFixedFeeMode',
-  HostLockingBlockHeightNotReached: 'HostLockingBlockHeightNotReached',
-  OnlyNPCAccountAllowedToRegisterLinkUrl: 'OnlyNPCAccountAllowedToRegisterLinkUrl',
-  LinkUrlAlreadyExist: 'LinkUrlAlreadyExist',
-  LinkDescriptionIsTooLong: 'LinkDescriptionIsTooLong',
-  LinkNotInApprovedList: 'LinkNotInApprovedList',
-  LinkAlreadyBeUsed: 'LinkAlreadyBeUsed',
-  OnlyNPCAccountAllowedToUpdateActivity: 'OnlyNPCAccountAllowedToUpdateActivity',
+
+  HostLockingBlockHeightNotReached: 'Can\'t unlock until host locking block height has been reached',
+  OnlyNPCAccountAllowedToRegisterLinkUrl: 'You don\'t have permission to register links',
+  LinkUrlAlreadyExist: 'This link has already been registered',
+  LinkDescriptionIsTooLong: 'The link description is too long',
+  LinkNotInApprovedList: 'TApps can only be created for registered links',
+  LinkAlreadyBeUsed: 'This link is already in use by another TApp',
+  OnlyNPCAccountAllowedToUpdateActivity: 'You don\'t have permission to update activity',
 
 
 
