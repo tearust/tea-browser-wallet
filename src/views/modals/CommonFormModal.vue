@@ -42,6 +42,16 @@
 
         <el-checkbox v-if="types[item.name]==='checkbox'" v-model="form[item.name]"></el-checkbox>
 
+        <el-radio-group v-if="types[item.name]==='radio-group'" v-model="form[item.name]">
+          <el-radio-button 
+            v-for="item in props[item.name].options || []"
+            :key="item.key || item.id"
+            :label="item.value || item.id"
+          >
+            {{item.label || item.id}}
+          </el-radio-button>
+        </el-radio-group>
+
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
       </el-form-item>
       </div>

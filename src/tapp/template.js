@@ -8,6 +8,7 @@ const TEM_LIST = [
     label: 'Youtube',
     link(tid){
       return JSON.stringify({
+        t: 'YouTube',
         v: tid,
       });
     },
@@ -20,6 +21,7 @@ const TEM_LIST = [
     label: 'Reddit',
     link(tid){
       return JSON.stringify({
+        t: 'Reddit',
         v: tid,
       });
     },
@@ -32,6 +34,7 @@ const TEM_LIST = [
     label: 'Twitter',
     link(tid){
       return JSON.stringify({
+        t: 'Twitter',
         v: tid,
       });
     },

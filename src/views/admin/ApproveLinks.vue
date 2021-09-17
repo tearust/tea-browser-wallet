@@ -2,7 +2,6 @@
 <div class="tea-page">
   <h4>Approve links</h4>
 
-  <span>TODO: add rpc to get approve links</span>
   <TeaTable
     name="sudo_approve_link_table"
     :data="list"
@@ -90,7 +89,7 @@ export default {
         }
         
       }));
-      console.log(11, this.list);
+      // console.log(11, this.list);
 
       this.$root.loading(false);
     },
@@ -105,7 +104,7 @@ export default {
           props: {
             template: {
               label: 'Type',
-              type: 'select',
+              type: 'radio-group',
               required: true,
               options: _.map(tapp.template.list(), (v)=>{
                 return {
