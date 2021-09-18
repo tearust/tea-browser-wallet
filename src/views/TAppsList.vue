@@ -11,7 +11,7 @@
   >
     <el-table-column
       prop="id"
-      width="60"
+      width="50"
       label="ID"
     >
       <template slot-scope="scope">
@@ -83,13 +83,19 @@
     <TeaTableColumn
       prop="host_performance"
       label="Host performance requirement"
-      width="120"
+      width="115"
       tip="A mining machine must be at least this powerful to host this TApp"
+    />
+
+    <TeaTableColumn
+      prop="host_current"
+      label="Current hosts"
+      width="60"
     />
     <TeaTableColumn
       prop="host_n"
-      label="Current/Max hosts"
-      width="90"
+      label="Min/Max hosts"
+      width="70"
       tip="The maximum number of hosts that can be hosting this TApp"
     />
 
@@ -215,7 +221,7 @@ console.log(111, list);
 
           host_performance: arr[9],
           host_current: arr[10][0],
-          host_n: `${arr[10][0]}/${arr[10][1]}`,
+          host_n: `3/${arr[10][1]}`,
           is_full: arr[10][0] >= arr[10][1],
 
           active_block: arr[11],

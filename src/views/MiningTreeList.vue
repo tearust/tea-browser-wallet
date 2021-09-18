@@ -3,6 +3,11 @@
 
   <h4>Top mining CML list</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
+
+  <span>
+    Total current performance : <b style="color: #35a696">{{total_current_performance}}</b>.
+    Total remaining performance : <b style="color: #35a696">{{total_remaining_performance}}</b>.
+  </span>
   <TeaTable 
     :data="list || []"
     name="top_mining_cml_list_table"
@@ -162,6 +167,9 @@ export default {
   data(){
     return {
       list: null,
+
+      total_current_performance: 0,
+      total_remaining_performance: 0,
     };
   },
 
@@ -194,6 +202,15 @@ export default {
       const cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
       const list = await this.wf.getCmlByList(cml_list);
       this.list = _.orderBy(list, ['slot_len'], ['desc']);
+
+      let s1 = 0;
+      let s2 = 0;
+      _.each(this.list, (item)=>{
+        s1 += item.current_performance;
+        s2 += item.remaining_performance;
+      });
+      this.total_current_performance = s1;
+      this.total_remaining_performance = s2;
 
       this.$root.loading(false);
     },
