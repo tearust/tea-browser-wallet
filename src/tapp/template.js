@@ -13,7 +13,7 @@ const TEM_LIST = [
       });
     },
     url(id, tid){
-      return `${http}:3200?v=${tid}&id=${id}`;
+      return `${http}:3200?t=youtube&v=${tid}&id=${id}`;
     },
   }, 
   {

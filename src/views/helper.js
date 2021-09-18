@@ -208,10 +208,10 @@ const F = {
   },
 
   openToTApp(self, row){
-    if(row.host_current < 1){
-      self.$root.showError('This TApp has zero host at this moment. It has not been deployed yet.');
-      return;
-    }
+    // if(row.host_current < 1){
+    //   self.$root.showError('This TApp has zero host at this moment. It has not been deployed yet.');
+    //   return;
+    // }
 
     try{
       const json = JSON.parse(row.link);

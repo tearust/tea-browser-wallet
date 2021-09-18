@@ -25,8 +25,8 @@
       width="80"
     >
       <template slot-scope="scope">
-        <span v-if="scope.row.status==='Pending'">{{scope.row.name}}</span>
-        <el-button v-if="scope.row.status!=='Pending'" size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
+        <span v-if="!scope.row.active_block">{{scope.row.name}}</span>
+        <el-button v-if="scope.row.active_block" size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
       </template>
     </el-table-column>
 
@@ -205,7 +205,7 @@ export default {
       // await utils.sleep(1000);
 
       const list = await request.layer1_rpc('bonding_listTApps', [false]);
-console.log(111, list);
+// console.log(111, list);
       this.list = await Promise.all(_.map(list, async (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
@@ -229,7 +229,12 @@ console.log(111, list);
         item.market_cap = utils.layer1.roundAmount(item.sell_price * item.total_supply);
 
         item.ori = (await api.query.bondingCurve.tAppBondingCurve(item.id)).toJSON();
-        item.status = item.ori.status;
+        if(_.has(item.ori.status, 'pending')){
+          item.status = 'Pending';
+        }
+        else if(_.has(item.ori.status, 'active')){
+          item.status = 'Active';
+        }
         item.type = item.ori.tapp_type;
 
         return item;

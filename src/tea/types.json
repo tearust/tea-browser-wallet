@@ -191,8 +191,15 @@
     "FixedHostingToken": "Balance"
   },
   "TAppStatus": {
-    "_enum": ["Active", "Pending"]
+    "_enum": {
+      "Active": "TAppStatusActive", 
+      "Pending": null
+    }
   },
+  "TAppStatusActive": {
+    "Active": "BlockNumber"
+  },
+
   "TAppItem": {
     "id": "TAppId",
     "name": "Bytes",
