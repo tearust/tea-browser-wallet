@@ -84,7 +84,7 @@ const layer1 = {
 
   },
   amountToBalance(value){
-    return _.toNumber(value) * (1000000*1000000);
+    return Math.floor(_.toNumber(value) * (1000000*1000000));
   },
   balanceToAmount(value){
     return layer1.formatBalance(value);

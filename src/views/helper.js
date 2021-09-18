@@ -23,11 +23,9 @@ const F = {
     const api = layer1_instance.getApi();
 
     self.$store.commit('modal/open', {
-      key: 'common_tx', 
+      key: 'common_form', 
       param: {
         title: 'Buy token',
-        pallet: 'bondingCurve',
-        tx: 'buyToken',
         confirm_text: 'Next',
         text: `You are buying the ${data.name}'s token ${data.token_symbol}. For more information on how to invest in TApp tokens, <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#tapp-token-strategy" class="t-wiki" target="_blank">visit our wiki</a>.`,
         props: {
@@ -40,6 +38,25 @@ const F = {
             type: 'number',
             max: 100000000,
             remove_required_rule: true,
+            default: undefined,
+          },
+          tea: {
+            label: 'TEA',
+            type: 'number',
+            default: undefined,
+            model_action: {
+              button_text: 'Convert back',
+              ref: 'tapp_amount',
+              handler: async (v)=>{
+                if(!v) return null;
+                const amount = utils.layer1.amountToBalance(v);
+                let estimate = await request.layer1_rpc('bonding_estimateHowMuchTokenBoughtByGivenTea', [
+                  data.id, amount
+                ]);
+                estimate = utils.layer1.balanceToAmount(estimate);
+                return estimate;
+              }
+            }
           }
         },
       },
@@ -50,7 +67,7 @@ const F = {
         }
 
         self.$root.loading(true);
-  
+        
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
         let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
@@ -88,12 +105,10 @@ const F = {
     const api = layer1_instance.getApi();
 
     self.$store.commit('modal/open', {
-      key: 'common_tx', 
+      key: 'common_form', 
       param: {
         title: 'Sell token',
         confirm_text: 'Next',
-        pallet: 'bondingCurve',
-        tx: 'sellToken',
         text: `You are selling the ${data.name}'s token ${data.token_symbol}`,
         props: {
           tapp_id: {
@@ -104,7 +119,26 @@ const F = {
             label: 'Amount token',
             type: 'number',
             max: 100000000,
-            remove_required_rule: true
+            remove_required_rule: true,
+            default: undefined,
+          },
+          tea: {
+            label: 'TEA',
+            type: 'number',
+            default: undefined,
+            model_action: {
+              button_text: 'Convert back',
+              ref: 'tapp_amount',
+              handler: async (v)=>{
+                if(!v) return null;
+                const amount = utils.layer1.amountToBalance(v);
+                let estimate = await request.layer1_rpc('bonding_estimateHowMuchTokenToSellByGivenTea', [
+                  data.id, amount
+                ]);
+                estimate = utils.layer1.balanceToAmount(estimate);
+                return estimate;
+              }
+            }
           }
         },
       },
