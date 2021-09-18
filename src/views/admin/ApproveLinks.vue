@@ -155,7 +155,6 @@ export default {
 
             creator: {
               type: 'Input',
-              required: true,
               label: 'Creator address',
             }
           }
