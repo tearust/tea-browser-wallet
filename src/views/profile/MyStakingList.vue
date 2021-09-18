@@ -238,7 +238,7 @@ export default {
       }));
 
       this.list = cml_list;
-      console.log(1, this.list);
+      // console.log(1, this.list);
       
     },
 
