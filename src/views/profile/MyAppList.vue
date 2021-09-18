@@ -32,7 +32,7 @@
     <el-table-column
       prop="owner"
       label="Owner"
-      width="200"
+      width="100"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.owner" placement="right">
@@ -55,7 +55,12 @@
     <el-table-column
       prop="amount"
       label="My holding tokens"
+      width="150"
       sortable
+    />
+    <el-table-column
+      prop="total_supply"
+      label="Total supply"
     />
 
 
@@ -167,6 +172,7 @@ export default {
           host_current: arr[9],
           host_n: `${arr[9]}/${arr[10]}`,
           is_full: arr[9] >= arr[10],
+          total_supply: utils.layer1.balanceToAmount(arr[11]), 
         };
 
         item.market_value = utils.layer1.roundAmount(item.amount*item.sell_price);
