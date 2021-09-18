@@ -11,6 +11,11 @@
       label="TApp Id"
     />
     <TeaTableColumn
+      prop="creator"
+      label="Creator"
+    />
+
+    <TeaTableColumn
       prop="type"
       label="Type"
     />
@@ -79,13 +84,15 @@ export default {
         const link = utils.rpcArrayToString(arr[0]);
         const tapp_id = arr[1];
         const desc = utils.rpcArrayToString(arr[2]);
+        const creator = arr[3];
 
         let json = utils.parseJSON(link, {});
         return {
           tapp_id,
           desc,
           type: json.t || '',
-          tid: json.v || ''
+          tid: json.v || '',
+          creator,
         }
         
       }));
@@ -144,6 +151,12 @@ export default {
             description: {
               type: 'Input',
               required: true,
+            },
+
+            creator: {
+              type: 'Input',
+              required: true,
+              label: 'Creator address',
             }
           }
         },
@@ -155,7 +168,7 @@ export default {
             let link_param = form[form.template];
             const link = tapp.template.genLink(form.template, link_param);
 
-            const tx = api.tx.bondingCurve.registerTappLink(stringToHex(link), stringToHex(form.description));
+            const tx = api.tx.bondingCurve.registerTappLink(stringToHex(link), stringToHex(form.description), form.creator);
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();

@@ -511,8 +511,8 @@ export default {
 
             let link_param = form[form.template];
             const link = tapp.template.genLink(form.template, link_param);
-            console.log(111, link, form);
 
+            const fix_token_mode = form.fixed_token_mode===1;
             const tx = api.tx.bondingCurve.createNewTapp(
               name, 
               ticker, 
@@ -521,9 +521,9 @@ export default {
               stringToHex(link), 
               form.max_allowed_hosts,
               form.template,
-              form.fixed_token_mode===1,
-              utils.layer1.amountToBalance(form.reward_per_performance),
-              utils.layer1.amountToBalance(form.stake_token_amount),
+              fix_token_mode,
+              fix_token_mode ? null : utils.layer1.amountToBalance(form.reward_per_performance),
+              fix_token_mode ? utils.layer1.amountToBalance(form.stake_token_amount) : null,
             );
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);
