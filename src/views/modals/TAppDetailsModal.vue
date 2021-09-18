@@ -17,12 +17,6 @@
       <el-row class="x-list" style="flex-direction: row;">
         <el-col :span="24">
           <div class="x-item">
-            <b>Billing model :</b>
-            <span>{{tapp.billing_mode}}</span>
-          </div>
-
-
-          <div class="x-item">
             <b>Ticker :</b>
             <span>{{tapp.token_symbol}}</span>
           </div>
@@ -30,24 +24,50 @@
             <b>Details :</b>
             <span>{{tapp.detail}}</span>
           </div>
+
+          <div class="x-item">
+            <b>Host performance</b>
+            <span>{{tapp.host_performance}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>Billing model :</b>
+            <span>{{tapp.billing_mode}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>Min / Max hosts :</b>
+            <span>{{tapp.host_n}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>Current hosts :</b>
+            <span>{{tapp.host_current}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>TApp template :</b>
+            <span>{{tapp.type}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>Total supply :</b>
+            <span>{{tapp.total_supply}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>Buy / Sell price :</b>
+            <span>{{tapp.buy_price}}/{{tapp.sell_price}}</span>
+          </div>
+
+          <div class="x-item">
+            <b>Market cap :</b>
+            <span>{{tapp.market_cap}}</span>
+          </div>
+
           
         </el-col>
         
-        <!-- <el-col :span="12" style="padding-left: 10px;">
-          <div class="x-item">
-            <b>Owner :</b>
-            <span>{{tapp.owner}}</span>
-          </div>
-          <div class="x-item">
-            <b>Performance required :</b>
-            <span>{{tapp.host_performance}}</span>
-          </div>
-          <div class="x-item">
-            <b>Current/Max hosts :</b>
-            <span>{{tapp.host_n}}</span>
-          </div>
-        </el-col> -->
-
       </el-row>
       <!-- <el-row class="x-list" style="flex-direction: row; margin-top:10px;">
         <el-col :span="24">
@@ -198,14 +218,20 @@ export default {
         host_current: arr[7],
         host_n: `${arr[7]}/${arr[8]}`,
         is_full: arr[7] >= arr[8],
+        total_supply: utils.layer1.balanceToAmount(arr[9]),
+        buy_price: utils.layer1.balanceToAmount(arr[10]),
+        sell_price: utils.layer1.balanceToAmount(arr[11]),
       };
 
       const cid = (await api.query.bondingCurve.tAppResourceMap(tapp_id)).toJSON();
       tmp.cid = hexToString(cid);
 
+      tmp.market_cap = utils.layer1.roundAmount(tmp.sell_price * tmp.total_supply);
+
       const item = (await api.query.bondingCurve.tAppBondingCurve(tapp_id)).toJSON();
-      console.log(11, item)
+
       tmp.billing_mode = item.billing_mode.fixedHostingToken ? 'Fixed TApp token and dividend payment per 100 blocks' : 'Fixed TEA payment per 100 blocks';
+      tmp.type = item.tapp_type;
 
       // console.log(tmp);
       this.tapp = tmp;
