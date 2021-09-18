@@ -149,7 +149,7 @@ export default {
       _.each(this.param.props, (item, name)=>{
         const n = name;
         labels[n] = item.label || utils.form.nameToLabel(n);
-        form[n] = item.default || null;
+        form[n] = _.has(item, 'default') ? _.get(item, 'default') : null;
         const type = item.type;
         types[n] = type;
         props[n] = item;
@@ -204,7 +204,9 @@ export default {
       const html = await cb(val);
 
       await utils.sleep(500);
-      action.html = html;
+      if(html){
+        action.html = html;
+      }
       
       vue.set(action, 'loading', false);
     },
@@ -214,7 +216,15 @@ export default {
       const cb = action.handler;
       const value = await cb(val);
 
-      this.form[name] = value;
+      if(value){
+        if(action.ref){
+          this.form[action.ref] = value;
+        }
+        else{
+          this.form[name] = value;
+        }
+      }
+      
       vue.set(action, 'loading', false);
     }
   }

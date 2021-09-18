@@ -441,23 +441,32 @@ export default {
       const api = layer1_instance.getApi();
 
       this.$store.commit('modal/open', {
-        key: 'common_tx', 
+        key: 'common_form', 
         param: {
           title: 'Sell TEA',
-          pallet: 'genesisExchange',
-          tx: 'teaToUsd',
           text: '',
           props: {
-            buy_usd_amount: {
-              class: 'hidden',
-            },
             sell_tea_amount: {
               label: 'Sell amount (TEA)',
               type: 'number',
-              max: this.layer1_account.balance,
+              required: true,
+              // max: this.layer1_account.balance,
               min: 0,
               step: 0.1,
               default: undefined,
+            },
+            coffee: {
+              label: 'COFFEE',
+              type: 'number',
+              default: undefined,
+              model_action: {
+                button_text: 'Convert back',
+                handler: async (amount)=>{
+                  const val = utils.layer1.roundAmount(this.rate.usdToTea*amount);
+                  return val;
+                },
+                ref: 'sell_tea_amount'
+              }
             }
           },
         },
@@ -499,16 +508,11 @@ export default {
       const api = layer1_instance.getApi();
 
       this.$store.commit('modal/open', {
-        key: 'common_tx', 
+        key: 'common_form', 
         param: {
           title: 'Sell COFFEE',
-          pallet: 'genesisExchange',
-          tx: 'usdToTea',
           text: '',
           props: {
-            buy_tea_amount: {
-              class: 'hidden',
-            },
             sell_usd_amount: {
               label: 'Sell amount (COFFEE)',
               type: 'number',
@@ -516,6 +520,19 @@ export default {
               min: 0,
               step: 0.1,
               default: undefined,
+            },
+            tea: {
+              label: 'TEA',
+              type: 'number',
+              default: undefined,
+              model_action: {
+                button_text: 'Convert back',
+                handler: async (amount)=>{
+                  const val = utils.layer1.roundAmount(this.rate.teaToUsd*amount)
+                  return val;
+                },
+                ref: 'sell_usd_amount'
+              }
             }
           },
         },

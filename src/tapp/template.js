@@ -26,7 +26,7 @@ const TEM_LIST = [
       });
     },
     url(id, tid){
-      throw 'TODO';
+      return `${http}:3200?t=reddit&v=${tid}&id=${id}`;
     },
   }, 
   {
@@ -39,7 +39,7 @@ const TEM_LIST = [
       });
     },
     url(id, tid){
-      throw 'TODO';
+      return `${http}:3200?t=twitter&v=${tid}&id=${id}`;
     },
   }, 
   // {
