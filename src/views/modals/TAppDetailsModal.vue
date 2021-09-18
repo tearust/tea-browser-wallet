@@ -2,7 +2,7 @@
   <el-dialog
     :title="tapp ? tapp.name : '---'"
     :visible="visible"
-    width="1080px"
+    width="900px"
     :close-on-click-modal="false"
     custom-class="tea-modal"
     :destroy-on-close="true"
@@ -15,7 +15,13 @@
     <div class="tea-modal-card" v-if="!loading" style="margin: 0 -20px; display:block;">
       <!-- <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">{{tapp.name}}</h4> -->
       <el-row class="x-list" style="flex-direction: row;">
-        <el-col :span="12" style="padding-right: 10px;">
+        <el-col :span="24">
+          <div class="x-item">
+            <b>Billing model :</b>
+            <span>{{tapp.billing_mode}}</span>
+          </div>
+
+
           <div class="x-item">
             <b>Ticker :</b>
             <span>{{tapp.token_symbol}}</span>
@@ -27,11 +33,11 @@
           
         </el-col>
         
-        <el-col :span="12" style="padding-left: 10px;">
-          <!-- <div class="x-item">
+        <!-- <el-col :span="12" style="padding-left: 10px;">
+          <div class="x-item">
             <b>Owner :</b>
             <span>{{tapp.owner}}</span>
-          </div> -->
+          </div>
           <div class="x-item">
             <b>Performance required :</b>
             <span>{{tapp.host_performance}}</span>
@@ -40,10 +46,10 @@
             <b>Current/Max hosts :</b>
             <span>{{tapp.host_n}}</span>
           </div>
-        </el-col>
+        </el-col> -->
 
       </el-row>
-      <el-row class="x-list" style="flex-direction: row; margin-top:10px;">
+      <!-- <el-row class="x-list" style="flex-direction: row; margin-top:10px;">
         <el-col :span="24">
           <div class="x-item">
             <b>Resource Cid :</b>
@@ -54,7 +60,7 @@
             <el-button style="margin-left: 15px;" size="small" plain type="primary" @click="visitIpfs()">Visit</el-button>
           </div>
         </el-col>
-      </el-row>
+      </el-row> -->
       
       <h4 style="font-size: 18px;color: #666; margin: 20px 0 5px 0;">Hosting CML list</h4>
       <TeaTable
@@ -196,6 +202,10 @@ export default {
 
       const cid = (await api.query.bondingCurve.tAppResourceMap(tapp_id)).toJSON();
       tmp.cid = hexToString(cid);
+
+      const item = (await api.query.bondingCurve.tAppBondingCurve(tapp_id)).toJSON();
+      console.log(11, item)
+      tmp.billing_mode = item.billing_mode.fixedHostingToken ? 'Fixed TApp token and dividend payment per 100 blocks' : 'Fixed TEA payment per 100 blocks';
 
       // console.log(tmp);
       this.tapp = tmp;
