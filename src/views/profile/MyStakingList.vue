@@ -1,17 +1,16 @@
 <template>
 <div class="tea-page">
 
-  <el-table 
+  <TeaTable
     v-if="list"
     :data="list"
-    stripe
-    size="small"
-    border
+    name="profile-staking-list-table"
   >
     <el-table-column
       prop="id"
       width="90"
       label="CML ID"
+      sortable
     >
       <template slot-scope="scope">
         <el-button
@@ -24,7 +23,9 @@
     </el-table-column>
     <el-table-column
       label="Total slots"
-      width="120">
+      prop="slot_len"
+      sortable
+      width="100">
       <template slot-scope="scope">
         <el-button
           v-if="scope.row.staking_slot.length>0"
@@ -40,10 +41,11 @@
       prop="index"
       width="100"
       label="Slot index"
+      sortable
     />
     <el-table-column
       label="Staking with"
-      width="150"
+      width="90"
     >
       <template slot-scope="scope">
         {{scope.row.staking_slot[scope.row.index].category}}
@@ -52,6 +54,30 @@
         </el-button>
       </template>
     </el-table-column>
+
+    <el-table-column
+      prop="liferemaining"
+      label="Life remaining"
+      width="120"
+      sortable
+    >
+      <template slot-scope="scope">
+        {{scope.row.life_day}}
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="performance"
+      label="Current / Peak performance"
+      width="184"
+      sortable
+    />
+    <el-table-column
+      prop="remaining_performance"
+      label="Remaining performance"
+      width="170"
+      sortable
+    />
 
     <el-table-column
       prop="weight"
@@ -86,7 +112,7 @@
 
 
 
-  </el-table>
+  </TeaTable>
 
   <div style="display:flex; justify-content: flex-end;">
     <el-button style="width:40%;margin-top: 40px;" type="primary" @click="openInvolveStakingModal()">Stake to Camellia</el-button>
@@ -102,9 +128,11 @@ import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import request from '../../request';
 import TeaIconButton from '../../components/TeaIconButton';
+import TeaTable from '../../components/TeaTable';
 export default {
   components: {
     TeaIconButton,
+    TeaTable
   },
   data(){
     return {
@@ -210,7 +238,7 @@ export default {
       }));
 
       this.list = cml_list;
-
+      console.log(1, this.list);
       
     },
 
