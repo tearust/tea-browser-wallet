@@ -66,13 +66,16 @@
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
 
         <div class="t-action" v-if="props[item.name].action">
-          <span class="s1" :inner-html.prop="props[item.name].action.html"></span>
-          <el-button class="s2" size="mini" :loading="props[item.name].action.loading||false" type="primary" plain @click="actionHandler(form[item.name], props[item.name].action)">{{props[item.name].action.button_text || 'Action'}}</el-button>
+          <span class="s1" v-if="props[item.name].action.html" :inner-html.prop="props[item.name].action.html"></span>
+          <span class="s1" v-if="props[item.name].action.tip_html" :inner-html.prop="props[item.name].action.tip_html(form[item.name], form)"></span>
+          <el-button v-if="props[item.name].action.button_text" class="s2" size="mini" :loading="props[item.name].action.loading||false" type="primary" plain @click="actionHandler(form[item.name], props[item.name].action)">{{props[item.name].action.button_text}}</el-button>
         </div>
 
         <div class="t-action" v-if="props[item.name].model_action">
           <el-button class="s2" size="mini" :loading="props[item.name].model_action.loading||false" type="primary" plain @click="modelActionHandler(form[item.name], item.name, props[item.name].model_action)">{{props[item.name].model_action.button_text || 'Action'}}</el-button>
         </div>
+
+        
 
       </el-form-item>
       </div>

@@ -383,6 +383,14 @@ export default {
                   disabled: true,
                 }
               ],
+              action: {
+                tip_html: (val, form)=>{
+                  if(!val) return null;
+                  const x = {'youtube': 3000, 'reddit':2000, 'twitter':1000}[_.toLower(val)];
+                  return `Require ${x} performance`;
+                }
+              },
+              tip: 'Different TApp template require different performance.'
             },
             YouTube: {
               label: 'Youtube Id',
