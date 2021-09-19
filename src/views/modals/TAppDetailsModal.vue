@@ -37,7 +37,7 @@
 
           <div class="x-item">
             <b>Min / Max hosts :</b>
-            <span>{{tapp.host_n}}</span>
+            <span>{{tapp.host_min}} / {{tapp.host_max}}</span>
           </div>
 
           <div class="x-item">
@@ -57,7 +57,7 @@
 
           <div class="x-item">
             <b>Buy / Sell price :</b>
-            <span>{{tapp.buy_price}}/{{tapp.sell_price}}</span>
+            <span>{{tapp.buy_price}} / {{tapp.sell_price}}</span>
           </div>
 
           <div class="x-item">
@@ -216,7 +216,8 @@ export default {
         link: utils.rpcArrayToString(arr[5]),
         host_performance: arr[6],
         host_current: arr[7],
-        host_n: `${arr[7]}/${arr[8]}`,
+        host_max: arr[8],
+        host_min: 3,
         is_full: arr[7] >= arr[8],
         total_supply: utils.layer1.balanceToAmount(arr[9]),
         buy_price: utils.layer1.balanceToAmount(arr[10]),
