@@ -288,6 +288,7 @@ query {
       `;
 
       const rs = await request.queryGraphQL(query);
+      console.log(111, rs.logs.nodes);
       return _.map(rs.logs.nodes, (item)=>{
 
         return item;
@@ -310,13 +311,16 @@ query {
       cmlId
       tappId
       accountId
-      total
+      fixTokenTotal
+      type
+      fixTeaTotal
     }
   }
 }     
       `;
 
       const rs = await request.queryGraphQL(query);
+      console.log(111, rs.hostingTappRewards.nodes);
       _.map(rs.hostingTappRewards.nodes, (item)=>{
         const n = _.toNumber(item.total);
         total += n;

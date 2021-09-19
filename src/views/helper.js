@@ -39,6 +39,7 @@ const F = {
             max: 100000000,
             remove_required_rule: true,
             default: undefined,
+            tip: 'Click "Next" button to see how much you can convert to, or input a number below to convert back.'
           },
           tea: {
             label: 'TEA',
@@ -121,6 +122,7 @@ const F = {
             max: 100000000,
             remove_required_rule: true,
             default: undefined,
+            tip: 'Click "Next" button to see how much you can convert to, or input a number below to convert back.'
           },
           tea: {
             label: 'TEA',

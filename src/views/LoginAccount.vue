@@ -454,6 +454,7 @@ export default {
               min: 0,
               step: 0.1,
               default: undefined,
+              tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.'
             },
             coffee: {
               label: 'COFFEE',
@@ -520,6 +521,7 @@ export default {
               min: 0,
               step: 0.1,
               default: undefined,
+              tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.'
             },
             tea: {
               label: 'TEA',
