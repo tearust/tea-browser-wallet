@@ -16,54 +16,12 @@
       <!-- <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">{{tapp.name}}</h4> -->
       <el-row class="x-list" style="flex-direction: row;">
         <el-col :span="24">
-          <div class="x-item">
-            <b>Ticker :</b>
-            <span>{{tapp.token_symbol}}</span>
-          </div>
-          <div class="x-item">
-            <b>Details :</b>
-            <span>{{tapp.detail}}</span>
-          </div>
 
-          <div class="x-item">
-            <b>Host performance</b>
-            <span>{{tapp.host_performance}}</span>
+          <div class="x-item" v-for="(item, i) of item_list" :key="i">
+            <b>{{item.label}} :</b>
+            <span>{{item.value}}</span>
           </div>
-
-          <div class="x-item">
-            <b>Billing model :</b>
-            <span>{{tapp.billing_mode}}</span>
-          </div>
-
-          <div class="x-item">
-            <b>Min / Max hosts :</b>
-            <span>{{tapp.host_min}} / {{tapp.host_max}}</span>
-          </div>
-
-          <div class="x-item">
-            <b>Current hosts :</b>
-            <span>{{tapp.host_current}}</span>
-          </div>
-
-          <div class="x-item">
-            <b>TApp template :</b>
-            <span>{{tapp.type}}</span>
-          </div>
-
-          <div class="x-item">
-            <b>Total supply :</b>
-            <span>{{tapp.total_supply}}</span>
-          </div>
-
-          <div class="x-item">
-            <b>Buy / Sell price :</b>
-            <span>{{tapp.buy_price}} / {{tapp.sell_price}}</span>
-          </div>
-
-          <div class="x-item">
-            <b>Market cap :</b>
-            <span>{{tapp.market_cap}}</span>
-          </div>
+          
 
           
         </el-col>
@@ -169,6 +127,7 @@ export default {
       tapp: null,
 
       cml_list: null,
+      item_list: [],
     };
   },
   computed: {
@@ -224,6 +183,21 @@ export default {
         sell_price: utils.layer1.balanceToAmount(arr[11]),
       };
 
+      let item_list = [
+        {
+          label: 'Ticker',
+          value: tmp.token_symbol,
+        },
+        {
+          value: tmp.detail,
+          label: 'Details'
+        },
+        {
+          value: tmp.host_performance,
+          label: 'Host performance'
+        }
+      ];
+
       const cid = (await api.query.bondingCurve.tAppResourceMap(tapp_id)).toJSON();
       tmp.cid = hexToString(cid);
 
@@ -231,11 +205,62 @@ export default {
 
       const item = (await api.query.bondingCurve.tAppBondingCurve(tapp_id)).toJSON();
 
-      tmp.billing_mode = item.billing_mode.fixedHostingToken ? 'Fixed TApp token and dividend payment per 100 blocks' : 'Fixed TEA payment per 100 blocks';
+      if(_.has(item.billing_mode, 'fixedHostingToken')){
+        tmp.billing_mode = 'Fixed TApp token and dividend payment per 100 blocks';
+        item_list.push({
+          label: 'Billing model',
+          value: tmp.billing_mode
+        });
+        item_list.push({
+          label: 'Stake token amount',
+          value: utils.layer1.balanceToAmount(item.billing_mode.fixedHostingToken.FixedHostingToken)
+        });
+      }
+      else if(_.has(item.billing_mode, 'fixedHostingFee')){
+        tmp.billing_mode = 'Fixed TEA payment per 100 blocks';
+        item_list.push({
+          label: 'Billing model',
+          value: tmp.billing_mode
+        });
+        item_list.push({
+          label: 'Reward per 1000 performance',
+          value: utils.layer1.balanceToAmount(item.billing_mode.fixedHostingFee.FixedHostingFee)
+        });
+      }
+      
       tmp.type = item.tapp_type;
 
-      // console.log(tmp);
       this.tapp = tmp;
+
+      item_list = _.concat(item_list, [
+        {
+          label: 'Min / Max hosts',
+          value: tmp.host_min+' / '+tmp.host_max
+        },
+        {
+          label: 'Current hosts',
+          value: tmp.host_current
+        },
+        {
+          label: 'TApp template',
+          value: tmp.type,
+        },
+        {
+          label: 'Total supply',
+          value: tmp.total_supply,
+        },
+        {
+          label: 'Buy / Sell price',
+          value: tmp.buy_price+' / '+tmp.sell_price
+        },
+        {
+          label: 'Market cap',
+          value: tmp.market_cap
+        }
+      ]);
+
+      this.item_list = item_list;
+
     },
     async initCmlInfo(tapp_id){
       const tmp_list = await request.layer1_rpc('bonding_tappHostedCmls', [tapp_id]);
