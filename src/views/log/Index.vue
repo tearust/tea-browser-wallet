@@ -1,6 +1,6 @@
 <template>
 <div class="tea-page">
-  <h4>RA FaaS rewards (Total: {{my_total_reward}})</h4>
+  <h4>RA FaaS rewards (Total : <b class="block">{{my_total_reward||0}}</b>)</h4>
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshPage()"></el-button>
 
   <TeaTable
