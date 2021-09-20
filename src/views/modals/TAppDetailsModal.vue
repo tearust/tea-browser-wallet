@@ -50,6 +50,7 @@
           prop="cml_id"
           label="CML ID"
           width="80"
+          sortable
         >
           <template slot-scope="scope">
             <el-button type="text" @click="close();$router.push('/cml_details/'+scope.row.cml_id)">{{scope.row.cml_id}}</el-button>
@@ -69,10 +70,15 @@
         </el-table-column>
 
         <el-table-column
-          prop="life_day"
+          prop="liferemaining"
           label="Life remaining"
-          width="100"
-        />
+          sortable
+          width="120"
+        >
+          <template slot-scope="scope">
+            {{scope.row.life_day}}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="performance"
           label="Current / Peak performance"
@@ -82,11 +88,14 @@
           prop="remaining_performance"
           label="Remaining performance"
           width="180"
+          sortable
         />
 
         <el-table-column
           label="Total income"
           width="120"
+          sortable
+          prop="reward"
         >
           <template slot-scope="scope">
             <span :inner-html.prop="scope.row.reward?scope.row.reward:'---'"></span>
