@@ -144,7 +144,6 @@ export default {
             arr[j] = _.toNumber(arr[j]);
           }
           const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
-          
           const rs = {
             index: i+1,
             address: arr[0],
@@ -202,16 +201,17 @@ export default {
       }
 
       this.list = _.map(x_list, (item)=>{
+         
         if(_.includes(sum_arr, item.index)){
           item.reward = utils.layer1.roundAmount(utils.consts.TOTAL_REWARD*(item.total / sum));
         }
         else{
           item.reward = 0;
         }
-        
+       
         return item;
       });
-      
+
       this.$root.loading(false);
     },
 

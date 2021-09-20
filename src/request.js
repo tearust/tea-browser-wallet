@@ -159,13 +159,13 @@ class REQ_MEM {
   constructor(){
     this.data = {};
     this.blocking = {};
-    this.expire_time = 1000*60;
+    this.expire_time = 1000*5;
   }
   set_doing(key){
     this.blocking[key] = true;
   }
   set(key, val){
-    const dd = [val, Date.now()];
+    const dd = [_.cloneDeep(val), Date.now()];
     this.data[key] = dd;
     this.blocking[key] = false;
   }
@@ -176,7 +176,7 @@ class REQ_MEM {
     if(Date.now() - this.expire_time > xd[1]){
       return null;
     }
-    return xd[0];
+    return _.cloneDeep(xd[0]);
   }
   clear(){
     this.data = {};
@@ -207,7 +207,7 @@ F.layer1_rpc = async (method, params=[], block=null)=>{
   const md5_key = utils.crypto.md5(data);
   const cache_result = request_mem.get(md5_key);
   if(cache_result){
-    console.log('layer1_rpc cache result => ', cache_result, data);
+    console.log('layer1_rpc cache result => ', cache_result);
     return cache_result;
   }
 
