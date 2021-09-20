@@ -32,7 +32,7 @@
       label="Reward"
     >
       <template slot-scope="scope">
-        {{scope.row.price}}
+        <span :inner-html.prop="scope.row.price | teaIcon"></span>
       </template>
     </el-table-column>
     
@@ -48,7 +48,7 @@
   </TeaTable>
 
   <el-divider />
-  <h4>Hosting TApp rewards (Total: {{hosting_reward_total}})</h4>
+  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}}</b> | Fix Token mode : <b class="block">{{tapp_fix_token_total}}</b>)</h4>
   <TeaTable
     :data="hosting_reward_list || []"
     name="hosting_tapp_reward_log_table"
@@ -82,10 +82,22 @@
     </el-table-column>
 
     <el-table-column
-      label="Reward"
+      label="Fix host fee reward"
+      width="150"
     >
       <template slot-scope="scope">
-        {{scope.row.amount}}
+        <span v-if="scope.row.tapp_mode === 'fix_tea_mode'" :inner-html.prop="scope.row.amount | teaIcon">
+        </span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      label="Fix host token eward"
+      width="150"
+    >
+      <template slot-scope="scope">
+        <span v-if="scope.row.tapp_mode === 'fix_token_mode'" :inner-html.prop="scope.row.amount | teaIcon">
+        </span>
       </template>
     </el-table-column>
     
@@ -227,7 +239,9 @@ export default {
   data(){
     return {
       hosting_reward_list: null,
-      hosting_reward_total: null,
+
+      tapp_fix_tea_total: 0,
+      tapp_fix_token_total: 0,
     };
   },
   computed: {
@@ -252,7 +266,11 @@ export default {
       await this.$store.dispatch('clog/fetch_my_reward_log', {});
 
       this.hosting_reward_list = await this.getHostingRewardList();
-      this.hosting_reward_total = await this.getHostingRewardTotal();
+
+      const tt = await this.getHostingRewardTotal();
+      console.log('tapp reward total ', tt);
+      this.tapp_fix_tea_total = tt.fixTeaTotal;
+      this.tapp_fix_token_total = tt.fixTokenTotal;
 
       this.$root.loading(false);
     },
@@ -265,7 +283,7 @@ query {
     orderBy: AT_BLOCK_DESC
     filter: {
       to: {in: ["${this.layer1_account.address}"]}
-      name: {in: ["TAppExpense"]}
+      name: {in: ["TAppExpense", "TAppConsumeRewardStatements"]}
     }
     
   ) {
@@ -288,9 +306,13 @@ query {
       `;
 
       const rs = await request.queryGraphQL(query);
-      console.log(111, rs.logs.nodes);
       return _.map(rs.logs.nodes, (item)=>{
-
+        if(item.name === 'TAppExpense'){
+          item.tapp_mode = 'fix_tea_mode';
+        }
+        else{
+          item.tapp_mode = 'fix_token_mode';
+        }
         return item;
       });
     },
@@ -314,20 +336,39 @@ query {
       fixTokenTotal
       type
       fixTeaTotal
+      fixTokenMinerTotal
+      fixTokenInvestorTotal
     }
   }
 }     
       `;
 
-      const rs = await request.queryGraphQL(query);
-      console.log(111, rs.hostingTappRewards.nodes);
-      _.map(rs.hostingTappRewards.nodes, (item)=>{
+      const rs = {
+        fixTeaTotal: 0,
+        fixTokenTotal: 0,
+        fixTokenMinerTotal: 0,
+        fixTokenInvestorTotal: 0,
+      };
+
+      const graph_result = await request.queryGraphQL(query);
+      _.map(graph_result.hostingTappRewards.nodes, (item)=>{
         const n = _.toNumber(item.total);
         total += n;
+
+        rs.fixTeaTotal += _.toNumber(item.fixTeaTotal);
+        rs.fixTokenTotal += _.toNumber(item.fixTokenTotal);
+        rs.fixTokenMinerTotal += _.toNumber(item.fixTokenMinerTotal);
+        rs.fixTokenInvestorTotal += _.toNumber(item.fixTokenInvestorTotal);
+
         return null;
       });
 
-      return utils.layer1.balanceToAmount(total);
+      return {
+        fixTeaTotal: utils.layer1.balanceToAmount(rs.fixTeaTotal),
+        fixTokenTotal: utils.layer1.balanceToAmount(rs.fixTokenTotal),
+        fixTokenMinerTotal: utils.layer1.balanceToAmount(rs.fixTokenMinerTotal),
+        fixTokenInvestorTotal: utils.layer1.balanceToAmount(rs.fixTokenInvestorTotal),
+      };
     },
 
     showAuctionDetails(auction_id){
