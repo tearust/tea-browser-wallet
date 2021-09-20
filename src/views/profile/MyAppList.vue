@@ -23,6 +23,7 @@
     <el-table-column
       prop="name"
       label="TApp Name"
+      width="120"
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="openTo(scope.row)">{{scope.row.name}}</el-button>
@@ -67,11 +68,15 @@
     <el-table-column
       prop="sell_price"
       label="Sell price (TEA)"
+      width="130"
+      sortable
     />
 
     <el-table-column
       prop="market_value"
       label="Market value (TEA)"
+      width="140"
+      sortable
     />
 
     <!-- <el-table-column
