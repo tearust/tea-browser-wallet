@@ -96,7 +96,7 @@
       width="150"
     >
       <template slot-scope="scope">
-        <span v-if="scope.row.tapp_mode === 'fix_token_mode'" :inner-html.prop="scope.row.amount | teaIcon">
+        <span v-if="scope.row.tapp_mode === 'fix_token_mode'" :inner-html.prop="scope.row.amount_in_tea | teaIcon">
         </span>
       </template>
     </el-table-column>
@@ -231,6 +231,7 @@ import { mapState, mapGetters } from 'vuex';
 import store from '../../store/index';
 import TeaTable from '../../components/TeaTable';
 import request from '../../request';
+import helper from '../helper';
 
 export default {
   components: {
@@ -306,12 +307,25 @@ query {
       `;
 
       const rs = await request.queryGraphQL(query);
+
+      const tapp_list = {};
+      _.map(rs.logs.nodes, (item)=>{
+        const id = item.tappId;
+        if(id && !tapp_list[id]){
+          tapp_list[id] = 1;
+        }
+        return null;
+      });
+
+      const tapp_detail_list = await helper.getTAppDetailsListByTAppIdList(_.keys(tapp_list));
       return _.map(rs.logs.nodes, (item)=>{
         if(item.name === 'TAppExpense'){
           item.tapp_mode = 'fix_tea_mode';
         }
         else{
           item.tapp_mode = 'fix_token_mode';
+          const sell_price = tapp_detail_list[item.tappId].sell_price;
+          item.amount_in_tea = utils.layer1.roundAmount(_.toNumber(item.amount)*sell_price);
         }
         return item;
       });
@@ -351,23 +365,35 @@ query {
       };
 
       const graph_result = await request.queryGraphQL(query);
+
+      const tapp_list = {};
       _.map(graph_result.hostingTappRewards.nodes, (item)=>{
-        const n = _.toNumber(item.total);
-        total += n;
+        const id = item.tappId;
+        if(id && !tapp_list[id]){
+          tapp_list[id] = 1;
+        }
+        return null;
+      });
+
+      const tapp_detail_list = await helper.getTAppDetailsListByTAppIdList(_.keys(tapp_list));
+
+      _.map(graph_result.hostingTappRewards.nodes, (item)=>{
 
         rs.fixTeaTotal += _.toNumber(item.fixTeaTotal);
-        rs.fixTokenTotal += _.toNumber(item.fixTokenTotal);
-        rs.fixTokenMinerTotal += _.toNumber(item.fixTokenMinerTotal);
-        rs.fixTokenInvestorTotal += _.toNumber(item.fixTokenInvestorTotal);
+
+        const sell_price = tapp_detail_list[item.tappId].sell_price;
+        rs.fixTokenTotal += utils.layer1.balanceToAmount(item.fixTokenTotal)*sell_price;
+        rs.fixTokenMinerTotal += utils.layer1.balanceToAmount(item.fixTokenMinerTotal)*sell_price;
+        rs.fixTokenInvestorTotal += utils.layer1.balanceToAmount(item.fixTokenInvestorTotal)*sell_price;
 
         return null;
       });
 
       return {
         fixTeaTotal: utils.layer1.balanceToAmount(rs.fixTeaTotal),
-        fixTokenTotal: utils.layer1.balanceToAmount(rs.fixTokenTotal),
-        fixTokenMinerTotal: utils.layer1.balanceToAmount(rs.fixTokenMinerTotal),
-        fixTokenInvestorTotal: utils.layer1.balanceToAmount(rs.fixTokenInvestorTotal),
+        fixTokenTotal: utils.layer1.roundAmount(rs.fixTokenTotal),
+        fixTokenMinerTotal: utils.layer1.roundAmount(rs.fixTokenMinerTotal),
+        fixTokenInvestorTotal: utils.layer1.roundAmount(rs.fixTokenInvestorTotal),
       };
     },
 

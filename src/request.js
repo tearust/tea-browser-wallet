@@ -153,33 +153,83 @@ query {
     }
   },
 
-
-  async layer1_rpc(method, params=[]){
-    const data = {
-      jsonrpc: '2.0',
-      method,
-      params,
-      id: 9999
-    };
-
-    const arr = await utils.safe.getForLayer1();
-    const rs = await axios.post(arr[1], data, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-
-    if(rs.data.error){
-      throw rs.data.error;
-    }
-
-    if(rs.data.id === 9999){
-      return rs.data.result;
-    }
-
-    return null;
-  }
 };
+
+class REQ_MEM {
+  constructor(){
+    this.data = {};
+    this.blocking = {};
+    this.expire_time = 1000*60;
+  }
+  set_doing(key){
+    this.blocking[key] = true;
+  }
+  set(key, val){
+    const dd = [val, Date.now()];
+    this.data[key] = dd;
+    this.blocking[key] = false;
+  }
+  get(key){
+    const xd = this.data[key];
+    if(!xd) return null;
+
+    if(Date.now() - this.expire_time > xd[1]){
+      return null;
+    }
+    return xd[0];
+  }
+  clear(){
+    this.data = {};
+    this.blocking = {};
+  }
+}
+const request_mem = new REQ_MEM();
+window.request_mem = request_mem;
+F.layer1_rpc = async (method, params=[], block=null)=>{
+  const data = {
+    jsonrpc: '2.0',
+    method,
+    params,
+    id: 9999
+  };
+
+  if(block){
+    const layer1_instance = utils.mem.get('layer1_instance');
+    const api = layer1_instance.getApi();
+    if(!api){
+      throw 'Invalid layer1 instance in layer1_rpc.';
+    }
+
+    const block_hash = (await api.rpc.chain.getBlockHash(block)).toJSON();
+    data.params = _.concat(data.params, block_hash);
+  }
+
+  const md5_key = utils.crypto.md5(data);
+  const cache_result = request_mem.get(md5_key);
+  if(cache_result){
+    console.log('layer1_rpc cache result => ', cache_result, data);
+    return cache_result;
+  }
+
+  const arr = await utils.safe.getForLayer1();
+  const rs = await axios.post(arr[1], data, {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  if(rs.data.error){
+    throw rs.data.error;
+  }
+
+  if(rs.data.id === 9999){
+    const result = rs.data.result;
+    request_mem.set(md5_key, result);
+    return result;
+  }
+
+  return null;
+}
 
 
 export default F;

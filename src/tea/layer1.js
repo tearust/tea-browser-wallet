@@ -47,6 +47,8 @@ class Layer1 {
     // });
 
     this.connected = 2;
+
+    utils.mem.set('layer1_instance', _layer1);
   }
 
   getLayer1Instance(){

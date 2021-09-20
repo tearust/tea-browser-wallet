@@ -106,6 +106,11 @@ const crypto = {
     const tmp = forge.sha256.create();
     tmp.update(data);
     return tmp.digest().toHex();
+  },
+  md5(data){
+    const tmp = forge.md5.create();
+    tmp.update(JSON.stringify(data));
+    return tmp.digest().toHex();
   }
 };
 

@@ -154,7 +154,7 @@ const F = {
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
         let estimate = await request.layer1_rpc('bonding_estimateReceivedTeaBySellGivenToken', [
-          id, amount
+          id, amount,
         ]);
         estimate = utils.layer1.balanceToAmount(estimate);
 
@@ -278,7 +278,11 @@ query {
       cmlId
       tappId
       accountId
-      total
+      fixTokenTotal
+      type
+      fixTeaTotal
+      fixTokenMinerTotal
+      fixTokenInvestorTotal
       
     }
   }
@@ -286,7 +290,18 @@ query {
     `;
 
     const rs = await request.queryGraphQL(query);
-    return rs.hostingTappRewards.nodes[0];
+    const item = rs.hostingTappRewards.nodes[0];
+
+    if(!item){
+      return {
+        total: 0
+      };
+    }
+    
+    item.total = item.fixTokenTotal;
+    // TODO fix token total
+    
+    return item;
   },
 
   async showTAppDetails(self, tapp_id){
@@ -320,6 +335,20 @@ query {
     estimate = utils.layer1.balanceToAmount(estimate);
 
     return estimate;
+  },
+
+  async getTAppDetailsListByTAppIdList(id_list){
+    const rs = {};
+    await Promise.all(_.map(id_list, async (id)=>{
+      const arr = await request.layer1_rpc('bonding_tappDetails', [_.toNumber(id)]);
+      rs[id] = {
+        sell_price: utils.layer1.balanceToAmount(arr[11]),
+      };
+
+      return null;
+    }));
+
+    return rs;
   }
 
 };

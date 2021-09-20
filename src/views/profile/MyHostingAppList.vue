@@ -20,6 +20,7 @@
       
     <el-table-column
       label="TApp Name"
+      width="100"
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="openTo(scope.row)">{{scope.row.tapp_name}}</el-button>
@@ -28,6 +29,7 @@
 
     <el-table-column
       label="Ticker"
+      width="80"
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="showDetails(scope)">{{scope.row.tapp_ticker}}</el-button>
@@ -57,7 +59,8 @@
 
     <el-table-column
       prop="total_income"
-      label="Total income (TEA)"
+      label="Total fix host fee income"
+      width="120"
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.total_income"></span>
@@ -65,8 +68,17 @@
     </el-table-column>
 
     <el-table-column
+      label="Total fix host token income"
+      width="120"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.total_token_income"></span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
       label="Actions"
-      width="200">
+      width="180">
       <template slot-scope="scope">
 
         <TeaIconButton 
@@ -106,6 +118,7 @@ export default {
       list: null,
 
       table_loading: false,
+
     }
   },
 
@@ -152,6 +165,7 @@ export default {
           };
 
           x_item.total_income = '---';
+          x_item.total_token_income = '---';
           x_list.push(x_item);
 
           ((index)=>{

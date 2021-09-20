@@ -313,7 +313,7 @@ query {
       cmlId
       tappId
       accountId
-      total
+      
       
     }
   }
