@@ -299,6 +299,10 @@ export default {
               rules: {
                 max: name_max_len,
                 message: `Name cannot be longer than ${name_max_len} characters.`,
+              },
+              tip: 'Click to visit wiki.',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---name');
               }
             },
             ticker: {
@@ -323,7 +327,7 @@ export default {
               ]
             },
             init_fund: {
-              label: 'Initial token',
+              label: 'Initial tokens',
               type: 'select_number',
               el_props: {
                 'allow-create': true,
@@ -340,11 +344,15 @@ export default {
               },
               action: {
                 button_text: 'Calculate',
-                html: '<b>Please click calcalute</b>',
+                html: '<b>Calculate cost</b>',
                 handler: async (val)=>{
                   const v = await helper.calculateTEAByToken(val);
                   return `Required <b>${v}</b> TEA`;
                 }
+              },
+              tip: 'Click to visit wiki.',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---initial-tokens');
               }
             },
             detail: {
@@ -390,15 +398,25 @@ export default {
                   return `Require ${x} performance`;
                 }
               },
-              tip: 'Different TApp template require different performance.'
+              tip: 'Different TApp template require different performance. <br/>Click to visit wiki.',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#minimum-hosting-performance-requirement');
+              }
             },
             YouTube: {
-              label: 'Youtube Id',
+              label: 'YouTube Id',
               type: 'Input',
               required: true,
               condition: {
                 target: 'template',
                 value: 'YouTube'
+              },
+              el_props: {
+                placeholder: 'e.g. Jg8tkBqA2ww',
+              },
+              tip: 'Click to visit wiki',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---youtube-id')
               }
             },
             Reddit: {
@@ -408,6 +426,9 @@ export default {
               condition: {
                 target: 'template',
                 value: 'Reddit'
+              },
+              el_props: {
+                placeholder: 'e.g. pkqhir',
               }
             },
             Twitter: {
@@ -417,6 +438,9 @@ export default {
               condition: {
                 target: 'template',
                 value: 'Twitter'
+              },
+              el_props: {
+                placeholder: 'e.g. 1410353460503928835',
               }
             },
             
@@ -432,6 +456,10 @@ export default {
               required: true,
               default: 10,
               min: 3,
+              tip: 'Click to visit wiki',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---max-allowed-hosts')
+              }
             },
 
 
@@ -446,10 +474,14 @@ export default {
                   value: 2,
                 },
                 {
-                  label: 'Fixed TApp token and dividend payment per 100 blocks',
+                  label: 'Fixed TApp token and dividend payments per 100 blocks',
                   value: 1,
                 }
-              ]
+              ],
+              tip: 'Click to visit wiki',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---billing-model')
+              }
             },
 
             reward_per_performance: {
@@ -475,6 +507,7 @@ export default {
             },
             stake_token_amount: {
               type: 'select_number',
+              label: 'Staked token amount',
               condition: {
                 target: 'fixed_token_mode',
                 value: 1
@@ -488,6 +521,10 @@ export default {
                 type: 'number',
                 message: 'Stake token amount must be number.',
               },
+              tip: 'Click to visit wiki',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---staked-token-amount')
+              }
             },
             
           },

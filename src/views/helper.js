@@ -349,6 +349,9 @@ query {
     }));
 
     return rs;
+  },
+  openUrl(url){
+    window.open(url, '_blank');
   }
 
 };

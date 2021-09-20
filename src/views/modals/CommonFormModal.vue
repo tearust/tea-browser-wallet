@@ -63,7 +63,7 @@
           </el-radio-button>
         </el-radio-group>
 
-        <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" icon="questionmark" />
+        <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" @click="props[item.name].tip_action ? props[item.name].tip_action() : ()=>{}" icon="questionmark" />
 
         <div class="t-action" v-if="props[item.name].action">
           <span class="s1" v-if="props[item.name].action.html" :inner-html.prop="props[item.name].action.html"></span>
