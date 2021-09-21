@@ -164,7 +164,7 @@
 import Vue from 'vue';
 import SettingAccount from '../workflow/SettingAccount';
 import {_} from 'tearust_utils';
-import {helper, numberToHex} from 'tearust_layer1';
+import {numberToHex} from 'tearust_layer1';
 import utils from '../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import MyCmlList from './profile/MyCmlList';
@@ -177,6 +177,7 @@ import PubSub from 'pubsub-js';
 import ClipboardJS from 'clipboard';
 import TeaIconButton from '../components/TeaIconButton';
 import request from '../request';
+import helper from './helper';
 export default {
   components: {
     MyCmlList,
@@ -454,7 +455,8 @@ export default {
               min: 0,
               step: 0.1,
               default: undefined,
-              tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.'
+              tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.',
+              
             },
             coffee: {
               label: 'COFFEE',
@@ -467,7 +469,11 @@ export default {
                   return val;
                 },
                 ref: 'sell_tea_amount'
-              }
+              },
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/The-TEA-Browser-Wallet#convert-back')
+              },
+              tip: 'Click to visit wiki for "Convert back"',
             }
           },
         },
@@ -521,7 +527,7 @@ export default {
               min: 0,
               step: 0.1,
               default: undefined,
-              tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.'
+              tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.',
             },
             tea: {
               label: 'TEA',
@@ -534,7 +540,11 @@ export default {
                   return val;
                 },
                 ref: 'sell_usd_amount'
-              }
+              },
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/The-TEA-Browser-Wallet#convert-back')
+              },
+              tip: 'Click to visit wiki for "Convert back"',
             }
           },
         },

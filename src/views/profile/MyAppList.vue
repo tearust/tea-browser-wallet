@@ -55,7 +55,7 @@
 
     <el-table-column
       prop="amount"
-      label="My holding tokens"
+      label="My token holdings"
       width="150"
       sortable
     />

@@ -343,8 +343,8 @@ export default {
                 message: 'Initial token must be number.',
               },
               action: {
-                button_text: 'Calculate',
-                html: '<b>Calculate cost</b>',
+                button_text: 'Calculate cost',
+                html: '',
                 handler: async (val)=>{
                   const v = await helper.calculateTEAByToken(val);
                   return `Required <b>${v}</b> TEA`;
