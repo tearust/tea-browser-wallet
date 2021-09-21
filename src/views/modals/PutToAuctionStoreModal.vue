@@ -18,9 +18,12 @@
       </el-form-item>
       <el-form-item label="Buy now price">
         <el-input-number v-model="form.buy_now_price" :min="0" :max="1000000"></el-input-number>
+        <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" @click="openUrl('https://github.com/tearust/teaproject/wiki/The-TEA-Browser-Wallet#buy-now-price')" icon="questionmark" />
       </el-form-item>
       <el-form-item label="Auto renew">
         <el-checkbox v-model="form.auto_renew"></el-checkbox>
+
+        <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" @click="openUrl('https://github.com/tearust/teaproject/wiki/The-TEA-Browser-Wallet#auto-renew')" icon="questionmark" />
       </el-form-item>
     </el-form>
 
@@ -37,7 +40,12 @@
 import { mapState } from 'vuex';
 import store from '../../store/index';
 import utils from '../../tea/utils';
+import TeaIconButton from '../../components/TeaIconButton';
+import helper from '../helper'
 export default {
+  components: {
+    TeaIconButton,
+  },
   data(){
     return {
       form: {
@@ -76,7 +84,8 @@ export default {
       if(cb){
         cb(this.form, this.close);
       }
-    }
+    },
+    openUrl: helper.openUrl,
   }
 }
 </script>
