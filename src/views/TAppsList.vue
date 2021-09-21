@@ -328,11 +328,11 @@ export default {
             },
             init_fund: {
               label: 'Initial tokens',
-              type: 'select_number',
-              el_props: {
-                'allow-create': true,
-                'filterable': true,
-              },
+              type: 'select',
+              // el_props: {
+              //   'allow-create': true,
+              //   'filterable': true,
+              // },
               required: true,
               default: 1000,
               options: [
