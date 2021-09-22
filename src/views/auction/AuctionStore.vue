@@ -144,7 +144,7 @@ export default {
       }catch(e){
         this.$root.showError(e);
       }
-      console.log(111, this.auction.auction_list);
+      // console.log(111, this.auction.auction_list);
       this.$root.loading(false);
     },
 
@@ -203,7 +203,7 @@ export default {
           try{
             const auction_id = scope.row.id;        
             const price = utils.toBN(layer1_instance.asUnit(form.price));
-            
+            console.log(111, price.toString(), min_price.toString());
             if(price.lt(min_price)){
               throw 'Insufficient bid amount.'
             }
