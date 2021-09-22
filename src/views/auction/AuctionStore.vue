@@ -204,9 +204,6 @@ export default {
             const auction_id = scope.row.id;        
             const price = utils.toBN(layer1_instance.asUnit(form.price));
             
-            // if(price.lt(min_price)){
-            //   throw 'Insufficient bid amount.'
-            // }
 
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);

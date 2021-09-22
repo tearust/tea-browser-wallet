@@ -68,14 +68,14 @@ export default {
         form.price = this.param.buy_now_need;
       }
 
-      if(this.form.buy_now && this.param.buy_now_need && this.form.price > this.param.buy_now_need){
-        // const x = await this.$confirm(`You only need ${this.param.buy_now_need} TEA to buy it now. Would you like to buy it at that price?`, 'Info');
-        // if(!x) return;
+      // if(!this.form.buy_now && this.param.buy_now_need && this.form.price > this.param.buy_now_need){
+      //   const x = await this.$confirm(`You only need ${this.param.buy_now_need} TEA to buy it now. Would you like to buy it at that price?`, 'Info');
+      //   if(!x) return;
 
-        // this.form.price = this.param.buy_now_need;
-        // this.form.buy_now = true;
-        // return;
-      }
+      //   this.form.price = this.param.buy_now_need;
+      //   this.form.buy_now = true;
+      //   return;
+      // }
 
 
       const cb = utils.mem.get('bid_for_auction');

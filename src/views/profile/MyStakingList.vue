@@ -166,16 +166,23 @@ export default {
       const api = layer1_instance.getApi();
 
       this.$store.commit('modal/open', {
-        key: 'common_tx', 
+        key: 'common_form', 
         param: {
           title: 'Stake',
-          pallet: 'cml',
-          tx: 'startStaking',
-          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot. You should leave "CML to stake" empty if you\'re staking TEA.',
+          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot.',
           props: {
             staking_to: {
               label: 'CML ID for staking',
               type: 'Input',
+            },
+            is_tea: {
+              type: 'switch',
+              label: 'Stake type',
+              el_props: {
+                'active-text': '1000 TEA',
+                'inactive-text': 'CML'
+              },
+              default: true,
             },
             staking_cml: {
               label: 'CML to stake',
@@ -184,6 +191,11 @@ export default {
                 return item.defrost_day === '0' && item.slot_len<1 && item.status !== 'Staking';
   
               }),
+              condition: {
+                target: 'is_tea',
+                value: false,
+              },
+              required: true,
             },
             acceptable_slot_index: {
               type: 'number',
@@ -198,11 +210,16 @@ export default {
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
+            let staking_cml = null;
+            if(!form.is_tea){
+              staking_cml = form.staking_cml;
+            }
+
             let index = form.acceptable_slot_index || 0;
             const [cml_item] = await this.wf.getCmlByList([form.staking_to]);
               
             index = cml_item.slot_len + index;
-            const tx = api.tx.cml.startStaking(form.staking_to, form.staking_cml||null, index);
+            const tx = api.tx.cml.startStaking(form.staking_to, staking_cml, index);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
             await this.refreshList();
 

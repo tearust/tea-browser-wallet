@@ -63,6 +63,9 @@
           </el-radio-button>
         </el-radio-group>
 
+        <el-switch v-if="types[item.name]==='switch'" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}">
+        </el-switch>
+
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" @click="props[item.name].tip_action ? props[item.name].tip_action() : ()=>{}" icon="questionmark" />
 
         <div class="t-action" v-if="props[item.name].action">
