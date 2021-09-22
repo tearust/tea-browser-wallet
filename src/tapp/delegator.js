@@ -1,4 +1,5 @@
 import {_, axios} from 'tearust_utils';
+import utils from '../tea/utils';
 
 const F = {
   async eachItem(ip, tapp){
@@ -9,21 +10,20 @@ const F = {
 
     rs.ping = hh+'ms';
 
-    if(tapp.json.type === 'bbs'){
-      rs.url = `http://${ip}:8080/ipfs/${tapp.cid}`;
-    }
-    else if(tapp.json.type === 'youtube'){
-      rs.url = `http://${ip}:3200?v=${tapp.json.v}`;
-    }
+    // if(tapp.json.type === 'bbs'){
+    //   rs.url = `http://${ip}:8080/ipfs/${tapp.cid}`;
+    // }
+    // else if(tapp.json.type === 'youtube'){
+    //   rs.url = `http://${ip}:3200?v=${tapp.json.v}`;
+    // }
+    const cid = utils.get_env('TAPP_CID');
+    rs.url = 'http://'+ip+':8080/ipfs/'+cid;
 
     return rs;
   },
   async candidateList(){
     // TODO get from layer1
-    const c_list = [
-      '134.209.69.224',
-      '143.244.154.7',
-    ];
+    const c_list = utils.get_env('DELEGATOR_LIST').split(',');
 
     return c_list;
   },

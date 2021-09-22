@@ -376,10 +376,10 @@ query {
         },
       });
     },
-    visitIpfs(){
-      const cid = this.tapp.cid;
-      helper.goToTAppWithIpfsCid(cid);
-    }
+    // visitIpfs(){
+    //   const cid = this.tapp.cid;
+    //   helper.goToTAppWithIpfsCid(cid);
+    // }
   }
 }
 </script>

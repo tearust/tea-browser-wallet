@@ -298,8 +298,7 @@ query {
       };
     }
     
-    item.total = item.fixTokenTotal;
-    // TODO fix token total
+    item.total = item.fixTeaTotal;
     
     return item;
   },
@@ -321,11 +320,11 @@ query {
     });
   },
 
-  goToTAppWithIpfsCid(cid){
-    const ss = utils.get_env('ipfs_url');
+  // goToTAppWithIpfsCid(cid){
+  //   const ss = utils.get_env('ipfs_url');
 
-    window.open(ss+'/ipfs/'+cid, '_blank');
-  },
+  //   window.open(ss+'/ipfs/'+cid, '_blank');
+  // },
 
   async calculateTEAByToken(token_amount){
     const amount = utils.layer1.amountToBalance(token_amount)

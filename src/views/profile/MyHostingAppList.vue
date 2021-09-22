@@ -168,13 +168,26 @@ export default {
           x_item.total_token_income = '---';
           x_list.push(x_item);
 
+      
           ((index)=>{
             _.delay(()=>{
-              helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then((tmp)=>{
-                  
+              helper.getHostingReward(this.layer1_account.address, x_item.cml_id, x_item.tapp_id).then(async (tmp)=>{
+                
                 const value = tmp ? tmp.total : 0;
-                console.log('from indexer', index, value);
-                this.list[index].total_income = utils.layer1.formatBalance(value, true);
+                const token_total = tmp.fixTokenTotal || 0;
+                console.log('from indexer', index, value, token_total);
+
+                if(value || token_total){
+                  const tapp_detail_list = await helper.getTAppDetailsListByTAppIdList([x_item.tapp_id]);
+                  const sell_price = tapp_detail_list[x_item.tapp_id].sell_price;
+
+                  this.list[index].total_income = utils.layer1.formatBalance(value, true);
+                  this.list[index].total_token_income = utils.layer1.formatBalance(token_total*sell_price, true);
+                }
+                else{
+                  this.list[index].total_income = 0;
+                  this.list[index].total_token_income = 0;
+                }
                 
               });
             }, 500+index*100);
