@@ -5,7 +5,7 @@ const http = 'http://'+utils.get_env('TAPP_BASE_IP');
 const TEM_LIST = [
   {
     key: 'YouTube',
-    label: 'Youtube',
+    label: 'YouTube',
     link(tid){
       return JSON.stringify({
         t: 'YouTube',

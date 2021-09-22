@@ -193,7 +193,6 @@ export default {
       const bid_user = await api.query.auction.auctionBidStore(scope.row.id);
       const bid_user_data = bid_user.toJSON();
 
-      
       const list = await Promise.all(_.map(bid_user_data, async (user)=>{
         const bid_item = await api.query.auction.bidStore(user, scope.row.id);
         const tmp = bid_item.toHuman();
