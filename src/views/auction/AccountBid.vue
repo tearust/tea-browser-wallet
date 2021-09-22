@@ -199,7 +199,10 @@ export default {
 
         const penalty = await request.layer1_rpc('auction_penaltyAmount', [scope.row.auction_id, this.layer1_account.address]);
 
-        title = 'You need to pay '+utils.layer1.balanceToAmount(penalty)+' TEA penalty due to you are the highest bider, Are you sure?';
+        if(_.toNumber(penalty) > 0){
+          title = 'You need to pay '+utils.layer1.balanceToAmount(penalty)+' TEA penalty due to you are the highest bider, Are you sure?';
+        }
+
       }
       const x = await this.$confirm(title, "Delete bid").catch(()=>{});
       if(!x) return;
