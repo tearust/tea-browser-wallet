@@ -59,7 +59,7 @@
 
     <el-table-column
       prop="total_income"
-      label="Total fixed hosting fee income"
+      label="Total fixed hosting fee income in TEA"
       width="120"
     >
       <template slot-scope="scope">
@@ -68,7 +68,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Total hosting token income"
+      label="Total hosting token income in TEA"
       width="120"
     >
       <template slot-scope="scope">
