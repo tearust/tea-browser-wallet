@@ -395,7 +395,7 @@ export default {
                 tip_html: (val, form)=>{
                   if(!val) return null;
                   const x = {'youtube': 3000, 'reddit':2000, 'twitter':1000}[_.toLower(val)];
-                  return `Require a ${x} performance CML`;
+                  return `Requires a ${x} performance CML`;
                 }
               },
               tip: 'Different TApp templates have different CML performance requirements. <br/>Click to visit wiki.',
