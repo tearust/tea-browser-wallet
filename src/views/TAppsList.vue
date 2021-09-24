@@ -142,8 +142,11 @@
         is the minimum power required for a mining machine to host this TApp.
       </li>
       <li>
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#current-and-max-hosts" target="_blank">Current / max hosts </a>
-        is the maximum number of CML miners that can be hosting this TApp.
+        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#current-hosts" target="_blank">Current hosts </a>
+        is the current number of miners hosting this TApp. <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#min-and-max-hosts" target="_blank">Min/Max hosts</a> refers to the minimum number of miners needed to host this TApp before it runs and the maximum number of CML miners that can host this TApp.
+      </li>
+      <li>
+      <strong>Status</strong> refers to the current state of the TApp. Note that users can still perform <strong>buy / sell / host</strong> actions on the TApp even if the status is pending.
       </li>
       <li>
         In the actions section, you can buy or sell the TApp's token as well as
