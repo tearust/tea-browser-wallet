@@ -15,7 +15,8 @@
       </el-form-item>
 
       <el-form-item label="Miner Id" prop="miner_id">
-        <el-input v-model="form.miner_id"></el-input>
+        <el-input  v-model="form.miner_id" show-word-limit maxlength="32" minlength="32"></el-input>
+        <el-button slot="append" icon="el-icon-search"></el-button>
 
         <TeaIconButton icon_style="font-size:18px;" tip="A name for your mining machine (must be unique)" icon="questionmark" />
       </el-form-item>
@@ -105,7 +106,15 @@ export default {
       },
       rules: {
         cml_id: [{ required: true }],
-        miner_id: [{ required: true }],
+        miner_id: [
+          { required: true },
+          {
+            min: 32,
+          },
+          {
+            max: 32
+          }
+        ],
         miner_ip: [{ required: true }],
         account: [{ required: true }],
       },
@@ -141,6 +150,7 @@ export default {
       api.consts.genesisExchange[map[cml.intrinsic.cml_type]].toJSON();
     this.form.miner_price = utils.layer1.formatBalance(price);
 
+    this.form.miner_id = utils.uuid().replace(/\-/g, '');
     this.$root.loading(false);
   },
   methods: {

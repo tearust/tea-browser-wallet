@@ -57,7 +57,8 @@
     "rules": {
       "no-unused-vars": 1,
       "no-empty": 1,
-      "no-async-promise-executor": 1
+      "no-async-promise-executor": 1,
+      "no-useless-escape": 0
     }
   },
   "browserslist": [
