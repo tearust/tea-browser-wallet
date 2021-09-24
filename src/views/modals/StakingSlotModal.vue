@@ -106,7 +106,6 @@ export default {
     ]),
     ...mapState('modal', {
       visible:state => store.state.modal.staking_slot.visible,
-      // title: state => store.state.modal.common_tx.title,
       param: state => store.state.modal.staking_slot.param,
     }),
 

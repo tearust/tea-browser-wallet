@@ -108,7 +108,15 @@ export default {
       this.loading = false;
     },
     initFormByTx(tx){
-      const args = tx.args;
+      const args = tx.fields;
+
+      const tmp_args = tx.args;
+      if(tmp_args && _.size(tmp_args) === _.size(args)){
+        _.each(tmp_args, (xr, i)=>{
+          args[i].type = xr.type;
+        });
+      }
+      console.log(33, args);
 
       const form = {};
       const labels = {};
