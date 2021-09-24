@@ -7,7 +7,7 @@ const help = {
   formatLogs(nodes=[]){
     const list = _.map(nodes, (item)=>{
       _.each(item, (val, key)=>{
-        if(_.startsWith(val, '0x')){
+        if(_.isString(val) && _.startsWith(val, '0x')){
           item[key] = hexToString(val);
         }
       })

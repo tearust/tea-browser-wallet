@@ -414,15 +414,7 @@ query {
         param = json;
       }
       else{
-        let arr = null;
-        try{
-          let str = scope.row.args.replace(/\{/g, '[').replace(/\}/g, ']');
-          arr = JSON.parse(str);
-        }catch(e){
-          arr = [];
-        }
-
-        _.each(arr, (val, i)=>{
+        _.each(scope.row.args, (val, i)=>{
           _.set(param, i+1, val);
         });
       }
