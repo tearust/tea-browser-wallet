@@ -172,9 +172,6 @@
 
   "TAppId": "u64",
   "Performance": "u32",
-  "CurveType": {
-    "_enum": ["UnsignedLinear", "UnsignedSquareRoot_10", "UnsignedSquareRoot_7"]
-  },
   "TAppType": {
     "_enum": ["YouTube", "Reddit", "Twitter"]
   },
@@ -205,14 +202,14 @@
     "name": "Bytes",
     "ticker": "Bytes",
     "owner": "AccountId",
-    "buy_curve": "CurveType",
-    "sell_curve": "CurveType",
     "detail": "Bytes",
     "link": "Bytes",
     "max_allowed_hosts": "u32",
     "current_cost": "Balance",
     "status": "TAppStatus",
     "tapp_type": "TAppType",
-    "billing_mode": "BillingMode"
+    "billing_mode": "BillingMode",
+    "buy_curve_theta": "u32",
+    "sell_curve_theta": "u32"
   }
 }

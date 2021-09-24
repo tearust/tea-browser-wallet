@@ -3,7 +3,7 @@
   <el-dialog
     :title="title"
     :visible="visible"
-    width="70%"
+    width="78%"
     :close-on-click-modal="false"
     custom-class="tea-modal"
     :destroy-on-close="true"
@@ -65,6 +65,12 @@
 
         <el-switch v-if="types[item.name]==='switch'" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}">
         </el-switch>
+
+
+
+        <div class="t-action" v-if="props[item.name].after">
+          <span class="s1" :inner-html.prop="props[item.name].after"></span>
+        </div>
 
         <TeaIconButton style="margin-left: 10px;" icon_style="font-size:18px;" v-if="props[item.name].tip" :tip="props[item.name].tip" @click="props[item.name].tip_action ? props[item.name].tip_action() : ()=>{}" icon="questionmark" />
 

@@ -331,11 +331,11 @@ export default {
             },
             init_fund: {
               label: 'Initial tokens',
-              type: 'select',
-              // el_props: {
-              //   'allow-create': true,
-              //   'filterable': true,
-              // },
+              type: 'select_number',
+              el_props: {
+                'allow-create': true,
+                'filterable': true,
+              },
               required: true,
               default: 1000,
               options: [
@@ -529,6 +529,29 @@ export default {
                 helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---staked-token-amount')
               }
             },
+
+            theta: {
+              label: 'Theta',
+              type: 'select_number',
+              el_props: {
+                'allow-create': true,
+                'filterable': true,
+              },
+              required: true,
+              default: 1,
+              options: [
+                {id: 1}, {id: 2}, {id: 3}, {id: 5}, {id: 10}, {id: 30}
+              ],
+              rules: {
+                type: 'number',
+                message: 'Theta must be number.',
+              },
+              after: '%',
+              tip: 'Click to visit wiki',
+              tip_action: ()=>{
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---theta')
+              }
+            }
             
           },
         },
@@ -572,6 +595,8 @@ export default {
               fix_token_mode,
               fix_token_mode ? null : utils.layer1.amountToBalance(form.reward_per_performance),
               fix_token_mode ? utils.layer1.amountToBalance(form.stake_token_amount) : null,
+              100,
+              _.toNumber(form.theta)*100,
             );
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);
