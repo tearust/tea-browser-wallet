@@ -286,6 +286,7 @@ export default {
                 value: false,
               },
               required: true,
+              tip: 'The number of slots occupied depends on the class of CML seed. Type A takes 4 slots, Type B takes 2 slots, and Type C takes 1 slot.'
             },
 
             acceptable_slot_index: {
