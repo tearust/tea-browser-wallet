@@ -34,7 +34,7 @@ const F = {
             default: data.id,
           },
           tapp_amount: {
-            label: 'Amount token',
+            label: 'Token amount',
             type: 'number',
             max: 100000000,
             remove_required_rule: true,
@@ -117,7 +117,7 @@ const F = {
             default: data.id,
           },
           tapp_amount: {
-            label: 'Amount token',
+            label: 'Token amount',
             type: 'number',
             max: 100000000,
             remove_required_rule: true,
