@@ -38,7 +38,7 @@
     </el-table-column>
 
     <el-table-column
-      prop="index"
+      prop="real_index"
       width="100"
       label="Slot index"
       sortable
@@ -250,6 +250,7 @@ export default {
 
         return {
           ...cml,
+          real_index: cml.staking_slot[index].real_index,
           index,
           weight,
         }

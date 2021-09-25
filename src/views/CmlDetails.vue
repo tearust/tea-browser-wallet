@@ -97,7 +97,7 @@
         label="Index"
         width="100"
       >
-        <template slot-scope="scope">{{scope.$index}}</template>
+        <template slot-scope="scope">{{scope.row.real_index}}</template>
       </el-table-column>
       <el-table-column
         prop="owner"
