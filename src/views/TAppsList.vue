@@ -286,7 +286,7 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_form', 
         param: {
-          title: 'Create new TApp',
+          title: 'Create TEAfulencer TApp',
           // confirm_text: 'Next',
           text: '',
           label_width: 200,
@@ -373,7 +373,7 @@ export default {
             },
 
             template: {
-              label: 'TApp template',
+              label: 'TEAfulencer template',
               type: 'radio-group',
               required: true,
               options: [
@@ -383,16 +383,16 @@ export default {
                     value: v,
                   }
                 }),
-                {
-                  label: 'TEA Party',
-                  value: 'tea_party',
-                  disabled: true,
-                },
-                {
-                  label: 'Create your own TApp',
-                  value: 'own',
-                  disabled: true,
-                }
+                // {
+                //   label: 'TEA Party',
+                //   value: 'tea_party',
+                //   disabled: true,
+                // },
+                // {
+                //   label: 'Create your own TApp',
+                //   value: 'own',
+                //   disabled: true,
+                // }
               ],
               action: {
                 tip_html: (val, form)=>{
