@@ -303,7 +303,7 @@ export default {
       // console.log(111, cml_data[0]);
       this.cml = cml_data[0];
       this.cml.staking_slot = await Promise.all(_.map(this.cml.staking_slot, async (item, index)=>{
-        item.weight = await utils.getStakingWeightByIndex(index, this.cml.slot_len);
+        item.weight = await utils.getStakingWeightByIndex(index, this.cml.slot_len, this.cml);
         return item;
       }));
       this.is_staking = this.cml.status === 'Staking';

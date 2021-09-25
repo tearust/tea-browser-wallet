@@ -59,9 +59,9 @@
       prop="name"
       label="Name"
     >
-      <template slot-scope="">
-        <!-- {{scope.row.name}} -->
-        Hosting tapp reward
+      <template slot-scope="scope">
+        {{scope.row.name}}
+        <!-- Hosting tapp reward -->
       </template>
     </el-table-column>
 

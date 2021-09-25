@@ -233,8 +233,9 @@ const F = {
 
     return price_table;
   },
-  async getStakingWeightByIndex(index, len) {
+  async getStakingWeightByIndex(index, len, cml) {
     const table = await F.getPriceTable();
+    console.log(11, table, cml)
     const xt = _.slice(table, 0, len);
     const total = _.sum(xt);
 

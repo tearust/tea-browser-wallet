@@ -245,7 +245,7 @@ export default {
         const index = val[1];
 
         const [cml] = await this.wf.getCmlByList([cml_id]);
-        const weight = await utils.getStakingWeightByIndex(index, cml.slot_len);
+        const weight = await utils.getStakingWeightByIndex(index, cml.slot_len, cml);
 
         return {
           ...cml,

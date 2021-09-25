@@ -584,6 +584,11 @@ export default {
             const link = tapp.template.genLink(form.template, link_param);
 
             const fix_token_mode = form.fixed_token_mode===1;
+
+            const theta = 100 - _.toNumber(form.theta);
+            if(theta < 70){
+              throw 'Theta can\'t be more than 30';
+            }
             const tx = api.tx.bondingCurve.createNewTapp(
               name, 
               ticker, 
@@ -596,7 +601,7 @@ export default {
               fix_token_mode ? null : utils.layer1.amountToBalance(form.reward_per_performance),
               fix_token_mode ? utils.layer1.amountToBalance(form.stake_token_amount) : null,
               100,
-              _.toNumber(form.theta)*100,
+              theta,
             );
 
             await layer1_instance.sendTx(this.layer1_account.address, tx);
