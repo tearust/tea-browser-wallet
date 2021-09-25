@@ -421,11 +421,37 @@ export default class {
       const remaining_performance = ttp[1] || 0;
       const current_performance = ttp[0]||0;
 
-      cml.staking_slot = _.map(cml.staking_slot, (item) => {
+      cml.slot_len = cml.staking_slot.length;
+      let real_index_total = 0;
+      let next_real_index = 0;
+      for(let i=0, len=cml.slot_len; i<len; i++){
+        const item = cml.staking_slot[i];
         item.category = _.toUpper(item.category);
+
+        item.real_index = _.clone(next_real_index);
+        if(item.cml){
+          let xcml = await api.query.cml.cmlStore(item.cml);
+          xcml = xcml.toJSON();
+          item.cml_type = xcml.intrinsic.cml_type;
+          item.cml_weight = utils.consts.CmlWeightByType[item.cml_type];
+          real_index_total += item.cml_weight;
+
+          next_real_index += item.cml_weight;
+        }
+        else{
+          item.cml_weight = 1;
+          real_index_total += 1;
+
+          next_real_index += item.cml_weight;
+        }
+
+        cml.staking_slot[i] = item;
+      }
+      
+      cml.staking_slot = _.map(cml.staking_slot, (item)=>{
+        item.cml_weight_total = real_index_total;
         return item;
       });
-      cml.slot_len = cml.staking_slot.length;
 
       // status;
       cml.status = ((row) => {

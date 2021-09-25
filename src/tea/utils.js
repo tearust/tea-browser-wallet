@@ -28,6 +28,11 @@ const consts = {
 
   SUDO_ACCOUNT: '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP',
   TOTAL_REWARD: 2000,
+  CmlWeightByType: {
+    'A': 4,
+    'B': 2,
+    'C': 1,
+  }
 };
 
 const _MEM = {};
@@ -233,13 +238,20 @@ const F = {
 
     return price_table;
   },
-  async getStakingWeightByIndex(index, len, cml) {
+  async getStakingWeightByIndex(cml) {
     const table = await F.getPriceTable();
-    console.log(11, table, cml)
+    
+    const index = cml.real_index;
+    const len = cml.cml_weight_total;
     const xt = _.slice(table, 0, len);
     const total = _.sum(xt);
 
-    return (Math.round((table[index] / total) * 100000) / 1000) + '%';
+    let mt = 0;
+    _.map(_.range(index, index+cml.cml_weight), (n)=>{
+      mt += table[n];
+    });
+
+    return (Math.round((mt / total) * 100000) / 1000) + '%';
   },
 
   rpcArrayToString(arr){

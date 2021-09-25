@@ -105,7 +105,7 @@ export default {
       if(key === 'staking_slot'){
         const len = param.list.length;
         param.list = await Promise.all(_.map(param.list, async (item, index)=>{
-          item.weight = await utils.getStakingWeightByIndex(index, len);
+          item.weight = await utils.getStakingWeightByIndex(item);
           return item;
         }));
       }

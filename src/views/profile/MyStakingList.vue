@@ -45,11 +45,11 @@
     />
     <el-table-column
       label="Staking with"
-      width="90"
+      width="110"
     >
       <template slot-scope="scope">
         {{scope.row.staking_slot[scope.row.index].category}}
-        <el-button type="text" @click="$root.goPath('/cml_details/'+scope.row.staking_slot[scope.row.index].cml)" v-if="scope.row.staking_slot[scope.row.index].cml">
+        <el-button type="text" style="width:auto;" @click="$root.goPath('/cml_details/'+scope.row.staking_slot[scope.row.index].cml)" v-if="scope.row.staking_slot[scope.row.index].cml">
           ({{scope.row.staking_slot[scope.row.index].cml}})
         </el-button>
       </template>
@@ -245,7 +245,8 @@ export default {
         const index = val[1];
 
         const [cml] = await this.wf.getCmlByList([cml_id]);
-        const weight = await utils.getStakingWeightByIndex(index, cml.slot_len, cml);
+
+        const weight = await utils.getStakingWeightByIndex(cml.staking_slot[index]);
 
         return {
           ...cml,
