@@ -48,7 +48,7 @@
   </TeaTable>
 
   <el-divider />
-  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}}</b> | Fix Token mode : <b class="block">{{tapp_fix_token_total}}</b>)</h4>
+  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}} TEA</b> | Fix Token mode : <b class="block">{{tapp_fix_token_total}} Token</b>)</h4>
   <TeaTable
     :data="hosting_reward_list || []"
     name="hosting_tapp_reward_log_table"
@@ -82,21 +82,21 @@
     </el-table-column>
 
     <el-table-column
-      label="Fix host fee reward"
+      label="Fix hosting fee reward"
       width="150"
     >
       <template slot-scope="scope">
-        <span v-if="scope.row.tapp_mode === 'fix_tea_mode'" :inner-html.prop="scope.row.amount | teaIcon">
+        <span v-if="scope.row.tapp_mode === 'fix_tea_mode'" :inner-html.prop="scope.row.amount">
         </span>
       </template>
     </el-table-column>
 
     <el-table-column
-      label="Fix host token eward"
+      label="Fix hosting token eward"
       width="150"
     >
       <template slot-scope="scope">
-        <span v-if="scope.row.tapp_mode === 'fix_token_mode'" :inner-html.prop="scope.row.amount_in_tea | teaIcon">
+        <span v-if="scope.row.tapp_mode === 'fix_token_mode'" :inner-html.prop="scope.row.amount_in_tea">
         </span>
       </template>
     </el-table-column>
@@ -324,7 +324,8 @@ query {
         }
         else{
           item.tapp_mode = 'fix_token_mode';
-          const sell_price = tapp_detail_list[item.tappId].sell_price;
+          // const sell_price = tapp_detail_list[item.tappId].sell_price;
+          const sell_price = 1;
           item.amount_in_tea = utils.layer1.roundAmount(_.toNumber(item.amount)*sell_price);
         }
         return item;
@@ -381,7 +382,8 @@ query {
 
         rs.fixTeaTotal += _.toNumber(item.fixTeaTotal);
 
-        const sell_price = tapp_detail_list[item.tappId].sell_price;
+        // const sell_price = tapp_detail_list[item.tappId].sell_price;
+        const sell_price = 1;
         rs.fixTokenTotal += utils.layer1.balanceToAmount(item.fixTokenTotal)*sell_price;
         rs.fixTokenMinerTotal += utils.layer1.balanceToAmount(item.fixTokenMinerTotal)*sell_price;
         rs.fixTokenInvestorTotal += utils.layer1.balanceToAmount(item.fixTokenInvestorTotal)*sell_price;

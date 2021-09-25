@@ -179,7 +179,8 @@ export default {
 
                 if(value || token_total){
                   const tapp_detail_list = await helper.getTAppDetailsListByTAppIdList([x_item.tapp_id]);
-                  const sell_price = tapp_detail_list[x_item.tapp_id].sell_price;
+                  // const sell_price = tapp_detail_list[x_item.tapp_id].sell_price;
+                  const sell_price = 1;
 
                   this.list[index].total_income = utils.layer1.formatBalance(value, true);
                   this.list[index].total_token_income = utils.layer1.formatBalance(token_total*sell_price, true);
