@@ -12,7 +12,7 @@
     <p class="c-info"
     >
       Are you sure you want to deposit CML as collateral for a Genesis loan? <br/>
-      For more info on how to use these loans, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Epoch-3-TEA-Loans#genesis-tea-loans" target="_blank">visit our wiki</a>.
+      For more info on how to use these loans, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Genesis-TEA-Loans" target="_blank">visit our wiki</a>.
     </p>
 
     <el-form v-if="param" :model="form" label-width="120px">
