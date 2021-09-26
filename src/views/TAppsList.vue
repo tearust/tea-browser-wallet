@@ -567,7 +567,7 @@ export default {
               after: '%',
               tip: 'Click to visit wiki',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---theta')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/Bonding-Curve-Theta#theta-as-tapp-creator')
               }
             }
             
