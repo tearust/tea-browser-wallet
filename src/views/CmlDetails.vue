@@ -7,12 +7,30 @@
       stripe
       size="small"
       border
+      class="tea-table"
     >
       <el-table-column
         prop="id"
         width="90"
         label="CML ID"
       />
+
+      <el-table-column
+        prop="owner"
+        label="Owner"
+        width="100"
+      >
+        <template slot-scope="scope">
+          <el-button
+            :title="scope.row.owner"
+            @click="
+              $root.goPath('/user_details/'+scope.row.owner, 'replace')"
+            type="text">
+            {{scope.row.owner}}
+          </el-button>
+        </template>
+      </el-table-column>
+
       <el-table-column
         prop="cml_type"
         label="Type"
