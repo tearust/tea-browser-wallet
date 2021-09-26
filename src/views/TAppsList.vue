@@ -159,6 +159,9 @@
         is the minimum power required for a mining machine to host this TApp.
       </li>
       <li>
+        <a href="https://github.com/tearust/teaproject/wiki/Bonding-Curve-Theta" target="_blank">Theta</a> is the % of every TApp token buy or consume event that goes to the developer.
+      </li>
+      <li>
         <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#current-hosts" target="_blank">Current hosts </a>
         is the current number of miners hosting this TApp. <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#min-and-max-hosts" target="_blank">Min/Max hosts</a> refers to the minimum number of miners needed to host this TApp before it runs and the maximum number of CML miners that can host this TApp.
       </li>
