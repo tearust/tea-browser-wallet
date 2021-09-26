@@ -255,10 +255,11 @@ export default {
     },
 
     async clickUnplantAction(scope){
+      const ct = (utils.consts.CmlWeightByType[scope.row.cml_type])*100;
       try{
         await this.$confirm(
           `Are you sure you want to unplant this CML? <br/>
-          Please note that you'll need to compensate each staker 100 TEA.`, {
+          Please note that you'll need to compensate each staker ${ct} TEA.`, {
           title: 'Info',
           dangerouslyUseHTMLString: true,
         });
