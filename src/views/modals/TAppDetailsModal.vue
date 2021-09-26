@@ -243,6 +243,10 @@ export default {
 
       item_list = _.concat(item_list, [
         {
+          label: 'Theta',
+          value: (item.buy_curve_theta-item.sell_curve_theta)+'%',
+        },
+        {
           label: 'Min / Max hosts',
           value: tmp.host_min+' / '+tmp.host_max
         },
@@ -259,13 +263,14 @@ export default {
           value: tmp.total_supply,
         },
         {
-          label: 'Buy / Sell price',
+          label: 'Buy / Sell price (TEA)',
           value: tmp.buy_price+' / '+tmp.sell_price
         },
         {
-          label: 'Market cap',
+          label: 'Market cap (TEA)',
           value: tmp.market_cap
-        }
+        },
+        
       ]);
 
       this.item_list = item_list;

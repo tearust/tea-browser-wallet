@@ -60,25 +60,42 @@
       width="90"
     />
 
-    <TeaTableColumn
+    <el-table-column
       prop="buy_price"
-      label="Buy price (TEA)"
-      tip="Price at which you can buy the token from the bonding curve"
-      width="100"
-    />
+      label="Buy price"
+      width="80"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.buy_price | teaIcon"></span>
+      </template>
+    </el-table-column>
 
-    <TeaTableColumn
+    <el-table-column
       prop="sell_price"
-      label="Sell price (TEA)"
-      tip="Price at which you can sell the token into the bonding curve"
+      label="Sell price"
+      width="80"
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.sell_price | teaIcon"></span>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      prop="market_cap"
+      label="Market cap"
       width="100"
-    />
+    >
+      <template slot-scope="scope">
+        <span :inner-html.prop="scope.row.market_cap | teaIcon"></span>
+      </template>
+    </el-table-column>
+
 
     <TeaTableColumn
-      label="Market cap"
-      prop="market_cap"
-      tip="The current sell price multiplied by the number of tokens outstanding"
-      width="90"
+      label="Theta"
+      prop="theta"
+      tip=""
+      width="70"
     />
     <TeaTableColumn
       prop="host_performance"
@@ -239,6 +256,7 @@ export default {
           item.status = 'Active';
         }
         item.type = item.ori.tapp_type;
+        item.theta = (item.ori.buy_curve_theta-item.ori.sell_curve_theta)+'%';
 
         return item;
       }));

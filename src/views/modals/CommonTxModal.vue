@@ -116,7 +116,6 @@ export default {
           args[i].type = xr.type;
         });
       }
-      console.log(33, args);
 
       const form = {};
       const labels = {};
