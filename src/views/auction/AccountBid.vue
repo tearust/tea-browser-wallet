@@ -118,29 +118,9 @@ export default {
       this.$root.loading(false);
     },
 
-    async calculateBidMinPrice(api, row){
-      // let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
-
-      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.auction_id, this.layer1_account.address]);
-      let min_price = utils.toBN(rs[0]);
-      // min_price = min_price.sub(row.price);
-      console.log('min-price => ', min_price.toString());
-
-      return min_price;
-    },
     async addPriceForBid(scope){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
-
-      const min_price = await this.calculateBidMinPrice(api, scope.row);
-
-      if(min_price.lt(utils.toBN(0))){
-        this.$root.showError('This auction is completed');
-        await this.refreshList();
-        return;
-      }
-
-      const msg = `You need to add at least <b>${utils.layer1.formatBalance(min_price, true)}</b> to your existing bid.`;
 
       let buy_now_need = null;
 
@@ -157,20 +137,18 @@ export default {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
-          msg,
+          auction_id: scope.row.auction_id,
           type: 'add',
           buy_now_price: auction.buy_now_price,
           buy_now_need,
+          auction: scope.row,
+
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
           try{
             const auction_id = scope.row.auction_id;     
             const price = utils.toBN(layer1_instance.asUnit(form.price));
-
-            if(price.lt(min_price)){
-              throw 'Please input higher bid price'
-            }
             
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);

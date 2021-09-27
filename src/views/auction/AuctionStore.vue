@@ -144,40 +144,13 @@ export default {
       }catch(e){
         this.$root.showError(e);
       }
-      // console.log(111, this.auction.auction_list);
+
       this.$root.loading(false);
-    },
-
-    async calculateBidMinPrice(api, row){
-      // let step = utils.toBN(api.consts.auction.minPriceForBid.toJSON());
-
-      const rs = await request.layer1_rpc('auction_calculateMinimumBidPrice', [row.id, this.layer1_account.address]);
-      let min_price = utils.toBN(rs[0]);
-      // if(row.for_current){
-      //   min_price = min_price.sub(row.for_current.price);
-      // }
-      console.log('min-price => ', min_price.toString());
-      
-      return min_price;
     },
 
     async bidForAuctionItem(scope){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
-
-      const min_price = await this.calculateBidMinPrice(api, scope.row);
-
-      if(min_price.lt(utils.toBN(0))){
-        this.$root.showError('This auction is completed');
-        await this.refreshList();
-        return;
-      }
-
-      let msg = `You need at least <b>${utils.layer1.formatBalance(min_price)} TEA</b> to bid on this auction.`;
-
-      if(scope.row.for_current){
-        msg = `You need to add at least <b>${utils.layer1.formatBalance(min_price)} TEA</b> to your existing bid.`;
-      }
 
       let buy_now_need = null;
       if(scope.row.buy_now_price){
@@ -193,9 +166,10 @@ export default {
         key: 'bid_for_auction', 
         param: {
           cml_id: scope.row.cml_id,
-          msg,
+          auction_id: scope.row.id,
           type: scope.row.for_current ? 'add' : 'new',
           buy_now_price: scope.row.buy_now_price,
+          auction: scope.row,
           buy_now_need,
         },
         cb: async (form, close)=>{
@@ -203,7 +177,6 @@ export default {
           try{
             const auction_id = scope.row.id;        
             const price = utils.toBN(layer1_instance.asUnit(form.price));
-            
 
             const tx = api.tx.auction.bidForAuction(auction_id, price);
             await layer1_instance.sendTx(this.layer1_account.address, tx);
