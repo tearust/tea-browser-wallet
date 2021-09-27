@@ -8,6 +8,7 @@
   <TeaTable
     :data="list || []"
     name="tapps_list_table"
+    style="overflow-y:"
   >
     <el-table-column
       prop="id"
@@ -99,22 +100,24 @@
     />
     <TeaTableColumn
       prop="host_performance"
-      label="Host performance requirement"
-      width="115"
+      label="Perfmt req"
+      width="80"
       tip="A mining machine must be at least this powerful to host this TApp"
     />
 
-    <TeaTableColumn
+    <!-- <TeaTableColumn
       prop="host_current"
       label="Current hosts"
       width="60"
-    />
-    <TeaTableColumn
-      prop="host_n"
-      label="Min/Max hosts"
-      width="70"
-      tip="The maximum number of hosts that can be hosting this TApp"
-    />
+    /> -->
+    <el-table-column
+      label="Current/Min/Max hosts"
+      width="120"
+    >
+      <template slot-scope="scope">
+        {{scope.row.host_current}}/{{scope.row.host_n}}
+      </template>
+    </el-table-column>
 
     <TeaTableColumn
       prop="status"
