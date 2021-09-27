@@ -16,8 +16,9 @@ const F = {
     // else if(tapp.json.type === 'youtube'){
     //   rs.url = `http://${ip}:3200?v=${tapp.json.v}`;
     // }
+
     const cid = utils.get_env('TAPP_CID');
-    rs.url = 'http://'+ip+':8080/ipfs/'+cid;
+    rs.url = 'http://'+ip+':8080/ipfs/'+cid+`?id=${tapp.id}&v=${tapp.json.v}&t=${tapp.json.t}`;
 
     return rs;
   },

@@ -41,7 +41,7 @@
     </div>
     
     <span slot="footer" class="dialog-footer">
-      <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button>
+      <!-- <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button> -->
 
       <el-button size="small" @click="close()">Close</el-button>
     </span>

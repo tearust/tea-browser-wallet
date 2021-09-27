@@ -271,8 +271,8 @@ export default {
       this.$root.loading(false);
     },
     showLink(scope){
-      // helper.showTAppLink(this, scope.row.id);
-      helper.openToTApp(this, scope.row);
+      helper.showTAppLink(this, scope.row.id);
+      // helper.openToTApp(this, scope.row);
     },
     showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);
