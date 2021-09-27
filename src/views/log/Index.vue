@@ -328,6 +328,11 @@ query {
           const sell_price = 1;
           item.amount_in_tea = utils.layer1.roundAmount(_.toNumber(item.amount)*sell_price);
         }
+
+        if(item.name === 'TAppConsumeRewardStatements'){
+          item.name = 'Dividend';
+        }
+
         return item;
       });
     },
