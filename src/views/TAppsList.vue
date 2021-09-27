@@ -127,7 +127,8 @@
 
     <el-table-column
       label="Actions"
-      width="120"
+      width="110"
+      fixed="right"
     >
       <template slot-scope="scope">
         <TeaIconButton tip="Buy" icon="buy" @click="buyHandler(scope)" />
