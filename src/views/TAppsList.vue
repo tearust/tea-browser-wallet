@@ -460,7 +460,7 @@ export default {
               }
             },
             Twitter: {
-              label: 'Twitter Id',
+              label: 'Twitter tag',
               type: 'Input',
               required: true,
               condition: {
@@ -468,7 +468,7 @@ export default {
                 value: 'Twitter'
               },
               el_props: {
-                placeholder: 'e.g. 1410353460503928835',
+                placeholder: 'e.g. teaproject',
               }
             },
             

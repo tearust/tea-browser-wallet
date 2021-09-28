@@ -139,7 +139,7 @@ export default {
               }
             },
             Twitter: {
-              label: 'Twitter Id',
+              label: 'Twitter tag',
               type: 'Input',
               required: true,
               condition: {
