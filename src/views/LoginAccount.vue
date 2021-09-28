@@ -471,7 +471,7 @@ export default {
                 ref: 'sell_tea_amount'
               },
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/The-TEA-Browser-Wallet#convert-back')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TEA-and-COFFEE#convert-back')
               },
               tip: 'Click to visit wiki for "Convert back"',
             }
@@ -542,7 +542,7 @@ export default {
                 ref: 'sell_usd_amount'
               },
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/The-TEA-Browser-Wallet#convert-back')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TEA-and-COFFEE#convert-back')
               },
               tip: 'Click to visit wiki for "Convert back"',
             }
