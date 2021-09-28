@@ -148,33 +148,33 @@
     <ul style="width: 600px; margin-left: -20px;">
       <li>
         The 
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#total-supply" target="_blank">total supply</a> 
+        <a href="https://github.com/tearust/teaproject/wiki/TApps-List#total-supply" target="_blank">total supply</a> 
         and 
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#buy-price" target="_blank">token price </a> 
+        <a href="https://github.com/tearust/teaproject/wiki/TApps-List#buy-price" target="_blank">token price </a> 
         are determined by 
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#sell-price" target="_blank">the bonding curve.</a> 
+        <a href="https://github.com/tearust/teaproject/wiki/TApps-List#sell-price" target="_blank">the bonding curve.</a> 
         Your TApp tokens in your wallet will expand or contract based on 
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-TApps-List#tapp-tokens-in-wallet-expand-on-consume-contract-on-expense" target="_blank">consume and expense actions </a> 
+        <a href="https://github.com/tearust/teaproject/wiki/TApp-Token-Supply-and-Demand#tapp-tokens-in-wallet-expand-on-consume-contract-on-expense" target="_blank">consume and expense actions </a> 
         on the TApp's bonding curve.
       </li>
       <li>
         The 
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#host-performance-requirement" target="_blank">host performance requirement </a> 
+        <a href="https://github.com/tearust/teaproject/wiki/Mining#host-performance-requirement" target="_blank">host performance requirement </a> 
         is the minimum power required for a mining machine to host this TApp.
       </li>
       <li>
         <a href="https://github.com/tearust/teaproject/wiki/Bonding-Curve-Theta" target="_blank">Theta</a> is the % of every TApp token buy or consume event that goes to the developer.
       </li>
       <li>
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#current-hosts" target="_blank">Current hosts </a>
-        is the current number of miners hosting this TApp. <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#min-and-max-hosts" target="_blank">Min/Max hosts</a> refers to the minimum number of miners needed to host this TApp before it runs and the maximum number of CML miners that can host this TApp.
+        <a href="https://github.com/tearust/teaproject/wiki/Mining#current-hosts" target="_blank">Current hosts </a>
+        is the current number of miners hosting this TApp. <a href="https://github.com/tearust/teaproject/wiki/Mining#min-and-max-hosts" target="_blank">Min/Max hosts</a> refers to the minimum number of miners needed to host this TApp before it runs and the maximum number of CML miners that can host this TApp.
       </li>
       <li>
       <strong>Status</strong> refers to the current state of the TApp. Note that users can still perform <strong>buy / sell / host</strong> actions on the TApp even if the status is pending.
       </li>
       <li>
         In the actions section, you can buy or sell the TApp's token as well as
-        <a href="https://github.com/tearust/teaproject/wiki/Epoch-3-Mining#host-and-unhost-tapp" target="_blank">host (or unhost) the TApp.</a> 
+        <a href="https://github.com/tearust/teaproject/wiki/Mining#host-and-unhost-tapp" target="_blank">host (or unhost) the TApp.</a> 
       </li>
     </ul>
 
