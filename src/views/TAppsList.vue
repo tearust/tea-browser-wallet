@@ -174,7 +174,7 @@
       </li>
       <li>
         In the actions section, you can buy or sell the TApp's token as well as
-        <a href="https://github.com/tearust/teaproject/wiki/Mining#host-and-unhost-tapp" target="_blank">host (or unhost) the TApp.</a> 
+        <a href="https://github.com/tearust/teaproject/wiki/Mining:-Host-and-Unhost-TApps" target="_blank">host (or unhost) the TApp.</a> 
       </li>
     </ul>
 
