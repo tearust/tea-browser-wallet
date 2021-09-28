@@ -13,7 +13,13 @@
     <i v-if="!param || loading" class="el-icon-loading" style="display: block; width: 40px; height: 40px;font-size: 40px; margin: 0 auto;"></i>
 
     <div class="tea-modal-card" v-if="!loading" style="margin: 0 -20px; display:block;">
-      
+      <p style="
+        font-size: 15px;
+        margin: -5px 0 15px 0;
+        word-break: break-word;
+      ">
+        These are individual miner's nodes that host delegator. Those delegator can load the TApp to your browser. You can click any of them to load the TApp. You can setup your own node that host delegator too in epoch5.
+      </p>
       
       <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">Delegator list</h4>
       <TeaTable
@@ -41,6 +47,8 @@
     </div>
     
     <span slot="footer" class="dialog-footer">
+      <el-button style="float:left;" size="small" type="primary" @click="$alert('This feature will be available in epoch5, stay calm.')">I want to deploy my own delegator</el-button>
+
       <!-- <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button> -->
 
       <el-button size="small" @click="close()">Close</el-button>

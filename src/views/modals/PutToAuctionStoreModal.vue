@@ -5,13 +5,22 @@
     width="70%"
     :close-on-click-modal="false"
     custom-class="tea-modal"
+    @opened="openHandler()"
     :destroy-on-close="true"
     @close="close()"
   >
 
     <el-form ref="tx_form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="CML Id" prop="cml_id">
-        <el-input v-model="form.cml_id"></el-input>
+        <el-select v-model="form.cml_id" placeholder="Please select cml." >
+          <el-option
+            v-for="item in option_list"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="Starting price">
         <el-input-number v-model="form.starting_price" :min="1" :max="500000"></el-input-number>
@@ -37,9 +46,10 @@
 
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import store from '../../store/index';
 import utils from '../../tea/utils';
+import {_} from 'tearust_utils';
 import TeaIconButton from '../../components/TeaIconButton';
 import helper from '../helper'
 export default {
@@ -56,10 +66,14 @@ export default {
       },
       rules: {
         cml_id: [{required: true}],
-      }
+      },
+      option_list: [],
     };
   },
   computed: {
+    ...mapGetters([
+      'layer1_account'
+    ]),
     ...mapState('modal', {
       visible:state => store.state.modal.put_to_auction_store.visible,
       param: state => store.state.modal.put_to_auction_store.param,
@@ -75,6 +89,7 @@ export default {
         cml_id: null,
         auto_renew: false,
       };
+      this.option_list = [];
     },
     async confrim(){
       const ref = this.$refs['tx_form'];
@@ -86,6 +101,18 @@ export default {
       }
     },
     openUrl: helper.openUrl,
+
+    async openHandler(){
+      const list = [];
+      _.each(this.layer1_account.cml, (item)=>{
+        list.push({
+          value: item.id,
+          label: item.id,
+        })
+      });
+
+      this.option_list = list;
+    }
   }
 }
 </script>
