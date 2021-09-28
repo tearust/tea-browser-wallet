@@ -208,10 +208,7 @@ export default {
       helper.tableLoading(this, false);
     },
     openTo(row){
-      let url = row.tapp_link;
-      url = utils.urlToLink(url);
-      url += '&id='+row.tapp_id;
-      window.open(url, '_blank');
+      helper.showTAppLink(this, row.tapp_id);
     },
     async showDetails(scope){
       helper.showTAppDetails(this, scope.row.tapp_id);

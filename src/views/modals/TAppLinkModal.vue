@@ -13,36 +13,43 @@
     <i v-if="!param || loading" class="el-icon-loading" style="display: block; width: 40px; height: 40px;font-size: 40px; margin: 0 auto;"></i>
 
     <div class="tea-modal-card" v-if="!loading" style="margin: 0 -20px; display:block;">
-      <p style="
-        font-size: 15px;
-        margin: -5px 0 15px 0;
-        word-break: break-word;
-      ">
-        These are individual miner's nodes that host delegator. Those delegator can load the TApp to your browser. You can click any of them to load the TApp. You can setup your own node that host delegator too in epoch5.
-      </p>
       
-      <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">Delegator list</h4>
-      <TeaTable
-        :data="list || []"
-        name='tapp_detail_hosting_cml_list_table'
-        :pagination="false"
-      >
-        <el-table-column
-          label="Link"
+      <div v-if="tapp.is_active">
+
+        <p style="
+          font-size: 15px;
+          margin: -5px 0 15px 0;
+          word-break: break-word;
+        ">
+          These are individual miner's nodes that host delegator. Those delegator can load the TApp to your browser. You can click any of them to load the TApp. You can setup your own node that host delegator too in epoch5.
+        </p>
+
+        <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">Delegator list</h4>
+        <TeaTable
+          :data="list || []"
+          name='tapp_detail_hosting_cml_list_table'
+          :pagination="false"
         >
-          <template slot-scope="scope">
-            <el-link :href="scope.row.url" target="_blank" :inner-html.prop="scope.row.url"></el-link>
-          </template>
-        </el-table-column>
+          <el-table-column
+            label="Link"
+          >
+            <template slot-scope="scope">
+              <el-link :href="scope.row.url" target="_blank" :inner-html.prop="scope.row.url"></el-link>
+            </template>
+          </el-table-column>
 
-        <el-table-column
-          label="Delay"
-          prop="ping"
-          width="100"
-        />
+          <el-table-column
+            label="Delay"
+            prop="ping"
+            width="100"
+          />
 
 
-      </TeaTable>
+        </TeaTable>
+      </div>
+      <div v-if="!tapp.is_active" style="font-size:15px;">
+        Current TApp is pending, will active until enough miner hosting it.
+      </div>
 
     </div>
     
@@ -125,6 +132,14 @@ export default {
 
       const cid = (await api.query.bondingCurve.tAppResourceMap(tapp_id)).toJSON();
       tmp.cid = hexToString(cid);
+
+      const item = (await api.query.bondingCurve.tAppBondingCurve(tapp_id)).toJSON();
+      if(_.has(item.status, 'active')){
+        tmp.is_active = true;
+      }
+      else{
+        tmp.is_active = false;
+      }
 
       try{
         tmp.json = JSON.parse(tmp.link);

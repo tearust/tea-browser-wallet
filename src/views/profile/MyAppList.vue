@@ -191,7 +191,7 @@ export default {
       helper.tableLoading(this, false);
     },
     openTo(row){
-      helper.openToTApp(this, row);
+      helper.showTAppLink(this, row.id);
     },
     async showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);

@@ -392,7 +392,7 @@ export default {
       });
     },
     openTo(row){
-      helper.openToTApp(this, row);
+      helper.showTAppLink(this, row.id);
     }
   }
 }
