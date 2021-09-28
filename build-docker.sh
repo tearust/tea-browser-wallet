@@ -1,8 +1,8 @@
-tag=v0.2.2
+tag=v0.4.1
 name=tea-browser-wallet
 
 echo building browser-wallet...
-npm run testnet
+npm run build
 echo building browser-wallet docker image...
 docker build . -t tearust/$name:$tag
 

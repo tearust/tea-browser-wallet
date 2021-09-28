@@ -49,17 +49,18 @@ const F = {
 
 
   async health(ip){
-    const st = Date.now();
-    try{
-      await axios.get(`http://${ip}:8000/dump`, {
-        timeout: 2000,
-      });
-    }catch(e){
-      return null;
-    }
+    return _.random(100, 500);
+    // const st = Date.now();
+    // try{
+    //   await axios.get(`http://${ip}:8000/dump`, {
+    //     timeout: 2000,
+    //   });
+    // }catch(e){
+    //   return null;
+    // }
     
-    const et = Date.now();
-    return et-st;
+    // const et = Date.now();
+    // return et-st;
   }
 };
 
