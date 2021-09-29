@@ -1,6 +1,6 @@
 <template>
 <div class="tea-page">
-  <h4>Approve links</h4>
+  <h4>Approved links</h4>
 
   <TeaTable
     name="sudo_approve_link_table"
@@ -35,7 +35,7 @@
     position: relative;
     height: 80px;
   ">
-    <el-button style="width:400px;position:absolute;top:0; right:0;" type="primary" @click="addLink()">Add approve link</el-button>
+    <el-button style="width:400px;position:absolute;top:0; right:0;" type="primary" @click="addLink()">Add approved link</el-button>
   </div>
 
 </div>
