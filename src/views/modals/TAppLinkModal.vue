@@ -21,7 +21,7 @@
           margin: -5px 0 15px 0;
           word-break: break-word;
         ">
-          These are individual miner's nodes that host delegator. Those delegator can load the TApp to your browser. You can click any of them to load the TApp. You can setup your own node that host delegator too in epoch5.
+          These are individual miners' nodes that host delegators. Your browser can load the TApp from any one of these delegators by clicking on them. You can setup your own node to host a delegator starting in epoch 5.
         </p>
 
         <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">Delegator list</h4>
