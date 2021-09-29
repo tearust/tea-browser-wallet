@@ -33,6 +33,7 @@ const TEM_LIST = [
     key: 'Twitter',
     label: 'Twitter',
     link(tid){
+      tid = tid.replace(/^#/, '');
       return JSON.stringify({
         t: 'Twitter',
         v: tid,
