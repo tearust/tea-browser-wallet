@@ -535,7 +535,7 @@ export default {
             },
             stake_token_amount: {
               type: 'select_number',
-              label: 'Staked token amount',
+              label: 'Staked tokens per miner',
               condition: {
                 target: 'fixed_token_mode',
                 value: 1
