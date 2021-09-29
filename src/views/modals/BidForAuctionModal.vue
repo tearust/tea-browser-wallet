@@ -166,7 +166,7 @@ export default {
       if(is_mining && !my_bid){
         tt_total = price.add(utils.toBN(utils.layer1.amountToBalance(1000)));
       }
-      let tt_msg = 'Total payment is '+utils.layer1.balanceToAmount(tt_total)+' TEA. <br />';
+      let tt_msg = 'Bid amount is '+utils.layer1.balanceToAmount(tt_total)+' TEA. <br />';
       if(is_mining && !my_bid){
         tt_msg += 'Include '+utils.layer1.balanceToAmount(price)+' TEA for CML and 1000 TEA for staking.';
       }
