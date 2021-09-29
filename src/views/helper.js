@@ -72,7 +72,7 @@ const F = {
         const id = form.tapp_id;
         const amount = utils.layer1.amountToBalance(form.tapp_amount);
         let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
-          id, amount
+          id, amount, 100
         ]);
         estimate = utils.layer1.balanceToAmount(estimate);
 
@@ -329,7 +329,7 @@ query {
   async calculateTEAByToken(token_amount){
     const amount = utils.layer1.amountToBalance(token_amount)
     let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
-      null, amount
+      null, amount, 100,
     ]);
     estimate = utils.layer1.balanceToAmount(estimate);
 

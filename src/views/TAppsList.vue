@@ -585,19 +585,6 @@ export default {
 
           
           const amount = utils.layer1.amountToBalance(form.init_fund)
-          // let estimate = await request.layer1_rpc('bonding_estimateTeaRequiredToBuyGivenToken', [
-          //   null, amount
-          // ]);
-          // estimate = utils.layer1.balanceToAmount(estimate);
-
-          // try{
-          //   await this.$confirm(`You will pay <b>${estimate} TEA</b> <br/> Are you sure?`, {
-          //     dangerouslyUseHTMLString: true,
-          //   });
-          // }catch(e){
-          //   this.$root.loading(false);
-          //   return false;
-          // }
 
           try{
 
