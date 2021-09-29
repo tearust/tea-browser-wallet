@@ -311,7 +311,7 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_form', 
         param: {
-          title: 'Create TEAfulencer TApp',
+          title: 'Create TEAfluencer TApp',
           // confirm_text: 'Next',
           text: '',
           label_width: 200,
@@ -398,7 +398,7 @@ export default {
             },
 
             template: {
-              label: 'TEAfulencer template',
+              label: 'TEAfluencer template',
               type: 'radio-group',
               required: true,
               options: [
