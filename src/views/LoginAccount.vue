@@ -450,7 +450,6 @@ export default {
             sell_tea_amount: {
               label: 'Sell amount (TEA)',
               type: 'number',
-              required: true,
               // max: this.layer1_account.balance,
               min: 0,
               step: 0.1,
