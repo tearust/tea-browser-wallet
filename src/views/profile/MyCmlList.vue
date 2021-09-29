@@ -159,6 +159,7 @@ import { mapGetters, mapState } from 'vuex';
 import {hexToString, stringToHex, hexToU8a, compactAddLength, u8aToHex} from 'tearust_layer1';
 import TeaTable from '../../components/TeaTable';
 import TeaIconButton from '../../components/TeaIconButton';
+import request from '../../request';
 export default {
   components: {
     TeaTable,
@@ -255,11 +256,16 @@ export default {
     },
 
     async clickUnplantAction(scope){
-      const ct = (utils.consts.CmlWeightByType[scope.row.cml_type])*100;
+
+      const tmp = await request.layer1_rpc('cml_estimateStopMiningPenalty', [scope.row.id]);
+      const ct = utils.layer1.balanceToAmount(tmp);
       try{
-        await this.$confirm(
-          `Are you sure you want to unplant this CML? <br/>
-          Please note that you'll need to compensate each staker ${ct} TEA.`, {
+        let msg = 'Are you sure you want to unplant this CML? <br/>';
+        if(ct > 0){
+          msg += `Please note that you'll need to compensate each staker ${ct} TEA.`;
+        }
+
+        await this.$confirm(msg, {
           title: 'Info',
           dangerouslyUseHTMLString: true,
         });
