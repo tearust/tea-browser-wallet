@@ -362,7 +362,7 @@ export default {
                 'filterable': true,
               },
               required: true,
-              default: 1000,
+              default: 10,
               options: [
                 {id: 10}, {id: 100}, {id: 1000}, {id: 2000}, {id: 5000}, {id: 10000}
               ],
