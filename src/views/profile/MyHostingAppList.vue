@@ -59,7 +59,7 @@
 
     <el-table-column
       prop="total_income"
-      label="Total fixed hosting fee income in TEA"
+      label="Total fixed hosting fee income"
       width="120"
     >
       <template slot-scope="scope">
@@ -68,7 +68,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Total hosting token income in TEA"
+      label="Total hosting token income"
       width="120"
     >
       <template slot-scope="scope">
@@ -151,7 +151,7 @@ export default {
       const x_list = [];
       await Promise.all(_.map(cml_list, async (item)=>{
         const tapps = await request.layer1_rpc('bonding_listCmlHostingTapps', [item.id]);
-
+// console.log(11, tapps);
         await Promise.all(_.map(tapps, async (arr)=>{
           const x_item = {
             cml_id: arr[0],
@@ -182,8 +182,8 @@ export default {
                   // const sell_price = tapp_detail_list[x_item.tapp_id].sell_price;
                   const sell_price = 1;
 
-                  this.list[index].total_income = utils.layer1.formatBalance(value, true);
-                  this.list[index].total_token_income = utils.layer1.formatBalance(token_total*sell_price, true);
+                  this.list[index].total_income = utils.layer1.formatBalance(value);
+                  this.list[index].total_token_income = utils.layer1.formatBalance(token_total*sell_price);
                 }
                 else{
                   this.list[index].total_income = 0;

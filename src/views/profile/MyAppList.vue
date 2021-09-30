@@ -54,8 +54,8 @@
     />
 
     <el-table-column
-      prop="amount"
-      label="My token holdings"
+      prop="invest_amount"
+      label="My investment token"
       width="150"
       sortable
     />
@@ -167,7 +167,9 @@ export default {
           name: utils.rpcArrayToString(arr[0]),
           token_symbol: utils.rpcArrayToString(arr[2]),
 
-          amount: utils.layer1.balanceToAmount(arr[3]),
+          invest_amount: utils.layer1.balanceToAmount(arr[3][0]),
+          stake_amount: utils.layer1.balanceToAmount(arr[3][1]),
+
           sell_price: utils.layer1.balanceToAmount(arr[4]),
           owner: arr[5],
           detail: utils.rpcArrayToString(arr[6]),
@@ -180,7 +182,7 @@ export default {
           total_supply: utils.layer1.balanceToAmount(arr[11]), 
         };
 
-        item.market_value = utils.layer1.roundAmount(item.amount*item.sell_price);
+        item.market_value = utils.layer1.roundAmount(item.invest_amount*item.sell_price);
         sum += item.market_value;
 
         return item;
