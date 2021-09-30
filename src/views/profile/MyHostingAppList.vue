@@ -39,6 +39,7 @@
     <el-table-column
       prop="host_performance"
       label="Host performance requirement"
+      width="150"
     />
 
     <el-table-column
@@ -56,6 +57,13 @@
       prop="remaining"
       label="Remaining performance"
     />
+
+    <el-table-column
+      prop="hosting_token"
+      label="My hosting token"
+      width="110"
+    />
+
 
     <el-table-column
       prop="total_income"
@@ -78,7 +86,7 @@
 
     <el-table-column
       label="Actions"
-      width="180">
+      width="120">
       <template slot-scope="scope">
 
         <TeaIconButton 
@@ -151,7 +159,7 @@ export default {
       const x_list = [];
       await Promise.all(_.map(cml_list, async (item)=>{
         const tapps = await request.layer1_rpc('bonding_listCmlHostingTapps', [item.id]);
-// console.log(11, tapps);
+
         await Promise.all(_.map(tapps, async (arr)=>{
           const x_item = {
             cml_id: arr[0],
@@ -162,6 +170,7 @@ export default {
             tapp_detail: utils.rpcArrayToString(arr[5]),
             tapp_link: utils.rpcArrayToString(arr[6]),
             host_performance: arr[7],
+            hosting_token: utils.layer1.balanceToAmount(arr[8]),
           };
 
           x_item.total_income = '---';
