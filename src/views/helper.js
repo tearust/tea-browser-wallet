@@ -158,6 +158,12 @@ const F = {
         ]);
         estimate = utils.layer1.balanceToAmount(estimate);
 
+        if(estimate === 0){
+          self.$root.showError('Insufficient token balance. Your token balance fluctuates according to the block height. <br/>Please try selling an amount slightly smaller than your total supply.');
+          self.$root.loading(false);
+          return false;
+        }
+
         try{
           await self.$confirm(`You will receive <b>${estimate} TEA</b> <br/> Are you sure?`, {
             dangerouslyUseHTMLString: true,

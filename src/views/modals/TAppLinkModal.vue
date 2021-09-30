@@ -38,11 +38,11 @@
             </template>
           </el-table-column>
 
-          <el-table-column
+          <!-- <el-table-column
             label="Delay"
             prop="ping"
             width="100"
-          />
+          /> -->
 
 
         </TeaTable>
