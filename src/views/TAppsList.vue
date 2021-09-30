@@ -611,7 +611,7 @@ export default {
               form.template,
               fix_token_mode,
               fix_token_mode ? null : utils.layer1.amountToBalance(form.reward_per_performance),
-              fix_token_mode ? utils.layer1.amountToBalance(form.stake_token_amount) : null,
+              fix_token_mode ? utils.toBN(utils.layer1.amountToBalance(form.stake_token_amount)) : null,
               100,
               theta,
             );

@@ -48,7 +48,7 @@
   </TeaTable>
 
   <el-divider />
-  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}} TEA</b> | Fix Token mode : <b class="block">{{tapp_fix_token_total}} Token</b>)</h4>
+  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}}</b>)</h4>
   <TeaTable
     :data="hosting_reward_list || []"
     name="hosting_tapp_reward_log_table"
