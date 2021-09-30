@@ -48,7 +48,7 @@
   </TeaTable>
 
   <el-divider />
-  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}} TEA</b> | Fix Token mode : <b class="block">{{tapp_fix_token_total}} Token</b>)</h4>
+  <h4>Hosting TApp rewards (Fixed TEA mode : <b class="block">{{tapp_fix_tea_total}} TEA</b> | Fixed Token mode : <b class="block">{{tapp_fix_token_total}} Tokens</b>)</h4>
   <TeaTable
     :data="hosting_reward_list || []"
     name="hosting_tapp_reward_log_table"
@@ -82,7 +82,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Fix hosting fee reward"
+      label="Fixed hosting fee reward"
       width="150"
     >
       <template slot-scope="scope">
@@ -92,7 +92,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Fix hosting token eward"
+      label="Fixed hosting token reward"
       width="150"
     >
       <template slot-scope="scope">
