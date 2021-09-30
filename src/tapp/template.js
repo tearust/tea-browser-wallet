@@ -16,19 +16,19 @@ const TEM_LIST = [
       return `${http}:3200?t=youtube&v=${tid}&id=${id}`;
     },
   }, 
-  {
-    key: 'Reddit',
-    label: 'Reddit',
-    link(tid){
-      return JSON.stringify({
-        t: 'Reddit',
-        v: tid,
-      });
-    },
-    url(id, tid){
-      return `${http}:3200?t=reddit&v=${tid}&id=${id}`;
-    },
-  }, 
+  // {
+  //   key: 'Reddit',
+  //   label: 'Reddit',
+  //   link(tid){
+  //     return JSON.stringify({
+  //       t: 'Reddit',
+  //       v: tid,
+  //     });
+  //   },
+  //   url(id, tid){
+  //     return `${http}:3200?t=reddit&v=${tid}&id=${id}`;
+  //   },
+  // }, 
   {
     key: 'Twitter',
     label: 'Twitter',

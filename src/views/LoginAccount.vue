@@ -587,7 +587,7 @@ export default {
 
       const loan_rate = (await api.query.genesisBank.interestRate()).toJSON();
       const pl = api.consts.genesisBank.loanTermDuration.toJSON();
-      this.loan_rate_str = '<b>'+(loan_rate/100) + '% per 100 blocks</b>. Loan term is <b>'+pl+'</b> blocks';
+      this.loan_rate_str = '<b>'+(loan_rate/100) + '% per 1000 blocks</b>. Loan term is <b>'+pl+'</b> blocks';
       this.loan_rate = (loan_rate/100)+'%';
 
       let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
