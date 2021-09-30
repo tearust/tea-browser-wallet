@@ -262,7 +262,7 @@ export default {
       try{
         let msg = 'Are you sure you want to unplant this CML? <br/>';
         if(ct > 0){
-          msg += `Please note that you'll need to compensate each staker ${ct} TEA.`;
+          msg = `Please note that you'll need to compensate total ${ct} TEA to stakers.`;
         }
 
         await this.$confirm(msg, {
