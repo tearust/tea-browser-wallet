@@ -82,7 +82,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Fix hosting fee reward"
+      label="Fixed hosting fee reward"
       width="150"
     >
       <template slot-scope="scope">
@@ -92,7 +92,7 @@
     </el-table-column>
 
     <el-table-column
-      label="Fix hosting token eward"
+      label="Fixed hosting token reward"
       width="150"
     >
       <template slot-scope="scope">

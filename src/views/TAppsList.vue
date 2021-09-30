@@ -100,7 +100,7 @@
     />
     <TeaTableColumn
       prop="host_performance"
-      label="Perfmt req"
+      label="Min perf"
       width="80"
       tip="A mining machine must be at least this powerful to host this TApp"
     />
