@@ -77,7 +77,7 @@
       <div v-if="layer1_account && layer1_account.reward" class="x-item">
         <b>
           {{'Public service staking reward' | cardTitle}}
-          <TeaIconButton style="position:relative; top:1px;" place="right" tip="Reward paid out for staking in CML-activated nodes. The first to plant a CML seed along with a 1000 TEA stake is considered the miner for that node." icon="questionmark" />
+          <TeaIconButton style="position:relative; top:1px;" place="right" tip="Public service (e.g. remote attestation) rewards paid out for mining or staking in CML-activated nodes." icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account.reward | teaIcon"></span>
       </div>
