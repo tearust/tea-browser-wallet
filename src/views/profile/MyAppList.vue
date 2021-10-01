@@ -55,7 +55,7 @@
 
     <el-table-column
       prop="invest_amount"
-      label="My investment token"
+      label="My investment and dividend tokens"
       width="150"
       sortable
     />
