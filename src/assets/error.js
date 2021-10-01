@@ -10,7 +10,7 @@ export default {
   CMLOwnerInvalid: 'The CML owner is invalid',
   CmlIsNotSeed: 'The CML is not a seed',
   SeedNotValid: 'The seed is invalid',
-  // InsufficientFreeBalance: 'Insufficient account balance',
+  InsufficientFreeBalance: 'Insufficient account balance',
   InsufficientReservedBalance: 'Insufficient reserved balance',
   MinerAlreadyExist: 'Miner already exists',
   NotFoundMiner: 'Miner not found',
@@ -197,7 +197,7 @@ export default {
   LinkNotInApprovedList: 'TApps can only be created for registered links. <a href="https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#tapps-topic-list" target="_blank">See the wiki</a> for more information.',
   LinkAlreadyBeUsed: 'This link is already in use by another TApp',
   OnlyNPCAccountAllowedToUpdateActivity: 'You don\'t have permission to update activity',
-
+  UserReservedLink: "That link is reserved for another user',
 
 
   OnlyAllowedNpcAccountToRegister: 'Only NPC user can add contestant.',
