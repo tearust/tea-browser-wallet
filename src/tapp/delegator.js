@@ -18,7 +18,7 @@ const F = {
     // }
 
     const cid = utils.get_env('TAPP_CID');
-    rs.url = 'http://'+ip+':8080/ipfs/'+cid+`?id=${tapp.id}&v=${tapp.json.v}&t=${tapp.json.t}`;
+    rs.url = 'http://'+ip+':8080/ipfs/'+cid+`?t=${tapp.json.t}&id=${tapp.id}&v=${tapp.json.v}`;
 
     return rs;
   },
