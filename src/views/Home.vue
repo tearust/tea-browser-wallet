@@ -5,7 +5,7 @@
     This current TEA browser wallet version is only for testing. 
   </h4>
   <p>
-    The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. Additionally, there will be no USDT rewards during testing epochs.
+    The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. We will have USDT rewards during the contest but not for the public testing periods.
   </p>
 
   <h4>Install Polkadot browser extension</h4>
