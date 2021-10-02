@@ -186,20 +186,27 @@ export default {
   CidIsToLong: 'CidIsToLong',
   TotalSupplyOverTheMaxValue: 'TotalSupplyOverTheMaxValue',
   RewardPerPerformanceShouldNotBeZero: 'Performance reward should be greater than zero',
-  StakeTokenShouldNotBeZero: 'The number of staked tokens should be greater than zero',
-  StakeTokenIsNoneInFixedTokenMode: 'Fixed token mode requires tokens to be staked',
-  RewardPerPerformanceIsNoneInFixedFeeMode: 'Fixed fee mode requires a reward for performance',
 
-  HostLockingBlockHeightNotReached: 'Can\'t unlock until host locking block height has been reached',
-  OnlyNPCAccountAllowedToRegisterLinkUrl: 'You don\'t have permission to register links',
   LinkUrlAlreadyExist: 'This link has already been registered',
   LinkDescriptionIsTooLong: 'The link description is too long',
   LinkNotInApprovedList: 'TApps can only be created for registered links. <a href="https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#tapps-topic-list" target="_blank">See the wiki</a> for more information.',
   LinkAlreadyBeUsed: 'This link is already in use by another TApp',
   OnlyNPCAccountAllowedToUpdateActivity: 'You don\'t have permission to update activity',
-  UserReservedLink: "That link is reserved for another user',
+  UserReservedLink: 'That link is reserved for another user',
 
 
   OnlyAllowedNpcAccountToRegister: 'Only NPC user can add contestant.',
   OnlyAllowedCompetitionUserBorrowUSD: 'You are not in the contestants list. please join <a href="https://t.me/teaprojectorg" target="_blank">https://t.me/teaprojectorg</a> group and ask the admin to add you in first',
+
+  BuyCurveThetaCanNotBeZero: 'Sell bonding curve theta value should be not be zero',
+  SellCurveThetaCanNotBeZero: 'Buy bonding curve theta value should be not be zero',
+  BuyCurveThetaShouldLargerEqualThanSellCurveTheta: 'Buy bonding curve theta should be larger than the sell bonding curve theta',
+
+  StakeTokenShouldNotBeZero: 'Staked token amount should not be zero',
+  StakeTokenIsNoneInFixedTokenMode: 'Staked token should be none in fixed token mode',
+  RewardPerPerformanceIsNoneInFixedFeeMode: 'Reward per performance should not be none in fixed fee mode',
+  HostLockingBlockHeightNotReached: 'Host locking block height has not been reached',
+  OnlyNPCAccountAllowedToRegisterLinkUrl: 'You do not have permission to register a link url',
+  StakeTokenAmountAndRewardPerPerformanceCannotBothExist: 'Staked token amount and reward per performance should not both be selected',
+
 };
