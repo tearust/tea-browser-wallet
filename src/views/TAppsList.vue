@@ -422,7 +422,7 @@ export default {
               action: {
                 tip_html: (val, form)=>{
                   if(!val) return null;
-                  const x = {'youtube': 3000, 'reddit':2000, 'twitter':1000}[_.toLower(val)];
+                  const x = {'youtube': 2000, 'reddit':1000, 'twitter':500}[_.toLower(val)];
                   return `Requires a ${x} performance CML`;
                 }
               },
