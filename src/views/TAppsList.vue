@@ -422,7 +422,7 @@ export default {
               action: {
                 tip_html: (val, form)=>{
                   if(!val) return null;
-                  const x = {'youtube': 2000, 'reddit':1000, 'twitter':500}[_.toLower(val)];
+                  const x = {'youtube': 2000, 'reddit':1500, 'twitter':1000}[_.toLower(val)];
                   return `Requires a ${x} performance CML`;
                 }
               },
@@ -498,11 +498,11 @@ export default {
               default: 1,
               options: [
                 {
-                  label: 'Fixed TEA payment per 100 blocks',
+                  label: 'Fixed TEA payment per 1000 blocks',
                   value: 2,
                 },
                 {
-                  label: 'Fixed TApp token and dividend payments per 100 blocks',
+                  label: 'Fixed TApp token and dividend payments per 1000 blocks',
                   value: 1,
                 }
               ],

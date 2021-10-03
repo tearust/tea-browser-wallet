@@ -215,7 +215,7 @@ export default {
       const item = (await api.query.bondingCurve.tAppBondingCurve(tapp_id)).toJSON();
 
       if(_.has(item.billing_mode, 'fixedHostingToken')){
-        tmp.billing_mode = 'Fixed TApp token and dividend payments per 100 blocks';
+        tmp.billing_mode = 'Fixed TApp token and dividend payments per 1000 blocks';
         item_list.push({
           label: 'Billing model',
           value: tmp.billing_mode
