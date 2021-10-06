@@ -667,7 +667,7 @@ export default {
               max: this.layer1_account.usd_debt,
               default: 1,
               model_action: {
-                button_text: 'Pay off all coffee in balance',
+                button_text: 'Use entire coffee balance',
                 handler: async (v)=>{
                   const {usd, usd_debt} = this.layer1_account;
 
