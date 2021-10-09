@@ -57,7 +57,9 @@
     </div>
 
     <div class="c-shell" v-if="shell">
-      <p>run >./start_tea_node.sh</p>
+      <p style="font-weight:bold;">
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/master/install.sh)"
+      </p>
     </div>
     <p v-if="shell" style="margin-top:5px;">
       The command above is a placeholder for the contest. <br/>
@@ -76,11 +78,11 @@
     >
       <el-button
         style="padding-left: 15px; padding-right: 15px"
-        @click="testPlant()"
-        plain
+        @click="verifyMiner()"
+        
         type="primary"
       >
-        Plant
+        Verify my miner
       </el-button>
     </div>
   </div>
@@ -115,7 +117,19 @@ export default {
             max: 32
           }
         ],
-        miner_ip: [{ required: true }],
+        miner_ip: [
+          { required: true },
+          {
+            validator: (rule, val, cb)=>{
+              if(!utils.isValidIP(val)){
+                cb('Invalid ip address');
+              }
+              else{
+                cb();
+              }
+            }
+          }
+        ],
         account: [{ required: true }],
       },
 
@@ -191,6 +205,10 @@ export default {
       }
       this.$root.loading(false);
     },
+    async verifyMiner(){
+      const url = `http://${this.form.miner_ip}:8000/verify_deployed?cml=${this.form.cml_id}`;
+      window.open(url, '_blank');
+    }
   },
 };
 </script>
