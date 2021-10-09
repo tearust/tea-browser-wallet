@@ -16,6 +16,7 @@ import LuckyDrawBox from './views/LuckyDrawBox';
 import CmlDetails from './views/CmlDetails';
 
 import PlantHelper from './views/PlantHelper';
+import PlantConfirm from './views/PlantConfirm';
 import UserDetails from './views/UserDetails';
 
 import MiningTreeList from './views/MiningTreeList';
@@ -88,6 +89,11 @@ let routers = [
     path: '/plant_helper/:cml_id',
     name: 'plant_helper',
     component: PlantHelper
+  },
+  {
+    path: '/plant_confirm',
+    name: 'plant_confirm',
+    component: PlantConfirm
   },
   {
     path: '/user_details/:address',

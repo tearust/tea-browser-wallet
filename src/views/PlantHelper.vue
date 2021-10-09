@@ -206,6 +206,8 @@ export default {
       this.$root.loading(false);
     },
     async verifyMiner(){
+      utils.cache.put('cml_plant_'+this.form.cml_id, this.form);
+
       const url = `http://${this.form.miner_ip}:8000/verify_deployed?cml=${this.form.cml_id}`;
       window.open(url, '_blank');
     }

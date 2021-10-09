@@ -265,6 +265,34 @@ const F = {
 
     return url;
   },
+  urlHashParam(key){
+    const l = _.last(location.hash.split('?'));
+    let tmp = l.split('&');
+    tmp = _.map(tmp, (arr)=>{
+      const t = arr.split('=');
+      return {
+        key: t[0],
+        value: t[1],
+      }
+    });
+
+    const rs =  _.find(tmp, (x)=>x.key === key);
+    return rs ? rs.value : null;
+  },
+  urlParam(key){
+    const l = location.search.replace(/^\?/, '');
+    let tmp = l.split('&');
+    tmp = _.map(tmp, (arr)=>{
+      const t = arr.split('=');
+      return {
+        key: t[0],
+        value: t[1],
+      }
+    });
+
+    const rs =  _.find(tmp, (x)=>x.key === key);
+    return rs ? rs.value : null;
+  },
 
   parseJSON(str, default_value=null){
     let rs;
