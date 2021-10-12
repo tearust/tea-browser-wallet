@@ -414,7 +414,7 @@ export default class {
       if (remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
       cml.life_day = this.blockToDay(remaining);
-
+console.log(111, cml_id)
       const ttp = await request.layer1_rpc('cml_cmlPerformance', [_.toNumber(cml_id)]);
       // console.log(111, ttp);
       const performance = (ttp[0]||0)+'/'+ttp[2];

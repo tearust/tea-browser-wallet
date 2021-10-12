@@ -199,7 +199,8 @@ export default {
     async refreshList(){
       this.$root.loading(true);
 
-      const cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
+      let cml_list = await request.layer1_rpc('cml_currentMiningCmlList',  []);
+      cml_list = _.map(cml_list, (arr)=>arr[0]);
       const list = await this.wf.getCmlByList(cml_list);
       this.list = _.orderBy(list, ['slot_len'], ['desc']);
 
