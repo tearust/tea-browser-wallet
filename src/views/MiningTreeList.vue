@@ -65,14 +65,14 @@
     <el-table-column
       prop="performance"
       label="Current / Peak performance"
-      width="160"
+      width="120"
     />
 
     <el-table-column
       prop="remaining_performance"
       label="Remaining performance"
       sortable
-      width="170"
+      width="110"
     />
 
     <!-- <el-table-column
@@ -91,6 +91,12 @@
         {{scope.row.status | str}}
       </template>
     </el-table-column>
+
+    <el-table-column
+      prop="miner_status"
+      label="Miner status"
+      width="90"
+    />
 
     <el-table-column
       label="Total slots"

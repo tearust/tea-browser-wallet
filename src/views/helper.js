@@ -357,6 +357,24 @@ query {
   },
   openUrl(url){
     window.open(url, '_blank');
+  },
+
+  async resumeCmlMiner(self, cml_id, succ_cb){
+
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+    self.$root.loading(true);
+
+    try{
+      const tx = api.tx.cml.resumeMining(cml_id);
+      await layer1_instance.sendTx(self.layer1_account.address, tx);
+
+      await succ_cb();
+    }catch(e){
+      self.$root.showError(e);
+    }
+
+    self.$root.loading(false);
   }
 
 };

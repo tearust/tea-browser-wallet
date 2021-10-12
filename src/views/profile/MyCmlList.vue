@@ -57,7 +57,7 @@
     <el-table-column
       prop="remaining_performance"
       label="Remaining performance"
-      width="110"
+      width="100"
     />
 
     <el-table-column
@@ -79,6 +79,15 @@
     >
       <template slot-scope="scope">
         {{scope.row.status | str}}
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="status"
+      label="Miner status"
+      width="90"
+    >
+      <template slot-scope="scope">
+        {{scope.row.miner_status}}
       </template>
     </el-table-column>
 
@@ -115,6 +124,8 @@
 
     <el-table-column
       label="Actions"
+      fixed="right"
+      width="120"
     >
       <template slot-scope="scope">
         <TeaIconButton
@@ -136,12 +147,21 @@
         />
 
         <TeaIconButton
-          v-if="
-            scope.row.status==='FrozenSeed'
-            && scope.row.staking_slot.length<1"
+          :disabled="
+            !(scope.row.status==='FrozenSeed'
+            && scope.row.staking_slot.length<1)"
           @click="pawnCmlToGB(scope)"
           tip="Deposit for loan"
           icon="bank"
+        />
+        <TeaIconButton
+          v-if="
+            (scope.row.miner_status &&
+            scope.row.miner_status === 'Offline')
+          "
+          @click="resumeMiner(scope)"
+          tip="Resume miner"
+          icon="fixed"
         />
       </template>
     </el-table-column>
@@ -153,13 +173,13 @@
 <script>
 import SettingAccount from '../../workflow/SettingAccount';
 import {_} from 'tearust_utils';
-import {helper} from 'tearust_layer1';
 import utils from '../../tea/utils';
 import { mapGetters, mapState } from 'vuex';
 import {hexToString, stringToHex, hexToU8a, compactAddLength, u8aToHex} from 'tearust_layer1';
 import TeaTable from '../../components/TeaTable';
 import TeaIconButton from '../../components/TeaIconButton';
 import request from '../../request';
+import helper from '../helper';
 export default {
   components: {
     TeaTable,
@@ -288,6 +308,25 @@ export default {
         this.$root.showError(e);
       }
       this.$root.loading(false);
+    },
+    async resumeMiner(scope){
+      try{
+        let msg = 'Are you sure to resume your miner?';
+        
+        await this.$confirm(msg, {
+          title: 'Info',
+          dangerouslyUseHTMLString: true,
+        });
+      }catch(e){
+        return;
+      } 
+
+
+      await helper.resumeCmlMiner(this, scope.row.id, async ()=>{
+        this.$root.success();
+        utils.publish('refresh-current-account__account');
+      });
+
     }
 
     

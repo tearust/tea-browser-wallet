@@ -414,7 +414,17 @@ export default class {
       if (remaining < 0) remaining = 0;
       cml.liferemaining = remaining;
       cml.life_day = this.blockToDay(remaining);
-console.log(111, cml_id)
+
+      if(cml.machine_id){
+        const miner = (await api.query.cml.minerItemStore(hexToString(cml.machine_id))).toJSON();
+
+        cml.miner_ip = hexToString(miner.ip);
+        cml.miner_status = miner.status;
+        cml.suspend_block = miner.suspend_height;
+        cml.miner_orbitdb_id = miner.orbitdb_id;
+
+      }
+
       const ttp = await request.layer1_rpc('cml_cmlPerformance', [_.toNumber(cml_id)]);
       // console.log(111, ttp);
       const performance = (ttp[0]||0)+'/'+ttp[2];
