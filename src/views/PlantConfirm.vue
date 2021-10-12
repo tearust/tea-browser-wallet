@@ -104,7 +104,7 @@ export default {
       const api = layer1_instance.getApi();
 
       const form = utils.cache.get('cml_plant_'+this.cml_id);
-      console.log(1, form);
+
       if(!form){
         this.fail('Invalid cache for CML.');
         return;
@@ -123,9 +123,12 @@ export default {
         const tx = api.tx.cml.startMining(
           form.cml_id,
           form.miner_id,
-          form.miner_ip
+          form.miner_ip,
+          this.orbit_id,
         );
         await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        utils.cache.remove('cml_plant_'+this.cml_id);
 
         this.$router.push("/login_account");
       } catch (e) {

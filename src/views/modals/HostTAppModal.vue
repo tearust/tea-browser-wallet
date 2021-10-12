@@ -136,9 +136,12 @@ export default {
     },
 
     async hostApp(scope){
-      const x = await this.$confirm('Once hosting a TApp, you cannot unhost until 1000 blocks later. <br/>Are you sure?', {
-        dangerouslyUseHTMLString: true,
-      }).catch(()=>{});
+      const x = await this.$confirm(
+        'Once hosting a TApp, you need to pay 100 TEA deposit and can\'t unhost until 1000 blocks later. <br/>Are you sure?', 
+        {
+          dangerouslyUseHTMLString: true,
+        }).catch(()=>{}
+      );
       if(!x){
         return false;
       }

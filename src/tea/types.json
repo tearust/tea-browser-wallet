@@ -96,7 +96,9 @@
     "cml_id": "CmlId",
     "id": "MachineId",
     "ip": "Cid",
-    "status": "MinerStatus"
+    "status": "MinerStatus",
+    "orbitdb_id": "Cid",
+    "suspend_height": "Option<BlockNumber>"
   },
   "performance": "u32",
   "ServiceTaskPoint": "u32",
