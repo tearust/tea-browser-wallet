@@ -311,10 +311,11 @@ export default {
     },
     async resumeMiner(scope){
       try{
-        let msg = 'Are you sure to resume your miner?';
+        let msg = `Please note that you need to pay 100 TEA as deposit. <br/>
+        Are you sure to resume your miner?`;
         
         await this.$confirm(msg, {
-          title: 'Info',
+          title: 'Notice',
           dangerouslyUseHTMLString: true,
         });
       }catch(e){
