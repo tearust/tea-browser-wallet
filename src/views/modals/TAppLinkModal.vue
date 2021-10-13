@@ -122,6 +122,10 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
+      const tmp_list = await request.layer1_rpc('bonding_tappHostedCmls', [tapp_id]);
+      
+      const cml_list = await this.wf.getCmlByList(_.map(tmp_list, (arr)=>arr[0]));
+
       const arr = await request.layer1_rpc('bonding_tappDetails', [tapp_id]);
       const tmp = {
         name: utils.rpcArrayToString(arr[0]),
@@ -152,8 +156,16 @@ export default {
       
       this.tapp = tmp;
 
-      this.list = await tapp.delegator.getTableData(this.tapp);
-      console.log(tmp, this.list);
+      const ori_ip_list = _.map(cml_list, (item)=>{
+        if(item.miner_status === 'Active'){
+          return item.miner_ip;
+        }
+        return null;
+      });
+      const ip_list = _.filter(_.uniq(ori_ip_list));
+
+      this.list = await tapp.delegator.getTableData(this.tapp, ip_list);
+
     },
 
 

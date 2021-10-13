@@ -29,8 +29,8 @@ const F = {
     return c_list;
   },
 
-  async getTableData(tapp){
-    const c_list = await F.candidateList();
+  async getTableData(tapp, ip_list){
+    const c_list = ip_list || (await F.candidateList());
 
     const list = [];
     await Promise.all(_.map(c_list, async (ip)=>{
