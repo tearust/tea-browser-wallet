@@ -209,4 +209,10 @@ export default {
   OnlyNPCAccountAllowedToRegisterLinkUrl: 'You do not have permission to register a link url',
   StakeTokenAmountAndRewardPerPerformanceCannotBothExist: 'Staked token amount and reward per performance should not both be selected',
 
+  NoNeedToSuspend: 'Miner is offline already, no need to suspend.',
+  NoNeedToResume: 'Miner is already active, no need to resume.',
+  OnlyNpcAccountAllowedToSuspend: 'You don\'t have necessary privileges to suspend this miner',
+  InsufficientFreeBalanceToAppendPledge: 'Insufficient free balance to add to pledge',
+  MiningCmlStatusShouldBeActive: 'Can only host TApp when CML is active',
+
 };
