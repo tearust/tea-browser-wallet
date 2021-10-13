@@ -12,8 +12,9 @@
   >
     <el-table-column
       prop="id"
-      width="50"
+      width="60"
       label="ID"
+      sortable
     >
       <template slot-scope="scope">
         <el-button size="small" type="text" @click="showDetails(scope)">{{scope.row.id}}</el-button>
@@ -58,13 +59,15 @@
       prop="total_supply"
       label="Total supply"
       tip="Total number of tokens issued"
-      width="90"
+      width="110"
+      sortable
     />
 
     <el-table-column
       prop="buy_price"
       label="Buy price"
-      width="80"
+      width="100"
+      sortable
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.buy_price | teaIcon"></span>
@@ -74,7 +77,8 @@
     <el-table-column
       prop="sell_price"
       label="Sell price"
-      width="80"
+      width="100"
+      sortable
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.sell_price | teaIcon"></span>
@@ -85,6 +89,7 @@
       prop="market_cap"
       label="Market cap"
       width="100"
+      sortable
     >
       <template slot-scope="scope">
         <span :inner-html.prop="scope.row.market_cap | teaIcon"></span>
@@ -96,7 +101,8 @@
       label="Theta"
       prop="theta"
       tip=""
-      width="70"
+      width="80"
+      sortable
     />
     <TeaTableColumn
       prop="host_performance"
