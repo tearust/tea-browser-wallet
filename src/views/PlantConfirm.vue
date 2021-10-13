@@ -1,9 +1,9 @@
 <template>
   <div class="tea-page">
-    <h4>Active miner for CML {{cml_id}}</h4>
+    <h4>Activate miner for CML {{cml_id}}</h4>
     
     <p style="font-size:18px; color: #f00;" v-if="error">
-      Can't active miner, reason as below.<br/>
+      Can't activate miner, see reason below.<br/>
       {{error}}
     </p>
 
@@ -17,7 +17,7 @@
         
         type="primary"
       >
-        Active miner
+        Activate miner
       </el-button>
     </div>
     
