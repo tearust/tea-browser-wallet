@@ -311,8 +311,8 @@ export default {
     },
     async resumeMiner(scope){
       try{
-        let msg = `Please note that you need to pay 100 TEA as a deposit. <br/>
-        Are you sure to resume your miner?`;
+        let msg = `Are you sure your miner is online and you wish to resume mining? <br/>
+        Please note that you need to pay 100 TEA as a deposit.`;
         
         await this.$confirm(msg, {
           title: 'Notice',
