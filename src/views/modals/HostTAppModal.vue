@@ -17,7 +17,7 @@
       <p class="c-info" v-if="param.tapp.is_full">This TApp no longer accepts new hosts</p>
       <p class="c-info" v-if="!param.tapp.is_full">
         {{param.tapp.name}} requires {{param.tapp.host_performance}} performance to host. Please select one of the CML which is qualified to host. <br/>
-        Note that you need to pay 100 TEA as deposit and will be slashing when offline without unhost. <br />
+        Note that you need to pay 100 TEA as a deposit which will be forfeited if your miner goes offline without unhosting first. <br />
         For more info about maximizing your hosting revenue, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Mining:-Host-and-Unhost-TApps" target="_blank">visit our wiki</a>.
       </p>
     
@@ -70,7 +70,7 @@
       
     
     </el-table>
-    <h5 v-if="!cml_list" style="font-size:20px;">You can only host a TApp using your CML currently in mining.</h5>
+    <h5 v-if="!cml_list" style="font-size:20px;">You can only host a TApp using a currently mining CML.</h5>
 
 
   </div>
@@ -138,7 +138,7 @@ export default {
 
     async hostApp(scope){
       const x = await this.$confirm(
-        'Once hosting a TApp, you need to pay 100 TEA deposit and can\'t unhost until 1000 blocks later. <br/>Are you sure?', 
+        'You\'ll need to pay a 100 TEA deposit to host a TApp and can\'t unhost until 1000 blocks later. <br/>Are you sure?', 
         {
           dangerouslyUseHTMLString: true,
         }).catch(()=>{}
