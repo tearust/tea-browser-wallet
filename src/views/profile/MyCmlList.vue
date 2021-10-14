@@ -282,7 +282,7 @@ export default {
       try{
         let msg = 'Are you sure you want to unplant this CML? <br/>';
         if(ct > 0){
-          msg = `Please note that you'll need to compensate total ${ct} TEA to stakers.`;
+          msg = `Please note that you'll need to compensate a total of ${ct} TEA to stakers.`;
         }
 
         await this.$confirm(msg, {
@@ -311,7 +311,7 @@ export default {
     },
     async resumeMiner(scope){
       try{
-        let msg = `Please note that you need to pay 100 TEA as deposit. <br/>
+        let msg = `Please note that you need to pay 100 TEA as a deposit. <br/>
         Are you sure to resume your miner?`;
         
         await this.$confirm(msg, {
