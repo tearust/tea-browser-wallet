@@ -16,7 +16,7 @@
   <div v-if="!loading && param && param.tapp">
       <p class="c-info" v-if="param.tapp.is_full">This TApp no longer accepts new hosts</p>
       <p class="c-info" v-if="!param.tapp.is_full">
-        {{param.tapp.name}} requires {{param.tapp.host_performance}} performance to host. Please select one of the CML which is qualified to host. <br/>
+        {{param.tapp.name}} requires {{param.tapp.host_performance}} performance to host. Please select one of your qualified CML to host this TApp. <br/>
         Note that you need to pay 100 TEA as a deposit which will be forfeited if your miner goes offline without unhosting first. <br />
         For more info about maximizing your hosting revenue, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Mining:-Host-and-Unhost-TApps" target="_blank">visit our wiki</a>.
       </p>
