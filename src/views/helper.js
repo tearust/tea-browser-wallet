@@ -122,7 +122,17 @@ const F = {
             max: 100000000,
             remove_required_rule: true,
             default: undefined,
-            tip: 'Click "Next" button to see how much you can convert to, or input a number below to convert back.'
+            tip: 'Click "Next" button to see how much you can convert to, or input a number below to convert back.',
+            model_action: {
+              button_text: 'Sell all',
+              handler: async ()=>{
+                const list = await request.layer1_rpc('bonding_listUserAssets', [
+                  self.layer1_account.address
+                ]);
+                const tmp = _.find(list, (arr)=>arr[1]===data.id);
+                return utils.layer1.balanceToAmount(tmp[3][0]);
+              },
+            },
           },
           tea: {
             label: 'TEA',

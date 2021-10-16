@@ -95,13 +95,13 @@ const layer1 = {
     return layer1.formatBalance(value);
   },
   roundAmount(value){
-    return Math.round(value*10000) / 10000;
+    return Math.floor(value*10000) / 10000;
   },
   toRealBalance(value){
     value = F.toBN(value);
     value = F.bnToBalanceNumber(value);
     const unit = 1000000*1000000;
-    return Math.round(value * unit) / unit;
+    return Math.floor(value * unit) / unit;
   }
 };
 

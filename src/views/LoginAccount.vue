@@ -455,6 +455,13 @@ export default {
               step: 0.1,
               default: undefined,
               tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.',
+              model_action: {
+                button_text: 'Sell all',
+                handler: async ()=>{
+                  const val = utils.layer1.roundAmount(this.layer1_account.balance-0.01);
+                  return val;
+                },
+              },
               
             },
             coffee: {
@@ -527,6 +534,13 @@ export default {
               step: 0.1,
               default: undefined,
               tip: 'Click "Confirm" button to see how much you can convert to, or input a number below to convert back.',
+              model_action: {
+                button_text: 'Sell all',
+                handler: async ()=>{
+                  const val = (this.layer1_account.usd)
+                  return val;
+                },
+              },
             },
             tea: {
               label: 'TEA',
