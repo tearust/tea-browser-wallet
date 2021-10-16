@@ -21,7 +21,7 @@
     <el-table-column
       prop="address"
       label="Account"
-      width="100"
+      width="220"
     >
       <template slot-scope="scope">
         <el-tooltip effect="light" :content="scope.row.address" placement="right">
@@ -35,11 +35,11 @@
       </template>
     </el-table-column>
 
-    <el-table-column
+    <!-- <el-table-column
       prop="cml_asset"
       label="Projected 7 day mining income"
       width="120"
-    />
+    /> -->
     <el-table-column
       prop="tea_asset"
       label="TEA account balance"
@@ -143,6 +143,7 @@ export default {
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
+          arr[1] = 0;
           const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
           const rs = {
             index: i+1,
@@ -177,6 +178,7 @@ export default {
           for(let j=1; j<7; j++){
             arr[j] = _.toNumber(arr[j]);
           }
+          arr[1] = 0;
           const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
           
           const rs = {
