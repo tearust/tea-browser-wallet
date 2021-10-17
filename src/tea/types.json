@@ -95,9 +95,9 @@
   "MinerItem": {
     "cml_id": "CmlId",
     "id": "MachineId",
-    "ip": "Cid",
+    "ip": "Bytes",
     "status": "MinerStatus",
-    "orbitdb_id": "Cid",
+    "orbitdb_id": "Option<Bytes>",
     "suspend_height": "Option<BlockNumber>"
   },
   "performance": "u32",
