@@ -80,6 +80,11 @@ export default {
       let cml = await api.query.cml.cmlStore(this.cml_id);
       cml = cml.toJSON();
 
+      if(cml.planted_at){
+        this.fail('CML already active.');
+        return;
+      }
+
       if(cml.owner !== this.layer1_account.address){
         this.fail(`CML owner is invalid.`);
         return;
