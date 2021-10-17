@@ -57,9 +57,10 @@
     </div>
 
     <div class="c-shell" v-if="shell">
-      <p style="font-weight:bold;">
+      <p style="font-weight:bold;" v-if="cml_type==='B'">
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/master/install.sh)"
       </p>
+      <p v-if="cml_type!=='B'">run >./start_tea_node.sh</p>
     </div>
     <p v-if="shell" style="margin-top:5px;">
       The command above is a placeholder for the contest. <br/>
@@ -77,12 +78,22 @@
       style="display: flex; justify-content: flex-end; margin-top: 10px"
     >
       <el-button
+        v-if="cml_type==='B'"
         style="padding-left: 15px; padding-right: 15px"
         @click="verifyMiner()"
         
         type="primary"
       >
         Verify my miner
+      </el-button>
+      <el-button
+        v-if="cml_type!=='B'"
+        style="padding-left: 15px; padding-right: 15px"
+        @click="testPlant()"
+        plain
+        type="primary"
+      >
+        Plant
       </el-button>
     </div>
   </div>
@@ -99,6 +110,7 @@ export default {
   },
   data() {
     return {
+      cml_type: null,
       form: {
         cml_id: null,
         miner_id: null,
@@ -121,12 +133,18 @@ export default {
           { required: true },
           {
             validator: (rule, val, cb)=>{
-              if(!utils.isValidIP(val)){
-                cb('Invalid ip address');
+              if(this.cml_type === 'B'){
+                if(!utils.isValidIP(val)){
+                  cb('Invalid ip address');
+                }
+                else{
+                  cb();
+                }
               }
               else{
                 cb();
               }
+              
             }
           }
         ],
@@ -164,6 +182,8 @@ export default {
       api.consts.genesisExchange[map[cml.intrinsic.cml_type]].toJSON();
     this.form.miner_price = utils.layer1.formatBalance(price);
 
+    this.cml_type = cml.intrinsic.cml_type;
+
     this.form.miner_id = utils.uuid().replace(/\-/g, '');
     this.$root.loading(false);
   },
@@ -195,7 +215,8 @@ export default {
         const tx = api.tx.cml.startMining(
           form.cml_id,
           form.miner_id,
-          form.miner_ip
+          form.miner_ip,
+          null,
         );
         await layer1_instance.sendTx(this.layer1_account.address, tx);
 

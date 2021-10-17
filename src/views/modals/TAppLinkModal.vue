@@ -54,7 +54,7 @@
     </div>
     
     <span slot="footer" class="dialog-footer">
-      <el-button style="float:left;" size="small" type="primary" @click="$alert('This feature will be available in epoch 5. For right now you can choose from the available delegators.')">I want to deploy my own delegator</el-button>
+      <!-- <el-button style="float:left;" size="small" type="primary" @click="$alert('This feature will be available in epoch 5. For right now you can choose from the available delegators.')">I want to deploy my own delegator</el-button> -->
 
       <!-- <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button> -->
 
@@ -157,6 +157,7 @@ export default {
       this.tapp = tmp;
 
       const ori_ip_list = _.map(cml_list, (item)=>{
+        if(item.cml_type !== 'B') return null;
         if(item.miner_status === 'Active'){
           return item.miner_ip;
         }

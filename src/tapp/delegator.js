@@ -24,13 +24,13 @@ const F = {
   },
   async candidateList(){
     // TODO get from layer1
-    const c_list = utils.get_env('DELEGATOR_LIST').split(',');
+    // const c_list = utils.get_env('DELEGATOR_LIST').split(',');
 
-    return c_list;
+    // return c_list;
   },
 
   async getTableData(tapp, ip_list){
-    const c_list = ip_list || (await F.candidateList());
+    const c_list = ip_list; // || (await F.candidateList());
 
     const list = [];
     await Promise.all(_.map(c_list, async (ip)=>{

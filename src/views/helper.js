@@ -220,6 +220,8 @@ const F = {
       self.layer1_account.address,
     ]);
     const list = await Promise.all(_.map(cml_list, async (arr)=>{
+      const [cml] = await self.wf.getCmlByList([arr[0]]);
+
       const item = {
         id: arr[0],
         current: arr[1],
@@ -228,10 +230,14 @@ const F = {
         is_on: !!_.find(arr[4], (xd)=>xd===tapp_id),
       };
 
+      if(cml.cml_type !== 'B'){
+        return null;
+      }
+
       return item;
     }));
 
-    return list;
+    return _.filter(list);
   },
   async unhostTApp(self, data, succ_cb){
     const tapp_id = data.tapp_id;
