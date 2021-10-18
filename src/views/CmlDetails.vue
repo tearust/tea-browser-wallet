@@ -1,7 +1,10 @@
 <template>
   <div class="tea-page">
 
-    <h4>Camellia detail</h4>
+    <h4>
+      Camellia detail
+    </h4>
+    <span v-if="miner">Miner public address : {{miner.ip}}</span>
     <el-table 
       :data="cml ? [cml] : []"
       stripe
@@ -277,6 +280,7 @@ export default {
       cml: null,
       id: null,
       is_staking: false,
+      miner: null,
 
       tapp_list: null,
       faas_list: [
@@ -353,9 +357,12 @@ export default {
         };
       }));
 
+      const mm = await this.getMinerDetails(this.cml.machine_id);
+      this.miner = mm;
+
       this.$root.loading(false);
     },
-    async showMinerInfo(miner_id){
+    async getMinerDetails(miner_id){
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
@@ -364,6 +371,14 @@ export default {
 
       mm.id = hexToString(mm.id);
       mm.ip = hexToString(mm.ip);
+
+      return mm;
+    },
+    async showMinerInfo(miner_id){
+      let mm = this.miner;
+      if(!mm){
+        mm = await this.getMinerDetails(miner_id);
+      }
       
       this.$store.commit('modal/open', {
         key: 'data_details',

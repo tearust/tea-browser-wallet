@@ -58,9 +58,14 @@
 
     <div class="c-shell" v-if="shell">
       <p style="font-weight:bold;" v-if="cml_type==='B'">
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/master/install.sh)"
+        <span class="js_need_copy">sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/master/install.sh)"</span>
+
+        <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
       </p>
-      <p v-if="cml_type!=='B'">run >./start_tea_node.sh</p>
+      <p v-if="cml_type!=='B'">run >
+        ./start_tea_node.sh
+        
+      </p>
     </div>
     <p v-if="shell" style="margin-top:5px;">
       The command above is a placeholder for the contest. <br/>
@@ -103,6 +108,7 @@ import Base from "../workflow/Base";
 import { _ } from "tearust_utils";
 import utils from "../tea/utils";
 import { mapGetters } from "vuex";
+import ClipboardJS from 'clipboard';
 import TeaIconButton from '../components/TeaIconButton';
 export default {
   components: {
@@ -157,6 +163,12 @@ export default {
   computed: {
     ...mapGetters(["layer1_account"]),
   },
+  async created(){
+    this.initCopyEvent();
+  },
+  beforeDestroy(){
+    this.clipboard && this.clipboard.destroy();
+  },
   async mounted() {
     this.form.cml_id = this.$route.params.cml_id;
     this.form.account = this.layer1_account.address;
@@ -188,6 +200,17 @@ export default {
     this.$root.loading(false);
   },
   methods: {
+    initCopyEvent(){
+      const clipboard = new ClipboardJS('.js_copy');
+      this.clipboard = clipboard;
+      clipboard.on('success', (e)=>{
+        e.clearSelection();
+        this.$root.success('Copied');
+      });
+
+      clipboard.on('error', (e)=>{
+      });
+    },
     async generateShell() {
       const ref = this.$refs["form"];
       await ref.validate();
