@@ -233,6 +233,8 @@ const F = {
       if(cml.cml_type !== 'B'){
         return null;
       }
+      
+      item.miner_ip = cml.miner_ip;
 
       return item;
     }));

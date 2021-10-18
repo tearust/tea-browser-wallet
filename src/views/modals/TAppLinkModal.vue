@@ -54,7 +54,9 @@
     </div>
     
     <span slot="footer" class="dialog-footer">
-      <!-- <el-button style="float:left;" size="small" type="primary" @click="$alert('This feature will be available in epoch 5. For right now you can choose from the available delegators.')">I want to deploy my own delegator</el-button> -->
+      <el-button style="float:left;" size="small" type="primary" @click="openUrl('https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware')">
+        I want to beb a TApp host too
+      </el-button>
 
       <!-- <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button> -->
 
@@ -216,7 +218,9 @@ export default {
         },
       });
     },
-
+    openUrl(url){
+      helper.openUrl(url);
+    }
   }
 }
 </script>

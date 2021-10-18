@@ -84,10 +84,11 @@
     <el-table-column
       prop="status"
       label="Miner status"
-      width="90"
+      width="100"
     >
       <template slot-scope="scope">
         {{scope.row.miner_status}}
+        <span v-if="scope.row.miner_ip"><br/>{{scope.row.miner_ip}}</span>
       </template>
     </el-table-column>
 

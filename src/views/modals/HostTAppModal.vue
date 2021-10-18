@@ -44,6 +44,11 @@
       </el-table-column>
 
       <el-table-column
+        prop="miner_ip"
+        label="Miner address"
+      />
+
+      <el-table-column
         prop="current"
         label="Current performance"
       />
@@ -119,7 +124,6 @@ export default {
       const tapp_id = this.param.tapp.id;
 
       this.cml_list = await helper.bonding_listCandidateMiners(this, tapp_id);
-
       this.loading = false;
     },
 

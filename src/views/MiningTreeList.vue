@@ -95,8 +95,15 @@
     <el-table-column
       prop="miner_status"
       label="Miner status"
-      width="90"
-    />
+      width="110"
+    >
+      <template slot-scope="scope">
+        {{scope.row.miner_status}}<br/>
+        <span v-if="scope.row.miner_ip && scope.row.cml_type==='B'">
+          {{scope.row.miner_ip}}
+        </span>
+      </template>
+    </el-table-column>
 
     <el-table-column
       label="Total slots"
@@ -145,7 +152,8 @@
 
     <el-table-column
       label="Actions"
-      
+      fixed="right"
+      width="120"
     >
       <template slot-scope="scope">
         <TeaIconButton tip="Stake" icon="invest" @click="openInvolveStakingModal(scope.row)" />
