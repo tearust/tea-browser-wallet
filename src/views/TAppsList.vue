@@ -336,7 +336,7 @@ export default {
               },
               tip: 'Click to visit wiki.',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---name');
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#create-new-tapp---name');
               }
             },
             ticker: {
@@ -386,7 +386,7 @@ export default {
               },
               tip: 'Click to visit wiki.',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---initial-tokens');
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#create-new-tapp---initial-tokens');
               }
             },
             detail: {
@@ -434,7 +434,7 @@ export default {
               },
               tip: 'Different TApp templates have different CML performance requirements. <br/>Click to visit wiki.',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#minimum-hosting-performance-requirement');
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#minimum-hosting-performance-requirement');
               }
             },
             YouTube: {
@@ -450,7 +450,7 @@ export default {
               },
               tip: 'Click to visit wiki',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---youtube-id')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#create-new-tapp---youtube-id')
               }
             },
             Reddit: {
@@ -492,7 +492,7 @@ export default {
               min: 3,
               tip: 'Click to visit wiki',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---max-allowed-hosts')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#create-new-tapp---max-allowed-hosts')
               }
             },
 
@@ -514,7 +514,7 @@ export default {
               ],
               tip: 'Click to visit wiki',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---billing-model')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#create-new-tapp---billing-model')
               }
             },
 
@@ -557,7 +557,7 @@ export default {
               },
               tip: 'Click to visit wiki',
               tip_action: ()=>{
-                helper.openUrl('https://github.com/tearust/teaproject/wiki/Epoch-4---New-TApp-Business-Model#create-new-tapp---staked-token-amount')
+                helper.openUrl('https://github.com/tearust/teaproject/wiki/TApps---Creating-a-TApp#create-new-tapp---staked-token-amount')
               }
             },
 
