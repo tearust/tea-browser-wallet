@@ -216,5 +216,7 @@ export default {
   MiningCmlStatusShouldBeActive: 'Can only host TApp when CML is active',
 
   CannotStopMiningWhenHostingTApp: 'Unable to stop mining while hosting a TApp',
+  NotAllowedTypeCHostingTApp: 'Type C CML are not allowed to host TApps',
+  CmlBStartMiningShouldHaveOrbitId: 'Your type B CML should have an orbit ID before it can start mining',
 
 };
