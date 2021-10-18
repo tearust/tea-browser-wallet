@@ -215,4 +215,6 @@ export default {
   InsufficientFreeBalanceToAppendPledge: 'Insufficient free balance to add to pledge',
   MiningCmlStatusShouldBeActive: 'Can only host TApp when CML is active',
 
+  CannotStopMiningWhenHostingTApp: 'Unable to stop mining while hosting a TApp',
+
 };
