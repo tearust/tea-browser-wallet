@@ -21,7 +21,7 @@
           margin: -5px 0 15px 0;
           word-break: break-word;
         ">
-          These are individual miners' nodes that host delegators. Your browser can load the TApp from any one of these delegators by clicking on them. You can setup your own node to host a delegator starting in epoch 5.
+          These are individual miners' nodes that are hosting delegators. Your browser can load the TApp from any one of these delegators by clicking on them. You can setup your own node to host a delegator starting in epoch 5. <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware" target="_blank">Click here for how to setup your own node</a>.
         </p>
 
         <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">Delegator list</h4>
