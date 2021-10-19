@@ -389,7 +389,7 @@ export default class {
 
           const tmp = _.find(x_cml.staking_slot, (x)=>(x.cml && x.cml===cml.intrinsic.id));
           if(tmp){
-            cml.staking_index = tmp.real_index.replace(/ /g, '');
+            cml.staking_index = tmp.real_index.toString().replace(/ /g, '');
           }
           else{
             console.error('Unexpect error, check for unzip_status in Base.js');
