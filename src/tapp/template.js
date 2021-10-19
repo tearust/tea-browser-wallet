@@ -29,20 +29,20 @@ const TEM_LIST = [
   //     return `${http}:3200?t=reddit&v=${tid}&id=${id}`;
   //   },
   // }, 
-  {
-    key: 'Twitter',
-    label: 'Twitter',
-    link(tid){
-      tid = tid.replace(/^#/, '');
-      return JSON.stringify({
-        t: 'Twitter',
-        v: tid,
-      });
-    },
-    url(id, tid){
-      return `${http}:3200?t=twitter&v=${tid}&id=${id}`;
-    },
-  }, 
+  // {
+  //   key: 'Twitter',
+  //   label: 'Twitter',
+  //   link(tid){
+  //     tid = tid.replace(/^#/, '');
+  //     return JSON.stringify({
+  //       t: 'Twitter',
+  //       v: tid,
+  //     });
+  //   },
+  //   url(id, tid){
+  //     return `${http}:3200?t=twitter&v=${tid}&id=${id}`;
+  //   },
+  // }, 
   // {
   //   key: 'bbs',
   //   label: 'Tea Party',

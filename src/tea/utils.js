@@ -241,7 +241,10 @@ const F = {
   async getStakingWeightByIndex(cml) {
     const table = await F.getPriceTable();
     
-    const index = cml.real_index;
+    let index = cml.real_index;
+    if(_.isString(index)){
+      index = _.toNumber(index.split('-')[0]);
+    }
     const len = cml.cml_weight_total;
     const xt = _.slice(table, 0, len);
     const total = _.sum(xt);

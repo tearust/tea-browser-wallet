@@ -32,7 +32,7 @@
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
-          {{scope.row.staking_slot.length}}
+          {{scope.row.real_total}}
         </el-button>
       </template>
     </el-table-column>
@@ -41,7 +41,6 @@
       prop="real_index"
       width="100"
       label="Slot index"
-      sortable
     />
     <el-table-column
       label="Staking with"

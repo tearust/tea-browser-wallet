@@ -94,22 +94,15 @@
 
     <el-table-column
       label="Staking status"
-      width="160">
+      width="180">
       <template slot-scope="scope">
+        
         <el-button
-          v-if="scope.row.staking_slot.length === 1"
+          v-if="scope.row.staking_slot.length>=1"
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
-          Mining - 1 occupied slot
-        </el-button>
-        <!-- <span v-if="scope.row.staking_slot.length === 1">Mining - 1 occupied slot</span> -->
-        <el-button
-          v-if="scope.row.staking_slot.length>1"
-          @click="showStakingSlot(scope)"
-          type="text"
-          size="small">
-          Mining - {{scope.row.staking_slot.length}} occupied slots
+          Mining - {{scope.row.real_total}} occupied slots
         </el-button>
         <span v-if="scope.row.status === 'Staking'">
           Stake to

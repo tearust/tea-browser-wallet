@@ -375,7 +375,7 @@ export default class {
 
     const current_block = await this.getCurrentBlock(api);
 
-    const unzip_status = (cml) => {
+    const unzip_status = async (cml) => {
       const status = cml.status;
       let rs = status;
       if (_.isObject(status)) {
@@ -385,7 +385,17 @@ export default class {
         else if (_.has(status, 'staking')) {
           rs = 'Staking';
           cml.staking_cml_id = status.staking.cml_id;
-          cml.staking_index = status.staking.staking_index;
+          const [x_cml] = await this.getCmlByList([cml.staking_cml_id]);
+
+          const tmp = _.find(x_cml.staking_slot, (x)=>(x.cml && x.cml===cml.intrinsic.id));
+          if(tmp){
+            cml.staking_index = tmp.real_index.replace(/ /g, '');
+          }
+          else{
+            console.error('Unexpect error, check for unzip_status in Base.js');
+            cml.staking_index = status.staking.staking_index;
+          }
+
         }
         else if (_.has(status, 'tree')) {
           rs = 'Tree';
@@ -402,8 +412,6 @@ export default class {
     const list = await Promise.all(_.map(cml_list, async (cml_id) => {
       let cml = await api.query.cml.cmlStore(cml_id);
       cml = cml.toJSON();
-
-      cml = unzip_status(cml);
 
       cml.defrost_day = this.blockToDay(cml.intrinsic.generate_defrost_time - current_block);
       let remaining = cml.intrinsic.lifespan;
@@ -455,6 +463,10 @@ export default class {
           next_real_index += item.cml_weight;
         }
 
+        if(item.cml_weight !== 1){
+          item.real_index += ' - '+(item.real_index+item.cml_weight-1).toString();
+        }
+
         cml.staking_slot[i] = item;
       }
       
@@ -462,6 +474,8 @@ export default class {
         item.cml_weight_total = real_index_total;
         return item;
       });
+
+      cml = await unzip_status(cml);
 
       // status;
       cml.status = ((row) => {
@@ -477,6 +491,7 @@ export default class {
         return row.status;
       })(cml);
 
+      cml.real_total = real_index_total;
       return {
         ...cml,
         ...cml.intrinsic,

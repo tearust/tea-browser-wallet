@@ -107,7 +107,7 @@
 
     <el-table-column
       label="Total slots"
-      prop="slot_len"
+      prop="real_total"
       sortable
       width="120">
       <template slot-scope="scope">
@@ -115,7 +115,7 @@
           @click="showStakingSlot(scope)"
           type="text"
           size="small">
-          {{scope.row.slot_len}}
+          {{scope.row.real_total}}
         </el-button>
       </template>
     </el-table-column>

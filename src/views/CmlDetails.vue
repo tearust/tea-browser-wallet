@@ -290,12 +290,12 @@ export default {
           detail: 'Blockchain randomly select a CML to run remote attestation to verify other random CML\'s security',
           estimate: ''
         },
-        {
-          id: '1',
-          name: 'Delegator(upcoming epoch4)',
-          detail: 'This service is counterpart of traditional "web server" that serve web client. Note: host needs to public IP address',
-          estimate: '---'
-        }
+        // {
+        //   id: '1',
+        //   name: 'Delegator(upcoming epoch4)',
+        //   detail: 'This service is counterpart of traditional "web server" that serve web client. Note: host needs to public IP address',
+        //   estimate: '---'
+        // }
       ],
     };
   },

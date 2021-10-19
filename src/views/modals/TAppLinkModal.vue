@@ -55,7 +55,7 @@
     
     <span slot="footer" class="dialog-footer">
       <el-button style="float:left;" size="small" type="primary" @click="openUrl('https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware')">
-        I want to beb a TApp host too
+        I want to be a TApp host too
       </el-button>
 
       <!-- <el-button v-if="tapp && layer1_account && layer1_account.address === tapp.owner" style="" size="small" type="primary" @click="updateResourceCid()">Update resource Cid</el-button> -->

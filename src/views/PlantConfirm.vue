@@ -121,9 +121,9 @@ export default {
         if(this.layer1_account.balance <= 1000){
           throw 'You need 1000 TEA for the first staking slot.';
         }
-        if(this.layer1_account.usd <= form.miner_price){
-          throw 'You need '+form.miner_price+' COFFEE to pay for this mining machine.';
-        }
+        // if(this.layer1_account.usd <= form.miner_price){
+        //   throw 'You need '+form.miner_price+' COFFEE to pay for this mining machine.';
+        // }
 
         const tx = api.tx.cml.startMining(
           form.cml_id,
