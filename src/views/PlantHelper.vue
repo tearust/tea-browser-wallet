@@ -65,11 +65,18 @@
         
       </p>
     </div>
-    <p v-if="shell" style="margin-top:5px;">
-      The command above must be run on your mining machine from your terminal application. <br/>
-      After the script has completed, you can use the button below to verify the installation. <br/>
-      A more in-depth mining hardware setup guide is available on our <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware" target="_blank">Github wiki</a>.      
-    </p>
+    
+      <p v-if="cml_type==='C'" style="margin-top:5px;">
+        C CML seeds are only able to earn public service rewards and aren't able to host TApps. <br/>
+        You can enter any number for the IP as a real mining machine isn't required. <br/>
+        The cost for hosting a type C CML miner is 500 COFFEE.
+      </p>
+      
+      <p v-else style="margin-top:5px;">
+        The command above must be run on your mining machine from your terminal application. <br/>
+        After the script has completed, you can use the button below to verify the installation. <br/>
+        A more in-depth mining hardware setup guide is available on our <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware" target="_blank">Github wiki</a>.
+      </p>
     <div
       v-if="shell"
       style="display: flex; justify-content: flex-end; margin-top: 10px"
