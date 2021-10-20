@@ -12,7 +12,7 @@
 
     <el-form ref="tx_form" :model="form" :rules="rules" label-width="120px">
       <el-form-item label="CML Id" prop="cml_id">
-        <el-select v-model="form.cml_id" placeholder="Please select cml." >
+        <el-select :allow-create="false" :filterable="true" v-model="form.cml_id" placeholder="Please select cml." >
           <el-option
             v-for="item in option_list"
             :key="item.value"
