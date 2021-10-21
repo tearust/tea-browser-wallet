@@ -55,10 +55,9 @@
       width="70"
     />
 
-    <TeaTableColumn
+    <el-table-column
       prop="total_supply"
       label="Total supply"
-      tip="Total number of tokens issued"
       width="110"
       sortable
     />
@@ -97,18 +96,16 @@
     </el-table-column>
 
 
-    <TeaTableColumn
+    <el-table-column
       label="Theta"
       prop="theta"
-      tip=""
       width="80"
       sortable
     />
-    <TeaTableColumn
+    <el-table-column
       prop="host_performance"
       label="Min perf"
       width="80"
-      tip="A mining machine must be at least this powerful to host this TApp"
     />
 
     <!-- <TeaTableColumn

@@ -15,6 +15,10 @@ export default {
       type: String,
       default: '',
     },
+    link: {
+      type: String,
+      default: '',
+    }
   },
   data(){
     return {
@@ -26,37 +30,58 @@ export default {
   },
   methods: {
     renderHeader(h, {column}){
-      return column.label;
-      // if(!this.tip){
-      //   return column.label;
-      // }
+      // return column.label;
+      if(!this.tip && !this.link){
+        return column.label;
+      }
 
-      // return [
-      //   column.label,
-      //   h(
-      //     'el-tooltip',
-      //     {
-      //       props: {
-      //         content: this.tip,
-      //         placement: 'top',
-      //         effect: 'light',
-      //       }
-      //     },
-      //     [
-      //       h('span', {
-      //         class: {
-      //           'iconfont icon-questionmark': true
-      //         },
-      //         style: {
-      //           'margin-left': '5px',
-      //           'position': 'relative',
-      //           'top': '1px',
-      //           'font-size': '11px',
-      //         }
-      //       })
-      //     ]
-      //   )
-      // ];
+      const args = [];
+      if(this.tip){
+        args.push('el-tooltip');
+        args.push({
+          props: {
+            content: this.tip,
+            placement: 'top',
+            effect: 'light',
+          }
+        });
+      }
+      else{
+        args.push('div');
+        args.push({
+          style: {
+            'display': 'inline-block',
+            'cursor': (this.link ? 'pointer' : 'default'),
+          }
+        })
+      }
+      
+      args.push([
+        h('span', {
+          class: {
+            'iconfont icon-questionmark': true
+          },
+          style: {
+            'margin-left': '5px',
+            'position': 'relative',
+            'top': '1px',
+            'font-size': '11px',
+          },
+          on: {
+            click: ()=>{
+              if(this.link){
+                window.open(this.link, "_blank");
+              }
+            }
+          }
+        })
+      ])
+
+
+      return [
+        column.label,
+        h.apply(this, args)
+      ];
     }
   },
 }

@@ -78,15 +78,16 @@
       sortable
     />
 
-    <el-table-column
+    <TeaTableColumn
       prop="weight"
       label="Slot weight"
       width="120"
+      link="https://github.com/tearust/teaproject/wiki/Staking#staking-percentages"
     >
       <template slot-scope="scope">
         {{scope.row.weight}}
       </template>
-    </el-table-column>
+    </TeaTableColumn>
 
     <el-table-column
       label="Actions"
@@ -128,10 +129,12 @@ import { mapGetters, mapState } from 'vuex';
 import request from '../../request';
 import TeaIconButton from '../../components/TeaIconButton';
 import TeaTable from '../../components/TeaTable';
+import TeaTableColumn from '../../components/TeaTableColumn'
 export default {
   components: {
     TeaIconButton,
-    TeaTable
+    TeaTable,
+    TeaTableColumn,
   },
   data(){
     return {

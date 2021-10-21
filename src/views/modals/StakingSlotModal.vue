@@ -67,10 +67,12 @@
           <span :inner-html.prop="scope.row.amount | balance"></span>
         </template>
       </el-table-column>
-      <el-table-column
+
+      <TeaTableColumn
         label="Weight"
         width="150"
         prop="weight"
+        link="https://github.com/tearust/teaproject/wiki/Staking#staking-percentages"
       />
       
 
@@ -93,8 +95,11 @@ import store from '../../store/index';
 import utils from '../../tea/utils';
 import Base from '../../workflow/Base';
 import {_} from 'tearust_utils';
-
+import TeaTableColumn from '../../components/TeaTableColumn'
 export default {
+  components: {
+    TeaTableColumn,
+  },
   data(){
     return {
 
