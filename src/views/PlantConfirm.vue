@@ -80,7 +80,7 @@ export default {
       let cml = await api.query.cml.cmlStore(this.cml_id);
       cml = cml.toJSON();
 
-      if(cml.planted_at){
+      if(cml.machine_id){
         this.fail('CML already active.');
         return;
       }
