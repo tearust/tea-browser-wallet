@@ -12,10 +12,13 @@
     :data="list || []"
   >
     <el-table-column
-      prop="index"
+      prop="$index"
       label="Rank"
       width="60"
     >
+      <template slot-scope="scope">
+        {{scope.$index+1}}
+      </template>
     </el-table-column>
 
     <el-table-column
@@ -202,7 +205,7 @@ export default {
         }));
       }
 
-      this.list = _.map(x_list, (item)=>{
+      this.list = _.reverse(_.sortBy(_.map(x_list, (item)=>{
          
         if(_.includes(sum_arr, item.index)){
           item.reward = utils.layer1.roundAmount(utils.consts.TOTAL_REWARD*(item.total / sum));
@@ -212,7 +215,7 @@ export default {
         }
        
         return item;
-      });
+      }), 'total'));
 
       this.$root.loading(false);
     },

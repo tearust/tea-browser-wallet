@@ -415,6 +415,8 @@ export default class {
 
       cml.defrost_day = this.blockToDay(cml.intrinsic.generate_defrost_time - current_block);
       let remaining = cml.intrinsic.lifespan;
+      
+      cml = await unzip_status(cml);
       if (cml.status !== 'FrozenSeed') {
         remaining = remaining + cml.planted_at - current_block;
       }
@@ -475,7 +477,7 @@ export default class {
         return item;
       });
 
-      cml = await unzip_status(cml);
+      // cml = await unzip_status(cml);
 
       // status;
       cml.status = ((row) => {
