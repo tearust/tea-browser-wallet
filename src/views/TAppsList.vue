@@ -401,7 +401,7 @@ export default {
             },
 
             template: {
-              label: 'TEAfluencer template',
+              label: 'TApp template',
               type: 'radio-group',
               required: true,
               options: [
@@ -411,11 +411,7 @@ export default {
                     value: v,
                   }
                 }),
-                // {
-                //   label: 'TEA Party',
-                //   value: 'tea_party',
-                //   disabled: true,
-                // },
+
                 // {
                 //   label: 'Create your own TApp',
                 //   value: 'own',
@@ -425,7 +421,7 @@ export default {
               action: {
                 tip_html: (val, form)=>{
                   if(!val) return null;
-                  const x = {'youtube': 2000, 'reddit':1500, 'twitter':1000}[_.toLower(val)];
+                  const x = {'youtube': 2000, 'reddit':1500, 'twitter':1000, 'bbs': 2000,}[_.toLower(val)];
                   return `Requires a ${x} performance CML`;
                 }
               },
@@ -472,6 +468,18 @@ export default {
               },
               el_props: {
                 placeholder: 'e.g. teaproject',
+              }
+            },
+            bbs: {
+              label: 'Channel name',
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'bbs'
+              },
+              el_props: {
+                placeholder: 'e.g. tea project',
               }
             },
             

@@ -75,7 +75,8 @@
   "MinerStatus": {
     "_enum": [
       "Active",
-      "Offline"
+      "Offline",
+      "ScheduleDown"
     ]
   },
   "StakingCategory": {
@@ -98,7 +99,8 @@
     "ip": "Bytes",
     "status": "MinerStatus",
     "orbitdb_id": "Option<Bytes>",
-    "suspend_height": "Option<BlockNumber>"
+    "suspend_height": "Option<BlockNumber>",
+    "schedule_down_height": "Option<BlockNumber>"
   },
   "performance": "u32",
   "ServiceTaskPoint": "u32",
@@ -175,7 +177,7 @@
   "TAppId": "u64",
   "Performance": "u32",
   "TAppType": {
-    "_enum": ["YouTube", "Reddit", "Twitter"]
+    "_enum": ["YouTube", "Reddit", "Twitter", "Bbs"]
   },
   "BillingMode": {
     "_enum": {

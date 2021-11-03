@@ -21,7 +21,7 @@
     />
     <TeaTableColumn
       prop="tid"
-      label="Social media id"
+      label="Tapp social param"
     />
     <TeaTableColumn
       prop="desc"
@@ -145,6 +145,15 @@ export default {
               condition: {
                 target: 'template',
                 value: 'Twitter'
+              }
+            },
+            bbs: {
+              label: 'Channel name',
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'bbs'
               }
             },
 

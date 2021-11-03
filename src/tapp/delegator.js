@@ -17,8 +17,19 @@ const F = {
     //   rs.url = `http://${ip}:3200?v=${tapp.json.v}`;
     // }
 
-    const cid = utils.get_env('TAPP_CID');
-    rs.url = 'http://'+ip+':8080/ipfs/'+cid+`?t=${tapp.json.t}&id=${tapp.id}&v=${tapp.json.v}`;
+
+    let cid = null;
+    let param = '';
+    if(tapp.json.t === 'bbs'){
+      cid = utils.get_env('TAPP_BBS_CID');
+      param = `id=${tapp.id}&v=${encodeURIComponent(tapp.json.v)}`;
+    }
+    else{
+      cid = utils.get_env('TAPP_CID');
+      param = `t=${tapp.json.t}&id=${tapp.id}&v=${tapp.json.v}`;
+    }
+
+    rs.url = 'http://'+ip+':8080/ipfs/'+cid+`?${param}`;
 
     return rs;
   },
