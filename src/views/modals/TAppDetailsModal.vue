@@ -226,7 +226,7 @@ export default {
         });
       }
       else if(_.has(item.billing_mode, 'fixedHostingFee')){
-        tmp.billing_mode = 'Fixed TEA payment per 100 blocks';
+        tmp.billing_mode = 'Fixed TEA payment per 1000 blocks';
         item_list.push({
           label: 'Billing model',
           value: tmp.billing_mode

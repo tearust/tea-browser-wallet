@@ -161,12 +161,15 @@
         on the TApp's bonding curve.
       </li>
       <li>
+        <a href="https://github.com/tearust/teaproject/wiki/Bonding-Curve-Theta" target="_blank">Theta</a> is the % of every TApp token buy or consume event that goes to the developer.
+      </li>
+      <li>
         The 
         <a href="https://github.com/tearust/teaproject/wiki/Mining#host-performance-requirement" target="_blank">host performance requirement </a> 
         is the minimum power required for a mining machine to host this TApp.
       </li>
-      <li>
-        <a href="https://github.com/tearust/teaproject/wiki/Bonding-Curve-Theta" target="_blank">Theta</a> is the % of every TApp token buy or consume event that goes to the developer.
+        <strong>Hosting rewards</strong> refers to how miners are incentivized to host a particular TApp: either a fixed <strong>T</strong> amount or a set amount of <a href="https://github.com/tearust/teaproject/wiki/Mining:-Staked-TApp-Tokens" target="_blank">staked hosting tokens</a> 
+        paid out to miners hosting this TApp every 1000 blocks.
       </li>
       <li>
         <a href="https://github.com/tearust/teaproject/wiki/Mining#current-hosts" target="_blank">Current hosts </a>
