@@ -304,27 +304,12 @@ export default {
       this.$root.loading(false);
     },
     async resumeMiner(scope){
-      try{
-        let msg = `Are you sure your miner is online and you wish to resume mining? <br/>
-        Please note that you need to pay 100 TEA as a deposit.`;
-        
-        await this.$confirm(msg, {
-          title: 'Notice',
-          dangerouslyUseHTMLString: true,
-        });
-      }catch(e){
-        return;
-      } 
-
-
-      await helper.resumeCmlMiner(this, scope.row.id, async ()=>{
+      await helper.resumeMiner(this, scope.row.id, async ()=>{
         this.$root.success();
         utils.publish('refresh-current-account__account');
       });
-
     }
 
-    
   }
 
   

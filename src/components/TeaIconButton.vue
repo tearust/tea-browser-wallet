@@ -13,7 +13,8 @@
     "
     style="width:auto;"
   >
-    <span :class="'iconfont icon-'+icon" :style="icon_style || ''"></span>
+    <span v-if="icon!=='NA'" :class="'iconfont icon-'+icon" :style="icon_style || ''"></span>
+    {{icon==='NA' ? title : ''}}
   </el-button>
 </el-tooltip>
 
@@ -30,6 +31,10 @@ export default {
     icon: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      default: ''
     },
     tip: {
       type: String,

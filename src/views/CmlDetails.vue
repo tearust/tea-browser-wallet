@@ -64,11 +64,16 @@
         </template>
       </el-table-column>
 
+      <el-table-column
+        prop="miner_status"
+        label="Miner status"
+        width="100"
+      />
 
       <el-table-column
         prop="performance"
         label="Current / Peak performance"
-        width="160"
+        width="110"
       />
 
       <el-table-column
@@ -102,8 +107,51 @@
       </el-table-column>
       
 
-
     </el-table>
+    <div style="margin-top: 8px;" v-if="layer1_account && layer1_account.address===cml.owner && cml && miner">
+      
+      <TeaIconButton 
+        type="primary"
+        tip="Migrate miner id and ip address"
+        icon="NA"
+        :disabled="miner.status==='Active'"
+        title="Migrate miner"
+        @click="migrateMiner()"
+      />
+      <TeaIconButton 
+        type="primary"
+        tip="Schedule up"
+        icon="NA"
+        :disabled="miner.status!=='ScheduleDown'"
+        title="Schedule up"
+        @click="scheduleUp()"
+      />
+      <TeaIconButton 
+        type="primary"
+        tip="Schedule down"
+        icon="NA"
+        :disabled="miner.status!=='Active'"
+        title="Schedule down"
+        @click="scheduleDown()"
+      />
+      <TeaIconButton 
+        type="primary"
+        tip="Resume"
+        icon="NA"
+        :disabled="miner.status!=='Offline'"
+        title="Resume"
+        @click="resumeMiner()"
+      />
+
+      <el-button 
+        style="margin-left: 20px;"
+        type="primary"
+        size="small"
+        plain
+        @click="OpenToPolkadotForStaking()"
+      >I wanna be staking for TEA chain</el-button>
+      
+    </div>
 
     <el-divider />
     <h4>Staking slots</h4>
@@ -361,7 +409,10 @@ export default {
       }));
 
       const mm = await this.getMinerDetails(this.cml.machine_id);
+      mm.status = 'Offline';
       this.miner = mm;
+      this.cml.miner_status = mm.status;
+
 
       this.$root.loading(false);
     },
@@ -411,7 +462,36 @@ export default {
     },
     openTo(row){
       helper.showTAppLink(this, row.id);
-    }
+    },
+    OpenToPolkadotForStaking(){
+      helper.openUrl(`https://polkadot.js.org/apps/?rpc=${encodeURIComponent('wss://wallet.teaproject.org/wss2')}#/staking`);
+      
+    },
+    
+    async migrateMiner(){
+      await helper.migrateMiner(this, this.cml, this.miner, async ()=>{
+        this.$root.success();
+        await this.refresh();
+      });
+    },
+    async scheduleUp(){
+      await helper.scheduleUpMiner(this, this.cml.id, async ()=>{
+        this.$root.success();
+        await this.refresh();
+      });
+    },
+    async scheduleDown(){
+      await helper.scheduleDownMiner(this, this.cml.id, async ()=>{
+        this.$root.success();
+        await this.refresh();
+      });
+    },
+    async resumeMiner(){
+      await helper.resumeMiner(this, this.cml.id, async ()=>{
+        this.$root.success();
+        await this.refresh();
+      });
+    },
   }
 }
 </script>

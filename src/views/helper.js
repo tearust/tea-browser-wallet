@@ -377,7 +377,18 @@ query {
     window.open(url, '_blank');
   },
 
-  async resumeCmlMiner(self, cml_id, succ_cb){
+  async resumeMiner(self, cml_id, succ_cb){
+    try{
+      let msg = `Are you sure your miner is online and you wish to resume mining? <br/>
+      Please note that you need to pay 100 TEA as a deposit.`;
+      
+      await self.$confirm(msg, {
+        title: 'Notice',
+        dangerouslyUseHTMLString: true,
+      });
+    }catch(e){
+      return;
+    } 
 
     const layer1_instance = self.wf.getLayer1Instance();
     const api = layer1_instance.getApi();
@@ -393,7 +404,136 @@ query {
     }
 
     self.$root.loading(false);
-  }
+  },
+  async scheduleUpMiner(self, cml_id, succ_cb){
+    try{
+      let msg = `Are sure to schdule up your miner?`;
+      
+      await self.$confirm(msg, {
+        title: 'Notice',
+        dangerouslyUseHTMLString: true,
+      });
+    }catch(e){
+      return;
+    } 
+
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+    self.$root.loading(true);
+
+    try{
+      const tx = api.tx.cml.scheduleUp(cml_id);
+      await layer1_instance.sendTx(self.layer1_account.address, tx);
+
+      await succ_cb();
+    }catch(e){
+      self.$root.showError(e);
+    }
+
+    self.$root.loading(false);
+  },
+  async scheduleDownMiner(self, cml_id, succ_cb){
+    try{
+      let msg = `Are sure to schdule down your miner?`;
+      
+      await self.$confirm(msg, {
+        title: 'Notice',
+        dangerouslyUseHTMLString: true,
+      });
+    }catch(e){
+      return;
+    } 
+
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+    self.$root.loading(true);
+
+    try{
+      const tx = api.tx.cml.scheduleDown(cml_id);
+      await layer1_instance.sendTx(self.layer1_account.address, tx);
+
+      await succ_cb();
+    }catch(e){
+      self.$root.showError(e);
+    }
+
+    self.$root.loading(false);
+  },
+  async migrateMiner(self, cml, miner, succ_cb){
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    self.$store.commit('modal/open', {
+      key: 'common_form', 
+      param: {
+        title: 'Migrate miner',
+        // text: ``,
+        props: {
+          cml_id: {
+            label: 'CML ID',
+            type: 'Input',
+            default: cml.id,
+            disabled: true,
+          },
+          miner_id: {
+            label: 'Miner Id',
+            type: 'Input',
+            required: true,
+            el_props: {
+              'show-word-limit': true,
+              maxlength: 32,
+              minlength: 32
+            },
+            rules: [
+              {min: 32,},
+              {max: 32,},
+            ]
+          },
+          miner_ip: {
+            label: 'Miner IP',
+            type: 'Input',
+            required: true,
+            rules: {
+              validator: (rule, val, cb)=>{
+                if(cml.cml_type === 'B'){
+                  if(!utils.isValidIP(val)){
+                    cb('Invalid ip address');
+                  }
+                  else{
+                    cb();
+                  }
+                }
+                else{
+                  cb();
+                }
+                
+              }
+            }
+          }
+          
+        },
+      },
+      cb: async (form, close)=>{
+        self.$root.loading(true);
+        
+        try{
+          const tx = api.tx.cml.migrate(
+            form.cml_id,
+            form.miner_id,
+            form.miner_ip,
+          );
+          await layer1_instance.sendTx(self.layer1_account.address, tx);
+
+          await succ_cb();
+        }catch(e){
+          self.$root.loading(false);
+          return false;
+        }
+        
+        self.$root.loading(false);
+      },
+    });
+  },
 
 };
 
