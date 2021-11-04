@@ -526,8 +526,7 @@ query {
 
           await succ_cb();
         }catch(e){
-          self.$root.loading(false);
-          return false;
+          self.$root.showError(e);
         }
         
         self.$root.loading(false);
