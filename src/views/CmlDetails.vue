@@ -409,7 +409,7 @@ export default {
       }));
 
       const mm = await this.getMinerDetails(this.cml.machine_id);
-      mm.status = 'Offline';
+      // mm.status = 'Offline';
       this.miner = mm;
       this.cml.miner_status = mm.status;
 
