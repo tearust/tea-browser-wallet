@@ -26,7 +26,7 @@ const consts = {
   DefrostScheduleType: { Investor: 'Investor', Team: 'Team' },
   CurveType: {Linear: 'Linear', SquareRoot: 'SquareRoot'},
 
-  SUDO_ACCOUNT: '5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP',
+  SUDO_ACCOUNT: '5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv',
   TOTAL_REWARD: 2000,
   CmlWeightByType: {
     'A': 4,
