@@ -524,6 +524,7 @@ query {
           );
           await layer1_instance.sendTx(self.layer1_account.address, tx);
 
+          await close();
           await succ_cb();
         }catch(e){
           self.$root.showError(e);

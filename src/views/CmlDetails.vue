@@ -108,12 +108,13 @@
       
 
     </el-table>
-    <div style="margin-top: 8px;" v-if="layer1_account && layer1_account.address===cml.owner && cml && miner">
+    <div style="margin-top: 8px; height: 24px;" v-if="layer1_account && layer1_account.address===cml.owner && cml && miner">
       
       <TeaIconButton 
         type="primary"
         tip="Migrate miner id and ip address"
         icon="NA"
+        v-if="cml.cml_type==='B'"
         :disabled="miner.status==='Active'"
         title="Migrate miner"
         @click="migrateMiner()"
@@ -122,6 +123,7 @@
         type="primary"
         tip="Schedule up"
         icon="NA"
+        v-if="cml.cml_type==='B'"
         :disabled="miner.status!=='ScheduleDown'"
         title="Schedule up"
         @click="scheduleUp()"
@@ -130,6 +132,7 @@
         type="primary"
         tip="Schedule down"
         icon="NA"
+        v-if="cml.cml_type==='B'"
         :disabled="miner.status!=='Active'"
         title="Schedule down"
         @click="scheduleDown()"
@@ -138,13 +141,14 @@
         type="primary"
         tip="Resume"
         icon="NA"
+        v-if="cml.cml_type==='B'"
         :disabled="miner.status!=='Offline'"
         title="Resume"
         @click="resumeMiner()"
       />
 
       <el-button 
-        style="margin-left: 20px;"
+        style="float:right;"
         type="primary"
         size="small"
         plain
