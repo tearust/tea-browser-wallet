@@ -2,7 +2,7 @@
 <div class="tea-page">
   <h4>TApps list</h4>
 
-  <el-button v-if="layer1_account && layer1_account.address==='5Eo1WB2ieinHgcneq6yUgeJHromqWTzfjKnnhbn43Guq4gVP'" style="right: 50px;" size="small" class="tea-refresh-btn" type="primary" @click="$root.goPath('/admin/approve_links')">Approve links</el-button>
+  <el-button v-if="layer1_account && layer1_account.address==='5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" style="right: 50px;" size="small" class="tea-refresh-btn" type="primary" @click="$root.goPath('/admin/approve_links')">Approve links</el-button>
 
   <el-button size="small" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
