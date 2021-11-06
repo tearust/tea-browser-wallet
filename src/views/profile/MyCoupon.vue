@@ -30,22 +30,14 @@
   </el-table>
 
   <div v-if="expired_block > 0" style="display:flex; justify-content: flex-end; margin-top: 40px;">
-    <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest.">
-      <div style="padding-left: 15px; padding-right: 15px;"><el-button 
-        :disabled="true"
-        plain
-        type="default">
-        Transfer coupon
-      </el-button></div>
-    </el-tooltip>
 
-    <!-- <el-button style="padding-left: 15px; padding-right: 15px;" 
+    <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="dai_modal.visible=true"
       :disabled="false"
       plain
       type="default">
       Transfer coupon
-    </el-button> -->
+    </el-button>
 
     <el-button style="padding-left: 15px; padding-right: 15px;" 
       @click="lotteryHandler(0)"
@@ -180,7 +172,10 @@ export default {
         ['coupon_team_A', 'Team', 'A'],
         ['coupon_team_B', 'Team', 'B'],
         ['coupon_team_C', 'Team', 'C'],
-      ]
+      ];
+
+      const CmlType = {};
+      const DefrostScheduleType = {};
       _.each(tmp, (item)=>{
         const key = item[0];
         if(layer1_account[key] && layer1_account[key].amount>0){
@@ -188,9 +183,15 @@ export default {
             amount: layer1_account[key].amount,
             type: item[2],
             schedule: item[1],
-          })
+          });
+          CmlType[item[2]] = 1;
+          DefrostScheduleType[item[1]] = 1;
         }
       });
+
+      p.dai_modal.class_options = _.keys(CmlType);
+      p.dai_modal.defrost_options = _.keys(DefrostScheduleType);
+
       return list;
     },
     expired_block: (p)=>{
@@ -207,8 +208,7 @@ export default {
   },
   
   async mounted(){
-    this.dai_modal.class_options = utils.consts.CmlType;
-    this.dai_modal.defrost_options = utils.consts.DefrostScheduleType,
+
 
     this.wf = new SettingAccount();
     await this.wf.init();
