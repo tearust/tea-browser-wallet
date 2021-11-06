@@ -47,7 +47,7 @@
         <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
       </div>
 
-      <div class="x-item">
+      <!-- <div class="x-item">
         <b>
           {{'My COFFEE' | cardTitle}}
           <TeaIconButton style="position:relative;" place="right" :tip="
@@ -55,9 +55,9 @@
           " icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
-      </div>
+      </div> -->
 
-      <div class="x-item" v-if="layer1_account && layer1_account.usd_debt">
+      <!-- <div class="x-item" v-if="layer1_account && layer1_account.usd_debt">
         <b>
           {{'My COFFEE debt'}}
           <TeaIconButton style="position:relative;" place="right" :tip="
@@ -65,7 +65,7 @@
           " icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account.usd_debt | usd"></span>
-      </div>
+      </div> -->
 
       <!-- <div v-if="layer1_account && layer1_account.debt" class="x-item">
         <b>
@@ -83,24 +83,23 @@
       </div>
 
       <div class="x-bottom">
-        <el-button v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">
+        <!-- <el-button v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">
           Sell TEA ({{rate.teaToUsd}} COFFEE/TEA)
-        </el-button>
-        <el-button v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">
+        </el-button> -->
+        <!-- <el-button v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">
           Sell COFFEE ({{rate.usdToTea}} TEA/COFFEE)
-        </el-button>
+        </el-button> -->
 
         <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button></el-tooltip>
 
         <el-tooltip v-if="layer1_account && layer1_account.reward" effect="light" placement="top" content="Send your staking reward to your TEA wallet balance"><el-button @click="withdrawStakingReward()">Withdraw reward</el-button></el-tooltip>
         
-        <el-tooltip effect="light" placement="top" content="Borrow COFFEE at the interest rate listed below"><el-button @click="borrowButtonHandler()">Borrow COFFEE</el-button></el-tooltip>
+        <!-- <el-tooltip effect="light" placement="top" content="Borrow COFFEE at the interest rate listed below"><el-button @click="borrowButtonHandler()">Borrow COFFEE</el-button></el-tooltip> -->
 
-        <el-button v-if="layer1_account && layer1_account.usd_debt" @click="payOffButtonhandler()">Pay off COFFEE debt</el-button>
+        <!-- <el-button v-if="layer1_account && layer1_account.usd_debt" @click="payOffButtonhandler()">Pay off COFFEE debt</el-button> -->
 
-        <el-tooltip effect="light" placement="top" content="In this epoch, this feature is disabled during contest."><div style="margin-left: 10px;">
-        <el-button v-if="layer1_account" :disabled="true" @click="transferBalance()">Send</el-button>
-        </div></el-tooltip>
+        <el-button v-if="layer1_account" @click="transferBalance()">Send</el-button>
+        
       </div>
 
     </div>
@@ -113,12 +112,12 @@
 
 
   <div class="t-major-financial" v-if="loan_amount && loan_rate && !show_other">
-    Interest rate: Genesis loan <b>{{loan_rate}}</b>, COFFEE <b>{{usd_interest_rate_number}}</b>. 
+    Interest rate: Genesis loan <b>{{loan_rate}}</b>
+    <!-- , COFFEE <b>{{usd_interest_rate_number}}</b>.  -->
     <a href="javascript:void(0)" @click="show_other=true;" style="margin-left: 5px;">others ...</a>
   </div>
   <div class="t-major-financial" v-if="loan_amount && loan_rate && show_other" :inner-html.prop="
-    'Genesis loan principle is <b>' + (loan_amount) + '</b> <span>|</span>'+
-    'Coffee interest rate is <b>'+usd_interest_rate+'</b>'+
+    'Genesis loan principle is <b>' + (loan_amount) + '</b>'+
     '<br/>Genesis loan interest rate is '+loan_rate_str + ''
   ">
   </div>
