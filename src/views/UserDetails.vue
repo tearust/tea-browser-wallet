@@ -26,10 +26,10 @@
           <b>{{'Locked TEA' | cardTitle}}</b>
           <span :inner-html.prop="info ? info.lock : '' | teaIcon"></span>
         </div>
-        <div class="x-item">
+        <!-- <div class="x-item">
           <b>{{'COFFEE'}}</b>
           <span :inner-html.prop="info ? info.usd : '' | usd"></span>
-        </div>
+        </div> -->
 
       </div>
 
@@ -192,7 +192,7 @@ export default {
       let mm = await api.query.cml.minerItemStore(miner_id);
       mm = mm.toJSON();
 
-      mm.id = hexToString(mm.id);
+      mm.id = ' '+mm.id;
       mm.ip = hexToString(mm.ip);
       
       this.$store.commit('modal/open', {

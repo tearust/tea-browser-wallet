@@ -426,7 +426,7 @@ export default class {
       cml.life_day = this.blockToDay(remaining);
 
       if(cml.machine_id){
-        const miner = (await api.query.cml.minerItemStore(hexToString(cml.machine_id))).toJSON();
+        const miner = (await api.query.cml.minerItemStore(cml.machine_id)).toJSON();
 
         cml.miner_ip = hexToString(miner.ip);
         cml.miner_status = miner.status;
@@ -500,7 +500,7 @@ export default class {
         performance,
         current_performance,
         remaining_performance,
-        machine_id: hexToString(cml.machine_id),
+        machine_id: (cml.machine_id),
       };
     }));
 // console.log(1, list);

@@ -3,10 +3,10 @@
   <h4>
     Leader board
   </h4>
-  <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
+  <!-- <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
-  </el-button>
-  <el-button size="small" style="top: 50px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
+  </el-button> -->
+  <el-button size="small" style="top: 0px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     name="leader_board_table"
     :data="list || []"
@@ -46,29 +46,29 @@
     <el-table-column
       prop="tea_asset"
       label="TEA account balance"
-      width="100"
+      width="180"
     />
-    <el-table-column
+    <!-- <el-table-column
       prop="usd_asset"
       label="COFFEE account balance"
       width="110"
-    />
+    /> -->
     <el-table-column
       prop="token_asset"
       label="TApp token balance"
-      width="100"
+      width="180"
     />
     <el-table-column
       prop="loan_credit"
       label="Genesis loan"
     />
-    <el-table-column
+    <!-- <el-table-column
       prop="usd_debt"
       label="COFFEE debt"
-    />
+    /> -->
     <el-table-column
       prop="total"
-      width="120"
+      width="180"
       label="Total account value"
     >
       <template slot-scope="scope">
@@ -89,9 +89,9 @@
 
   </TeaTable>
 
-  <div v-if="layer1_account && layer1_account.address === '5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" style="display:flex; justify-content: flex-end;">
+  <!-- <div v-if="layer1_account && layer1_account.address === '5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" style="display:flex; justify-content: flex-end;">
     <el-button style="width:40%;margin-top: 40px;" type="primary" @click="registerHandler()">Register for competition</el-button>
-  </div>
+  </div> -->
 
 </div>
 </template>
@@ -182,6 +182,8 @@ export default {
             arr[j] = _.toNumber(arr[j]);
           }
           arr[1] = 0;
+          arr[3] = 0;
+          arr[6] = 0;
           const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
           
           const rs = {

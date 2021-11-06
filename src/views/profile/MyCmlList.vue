@@ -39,7 +39,6 @@
     > 
       <template slot-scope="scope">
         <el-button
-          class="c-btn"
           @click="showMinerInfo(scope.row.machine_id)"
           type="text"
           size="small">
@@ -222,7 +221,7 @@ export default {
       let mm = await api.query.cml.minerItemStore(miner_id);
       mm = mm.toJSON();
 
-      mm.id = hexToString(mm.id);
+      mm.id = ' '+mm.id;
       mm.ip = hexToString(mm.ip);
       
       this.$store.commit('modal/open', {

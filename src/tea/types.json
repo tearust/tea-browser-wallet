@@ -97,6 +97,7 @@
     "cml_id": "CmlId",
     "id": "MachineId",
     "ip": "Bytes",
+    "controller_account": "AccountId",
     "status": "MinerStatus",
     "orbitdb_id": "Option<Bytes>",
     "suspend_height": "Option<BlockNumber>",

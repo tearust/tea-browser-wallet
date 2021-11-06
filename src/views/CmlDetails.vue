@@ -108,7 +108,7 @@
       
 
     </el-table>
-    <div style="margin-top: 8px; height: 24px;" v-if="layer1_account && layer1_account.address===cml.owner && cml && miner">
+    <div style="margin-top: 8px; height: 24px;" v-if="layer1_account && cml && miner && layer1_account.address===cml.owner">
       
       <TeaIconButton 
         type="primary"
@@ -427,7 +427,7 @@ export default {
       let mm = await api.query.cml.minerItemStore(miner_id);
       mm = mm.toJSON();
 
-      mm.id = hexToString(mm.id);
+      mm.id = ' '+mm.id;
       mm.ip = hexToString(mm.ip);
 
       return mm;

@@ -128,6 +128,7 @@ export default {
         const tx = api.tx.cml.startMining(
           form.cml_id,
           form.miner_id,
+          form.account,
           form.miner_ip,
           this.orbit_id,
         );
