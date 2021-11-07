@@ -481,12 +481,12 @@ query {
             required: true,
             el_props: {
               'show-word-limit': true,
-              maxlength: 32,
-              minlength: 32
+              maxlength: 66,
+              minlength: 66
             },
             rules: [
-              {min: 32,},
-              {max: 32,},
+              {min: 66,},
+              {max: 66,},
             ]
           },
           miner_ip: {
@@ -509,7 +509,13 @@ query {
                 
               }
             }
-          }
+          },
+          account: {
+            label: 'Binding address',
+            type: 'Input',
+            required: true,
+
+          },
           
         },
       },
@@ -521,6 +527,8 @@ query {
             form.cml_id,
             form.miner_id,
             form.miner_ip,
+            form.account,
+            null,
           );
           await layer1_instance.sendTx(self.layer1_account.address, tx);
 
