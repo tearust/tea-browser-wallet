@@ -475,7 +475,7 @@ export default {
               }
             },
             bbs: {
-              label: 'Channel name',
+              label: 'Party table name',
               type: 'Input',
               required: true,
               condition: {
