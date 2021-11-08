@@ -4,7 +4,7 @@
     <h4>
       Camellia detail
     </h4>
-    <span v-if="miner">Miner public address : {{miner.ip}}</span>
+    <span v-if="miner && cml && cml.cml_type==='B'">Miner public address : {{miner.ip}}</span>
     <el-table 
       :data="cml ? [cml] : []"
       stripe
@@ -114,7 +114,6 @@
         type="primary"
         tip="Migrate miner id and ip address"
         icon="NA"
-        v-if="cml.cml_type==='B'"
         :disabled="miner.status==='Active'"
         title="Migrate miner"
         @click="migrateMiner()"
@@ -123,25 +122,22 @@
         type="primary"
         tip="Schedule up"
         icon="NA"
-        v-if="cml.cml_type==='B'"
         :disabled="miner.status!=='ScheduleDown'"
-        title="Schedule up"
+        title="Schedule start"
         @click="scheduleUp()"
       />
       <TeaIconButton 
         type="primary"
         tip="Schedule down"
         icon="NA"
-        v-if="cml.cml_type==='B'"
         :disabled="miner.status!=='Active'"
-        title="Schedule down"
+        title="Schedule shut down"
         @click="scheduleDown()"
       />
       <TeaIconButton 
         type="primary"
         tip="Resume"
         icon="NA"
-        v-if="cml.cml_type==='B'"
         :disabled="miner.status!=='Offline'"
         title="Resume"
         @click="resumeMiner()"
@@ -153,7 +149,7 @@
         size="small"
         plain
         @click="OpenToPolkadotForStaking()"
-      >I wanna be staking for TEA chain</el-button>
+      >Apply to be a blockchain validator</el-button>
       
     </div>
 
