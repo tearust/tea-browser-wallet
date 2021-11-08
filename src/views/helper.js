@@ -269,7 +269,7 @@ const F = {
 
   openToTApp(self, row){
     // if(row.host_current < 1){
-    //   self.$root.showError('This TApp has zero host at this moment. It has not been deployed yet.');
+    //   self.$root.showError('This TApp has zero hosts at this moment. It has not been deployed yet.');
     //   return;
     // }
 
@@ -407,7 +407,7 @@ query {
   },
   async scheduleUpMiner(self, cml_id, succ_cb){
     try{
-      let msg = `Are sure to schedule start your miner?`;
+      let msg = `Are you sure you want to start up of your miner?`;
       
       await self.$confirm(msg, {
         title: 'Notice',
@@ -434,7 +434,7 @@ query {
   },
   async scheduleDownMiner(self, cml_id, succ_cb){
     try{
-      let msg = `Are sure to schedule shut down your miner?`;
+      let msg = `Are you sure you want to shut down your miner?`;
       
       await self.$confirm(msg, {
         title: 'Notice',
