@@ -8,13 +8,12 @@
     The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. We will have USDT rewards during the contest but not for the public testing periods.
   </p>
 
-  <h4>Install Polkadot browser extension</h4>
-  <p>
-    Make sure you've installed the polkadot{.js} browser extension. It's available for 
-    <a href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd" target="_blank">Chrome</a>, 
-    <a href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd" target="_blank">Brave</a>, and 
-    <a href="https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/" target="_blank">Firefox</a>.
-  </p>
+  <h4>Signing up for the mining competition</h4>
+<ul>
+<li>Join our communities for updated rules including starting time announcements: <a href="https://t.me/teaprojectorg" target="_blank">@teaprojectorg</a>.</li>
+<li>You will need your address from the polkadot{.js} browser extension to before <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist" target="_blank">registering for the competition</a></li>. 
+<li>If you're signing up after the contest starts, keep an eye on your email for registration confirmation. You will not be able to login to the TEA browser wallet until you're added to the contestant roll which could take some hours.</li>
+</ul>
 
   <h4>Basic concept of plant and staking</h4>
   <p>
@@ -24,7 +23,7 @@
   <h4>Links</h4>
   <p>
     More help is available including a tutorial video in 
-    <a href="https://teaproject.org/#/doc_list/Try_the_demo%2FREADME.md" target="_blank">our mining and staking guide.</a>
+    <a href="https://github.com/tearust/teaproject/wiki" target="_blank">our wiki.</a>
   </p>
   <p>
     Learn more about the TEA Project on 
