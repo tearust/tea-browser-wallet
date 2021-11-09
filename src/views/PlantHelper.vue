@@ -43,7 +43,7 @@
         Note that you need <b class="block">1000 TEA</b> available for your initial stake. More info is available <a href="https://github.com/tearust/teaproject/wiki/Mining#mining-machines-are-no-longer-free" class="t-wiki" target="_blank">on our wiki.</a>
       </p>
 
-      <el-form :model="form" label-width="220px" :rules="rules" ref="form" class="tea-modal">
+      <el-form :model="form" label-width="320px" :rules="rules" ref="form" class="tea-modal">
         <el-form-item label="CML Id" prop="cml_id">
           <el-input :disabled="true" v-model="form.cml_id"></el-input>
         </el-form-item>
@@ -61,7 +61,7 @@
           <TeaIconButton icon_style="font-size:18px;" tip="The IP address of your mining machine. Note that if you are planting a C CML, you can use any random number here." icon="questionmark" />
         </el-form-item>
 
-        <el-form-item label="Mining machine's Polkadot wallet (SSS8) address" prop="account">
+        <el-form-item label="Mining machine's Polkadot wallet (SS58) address" prop="account">
           <el-input v-model="form.account"></el-input>
 
           <TeaIconButton icon_style="font-size:18px;" tip="The Polkadot wallet address created by the mining machine." icon="questionmark" />
