@@ -219,4 +219,23 @@ export default {
   NotAllowedTypeCHostingTApp: 'Type C CML are not allowed to host TApps',
   CmlBStartMiningShouldHaveOrbitId: 'Your type B CML should have an orbit ID before it can start mining',
 
+  CanNotScheduleDownWhenInactive: 'Can not shut down when CML isn\'t active' ,
+  NoNeedToScheduleUp: 'CML is already actively mining',
+  CannotMigrateWhenActive: 'Can not migrate while cml is in active state. Before migrating, make sure the CML is shut down first',
+
+  ReportNodeNotExist: 'The reporting node does not exist',
+  OnlyBTypeCmlCanCommitReport: 'Only B type CML can commit reports',
+  OnlyCTypeCmlCanReport: 'Only C type CML can report evidence',
+  RedundantReport: 'Phishing reports about this node have already been committed multiple times',
+  PhishingNodeNotExist: 'That phishing node does not exist',
+  PhishingNodeNotActive: 'The phishing node is not in an active state and can\'t be reported again',
+  OfflineNodeNotExist: 'The reported offline node does not exist',
+  OfflineNodeNotActive: 'This offline node is not in an active state and can\'t be reported again',
+  PhishingNodeCannotCommitReport: 'A phishing node can not commit a report on itself',
+  PhishingNodeCannotBeTypeC: 'The reported node is a type C CML and is not capable of phishing',
+  OfflineNodeCannotBeTypeC: 'The reported node is a type C CML and is not required to always be online',
+  CanNotCommitOfflineEvidenceMultiTimes: 'Can not commit offline evidence multiple times within a short interval',
+  RedundantTips: 'These tips have been committed multiple times already',
+
+
 };

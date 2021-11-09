@@ -113,11 +113,13 @@ export default {
               label: 'Type',
               type: 'radio-group',
               required: true,
-              options: _.map(tapp.template.list(), (v)=>{
+              options: _.filter(_.map(tapp.template.list(), (v)=>{
                 return {
                   label: tapp.template.getLabel(v),
                   value: v,
                 }
+              }), (x)=>{
+                return x.value !== 'bbs';
               }),
             },
             YouTube: {
@@ -147,16 +149,7 @@ export default {
                 value: 'Twitter'
               }
             },
-            bbs: {
-              label: 'Party table name',
-              type: 'Input',
-              required: true,
-              condition: {
-                target: 'template',
-                value: 'bbs'
-              }
-            },
-
+            
             description: {
               type: 'Input',
               required: true,

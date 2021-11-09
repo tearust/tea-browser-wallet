@@ -215,6 +215,8 @@ export default {
   data(){
     return {
       list: null,
+
+      youtube_options: [],
     }
   },
   computed: {
@@ -228,6 +230,7 @@ export default {
 
 
     await this.refreshList();
+    await this.initCreaetTAppModalOptions();
   },
 
   methods: {
@@ -373,10 +376,21 @@ export default {
               options: [
                 {id: 10}, {id: 100}, {id: 1000}, {id: 2000}, {id: 5000}, {id: 10000}
               ],
-              rules: {
+              rules: [{
                 type: 'number',
                 message: 'Initial token must be number.',
-              },
+              }, {
+                validator: (rule, val, cb)=>{
+                  if(!(/^[0-9]+$/g).test(val.toString())){
+                    return cb('Must be integer value.');
+                  }
+                  
+                  if(_.toNumber(val)<10) 
+                    return cb('min value is 10');
+
+                  return cb();
+                }
+              }],
               action: {
                 button_text: 'Calculate cost',
                 html: '',
@@ -436,14 +450,17 @@ export default {
             },
             YouTube: {
               label: 'YouTube Id',
-              type: 'Input',
+              type: 'select',
               required: true,
               condition: {
                 target: 'template',
                 value: 'YouTube'
               },
+              options: this.youtube_options,
               el_props: {
                 placeholder: 'e.g. Jg8tkBqA2ww',
+                'allow-create': true,
+                'filterable': true,
               },
               tip: 'Click to visit wiki',
               tip_action: ()=>{
@@ -551,6 +568,10 @@ export default {
             stake_token_amount: {
               type: 'select_number',
               label: 'Staked tokens per miner',
+              el_props: {
+                'allow-create': true,
+                'filterable': true,
+              },
               condition: {
                 target: 'fixed_token_mode',
                 value: 1
@@ -560,9 +581,18 @@ export default {
                 {id: 5000}, {id: 10000},
               ],
               default: 100,
+              required: true,
               rules: {
-                type: 'number',
-                message: 'Stake token amount must be number.',
+                validator: (rule, val, cb)=>{
+                  if(!(/^[0-9]+$/g).test(val.toString())){
+                    return cb('Must be integer value.');
+                  }
+                  
+                  if(_.toNumber(val)<1) 
+                    return cb('min value is 1');
+
+                  return cb();
+                }
               },
               tip: 'Click to visit wiki',
               tip_action: ()=>{
@@ -582,10 +612,24 @@ export default {
               options: [
                 {id: 1}, {id: 2}, {id: 3}, {id: 5}, {id: 10}, {id: 30}
               ],
-              rules: {
+              rules: [{
                 type: 'number',
                 message: 'Theta must be number.',
-              },
+              }, {
+                validator: (rule, val, cb)=>{
+                  if(!(/^[0-9]+$/g).test(val.toString())){
+                    return cb('Must be integer value.');
+                  }
+                  
+                  if(_.toNumber(val)<1) 
+                    return cb('min value is 1');
+                  if(_.toNumber(val)>30){
+                    return cb('max value is 30');
+                  }
+
+                  return cb();
+                }
+              }],
               after: '%',
               tip: 'Click to visit wiki',
               tip_action: ()=>{
@@ -597,7 +641,6 @@ export default {
         },
         cb: async (form, close)=>{
           this.$root.loading(true);
-
           
           const amount = utils.layer1.amountToBalance(form.init_fund)
 
@@ -609,6 +652,17 @@ export default {
 
             let link_param = form[form.template];
             const link = tapp.template.genLink(form.template, link_param);
+
+            if(form.template === 'YouTube' && _.includes(_.map(this.youtube_options, (x)=>x.value), link_param)){
+              const x = await this.$confirm(`Note that you need to pay 100 TEA for this TApp.`, {
+                dangerouslyUseHTMLString: true,
+              }).catch(()=>{});
+
+              if(!x){
+                this.$root.loading(false);
+                return false;
+              }
+            }
 
             const fix_token_mode = form.fixed_token_mode===1;
 
@@ -648,6 +702,37 @@ export default {
         await this.refreshList();
       });
     },
+
+    async initCreaetTAppModalOptions(){
+      const xl = await request.layer1_rpc('cml_approvedLinks', []);
+      let list = await Promise.all(_.map(xl, async (arr)=>{
+        const link = utils.rpcArrayToString(arr[0]);
+        const tapp_id = arr[1];
+        const desc = utils.rpcArrayToString(arr[2]);
+        const creator = arr[3];
+
+        let json = utils.parseJSON(link, {});
+        return {
+          tapp_id,
+          desc,
+          type: json.t || '',
+          tid: json.v || '',
+          creator,
+        }
+      }));
+
+      list = _.filter(list, (x)=>{
+        return x.type === 'YouTube' && !x.creator;
+      });
+      list = _.map(list, (x)=>{
+        return {
+          label: x.tid,
+          value: x.tid
+        };
+      });
+      
+      this.youtube_options = list;
+    }
 
   }
 };
