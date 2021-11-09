@@ -407,7 +407,7 @@ query {
   },
   async scheduleUpMiner(self, cml_id, succ_cb){
     try{
-      let msg = `Are you sure you want to start up of your miner?`;
+      let msg = `Are you sure you want to start up your miner?`;
       
       await self.$confirm(msg, {
         title: 'Notice',
@@ -434,7 +434,7 @@ query {
   },
   async scheduleDownMiner(self, cml_id, succ_cb){
     try{
-      let msg = `Are you sure you want to shut down your miner?`;
+      let msg = `Are you sure you want to shutdown your miner?`;
       
       await self.$confirm(msg, {
         title: 'Notice',
