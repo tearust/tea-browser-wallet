@@ -58,7 +58,7 @@
         <el-form-item label="Miner IP" prop="miner_ip">
           <el-input v-model="form.miner_ip"></el-input>
 
-          <TeaIconButton icon_style="font-size:18px;" tip="The IP address of your mining machine. Note that if you are planting a C CML, you can use any random number here." icon="questionmark" />
+          <TeaIconButton icon_style="font-size:18px;" tip="The IP address of your mining machine. If you are planting a C CML, you can use any random number here. If running Ubuntu, you can find your machine's IP address by running the following from the command line: ip addr show eth0" icon="questionmark" />
         </el-form-item>
 
         <el-form-item label="Mining machine's Polkadot wallet (SS58) address" prop="account">
