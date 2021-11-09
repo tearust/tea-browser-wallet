@@ -464,7 +464,7 @@ export default {
       helper.showTAppLink(this, row.id);
     },
     OpenToPolkadotForStaking(){
-      helper.openUrl(`https://polkadot.js.org/apps/?rpc=${encodeURIComponent('wss://wallet.teaproject.org/wss2')}#/staking`);
+      helper.openUrl(`https://polkadot.js.org/apps/?rpc=${encodeURIComponent('wss://wallet.teaproject.org/wss1')}#/staking`);
       
     },
     
