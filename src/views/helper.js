@@ -476,7 +476,7 @@ query {
             disabled: true,
           },
           miner_id: {
-            label: 'Miner Id',
+            label: 'Machine ID',
             type: 'Input',
             required: true,
             el_props: {
@@ -511,7 +511,7 @@ query {
             }
           },
           account: {
-            label: 'Binding address',
+            label: 'Mining machine\'s Polkadot wallet (SSS8) address',
             type: 'Input',
             required: true,
 
