@@ -318,7 +318,7 @@ export default {
       this.$store.commit('modal/open', {
         key: 'common_form', 
         param: {
-          title: 'Create TEAfluencer TApp',
+          title: 'Create TApp',
           // confirm_text: 'Next',
           text: '',
           label_width: 200,
