@@ -158,7 +158,7 @@ export default {
 
       const [min_price, my_bid, is_mining] = this.xm;
       if(price.lt(min_price)){
-        this.$root.showError('Please input higher bid price');
+        this.$root.showError('Please input a higher bid price');
         return false;
       }
 
@@ -166,9 +166,9 @@ export default {
       if(is_mining && !my_bid){
         tt_total = price.add(utils.toBN(utils.layer1.amountToBalance(1000)));
       }
-      let tt_msg = 'Bid amount is '+utils.layer1.balanceToAmount(tt_total)+' TEA. <br />';
+      let tt_msg = 'Total bid amount will be '+utils.layer1.balanceToAmount(tt_total)+' TEA: <br />';
       if(is_mining && !my_bid){
-        tt_msg += 'Include '+utils.layer1.balanceToAmount(price)+' TEA for CML and 1000 TEA for staking.';
+        tt_msg += ''+utils.layer1.balanceToAmount(price)+' TEA for the CML and 1000 TEA for staking.';
       }
       if(my_bid){
         //
