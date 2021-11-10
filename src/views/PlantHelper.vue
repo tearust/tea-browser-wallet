@@ -5,7 +5,7 @@
     <el-steps :active="step" simple>
       <el-step title="Generate"></el-step>
       <el-step title="Fill"></el-step>
-      <el-step title="Start minming"></el-step>
+      <el-step title="Start mining"></el-step>
     </el-steps>
 
     <div class="t-step" v-if="step===1">
@@ -44,7 +44,7 @@
       </p>
 
       <el-form :model="form" label-width="320px" :rules="rules" ref="form" class="tea-modal">
-        <el-form-item label="CML Id" prop="cml_id">
+        <el-form-item label="CML ID" prop="cml_id">
           <el-input :disabled="true" v-model="form.cml_id"></el-input>
         </el-form-item>
 
