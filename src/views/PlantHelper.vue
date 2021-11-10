@@ -88,7 +88,7 @@
       <div class="c-shell">
         <p style="font-weight:bold;">
           <span class="js_need_copy">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch6/install.sh)" "" "{{form.miner_id}}" "{{form.account}}"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch6/install.sh)"
           </span>
 
           <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>

@@ -467,6 +467,7 @@ query {
       key: 'common_form', 
       param: {
         title: 'Migrate miner',
+        label_width: 310,
         // text: ``,
         props: {
           cml_id: {
@@ -511,7 +512,7 @@ query {
             }
           },
           account: {
-            label: 'Mining machine\'s Polkadot wallet (SSS8) address',
+            label: 'Mining machine\'s Polkadot wallet (SS58) address',
             type: 'Input',
             required: true,
 
