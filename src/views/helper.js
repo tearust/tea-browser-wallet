@@ -460,88 +460,89 @@ query {
     self.$root.loading(false);
   },
   async migrateMiner(self, cml, miner, succ_cb){
-    const layer1_instance = self.wf.getLayer1Instance();
-    const api = layer1_instance.getApi();
+    self.$root.goPath('/cml/migrate/'+cml.id);
+    // const layer1_instance = self.wf.getLayer1Instance();
+    // const api = layer1_instance.getApi();
 
-    self.$store.commit('modal/open', {
-      key: 'common_form', 
-      param: {
-        title: 'Migrate miner',
-        label_width: 310,
-        // text: ``,
-        props: {
-          cml_id: {
-            label: 'CML ID',
-            type: 'Input',
-            default: cml.id,
-            disabled: true,
-          },
-          miner_id: {
-            label: 'Machine ID',
-            type: 'Input',
-            required: true,
-            el_props: {
-              'show-word-limit': true,
-              maxlength: 66,
-              minlength: 66
-            },
-            rules: [
-              {min: 66,},
-              {max: 66,},
-            ]
-          },
-          miner_ip: {
-            label: 'Miner IP',
-            type: 'Input',
-            required: true,
-            rules: {
-              validator: (rule, val, cb)=>{
-                if(cml.cml_type === 'B'){
-                  if(!utils.isValidIP(val)){
-                    cb('Invalid ip address');
-                  }
-                  else{
-                    cb();
-                  }
-                }
-                else{
-                  cb();
-                }
+    // self.$store.commit('modal/open', {
+    //   key: 'common_form', 
+    //   param: {
+    //     title: 'Migrate miner',
+    //     label_width: 310,
+    //     // text: ``,
+    //     props: {
+    //       cml_id: {
+    //         label: 'CML ID',
+    //         type: 'Input',
+    //         default: cml.id,
+    //         disabled: true,
+    //       },
+    //       miner_id: {
+    //         label: 'Machine ID',
+    //         type: 'Input',
+    //         required: true,
+    //         el_props: {
+    //           'show-word-limit': true,
+    //           maxlength: 66,
+    //           minlength: 66
+    //         },
+    //         rules: [
+    //           {min: 66,},
+    //           {max: 66,},
+    //         ]
+    //       },
+    //       miner_ip: {
+    //         label: 'Miner IP',
+    //         type: 'Input',
+    //         required: true,
+    //         rules: {
+    //           validator: (rule, val, cb)=>{
+    //             if(cml.cml_type === 'B'){
+    //               if(!utils.isValidIP(val)){
+    //                 cb('Invalid ip address');
+    //               }
+    //               else{
+    //                 cb();
+    //               }
+    //             }
+    //             else{
+    //               cb();
+    //             }
                 
-              }
-            }
-          },
-          account: {
-            label: 'Mining machine\'s Polkadot wallet (SS58) address',
-            type: 'Input',
-            required: true,
+    //           }
+    //         }
+    //       },
+    //       account: {
+    //         label: 'Mining machine\'s Polkadot wallet (SS58) address',
+    //         type: 'Input',
+    //         required: true,
 
-          },
+    //       },
           
-        },
-      },
-      cb: async (form, close)=>{
-        self.$root.loading(true);
+    //     },
+    //   },
+    //   cb: async (form, close)=>{
+    //     self.$root.loading(true);
         
-        try{
-          const tx = api.tx.cml.migrate(
-            form.cml_id,
-            form.miner_id,
-            form.miner_ip,
-            form.account,
-            null,
-          );
-          await layer1_instance.sendTx(self.layer1_account.address, tx);
+    //     try{
+    //       const tx = api.tx.cml.migrate(
+    //         form.cml_id,
+    //         form.miner_id,
+    //         form.miner_ip,
+    //         form.account,
+    //         null,
+    //       );
+    //       await layer1_instance.sendTx(self.layer1_account.address, tx);
 
-          await close();
-          await succ_cb();
-        }catch(e){
-          self.$root.showError(e);
-        }
+    //       await close();
+    //       await succ_cb();
+    //     }catch(e){
+    //       self.$root.showError(e);
+    //     }
         
-        self.$root.loading(false);
-      },
-    });
+    //     self.$root.loading(false);
+    //   },
+    // });
   },
 
 };

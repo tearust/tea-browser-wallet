@@ -1,11 +1,11 @@
 <template>
   <div class="tea-page">
-    <h4>Plant my Camellia</h4>
+    <h4>Migrate miner</h4>
 
     <el-steps :active="step" simple>
       <el-step title="Generate"></el-step>
       <el-step title="Fill"></el-step>
-      <el-step title="Start mining"></el-step>
+      <el-step title="Migrate"></el-step>
     </el-steps>
 
     <div class="t-step" v-if="step===1">
@@ -39,6 +39,7 @@
     <div v-if="step===2" class="t-step">
       <p>
         Please fill out the form below to generate the shell mining commands. 
+        
         <br/>
         Note that you need <b class="block">1000 TEA</b> available for your initial stake. More info is available <a href="https://github.com/tearust/teaproject/wiki/Mining#mining-machines-are-no-longer-free" class="t-wiki" target="_blank">on our wiki.</a>
       </p>
@@ -119,10 +120,10 @@
           v-if="cml_type!=='B'"
           size="small"
           style="padding-left: 25px; padding-right: 25px"
-          @click="testPlant()"
+          @click="testMigrate()"
           type="primary"
         >
-          Plant
+          Migrate
         </el-button>
       </div>
     </div>
@@ -220,16 +221,13 @@ export default {
     const layer1_instance = this.wf.getLayer1Instance();
     const api = layer1_instance.getApi();
 
-    let cml = await api.query.cml.cmlStore(this.form.cml_id);
-    cml = cml.toJSON();
+    const [cml] = await this.wf.getCmlByList([this.form.cml_id]);
 
-    // const map = {
-    //   A: "cmlAMiningMachineCost",
-    //   B: "cmlBMiningMachineCost",
-    //   C: "cmlCMiningMachineCost",
-    // };
+    this.cml_type = cml.cml_type;
 
-    this.cml_type = cml.intrinsic.cml_type;
+    this.form.miner_id = cml.machine_id;
+    this.form.miner_ip = cml.miner_ip;
+    this.form.account = cml.miner_controller_account;
 
     // this.form.miner_id = utils.uuid().replace(/\-/g, '');
     this.$root.loading(false);
@@ -251,7 +249,7 @@ export default {
       await ref.validate();
       this.step = 3;
     },
-    async testPlant() {
+    async testMigrate() {
       const x = await this.beforeAction();
       if(!x) return false;
       const layer1_instance = this.wf.getLayer1Instance();
@@ -265,18 +263,18 @@ export default {
         if(this.layer1_account.balance <= 1000){
           throw 'You need 1000 TEA for the first staking slot.';
         }
-        
 
-        const tx = api.tx.cml.startMining(
+        const tx = api.tx.cml.migrate(
           form.cml_id,
           form.miner_id,
-          form.account,
           form.miner_ip,
+          form.account,
           null,
         );
+
         await layer1_instance.sendTx(this.layer1_account.address, tx);
 
-        this.$router.push("/login_account");
+        this.$router.replace("/cml_details/"+this.form.cml_id);
       } catch (e) {
         this.$root.showError(e);
       }
@@ -285,7 +283,11 @@ export default {
     async verifyMiner(){
       const x = await this.beforeAction();
       if(!x) return false;
-      utils.cache.put('cml_plant_'+this.form.cml_id, this.form);
+      
+      utils.cache.put('cml_plant_'+this.form.cml_id, {
+        ...this.form,
+        action: 'migrate',
+      });
 
       const url = `http://${this.form.miner_ip}:8000/verify_deployed?cml=${this.form.cml_id}`;
       window.open(url, '_blank');

@@ -1,9 +1,18 @@
 <template>
   <div class="tea-page">
-    <h4>Activate miner for CML {{cml_id}}</h4>
+    <h4 v-if="action==='plant'">Activate miner for CML {{cml_id}}</h4>
+    <h4 v-if="action==='migrate'">Migrate miner for CML {{cml_id}}</h4>
+
+    <p v-if="!error && action==='plant'">
+      You have completed setup of your mining machine. The final step is to click the below <strong>Activate miner</strong> button. <br/>
+      Once your mining node has started, you can go to the CML detail page to manage your mining CML.
+    </p>
+    <p v-if="!error && action==='migrate'">
+      You have completed setup of your mining machine. The final step is to click the below <strong>Migrate miner</strong> button. <br/>
+    </p>
     
     <p style="font-size:18px; color: #f00;" v-if="error">
-      Can't activate miner, see reason below.<br/>
+      Can't activate or migrate miner, see reason below.<br/>
       {{error}}
     </p>
 
@@ -14,13 +23,23 @@
       <el-button
         style="padding-left: 15px; padding-right: 15px; width:250px;"
         @click="testPlant()"
-        
+        v-if="action==='plant'"
         type="primary"
       >
         Activate miner
       </el-button>
-      <p>You have completed setup of your mining machine. The final step is to click the above <strong>Activate miner</strong> button. Once your mining node has started, you can <a :href="'https://wallet.teaproject.org/#/cml_details/'+cml_id">click here</a> to manage your mining CML.</p>
+
+      <el-button
+        style="padding-left: 15px; padding-right: 15px; width:250px;"
+        @click="testMigrate()"
+        v-if="action==='migrate'"
+        type="primary"
+      >
+        Migrate miner
+      </el-button>
+      
     </div>
+
     
   </div>
 </template>
@@ -38,6 +57,8 @@ export default {
     return {
       cml_id: null,
       orbit_id: null,
+      form: null,
+      action: null,
 
       error: null,
     };
@@ -51,9 +72,15 @@ export default {
     }
   },
   async mounted() {
+    this.$root.loading(true);
+
     this.cml_id = utils.urlHashParam('cml');
     this.orbit_id = utils.urlHashParam('orbit');
 
+    this.form = utils.cache.get('cml_plant_'+this.cml_id);
+    this.action = this.form.action&&this.form.action==='migrate' ? 'migrate' : 'plant';
+
+    console.log('action =>', this.action);
     console.log('cml_id =>', this.cml_id);
     console.log('orbit_id =>', this.orbit_id);
 
@@ -62,12 +89,13 @@ export default {
       return;
     }
 
-    this.$root.loading(true);
+    
     this.wf = new Base();
     await this.wf.init();
 
-
-    await this.checkCanActive();
+    if(this.action === 'plant'){
+      await this.checkCanActive();
+    }
 
     this.$root.loading(false);
 
@@ -109,7 +137,7 @@ export default {
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
-      const form = utils.cache.get('cml_plant_'+this.cml_id);
+      const form = this.form;
 
       if(!form){
         this.fail('Invalid cache for CML.');
@@ -138,6 +166,46 @@ export default {
         utils.cache.remove('cml_plant_'+this.cml_id);
 
         this.$router.push("/login_account");
+      } catch (e) {
+        this.$root.showError(e);
+      }
+      this.$root.loading(false);
+    },
+
+    async testMigrate() {
+    
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      const form = this.form;
+
+      if(!form){
+        this.fail('Invalid cache for CML.');
+        return;
+      }
+
+      this.$root.loading(true);
+      try {
+        // validate tea and coffee balance
+        if(this.layer1_account.balance <= 1000){
+          throw 'You need 1000 TEA for the first staking slot.';
+        }
+        // if(this.layer1_account.usd <= form.miner_price){
+        //   throw 'You need '+form.miner_price+' COFFEE to pay for this mining machine.';
+        // }
+
+        const tx = api.tx.cml.migrate(
+          form.cml_id,
+          form.miner_id,
+          form.miner_ip,
+          form.account,
+          this.orbit_id,
+        );
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+        utils.cache.remove('cml_plant_'+this.cml_id);
+
+        this.$router.replace("/cml_details/"+this.cml_id);
       } catch (e) {
         this.$root.showError(e);
       }

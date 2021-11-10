@@ -427,7 +427,8 @@ export default class {
 
       if(cml.machine_id){
         const miner = (await api.query.cml.minerItemStore(cml.machine_id)).toJSON();
-
+        
+        cml.miner_controller_account = miner.controller_account;
         cml.miner_ip = hexToString(miner.ip);
         cml.miner_status = miner.status;
         cml.suspend_block = miner.suspend_height;

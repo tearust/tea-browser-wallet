@@ -5,7 +5,6 @@ import Router from 'vue-router'
 import Home from './views/Home';
 // import SocialRecovery from './views/SocialRecovery';
 import LoginAccount from './views/LoginAccount';
-import Test from './views/Test';
 
 import CalculateStakingProfit from './views/tools/CalculateStakingProfit';
 
@@ -16,6 +15,7 @@ import LuckyDrawBox from './views/LuckyDrawBox';
 import CmlDetails from './views/CmlDetails';
 
 import PlantHelper from './views/PlantHelper';
+import MigrateHelper from './views/MigrateHelper';
 import PlantConfirm from './views/PlantConfirm';
 import UserDetails from './views/UserDetails';
 
@@ -49,15 +49,7 @@ let routers = [
       needLogin: true
     }
   },
-  
-  {
-    path: '/test',
-    name: 'test',
-    component: Test,
-    meta: {
-      needLogin: true
-    }
-  },
+
 
   {
     path: '/tools/calculate_staking_profit',
@@ -88,7 +80,12 @@ let routers = [
   {
     path: '/plant_helper/:cml_id',
     name: 'plant_helper',
-    component: PlantHelper
+    component: PlantHelper,
+  },
+  {
+    path: '/cml/migrate/:cml_id',
+    name: 'migrate_cml',
+    component: MigrateHelper,
   },
   {
     path: '/plant_confirm',
