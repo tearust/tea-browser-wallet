@@ -19,6 +19,7 @@
       >
         Activate miner
       </el-button>
+      <p>You have completed setup of your mining machine. The final step is to click the above <strong>Activate miner</strong> button. Once your mining node has started, you can <a href="https://wallet.teaproject.org/#/cml_details/{{cml_id}}">click here</a> to manage your mining CML.</p>
     </div>
     
   </div>
