@@ -29,7 +29,7 @@
         <el-button type="primary" size="small" plain :disabled="true">
           Previous step
         </el-button>
-        <el-button type="primary" size="small" @click="step=2">
+        <el-button type="primary" size="small" @click="toStep2()">
           Next step
         </el-button>
       </div>
@@ -286,6 +286,19 @@ export default {
 
       const url = `http://${this.form.miner_ip}:8000/verify_deployed?cml=${this.form.cml_id}`;
       window.open(url, '_blank');
+    },
+    async toStep2(){
+      try{
+        const html = 'Check that the command line output lists out all creation steps as <b>done</b>.<br/> Does your mining machine install script show that all creation steps are <b>done</b> and that <b>docker start completed?</b>';
+        await this.$confirm(html, {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No - continue to wait',
+        });
+
+        this.step = 2;
+      }catch(e){}
+
     }
   },
 };
