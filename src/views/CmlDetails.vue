@@ -108,6 +108,7 @@
       
 
     </el-table>
+    
     <div style="margin-top: 8px; height: 24px;" v-if="layer1_account && cml && miner && layer1_account.address===cml.owner">
       
       <TeaIconButton 
@@ -151,6 +152,13 @@
         @click="OpenToPolkadotForStaking()"
       >Apply to be a blockchain validator</el-button>
       
+    </div>
+    <div v-if="layer1_account && cml && miner && layer1_account.address===cml.owner">
+      <p style="margin-top: 8px;margin-bottom:-8px;" v-if="miner.status==='Active'">
+        Please note that mining machines must be shutdown before their CML can be migrated. 
+        <a href="https://github.com/tearust/teaproject/wiki/CML-Transfer" target="_blank">Click here </a>
+        for more information.
+      </p>
     </div>
 
     <el-divider />

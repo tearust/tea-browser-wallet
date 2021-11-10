@@ -225,9 +225,9 @@ export default {
 
     this.cml_type = cml.cml_type;
 
-    this.form.miner_id = cml.machine_id;
-    this.form.miner_ip = cml.miner_ip;
-    this.form.account = cml.miner_controller_account;
+    // this.form.miner_id = cml.machine_id;
+    // this.form.miner_ip = cml.miner_ip;
+    // this.form.account = cml.miner_controller_account;
 
     // this.form.miner_id = utils.uuid().replace(/\-/g, '');
     this.$root.loading(false);
