@@ -135,14 +135,14 @@
         title="Shut down miner"
         @click="scheduleDown()"
       />
-      <TeaIconButton 
+      <!-- <TeaIconButton 
         type="primary"
         tip="Resume"
         icon="NA"
         :disabled="miner.status!=='Offline'"
         title="Resume miner"
         @click="resumeMiner()"
-      />
+      /> -->
 
       <el-button 
         style="float:right;"
