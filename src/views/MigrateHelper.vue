@@ -24,7 +24,7 @@
       <div style="width:80%;">
         <img src="../assets/images/step_1.jpg" />
       </div>
-
+      <p>More information about performing the migration process is available in <a href="https://github.com/tearust/teaproject/wiki/CML-Migration-(Transfer)" target="_blank">our wiki</a>.</p>
       <div style="display: flex; justify-content: space-between; margin-top: 20px">
         <el-button type="primary" size="small" plain :disabled="true">
           Previous step
