@@ -92,6 +92,12 @@
         />
 
         <el-table-column
+          prop="miner_status"
+          label="Miner status"
+          width="120"
+        />
+
+        <el-table-column
           label="Total income"
           width="120"
           sortable
@@ -191,7 +197,9 @@ export default {
         buy_price: utils.layer1.balanceToAmount(arr[10]),
         sell_price: utils.layer1.balanceToAmount(arr[11]),
       };
+      tmp.link = utils.parseJSON(tmp.link);
 
+      
       let item_list = [
         {
           label: 'Ticker',
@@ -206,6 +214,8 @@ export default {
           label: 'Host performance'
         }
       ];
+
+      
 
       const cid = (await api.query.bondingCurve.tAppResourceMap(tapp_id)).toJSON();
       tmp.cid = hexToString(cid);
@@ -255,10 +265,6 @@ export default {
           value: tmp.host_current
         },
         {
-          label: 'TApp template',
-          value: tmp.type,
-        },
-        {
           label: 'Total supply',
           value: tmp.total_supply,
         },
@@ -273,6 +279,27 @@ export default {
         
       ]);
 
+      if(_.toLower(tmp.link.t) === 'bbs'){
+        item_list.push({
+          label: 'TApp template',
+          value: 'Tea Party'
+        });
+        item_list.push({
+          label: 'Party table name',
+          value: tmp.link.v
+        });
+      }
+      else if(_.toLower(tmp.link.t) === 'youtube'){
+        item_list.push({
+          label: 'TApp template',
+          value: 'YouTube'
+        });
+        item_list.push({
+          label: 'YouTube Id',
+          value: tmp.link.v
+        });
+      }
+
       this.item_list = item_list;
 
     },
@@ -280,6 +307,8 @@ export default {
       const tmp_list = await request.layer1_rpc('bonding_tappHostedCmls', [tapp_id]);
 
       const list = await Promise.all(_.map(tmp_list, async (arr, i)=>{
+        const [cml] = await this.wf.getCmlByList([arr[0]]);
+        // console.log(11, cml)
         const item = {
           cml_id: arr[0],
           owner: arr[1],
@@ -288,6 +317,7 @@ export default {
           remaining_performance: arr[4],
           peak_performance: arr[5],
           reward: null,
+          miner_status: cml.miner_status,
         };
         item.performance = `${item.current_performace}/${item.peak_performance}`;
 
