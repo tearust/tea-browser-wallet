@@ -345,8 +345,8 @@ export default {
       faas_list: [
         {
           id: '0',
-          name: 'Remote attestation',
-          detail: 'Blockchain randomly select a CML to run remote attestation to verify other random CML\'s security',
+          name: 'Availability Attestation',
+          detail: 'C CML are randomly selected to run Availability Attestation on B CML to ensure they are online.',
           estimate: ''
         },
         // {
