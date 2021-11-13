@@ -60,6 +60,10 @@
         prop="life_day"
         label="Life remaining"
       />
+      <el-table-column
+        prop="status"
+        label="Miner status"
+      />
 
       <el-table-column
         label="Actions"

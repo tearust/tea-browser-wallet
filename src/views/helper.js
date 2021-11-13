@@ -228,6 +228,7 @@ const F = {
         remaining: arr[2],
         life_day: self.wf.blockToDay(arr[3]),
         is_on: !!_.find(arr[4], (xd)=>xd===tapp_id),
+        status:  cml.miner_status,
       };
 
       if(cml.cml_type !== 'B'){
