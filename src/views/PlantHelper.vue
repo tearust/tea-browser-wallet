@@ -128,18 +128,9 @@
       </div>
     </div>
     
-
-    
-
-    
-
-    
-    
-      <!-- <p v-if="cml_type==='C'" style="margin-top:5px;">
-        C CML seeds are only able to earn public service rewards and aren't able to host TApps. <br/>
-        You can enter any number for the IP as a real mining machine isn't required. <br/>
-        The cost for hosting a type C CML miner is 500 COFFEE.
-      </p> -->
+<p v-if="cml_type==='C'" style="margin-top:5px;">
+        C CML seeds aren't able to host TApps. They can earn public service rewards by running <a href="https://github.com/tearust/teaproject/wiki/Mining---Availability-Attestation" target="_blank">Availability Attestation</a> to monitor the availability of B CML mining machines.
+      </p> 
       
       
   </div>
