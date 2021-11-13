@@ -121,18 +121,18 @@
       />
       <TeaIconButton 
         type="primary"
-        tip="Start up mining machine"
+        tip="Schedule start up mining machine"
         icon="NA"
         :disabled="miner.status!=='ScheduleDown'"
-        title="Start miner"
+        title="Schedule start miner"
         @click="scheduleUp()"
       />
       <TeaIconButton 
         type="primary"
-        tip="Shut down mining machine"
+        tip="Schedule shut down mining machine"
         icon="NA"
         :disabled="miner.status!=='Active'"
-        title="Shut down miner"
+        title="Schedule shut down miner"
         @click="scheduleDown()"
       />
       <!-- <TeaIconButton 

@@ -198,7 +198,7 @@ export default {
             total: utils.layer1.roundAmount(total),
           };
 
-          if(rs.total > 0 && _.size(sum_arr)<20){
+          if(rs.total > 0){
             sum += rs.total;
             sum_arr.push(rs.index);
           }

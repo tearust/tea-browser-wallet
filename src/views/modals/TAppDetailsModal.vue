@@ -79,16 +79,22 @@
             {{scope.row.life_day}}
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="performance"
           label="Current / Peak performance"
           width="180"
-        />
+        /> -->
         <el-table-column
           prop="remaining_performance"
           label="Remaining performance"
           width="180"
           sortable
+        />
+
+        <el-table-column
+          prop="miner_ip"
+          label="Miner ip address"
+          width="150"
         />
 
         <el-table-column
@@ -318,6 +324,7 @@ export default {
           peak_performance: arr[5],
           reward: null,
           miner_status: cml.miner_status,
+          miner_ip: cml.miner_ip,
         };
         item.performance = `${item.current_performace}/${item.peak_performance}`;
 
