@@ -89,9 +89,9 @@
 
   </TeaTable>
 
-  <!-- <div v-if="layer1_account && layer1_account.address === '5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" style="display:flex; justify-content: flex-end;">
+  <div v-if="layer1_account && layer1_account.address === '5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" style="display:flex; justify-content: flex-end;">
     <el-button style="width:40%;margin-top: 40px;" type="primary" @click="registerHandler()">Register for competition</el-button>
-  </div> -->
+  </div>
 
 </div>
 </template>
