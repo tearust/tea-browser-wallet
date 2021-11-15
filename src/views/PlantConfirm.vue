@@ -148,7 +148,7 @@ export default {
       try {
         // validate tea and coffee balance
         if(this.layer1_account.balance <= 1000){
-          throw 'You need 1000 TEA for the first staking slot.';
+          throw 'You need 1000 TEA for the first staking slot. You can put up some of your extra <a href="https://github.com/tearust/teaproject/wiki/Genesis-TEA-Loans" target="_blank">CML seeds for a Genesis Loan</a> and receive TEA in return.';
         }
         // if(this.layer1_account.usd <= form.miner_price){
         //   throw 'You need '+form.miner_price+' COFFEE to pay for this mining machine.';
@@ -188,7 +188,7 @@ export default {
       try {
         // validate tea and coffee balance
         if(this.layer1_account.balance <= 1000){
-          throw 'You need 1000 TEA for the first staking slot.';
+          throw 'You need 1000 TEA for the first staking slot. You can put up some of your extra <a href="https://github.com/tearust/teaproject/wiki/Genesis-TEA-Loans" target="_blank">CML seeds for a Genesis Loan</a> and receive TEA in return.';
         }
         // if(this.layer1_account.usd <= form.miner_price){
         //   throw 'You need '+form.miner_price+' COFFEE to pay for this mining machine.';
