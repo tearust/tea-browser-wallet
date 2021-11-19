@@ -6,6 +6,7 @@
   <!-- <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
   </el-button> -->
+  <el-button type="primary" size="small" style="position:absolute; top:0; right: 50px;" @click="registerHandler()">Register for competition</el-button>
   <el-button size="small" style="top: 0px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
     name="leader_board_table"
@@ -89,9 +90,7 @@
 
   </TeaTable>
 
-  <div v-if="layer1_account && layer1_account.address === '5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" style="display:flex; justify-content: flex-end;">
-    <el-button style="width:40%;margin-top: 40px;" type="primary" @click="registerHandler()">Register for competition</el-button>
-  </div>
+  
 
 </div>
 </template>
@@ -242,6 +241,8 @@ export default {
             user: {
               label: 'Polkadot{.js} address',
               type: 'Input',
+              disabled: true,
+              default: this.layer1_account.address,
             },
           },
         },

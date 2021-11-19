@@ -234,6 +234,12 @@ export default {
     },
 
     clickPlantAction(scope){
+      if(this.layer1_account.balance <= 1001){
+        this.$root.showError('You need at least 1001 TEA to plant CML. You can put up some of your extra <a href="https://github.com/tearust/teaproject/wiki/Genesis-TEA-Loans" target="_blank">CML seeds for a Genesis Loan</a> and receive TEA in return.');
+
+        return;
+      }
+
       this.$router.push('/plant_helper/'+scope.row.id);
     },
 
