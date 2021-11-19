@@ -5,14 +5,13 @@
     This current TEA browser wallet version is only for testing. 
   </h4>
   <p>
-    The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. We will have USDT rewards during the contest but not for the public testing periods.
+    The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. We will have USDT rewards during the contest but not for the public testing periods. Make sure to join our Telegram community for updated rules including starting time announcements: <a href="https://t.me/teaprojectorg" target="_blank">@teaprojectorg</a>.
   </p>
 
   <h4>Signing up for the mining competition</h4>
 <ul>
-<li>Join our communities for updated rules including starting time announcements: <a href="https://t.me/teaprojectorg" target="_blank">@teaprojectorg</a>.</li>
-<li>You will need your address from the polkadot{.js} browser extension to before <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist" target="_blank">registering for the competition</a></li>. 
-<li>If you're signing up after the contest starts, keep an eye on your email for registration confirmation. You will not be able to login to the TEA browser wallet until you're added to the contestant roll which could take some hours.</li>
+<li>You will need your address from the polkadot{.js} browser extension to before <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist" target="_blank">registering for the competition</a>.</li> 
+<li>You can now sign up directly through <a href="https://wallet.teaproject.org/#/leader_board">the Leader board</a> by clicking on the <strong>Register for competition</strong> button at the bottom of that page.</li>
 </ul>
 
   <h4>Basic concept of plant and staking</h4>

@@ -40,7 +40,7 @@
       <h5>TEA Token Loan Agreement</h5>
       <p>
         Deposit CML to use as collateral for a TEA token loan.<br />
-        The current loan amount depends on the type of seed used for collateral: 2000T for A seeds, 1000T for B seeds, and 500T for C seeds.<br />
+        The current loan amount depends on the type of seed used for collateral: 3000T for B seeds, and 1500T for C seeds.<br />
         Each billing cycle is 1000 blocks long (approximately 100 minutes).<br />
         The interest rate for every billing cycle is {{loan_rate}}.<br />
         The loan term is 200,000 blocks, approximately 55 hours.<br />
