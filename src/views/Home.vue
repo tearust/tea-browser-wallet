@@ -12,7 +12,7 @@
 <ul>
 <li>You will need your address from the polkadot{.js} browser extension to before <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist" target="_blank">registering for the competition</a>.</li>
 <li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">topup</a> your account so you have enough TEA for your first transactions.</li>
-<li>You can now sign up directly through <a href="https://wallet.teaproject.org/#/leader_board">the Leader board</a> by clicking on the <strong>Register for competition</strong> button at the bottom of that page.</li>
+<li>You can now sign up directly through <a href="https://wallet.teaproject.org/#/leader_board">the Leader board</a> by clicking on the <strong>Register for competition</strong> button at the top of that page.</li>
 <li>Visit the <a href="https://forms.gle/RwWxUfuSWLfZNLoQ9" target="_blank">CML purchase form</a> to buy your CML seeds for epoch 6.</li>
 <li>Wait for your CML coupons to be transferred to your wallet. You'll be notified by email when they've been transferred, after which you can redeem them.</li>
 <li>Take out Genesis loans with some of your CML seeds for your initial TEA necessary for the first staking slot.</li>
