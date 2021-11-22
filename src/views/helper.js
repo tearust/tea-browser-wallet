@@ -379,20 +379,24 @@ query {
   },
 
   async resumeMiner(self, cml_id, succ_cb){
-    try{
-      let msg = `Are you sure your miner is online and you wish to resume mining? <br/>
-      Please note that you need to pay 100 TEA as a deposit.`;
-      
-      await self.$confirm(msg, {
-        title: 'Notice',
-        dangerouslyUseHTMLString: true,
-      });
-    }catch(e){
-      return;
-    } 
-
     const layer1_instance = self.wf.getLayer1Instance();
     const api = layer1_instance.getApi();
+
+    // const tapp_list = (await api.query.bondingCurve.cmlHostingTApps(cml_id)).toJSON();
+    // const total = tapp_list.length * 100;
+    // try{
+    //   let msg = `Are you sure your miner is online and you wish to resume mining? <br/>
+    //   Please note that you need to pay ${total} TEA as a deposit.`;
+      
+    //   await self.$confirm(msg, {
+    //     title: 'Notice',
+    //     dangerouslyUseHTMLString: true,
+    //   });
+    // }catch(e){
+    //   return;
+    // } 
+
+    
     self.$root.loading(true);
 
     try{

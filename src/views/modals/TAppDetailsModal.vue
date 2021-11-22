@@ -254,7 +254,7 @@ export default {
       }
       
       tmp.type = item.tapp_type;
-
+console.log(11, tmp);
       this.tapp = tmp;
 
       item_list = _.concat(item_list, [

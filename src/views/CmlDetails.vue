@@ -135,14 +135,7 @@
         title="Schedule shut down miner"
         @click="scheduleDown()"
       />
-      <!-- <TeaIconButton 
-        type="primary"
-        tip="Resume"
-        icon="NA"
-        :disabled="miner.status!=='Offline'"
-        title="Resume miner"
-        @click="resumeMiner()"
-      /> -->
+
 
       <el-button 
         style="float:right;"
@@ -494,12 +487,7 @@ export default {
         await this.refresh();
       });
     },
-    async resumeMiner(){
-      await helper.resumeMiner(this, this.cml.id, async ()=>{
-        this.$root.success();
-        await this.refresh();
-      });
-    },
+    
   }
 }
 </script>
