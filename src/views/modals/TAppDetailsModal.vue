@@ -254,7 +254,7 @@ export default {
       }
       
       tmp.type = item.tapp_type;
-console.log(11, tmp);
+
       this.tapp = tmp;
 
       item_list = _.concat(item_list, [
@@ -328,11 +328,12 @@ console.log(11, tmp);
         };
         item.performance = `${item.current_performace}/${item.peak_performance}`;
 
-        this.getReward(item.cml_id, tapp_id, (total, total_str)=>{
-          console.log(`${item.cml_id} => `+total);
-          this.cml_list[i].reward = total_str;
-        });
-
+        (async (i)=>{
+          await this.getReward(item.cml_id, tapp_id, (total, total_str)=>{
+            this.cml_list[i].reward = total_str;
+          });
+        })(i);
+        
         return item;
       }));
 
@@ -355,21 +356,26 @@ query {
       cmlId
       tappId
       accountId
-      
-      
+      fixTokenTotal
+      type
+      fixTeaTotal
+      fixTokenMinerTotal
+      fixTokenInvestorTotal
     }
   }
 }
       `;
-
       const rs = await request.queryGraphQL(query);
       _.map(rs.hostingTappRewards.nodes, (item)=>{
-        const n = _.toNumber(item.total);
+        const n = (_.toNumber(item.fixTeaTotal||0))+(_.toNumber(item.fixTokenTotal||0));
         total += n;
         return null;
       });
 
-      cb(utils.layer1.balanceToAmount(total), utils.layer1.formatBalance(total, true));
+      _.delay(()=>{
+        cb(utils.layer1.balanceToAmount(total), utils.layer1.formatBalance(total, true));
+      }, 2000);
+      
       
     },
 
