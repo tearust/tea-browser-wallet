@@ -62,7 +62,7 @@
         is always rounded up. The total interest on the loan is calculated as
         rounded number of billing cycles * interest rate * loan amount. The
         interest rate is {{loan_rate}}, and the loan amount from the Genesis loan is
-        2000T for A seeds, 1000T for B seeds, and 500T for C seeds.
+        3000T for B seeds and 1500T for C seeds.
       </p>
       <p>
         <b>Return of Collateral</b><br />
