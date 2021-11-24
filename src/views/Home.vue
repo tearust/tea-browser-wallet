@@ -9,6 +9,7 @@
   </p>
 
   <h4>Signing up for the mining competition</h4>
+  <p>If you're new to using the polkadot{.js} wallet, we have a <a href="https://github.com/tearust/teaproject/wiki/%5ENewbie-Mining-Contest-Getting-Started-Guide%5E" target="_blank">new user's guide</a> to help contestants get started.</p>
 <ul>
 <li>You will need your address from the polkadot{.js} browser extension to before <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist" target="_blank">registering for the competition</a>.</li>
 <li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">topup</a> your account so you have enough TEA for your first transactions.</li>
