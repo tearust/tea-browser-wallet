@@ -156,7 +156,7 @@
       width="120"
     >
       <template slot-scope="scope">
-        <TeaIconButton tip="Stake" icon="invest" @click="openInvolveStakingModal(scope.row)" />
+        <TeaIconButton :disabled="scope.row.cml_type==='C'" tip="Stake" icon="invest" @click="openInvolveStakingModal(scope.row)" />
       </template>
     </el-table-column>
   </TeaTable>

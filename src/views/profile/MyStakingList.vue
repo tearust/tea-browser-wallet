@@ -171,7 +171,7 @@ export default {
         key: 'common_form', 
         param: {
           title: 'Stake',
-          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot.',
+          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot. <br /> Note that not allowed to stake to C type CML.',
           props: {
             staking_to: {
               label: 'CML ID for staking',
