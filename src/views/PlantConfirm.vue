@@ -1,5 +1,6 @@
 <template>
-  <div class="tea-page">
+<div>
+  <div class="tea-page" v-if="step===1">
     <h4 v-if="action==='plant'">Activate miner for CML {{cml_id}}</h4>
     <h4 v-if="action==='migrate'">Migrate miner for CML {{cml_id}}</h4>
 
@@ -39,9 +40,46 @@
       </el-button>
       
     </div>
+  </div>
+
+  <div class="tea-page" v-if="step===2">
+    <h2>Active miner success.</h2>
+
+    <h4>
+      Please read carefully before hosting any application. Fail to do so may cause penalty.
+    </h4>
+    <p>
+      After you activate your newly planted CML, you still need to wait for your new node to sync up with the latest blockchain. Depending on your network speed, this sync-up make take up to a few minutes to several hours. Your node actually cannot provide the hosting service during syncing up although the status shows "active". If you host any application now, your node may be marked "offline" which results in a penalty.
+    </p>
+    <h4>
+      How to determine if the syncing-up is completed?
+    </h4>
+
+    <div>
+      You will need to login (ssh) into your node and type in the following command line:
+
+      <b class="t-code">
+        sudo docker logs -f -n 10 delegate-layer1
+      </b>
+
+    </div>
+
+    <div style="margin-top:15px;">If you can see the output like the following screenshot. Note the "import" word.</div>
+    <div style="width:80%;margin:5px 0">
+      <img src="../assets/images/c_1.png" />
+    </div>
+    <div>then your machine has completed syncing and ready to host applications.</div>
+
+    <div style="margin-top: 15px;">But if you see the logs like the following picture. Note the "Syncing .... target:.....best:... finalized #..."</div>
+    <div style="width:80%;margin:5px 0;">
+      <img src="../assets/images/c_2.png" />
+    </div>
+    <div>then your machine is still syncing up to the latest block. Do NOT host any application just yet. Check again after a few minutes or hours.</div>
 
     
   </div>
+    
+</div>
 </template>
 <script>
 import Base from "../workflow/Base";
@@ -55,6 +93,7 @@ export default {
   },
   data() {
     return {
+      step: 1,
       cml_id: null,
       orbit_id: null,
       form: null,
@@ -77,7 +116,7 @@ export default {
     this.cml_id = utils.urlHashParam('cml');
     this.orbit_id = utils.urlHashParam('orbit');
 
-    this.form = utils.cache.get('cml_plant_'+this.cml_id);
+    this.form = utils.cache.get('cml_plant_'+this.cml_id) || {};
     this.action = this.form.action&&this.form.action==='migrate' ? 'migrate' : 'plant';
 
     console.log('action =>', this.action);
@@ -110,7 +149,8 @@ export default {
       cml = cml.toJSON();
 
       if(cml.machine_id){
-        this.fail('CML already active.');
+        // this.fail('CML already active.');
+        this.step = 2;
         return;
       }
 
@@ -165,7 +205,8 @@ export default {
 
         utils.cache.remove('cml_plant_'+this.cml_id);
 
-        this.$router.push("/login_account");
+        // this.$router.push("/login_account");
+        this.step = 2;
       } catch (e) {
         this.$root.showError(e);
       }
