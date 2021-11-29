@@ -270,7 +270,7 @@ export default {
         param: {
           title: 'Stake',
           label_width: 200,
-          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot.',
+          text: 'You can either stake 1000 TEA or one defrosted CML to a staking slot on an A or B CML mining machine (not C).',
           props: {
             staking_to: {
               type: 'Input',
