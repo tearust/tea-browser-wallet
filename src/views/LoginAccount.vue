@@ -90,7 +90,7 @@
           Sell COFFEE ({{rate.usdToTea}} TEA/COFFEE)
         </el-button> -->
 
-        <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button v-if="layer1_account" @click="rechargeHandler()">Top up</el-button></el-tooltip>
+        <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button v-if="layer1_account" @click="rechargeHandler()">Faucet</el-button></el-tooltip>
 
         <el-tooltip v-if="layer1_account && layer1_account.reward" effect="light" placement="top" content="Send your staking reward to your TEA wallet balance"><el-button @click="withdrawStakingReward()">Withdraw reward</el-button></el-tooltip>
         
