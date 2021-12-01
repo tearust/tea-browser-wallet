@@ -48,7 +48,8 @@
   </TeaTable>
 
   <el-divider />
-  <h4>Hosting TApp rewards (Fix TEA mode : <b class="block">{{tapp_fix_tea_total}}</b>)</h4>
+  <h4>Hosting TApp rewards (Fixed TEA mode : <b class="block">{{tapp_fix_tea_total}}</b>)</h4>
+  <p>TApp token hosting rewards are viewable in the <strong>My hosting TApps</strong> tab of your <a href="https://wallet.teaproject.org/#/login_account">My assets</a> page.</p>
   <TeaTable
     :data="hosting_reward_list || []"
     name="hosting_tapp_reward_log_table"

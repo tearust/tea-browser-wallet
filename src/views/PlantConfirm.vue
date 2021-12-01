@@ -46,17 +46,17 @@
     <h2>Active miner success.</h2>
 
     <h4>
-      Please read carefully before hosting any application. Fail to do so may cause penalty.
+      Please read carefully before hosting any applications. Failure to do so could result in penalties.
     </h4>
     <p>
-      After you activate your newly planted CML, you still need to wait for your new node to sync up with the latest blockchain. Depending on your network speed, this sync-up make take up to a few minutes to several hours. Your node actually cannot provide the hosting service during syncing up although the status shows "active". If you host any application now, your node may be marked "offline" which results in a penalty.
+      After you activate your newly planted CML, you still need to wait for your new node to sync up with the blockchain's latest block. Depending on your network speed, this sync-up may take up to a few minutes to several hours. Your node cannot provide any hosting services while negotiating the sync even though the status shows "active". If you host any application and your node hasn't yet synced, your node may be marked as "offline" which will result in a penalty.
     </p>
     <h4>
-      How to determine if the syncing-up is completed?
+      How to determine if your node is completely synced-up?
     </h4>
 
     <div>
-      You will need to login (ssh) into your node and type in the following command line:
+      You will need to login (ssh) to your node and type in the following command:
 
       <b class="t-code">
         sudo docker logs -f -n 10 delegate-layer1
@@ -64,17 +64,17 @@
 
     </div>
 
-    <div style="margin-top:15px;">If you can see the output like the following screenshot. Note the "import" word.</div>
+    <div style="margin-top:15px;">If you can see the output like the following screenshot (note the "Imported" lines in the log): </div>
     <div style="width:80%;margin:5px 0">
       <img src="../assets/images/c_1.png" />
     </div>
-    <div>then your machine has completed syncing and ready to host applications.</div>
+    <div>then your machine has completed syncing and is ready to host applications.</div>
 
-    <div style="margin-top: 15px;">But if you see the logs like the following picture. Note the "Syncing .... target:.....best:... finalized #..."</div>
+    <div style="margin-top: 15px;">But if you see log messages as in the following screenshot (note the "Syncing .... target:.....best:... finalized #..." line):</div>
     <div style="width:80%;margin:5px 0;">
       <img src="../assets/images/c_2.png" />
     </div>
-    <div>then your machine is still syncing up to the latest block. Do NOT host any application just yet. Check again after a few minutes or hours.</div>
+    <div>then your machine is still syncing up to the latest block. Do NOT host any applications just yet. Check again after a few minutes or hours.</div>
 
     
   </div>
