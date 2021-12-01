@@ -216,5 +216,7 @@
     "billing_mode": "BillingMode",
     "buy_curve_theta": "u32",
     "sell_curve_theta": "u32"
-  }
+  },
+
+  "VersionItem": ["Bytes", "Bytes"]
 }

@@ -273,6 +273,14 @@ a, a:hover, a:focus, button:focus {
 .el-table th>.cell{
   word-break: break-word;
 }
+.el-table .v-error{
+  & > td:first-child{
+    background: rgb(245, 108, 108) !important;
+    border-color: none !important;
+    color: #fff;
+
+  }
+}
 
 @import './css/tea-notify.scss';
 @import './css/tea-toast.scss';

@@ -2,8 +2,10 @@
 <div class="tea-page">
 
   <TeaTable 
-    :data="layer1_account ? layer1_account.cml : []"
+    :data="list"
     name="profile_cml_list_table"
+    v-loading="table_loading"
+    :row-class-name="tableRowClassName"
   >
     <el-table-column
       prop="id"
@@ -156,6 +158,16 @@
           tip="Resume miner"
           icon="fixed"
         />
+
+        <TeaIconButton
+          v-if="
+            scope.row.version_expired
+          "
+          style="color: rgb(245, 108, 108);"
+          @click="fixVersionExpired(scope)"
+          tip="Reset expired versions for miner"
+          icon="fixed"
+        />
       </template>
     </el-table-column>
   </TeaTable>
@@ -184,6 +196,8 @@ export default {
         visible: false,
         data: null,
       },
+      list: [],
+      table_loading: true,
     };
   },
 
@@ -198,10 +212,38 @@ export default {
     this.wf = new SettingAccount();
     await this.wf.init();
 
+    utils.register('refresh-current-account__my_cml', async ()=>{
+      await this.refresh();
+    });
     
+    await this.refresh();
   },
 
   methods: {
+
+    async refresh(){
+      this.table_loading = true;
+
+      this.list = await this.initCheckMinerVersion();
+      this.table_loading = false;
+    },
+
+    async initCheckMinerVersion(){
+      const expired_miner_list = await request.layer1_rpc('tea_versionExpiredNodes', []);
+      const cml_list = this.layer1_account.cml;
+      _.each(expired_miner_list, (mm)=>{
+        const miner_id = u8aToHex(mm);
+
+        const cml_index = _.findIndex(cml_list, (c)=>{
+          return c.machine_id === miner_id;
+        });
+        if(cml_index > -1){
+          cml_list[cml_index].version_expired = true;
+        }
+      });
+      
+      return cml_list;
+    },
     
     showStakingSlot(scope){
       // console.log(111, scope.row);
@@ -312,6 +354,51 @@ export default {
       await helper.resumeMiner(this, scope.row.id, async ()=>{
         this.$root.success();
         utils.publish('refresh-current-account__account');
+      });
+    },
+    tableRowClassName({row}){
+      if(row.version_expired){
+        return 'v-error';
+      }
+      return '';
+    },
+    async fixVersionExpired(scope){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      // TODO
+      const fixed_html = `
+        Please fix your miner program versions as below. <br/>
+        <ol>
+          <li>aaaa</li>
+          <li>bbbb</li>
+          <li>cccc</li>
+        </ol>
+      `;
+
+      this.$store.commit('modal/open', {
+        key: 'common_form', 
+        param: {
+          title: 'Reset expired version for miner',
+          label_width: 310,
+          text: fixed_html,
+        },
+        cb: async (form, close)=>{
+          this.$root.loading(true);
+        
+          try{
+            const tx = api.tx.tea.resetExpiredState(scope.row.machine_id);
+            await layer1_instance.sendTx(this.layer1_account.address, tx);
+
+            await utils.sleep(2000);
+            close();
+            await this.refresh();
+          }catch(e){
+            this.$root.showError(e);
+          }
+        
+          this.$root.loading(false);
+        },
       });
     }
 
