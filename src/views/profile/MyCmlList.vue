@@ -229,7 +229,11 @@ export default {
     },
 
     async initCheckMinerVersion(){
-      const expired_miner_list = await request.layer1_rpc('tea_versionExpiredNodes', []);
+      let expired_miner_list = [];
+      try{
+        await request.layer1_rpc('tea_versionExpiredNodes', []);
+      }catch(e){}
+      
       const cml_list = this.layer1_account.cml;
       _.each(expired_miner_list, (mm)=>{
         const miner_id = u8aToHex(mm);
