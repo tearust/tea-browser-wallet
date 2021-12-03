@@ -29,6 +29,7 @@
       <template slot-scope="scope">
         <span v-if="!scope.row.active_block">{{scope.row.name}}</span>
         <el-button v-if="scope.row.active_block" size="small" type="text" @click="showLink(scope)">{{scope.row.name}}</el-button>
+        
       </template>
     </el-table-column>
 
@@ -281,8 +282,9 @@ export default {
       this.$root.loading(false);
     },
     showLink(scope){
-      helper.showTAppLink(this, scope.row.id);
-      // helper.openToTApp(this, scope.row);
+
+      const url = utils.get_env('FAUCET_URL')+'#/tapp_links/1';
+      helper.openUrl(url);
     },
     showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);
