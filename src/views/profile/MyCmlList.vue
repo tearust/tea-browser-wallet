@@ -206,6 +206,11 @@ export default {
       'layer1_account'
     ]),
   },
+  watch: {
+    async layer1_account(){
+      await this.refresh();
+    }
+  },
   
   async mounted(){
     
@@ -216,7 +221,7 @@ export default {
       await this.refresh();
     });
     
-    await this.refresh();
+    // await this.refresh();
   },
 
   methods: {
@@ -225,6 +230,7 @@ export default {
       this.table_loading = true;
 
       this.list = await this.initCheckMinerVersion();
+   
       this.table_loading = false;
     },
 

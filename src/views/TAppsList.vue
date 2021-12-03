@@ -430,11 +430,11 @@ export default {
                   }
                 }),
 
-                // {
-                //   label: 'Create your own TApp',
-                //   value: 'own',
-                //   disabled: true,
-                // }
+                {
+                  label: 'Tea party',
+                  value: 'bbs',
+                  disabled: true,
+                },
               ],
               action: {
                 tip_html: (val, form)=>{
