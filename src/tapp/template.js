@@ -43,16 +43,16 @@ const TEM_LIST = [
   //     return `${http}:3200?t=twitter&v=${tid}&id=${id}`;
   //   },
   // }, 
-  // {
-  //   key: 'bbs',
-  //   label: 'Tea Party',
-  //   link(tid){
-  //     return JSON.stringify({
-  //       t: 'bbs',
-  //       v: tid,
-  //     });
-  //   },
-  // }
+  {
+    key: 'bbs',
+    label: 'Tea Party',
+    link(tid){
+      return JSON.stringify({
+        t: 'bbs',
+        v: tid,
+      });
+    },
+  }
 ];
 const TEM_MAP = {};
 _.each(TEM_LIST, (item)=>{

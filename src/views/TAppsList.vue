@@ -432,11 +432,11 @@ export default {
                   }
                 }),
 
-                {
-                  label: 'Tea party',
-                  value: 'bbs',
-                  disabled: true,
-                },
+                // {
+                //   label: 'Tea party',
+                //   value: 'bbs',
+                //   disabled: true,
+                // },
               ],
               action: {
                 tip_html: (val, form)=>{
