@@ -215,7 +215,8 @@
     "tapp_type": "TAppType",
     "billing_mode": "BillingMode",
     "buy_curve_theta": "u32",
-    "sell_curve_theta": "u32"
+    "sell_curve_theta": "u32",
+    "created_at": "BlockNumber"
   },
 
   "VersionItem": ["Bytes", "Bytes"]
