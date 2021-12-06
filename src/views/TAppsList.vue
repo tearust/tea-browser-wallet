@@ -283,7 +283,7 @@ export default {
     },
     showLink(scope){
 
-      const url = utils.get_env('FAUCET_URL')+'#/tapp_links/1';
+      const url = utils.get_env('FAUCET_URL')+'#/tapp_links/'+scope.row.id;
       helper.openUrl(url);
     },
     showDetails(scope){
