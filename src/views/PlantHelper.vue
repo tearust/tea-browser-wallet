@@ -9,8 +9,11 @@
     </el-steps>
 
     <div class="t-step" v-if="step===1">
-      <p>Please run the following command on your mining machine running the Ubuntu operating system. More information about software and hardware mining machine requirements are available in <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware#minimum-mining-machine-requirements---os" target="_blank">our mining setup wiki</a>.
-</p>
+      <p>
+        Please run the following command on your mining machine running the Ubuntu operating system. More information about software and hardware mining machine requirements are available in <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware#minimum-mining-machine-requirements---os" target="_blank">our mining setup wiki</a>.
+        <br/>
+        Make sure your mining machine has the <a href="https://github.com/tearust/teaproject/wiki/Mining:-Required-Open-Ports" target="_blank">proper ports open.</a>
+      </p>
       <div class="c-shell" style="margin-top:0;">
         <p style="font-weight:bold;">
           <span class="js_need_copy1">
