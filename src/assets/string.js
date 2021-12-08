@@ -3,4 +3,9 @@ export default {
   FrozenSeed: 'Frozen seed',
   FreshSeed: 'Fresh seed',
   PutCmlToAuctionStore: 'Put CML up for auction',
+
+
+  // graphql convert name
+  drawCmlsFromCoupon: 'RedeemCML',
+  DrawCmls: 'RedeemCML',
 };

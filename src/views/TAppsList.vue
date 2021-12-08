@@ -612,7 +612,7 @@ export default {
               required: true,
               default: 1,
               options: [
-                {id: 1}, {id: 2}, {id: 3}, {id: 5}, {id: 10}, {id: 30}
+                {id: 0}, {id: 1}, {id: 2}, {id: 3}, {id: 5}, {id: 10}, {id: 30}
               ],
               rules: [{
                 type: 'number',
@@ -623,8 +623,8 @@ export default {
                     return cb('Must be integer value.');
                   }
                   
-                  if(_.toNumber(val)<1) 
-                    return cb('min value is 1');
+                  if(_.toNumber(val)<0) 
+                    return cb('min value is 0');
                   if(_.toNumber(val)>30){
                     return cb('max value is 30');
                   }

@@ -135,7 +135,7 @@
       label="Name"
     >
       <template slot-scope="scope">
-        {{scope.row.name}}
+        {{scope.row.name | str}}
       </template>
     </el-table-column>
 

@@ -4,6 +4,7 @@
   "Url": "Bytes",
   "TeaPubKey": "[u8; 32]",
   "PeerId": "Bytes",
+  "ConnId": "Bytes",
   "Cid": "Bytes",
   "Signature": "Bytes",
   "NodeStatus": {
@@ -18,8 +19,8 @@
     "teaId": "TeaPubKey",
     "ephemeralId": "TeaPubKey",
     "profileCid": "Bytes",
-    "urls": "Vec<Url>",
     "peerId": "Bytes",
+    "conn_id": "Bytes",
     "createTime": "BlockNumber",
     "updateTime": "BlockNumber",
     "raNodes": "Vec<(TeaPubKey, bool)>",
