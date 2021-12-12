@@ -193,7 +193,7 @@
         </li>
         <li>
           Login to your mining node and run <br/>
-          <pre class="code">sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7-dev/install.sh)" "" "update"</pre><br/>
+          <pre class="code">sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7/install.sh)" "" "update"</pre><br/>
           This scripts will update the mining software and restart.
         </li>
         <li>
