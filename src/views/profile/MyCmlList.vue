@@ -204,7 +204,7 @@
     <span slot="footer" class="dialog-footer">
       <el-button size="small" @click="update_modal.visible=false">Later</el-button>
       <el-button size="small" type="primary" @click="update_modal_confrim()">
-        Later
+        Update
       </el-button>
     </span>
   </el-dialog>
