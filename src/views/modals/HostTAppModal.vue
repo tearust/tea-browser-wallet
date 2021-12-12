@@ -22,8 +22,9 @@
       </p>
 
       <p class="c-info">
-        Before host tapp, you need to assure your layer1 image version is <b>{{layer1_image}}</b><br/>
-        Please goto your miner machine and check your layer1 docker image version.
+        Note: Please make sure your miner software version is <b>{{layer1_image}}</b><br/>
+        Click <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Mining:-Host-and-Unhost-TApps" target="_blank">here</a> to learn how to check version.
+        
       </p>
     
 

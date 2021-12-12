@@ -176,7 +176,7 @@
   </TeaTable>
 
   <el-dialog
-    title="Reset expired version for miner"
+    title="Update miner software"
     :visible="update_modal.visible"
     width="78%"
     :close-on-click-modal="false"
@@ -185,26 +185,30 @@
     @close="update_modal.visible=false"
   >
     <p class="c-info">
-      Please fix your miner program versions as below. <br/>
+      Please follow the steps blow to update your miners software to the latest version. <br/>
       <ol>
         <li>
-          <span class="button" @click="schedule_down()">Schedule down</span> your CML so that other nodes will not report your machine and turn your CML into "Offline" status.
+          Click
+          <span class="button" @click="schedule_down()">Schedule down</span> your CML so that other validators will not report your node offline.
         </li>
         <li>
-          Login into your machine server and run <br/>
+          Login to your mining node and run <br/>
           <pre class="code">sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7-dev/install.sh)" "" "update"</pre><br/>
-          in terminal to update your docker images and restart running containers.
+          This scripts will update the mining software and restart.
         </li>
         <li>
-          <span class="button" @click="schedule_up()">Schedule up</span> your CML.
+          The last step, as long as the previous command completed, click
+          <span class="button" @click="schedule_up()">Schedule up</span>.
+          Now you can click the [Update completed] button to close this window.
+
         </li>
 
       </ol>
     </p>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="update_modal.visible=false">Later</el-button>
+      <el-button size="small" @click="update_modal.visible=false">Update later</el-button>
       <el-button size="small" type="primary" @click="update_modal_confrim()">
-        Update
+        Update completed
       </el-button>
     </span>
   </el-dialog>
@@ -429,7 +433,7 @@ export default {
     async schedule_up(){
       const row = this.update_modal.param;
       await helper.scheduleUpMiner(this, row.id, async ()=>{
-        this.$root.success('success, please click Update button to complete update process.');
+        this.$root.success('success, please click [Update completed] to close the window.');
       });
     },
     async update_modal_confrim(){
