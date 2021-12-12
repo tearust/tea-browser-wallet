@@ -91,7 +91,7 @@
     </el-form>
 
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="close()">Close</el-button>
+      <el-button size="small" @click="close()">{{param.close_text || 'Close'}}</el-button>
       <el-button size="small" :disabled="loading" type="primary" @click="confrim()">
         {{param.confirm_text || 'Confirm'}}
       </el-button>

@@ -237,7 +237,7 @@ export default {
           value: tmp.billing_mode
         });
         item_list.push({
-          label: 'Stake token amount',
+          label: 'Reward token amount',
           value: utils.layer1.balanceToAmount(item.billing_mode.fixedHostingToken.FixedHostingToken)
         });
       }

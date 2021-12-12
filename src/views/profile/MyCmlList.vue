@@ -11,9 +11,12 @@
       prop="id"
       sortable
       label="CML ID"
+      width="150"
     >
       <template slot-scope="scope">
-        <el-button type="text" @click="$router.push('/cml_details/'+scope.row.id)">{{scope.row.id}}</el-button>
+        <el-button style="width:auto;" type="text" @click="$router.push('/cml_details/'+scope.row.id)">{{scope.row.id}}</el-button>
+
+        <span v-if="scope.row.version_expired" @click="fixVersionExpired(scope)" style="color:red;font-size:12px;margin-left: 8px;">(Click to update)</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -172,6 +175,39 @@
     </el-table-column>
   </TeaTable>
 
+  <el-dialog
+    title="Reset expired version for miner"
+    :visible="update_modal.visible"
+    width="78%"
+    :close-on-click-modal="false"
+    custom-class="tea-modal"
+    :destroy-on-close="true"
+    @close="update_modal.visible=false"
+  >
+    <p class="c-info">
+      Please fix your miner program versions as below. <br/>
+      <ol>
+        <li>
+          <span class="button" @click="schedule_down()">Schedule down</span> your CML so that other nodes will not report your machine and turn your CML into "Offline" status.
+        </li>
+        <li>
+          Login into your machine server and run <br/>
+          <pre class="code">sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7-dev/install.sh)" "" "update"</pre><br/>
+          in terminal to update your docker images and restart running containers.
+        </li>
+        <li>
+          <span class="button" @click="schedule_up()">Schedule up</span> your CML.
+        </li>
+
+      </ol>
+    </p>
+    <span slot="footer" class="dialog-footer">
+      <el-button size="small" @click="update_modal.visible=false">Later</el-button>
+      <el-button size="small" type="primary" @click="update_modal_confrim()">
+        Later
+      </el-button>
+    </span>
+  </el-dialog>
 
 </div>
 </template>
@@ -198,6 +234,11 @@ export default {
       },
       list: [],
       table_loading: true,
+
+      update_modal: {
+        visible: false,
+        param: null,
+      }
     };
   },
 
@@ -229,6 +270,8 @@ export default {
     async refresh(){
       this.table_loading = true;
 
+      this.list = null;
+      await utils.sleep(1000);
       this.list = await this.initCheckMinerVersion();
    
       this.table_loading = false;
@@ -237,10 +280,10 @@ export default {
     async initCheckMinerVersion(){
       let expired_miner_list = [];
       try{
-        await request.layer1_rpc('tea_versionExpiredNodes', []);
+        expired_miner_list = await request.layer1_rpc('tea_versionExpiredNodes', []);
       }catch(e){}
       
-      const cml_list = this.layer1_account.cml;
+      const cml_list = _.cloneDeep(this.layer1_account.cml);
       _.each(expired_miner_list, (mm)=>{
         const miner_id = u8aToHex(mm);
 
@@ -373,43 +416,40 @@ export default {
       return '';
     },
     async fixVersionExpired(scope){
+      this.update_modal.visible = true;
+      this.update_modal.param = scope.row;
+    },
+
+    async schedule_down(){
+      const row = this.update_modal.param;
+      await helper.scheduleDownMiner(this, row.id, async ()=>{
+        this.$root.success('success, please update your miner.');
+      });
+    },
+    async schedule_up(){
+      const row = this.update_modal.param;
+      await helper.scheduleUpMiner(this, row.id, async ()=>{
+        this.$root.success('success, please click Update button to complete update process.');
+      });
+    },
+    async update_modal_confrim(){
+      const row = this.update_modal.param;
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
+      this.$root.loading(true);
+      try{
+        const tx = api.tx.tea.resetExpiredState(row.machine_id);
+        await layer1_instance.sendTx(this.layer1_account.address, tx);
 
-      // TODO
-      const fixed_html = `
-        Please fix your miner program versions as below. <br/>
-        <ol>
-          <li>aaaa</li>
-          <li>bbbb</li>
-          <li>cccc</li>
-        </ol>
-      `;
-
-      this.$store.commit('modal/open', {
-        key: 'common_form', 
-        param: {
-          title: 'Reset expired version for miner',
-          label_width: 310,
-          text: fixed_html,
-        },
-        cb: async (form, close)=>{
-          this.$root.loading(true);
+        await utils.sleep(3000);
+        this.update_modal.visible = false;
         
-          try{
-            const tx = api.tx.tea.resetExpiredState(scope.row.machine_id);
-            await layer1_instance.sendTx(this.layer1_account.address, tx);
-
-            await utils.sleep(2000);
-            close();
-            await this.refresh();
-          }catch(e){
-            this.$root.showError(e);
-          }
-        
-          this.$root.loading(false);
-        },
-      });
+      }catch(e){
+        this.$root.showError(e);
+      }
+    
+      await this.refresh();
+      this.$root.loading(false);
     }
 
   }
