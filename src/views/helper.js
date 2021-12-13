@@ -130,6 +130,9 @@ const F = {
                   self.layer1_account.address
                 ]);
                 const tmp = _.find(list, (arr)=>arr[1]===data.id);
+                if(!tmp){
+                  return 0;
+                }
                 return utils.layer1.balanceToAmount(tmp[3][0]);
               },
             },

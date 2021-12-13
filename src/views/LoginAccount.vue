@@ -604,7 +604,7 @@ export default {
       this.loan_rate = (loan_rate/100)+'%';
 
       let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
-      loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
+      // loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
       loan_amount += '(B)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON());
       loan_amount += '(C)';
       this.loan_amount = loan_amount;
