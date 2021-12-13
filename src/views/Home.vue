@@ -5,16 +5,16 @@
     This current TEA browser wallet version is only for testing. 
   </h4>
   <p>
-    The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. We will have USDT rewards during the contest but not for the public testing periods. Make sure to join our Telegram community for updated rules including starting time announcements: <a href="https://t.me/teaprojectorg" target="_blank">@teaprojectorg</a>.
+    The blockchain can be restarted at any time during testing which will result in your wallet balances being reset. We will have rewards during the contest but not for the public testing periods. Make sure to join our Telegram community for <a href="https://github.com/tearust/teaproject/wiki" target="_blank">updated rules</a> including starting time announcements: <a href="https://t.me/teaprojectorg" target="_blank">@teaprojectorg</a>.
   </p>
 
   <h4>Signing up for the mining competition</h4>
   <p>If you're new to using the polkadot{.js} wallet, we have a <a href="https://github.com/tearust/teaproject/wiki/%5ENewbie-Mining-Contest-Getting-Started-Guide%5E" target="_blank">new user's guide</a> to help contestants get started.</p>
 <ul>
 <li>You will need your address from the polkadot{.js} browser extension to before <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist" target="_blank">registering for the competition</a>.</li>
-<li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">topup</a> your account so you have enough TEA for your first transactions.</li>
+<li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">use the faucet</a> so you have enough TEA for your first transactions.</li>
 <li>You can now sign up directly through <a href="https://wallet.teaproject.org/#/leader_board">the Leader board</a> by clicking on the <strong>Register for competition</strong> button at the top of that page.</li>
-<li>Visit the <a href="https://forms.gle/RwWxUfuSWLfZNLoQ9" target="_blank">CML purchase form</a> to buy your CML seeds for epoch 6.</li>
+<li>Visit the <a href="https://forms.gle/jeBkBn8wDj1np92eA" target="_blank">CML purchase form</a> to buy your CML seeds for epoch 7.</li>
 <li>Wait for your CML coupons to be transferred to your wallet. You'll be notified by email when they've been transferred, after which you can redeem them.</li>
 <li>Take out Genesis loans with some of your CML seeds for your initial TEA necessary for the first staking slot.</li>
 </ul>
@@ -23,7 +23,14 @@
   <p>
     You can use your TEA browser wallet to earn TEA tokens through mining or staking. Mining TEA requires planting a Camellia (CML) NFT into a mining machine and paying <i class="iconfont icon-a-TeaProject-T" />1000 for the initial staking slot. Staking can be done on any mining machine operating on the TEA network. Each staking slot requires either <i class="iconfont icon-a-TeaProject-T" />1000 or 1 CML. You may stake or unstake every 1000 blocks.
   </p>
-
+  <h4>Disclaimer</h4>
+  By participating in the TEA mining contest, you acknowledge and agree to the following:
+  <ul>
+  <li>The CML that are purchased through the form are only for the contest and are not mainnet CML.</li>
+  <li>The contest allows for many different strategies, some of which might not be profitable (i.e. there's no guarantee of profit or rewards for participating in the mining contest).</li>
+  <li>The TEA Project team reserves the right to end the contest early or alter the rules at any time.</li>
+  </ul>
+  
   <h4>Links</h4>
   <p>
     More help is available including a tutorial video in 
