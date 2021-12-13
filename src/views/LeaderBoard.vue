@@ -78,14 +78,14 @@
       </template>
     </el-table-column>
 
-    <el-table-column
+    <!-- <el-table-column
       prop="reward"
       label="Prize share"
     >
       <template slot-scope="scope">
         <span style="color: #35a696;font-weight:bold;" :inner-html.prop="scope.row.reward>0?`<i class='iconfont icon-dollar'></i>${scope.row.reward}`:'0'"></span>
       </template>
-    </el-table-column>
+    </el-table-column> -->
       
 
   </TeaTable>
