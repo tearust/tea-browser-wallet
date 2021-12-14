@@ -244,6 +244,10 @@ export default {
               disabled: true,
               default: this.layer1_account.address,
             },
+            erc20_address: {
+              class: 'hidden',
+              default: 'NA',
+            }
           },
         },
         cb: async (form, close)=>{
