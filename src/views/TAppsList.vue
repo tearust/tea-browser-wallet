@@ -282,9 +282,9 @@ export default {
       this.$root.loading(false);
     },
     showLink(scope){
-
-      const url = utils.get_env('FAUCET_URL')+'#/tapp_links/'+scope.row.id;
-      helper.openUrl(url);
+      helper.showTAppLink(this, scope.row.id);
+      // const url = utils.get_env('FAUCET_URL')+'#/tapp_links/'+scope.row.id;
+      // helper.openUrl(url);
     },
     showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);

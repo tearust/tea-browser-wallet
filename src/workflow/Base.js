@@ -227,20 +227,20 @@ export default class {
 
     
 
-    let usd = await api.query.genesisExchange.uSDStore(address);
-    usd = usd.toJSON();
-    usd = utils.layer1.balanceToAmount(usd);
+    // let usd = await api.query.genesisExchange.uSDStore(address);
+    // usd = usd.toJSON();
+    // usd = utils.layer1.balanceToAmount(usd);
 
-    let usd_debt = await api.query.genesisExchange.uSDDebt(address);
-    usd_debt = usd_debt.toJSON();
-    usd_debt = utils.layer1.balanceToAmount(usd_debt);
+    // let usd_debt = await api.query.genesisExchange.uSDDebt(address);
+    // usd_debt = usd_debt.toJSON();
+    // usd_debt = utils.layer1.balanceToAmount(usd_debt);
     
     return {
       free: Math.floor(free * 10000) / 10000,
       lock: Math.floor(lock * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
-      usd,
-      usd_debt,
+      usd: 0,
+      usd_debt: 0
     };
   }
 
