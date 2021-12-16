@@ -21,7 +21,18 @@
           margin: -5px 0 15px 0;
           word-break: break-word;
         ">
-          These are individual miners' nodes that are hosting delegators. Your browser can load the TApp from any one of these delegators by clicking on them. You can setup your own node to host a delegator starting in epoch 5. <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware" target="_blank">Click here for how to setup your own node</a>.
+          These are individual miners' nodes that are hosting delegators. Your browser can load the TApp from any one of these delegators by clicking on them. You can setup your own node to host a delegator by following <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware" target="_blank">this guide to setup your own node</a>.
+        </p>
+        
+        <p style="
+          font-size: 15px;
+          margin: -5px 0 15px 0;
+          word-break: break-word;
+        ">
+        Please note that you may get a browser warning message when clicking on the delegator HTTP links: <br>
+        <img width="140" alt="http-warning" src="https://user-images.githubusercontent.com/86096370/146291198-74ec561d-7261-45b5-bc02-c28b0055f2dd.png">
+        <br>
+        This is a false alarm and you can safely click through. For more on why this isn't a problem you can <a href="https://medium.com/p/how-tea-projects-use-of-http-in-web3-is-more-secure-than-https-in-web-2-0-d488265af3d2" target="_blank">read more here</a>.        
         </p>
 
         <h4 style="font-size: 18px;color: #666; margin: 0 0 5px 0;">Delegator list</h4>
