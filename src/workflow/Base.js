@@ -219,13 +219,18 @@ export default class {
     let reward = await api.query.cml.accountRewards(address);
     reward = reward.toJSON();
 
-    const free = parseInt(tmp.free, 10) / layer1_instance.asUnit();
-    const lock = parseInt(tmp.reserved, 10) / layer1_instance.asUnit();
+    const free_b = parseInt(tmp.free, 10);
+    const fee_frozen_b = parseInt(tmp.feeFrozen, 10);
+    const misc_frozen_b = parseInt(tmp.miscFrozen, 10);
+    const reserved_b = parseInt(tmp.reserved, 10);
+
+    const free = (free_b - fee_frozen_b) / layer1_instance.asUnit();
+    const fee_frozen = fee_frozen_b / layer1_instance.asUnit();
+    const lock = reserved_b / layer1_instance.asUnit();
     if (reward) {
       reward = reward / layer1_instance.asUnit();
     }
 
-    
 
     // let usd = await api.query.genesisExchange.uSDStore(address);
     // usd = usd.toJSON();
@@ -238,6 +243,7 @@ export default class {
     return {
       free: Math.floor(free * 10000) / 10000,
       lock: Math.floor(lock * 10000) / 10000,
+      fee_frozen: Math.floor(fee_frozen * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
       usd: 0,
       usd_debt: 0
@@ -356,6 +362,8 @@ export default class {
       coupons,
       pawn_cml_list,
       tea_debt,
+
+      fee_frozen: balance.fee_frozen,
     });
 
 

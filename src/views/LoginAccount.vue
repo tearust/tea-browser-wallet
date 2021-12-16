@@ -47,6 +47,14 @@
         <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
       </div>
 
+      <div class="x-item">
+        <b>
+          {{'Frozen TEA'}}
+          <TeaIconButton style="position:relative; top:0;" place="right" tip="The frozen fee for layer1 staking." icon="questionmark" />
+        </b>
+        <span :inner-html.prop="layer1_account ? layer1_account.fee_frozen : '' | teaIcon"></span>
+      </div>
+
       <!-- <div class="x-item">
         <b>
           {{'My COFFEE' | cardTitle}}
