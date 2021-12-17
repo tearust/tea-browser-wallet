@@ -27,7 +27,8 @@
         :prop="item.name" 
         :class="(props[item.name] && props[item.name].class) || ''"
       >
-        <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}"></el-input>
+        <el-input v-if="types[item.name]==='Input'" :disabled="props[item.name].disabled||false" 
+          v-model="form[item.model||item.name]" v-bind="{...props[item.name].el_props||{}}"></el-input>
 
         <el-select v-if="types[item.name]==='select'" v-model="form[item.name]" placeholder="Please select." v-bind="{...props[item.name].el_props||{}}">
           <el-option

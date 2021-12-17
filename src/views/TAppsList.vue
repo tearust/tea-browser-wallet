@@ -441,7 +441,7 @@ export default {
               action: {
                 tip_html: (val, form)=>{
                   if(!val) return null;
-                  const x = {'youtube': 2000, 'reddit':1500, 'twitter':1000, 'bbs': 2000,}[_.toLower(val)];
+                  const x = {'youtube': 3000, 'reddit':1500, 'twitter':1000, 'bbs': 2000, 'referralcode': 2000,}[_.toLower(val)];
                   return `Requires a ${x} performance CML`;
                 }
               },
@@ -504,6 +504,12 @@ export default {
               el_props: {
                 placeholder: 'e.g. tea project',
               }
+            },
+            code: {
+              label: 'Referral Code',
+              type: 'Input',
+              disabled: true,
+              model: 'ticker',
             },
             
             min_hosts: {
@@ -652,7 +658,7 @@ export default {
             const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
-            let link_param = form[form.template];
+            let link_param = form[form.template]||'NA';
             const link = tapp.template.genLink(form.template, link_param);
 
             if(form.template === 'YouTube' && _.includes(_.map(this.youtube_options, (x)=>x.value), link_param)){
@@ -706,7 +712,12 @@ export default {
     },
 
     async initCreaetTAppModalOptions(){
-      const xl = await request.layer1_rpc('cml_approvedLinks', []);
+      const xl_1 = await request.layer1_rpc('cml_approvedLinks', [false]);
+      const xl_2 = await request.layer1_rpc('cml_approvedLinks', [true]);
+      const xl = _.differenceBy(xl_1, xl_2, (val)=>{
+        return val.toString();
+      });
+
       let list = await Promise.all(_.map(xl, async (arr)=>{
         const link = utils.rpcArrayToString(arr[0]);
         const tapp_id = arr[1];

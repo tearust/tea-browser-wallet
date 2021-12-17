@@ -77,7 +77,7 @@ export default {
     async refreshList(){
       this.$root.loading(true);
 
-      const xl = await request.layer1_rpc('cml_approvedLinks', []);
+      const xl = await request.layer1_rpc('cml_approvedLinks', [false]);
 
       
       this.list = await Promise.all(_.map(xl, async (arr)=>{

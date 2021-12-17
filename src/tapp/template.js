@@ -16,6 +16,16 @@ const TEM_LIST = [
       return `${http}:3200?t=youtube&v=${tid}&id=${id}`;
     },
   }, 
+  {
+    key: 'ReferralCode',
+    label: 'ReferralCode',
+    link(tid){
+      return JSON.stringify({
+        t: 'ReferralCode',
+        v: tid,
+      });
+    }
+  }
   // {
   //   key: 'Reddit',
   //   label: 'Reddit',
