@@ -224,9 +224,13 @@ export default class {
     const misc_frozen_b = parseInt(tmp.miscFrozen, 10);
     const reserved_b = parseInt(tmp.reserved, 10);
 
-    const free = (free_b - fee_frozen_b) / layer1_instance.asUnit();
-    const fee_frozen = fee_frozen_b / layer1_instance.asUnit();
+    const frozen_b = misc_frozen_b > fee_frozen_b ? misc_frozen_b : fee_frozen_b;
+
+    const free = (free_b - frozen_b) / layer1_instance.asUnit();
+    const fee_frozen = frozen_b / layer1_instance.asUnit();
     const lock = reserved_b / layer1_instance.asUnit();
+
+    const total = (free_b+reserved_b) / layer1_instance.asUnit();
     if (reward) {
       reward = reward / layer1_instance.asUnit();
     }
@@ -244,6 +248,7 @@ export default class {
       free: Math.floor(free * 10000) / 10000,
       lock: Math.floor(lock * 10000) / 10000,
       fee_frozen: Math.floor(fee_frozen * 10000) / 10000,
+      total_balance: Math.floor(total * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
       usd: 0,
       usd_debt: 0
@@ -364,6 +369,7 @@ export default class {
       tea_debt,
 
       fee_frozen: balance.fee_frozen,
+      total_balance: balance.total_balance,
     });
 
 

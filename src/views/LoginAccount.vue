@@ -23,7 +23,7 @@
 
       </div>
       <div class="x-item">
-        <b>{{'My TEA' | cardTitle}}</b>
+        <b>{{'Transferrable TEA' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
 
@@ -49,10 +49,10 @@
 
       <div class="x-item">
         <b>
-          {{'Frozen TEA'}}
-          <TeaIconButton style="position:relative; top:0;" place="right" tip="The frozen fee for layer1 staking." icon="questionmark" />
+          {{'Total TEA'}}
+          <TeaIconButton style="position:relative; top:0;" place="right" tip="Total balance include frozen and reserved balance." icon="questionmark" />
         </b>
-        <span :inner-html.prop="layer1_account ? layer1_account.fee_frozen : '' | teaIcon"></span>
+        <span :inner-html.prop="layer1_account ? layer1_account.total_balance : '' | teaIcon"></span>
       </div>
 
       <!-- <div class="x-item">

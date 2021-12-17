@@ -1,4 +1,4 @@
-tag=v0.7.19
+tag=v0.7.20
 name=tea-browser-wallet
 
 echo building browser-wallet...

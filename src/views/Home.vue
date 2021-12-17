@@ -1,5 +1,6 @@
 <template>
 <div class="tea-page p-home">
+  <h4 style="background:#35a696; color: #fff; text-align:center; padding: 5px 10px;">Epoch7.1 starts at 8PM PST Dec 17.</h4>
 
   <h4>
     This current TEA browser wallet version is only for testing. 
