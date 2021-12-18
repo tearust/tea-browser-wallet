@@ -39,6 +39,12 @@
       </template>
     </el-table-column>
 
+    <el-table-column
+      prop="coupon_amount"
+      width="120"
+      label="Mainnet coupon"
+    />
+
     <!-- <el-table-column
       prop="cml_asset"
       label="Projected 7 day mining income"
@@ -67,6 +73,7 @@
       prop="usd_debt"
       label="COFFEE debt"
     /> -->
+
     <el-table-column
       prop="total"
       width="180"
@@ -77,6 +84,7 @@
         <span v-if="scope.row.total<0" style="color:#f00;">({{scope.row.total}})</span>
       </template>
     </el-table-column>
+    
 
     <!-- <el-table-column
       prop="reward"
@@ -195,6 +203,8 @@ export default {
             loan_credit: utils.layer1.roundAmount(arr[5]),
             usd_debt: utils.layer1.roundAmount(arr[6]),
             total: utils.layer1.roundAmount(total),
+
+            coupon_amount: utils.layer1.roundAmount(arr[8]),
           };
 
           if(rs.total > 0){
