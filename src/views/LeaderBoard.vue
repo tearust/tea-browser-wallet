@@ -204,7 +204,7 @@ export default {
             usd_debt: utils.layer1.roundAmount(arr[6]),
             total: utils.layer1.roundAmount(total),
 
-            coupon_amount: utils.layer1.roundAmount(arr[8]),
+            coupon_amount: _.toNumber(arr[8])/1000000000000,
           };
 
           if(rs.total > 0){
