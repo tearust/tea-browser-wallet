@@ -7,7 +7,7 @@
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
   </el-button> -->
   <span style="position:absolute;top:8px;left:160px;">
-    Current reward rate XXXX TEA = 1 Mainnet CML Coupon.
+    Current reward rate <b style="color:#35a696;">{{reward_rate}} TEA</b> = 1 Mainnet CML Coupon.
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLSD7JPA_9xF4qzYMM3gyUPqWJ_smiC3v28YQR0tq5Y07ZhA/viewform" target="_blank">Reward application form</a>.
     Rules in 
     <a href="https://github.com/tearust/teaproject/wiki/epoch-7-Reward-Details" target="_blank">detail</a>.
@@ -124,6 +124,7 @@ export default {
   data(){
     return {
       list: null,
+      reward_rate: 'XXXX',
 
       show_for_coffee: false,
     };
@@ -154,6 +155,7 @@ export default {
       let x_list = null;
       const sum_arr = [];
       let sum = 0;
+      let tea_total = 0;
       if(this.show_for_coffee){
         x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           for(let j=1; j<7; j++){
@@ -217,10 +219,13 @@ export default {
             sum += rs.total;
             sum_arr.push(rs.index);
           }
+          tea_total += rs.tea_asset;
 
           return rs;
         }));
       }
+
+      this.reward_rate = utils.layer1.roundAmount((sum/tea_total)*3);
 
       this.list = _.reverse(_.sortBy(_.map(x_list, (item)=>{
          
