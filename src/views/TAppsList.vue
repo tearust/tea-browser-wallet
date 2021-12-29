@@ -243,7 +243,7 @@ export default {
       // await utils.sleep(1000);
 
       const list = await request.layer1_rpc('bonding_listTApps', [true]);
-console.log(111, list);
+
       this.list = await Promise.all(_.map(list, async (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
@@ -505,6 +505,22 @@ console.log(111, list);
                 placeholder: 'e.g. tea project',
               }
             },
+            ReferralCode: {
+              label: 'Referral info',
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'ReferralCode'
+              },
+              el_props: {
+                type: 'textarea',
+                rows: 4,
+                style: {
+                  width: '800px'
+                }
+              },
+            },
             code: {
               label: 'Referral Code',
               type: 'Input',
@@ -660,6 +676,7 @@ console.log(111, list);
 
             let link_param = form[form.template]||'NA';
             const link = tapp.template.genLink(form.template, link_param);
+            
 
             if(form.template === 'YouTube' && _.includes(_.map(this.youtube_options, (x)=>x.value), link_param)){
               const x = await this.$confirm(`Note that you need to pay 100 TEA for this TApp.`, {

@@ -24,6 +24,10 @@ const F = {
       cid = utils.get_env('TAPP_BBS_CID');
       param = `id=${tapp.id}&v=${encodeURIComponent(tapp.json.v)}`;
     }
+    else if(tapp.json.t === 'ReferralCode'){
+      cid = utils.get_env('TAPP_CID');
+      param = `t=${tapp.json.t}&id=${tapp.id}&v=code`;
+    }
     else{
       cid = utils.get_env('TAPP_CID');
       param = `t=${tapp.json.t}&id=${tapp.id}&v=${tapp.json.v}`;

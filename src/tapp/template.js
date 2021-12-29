@@ -19,10 +19,11 @@ const TEM_LIST = [
   {
     key: 'ReferralCode',
     label: 'ReferralCode',
-    link(tid){
+    link(info){
+      const i = utils.forge.util.encode64(info);
       return JSON.stringify({
         t: 'ReferralCode',
-        v: tid,
+        v: i,
       });
     }
   }
