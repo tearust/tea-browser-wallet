@@ -242,8 +242,8 @@ export default {
       this.$root.loading(true);
       // await utils.sleep(1000);
 
-      const list = await request.layer1_rpc('bonding_listTApps', [false]);
-// console.log(111, list);
+      const list = await request.layer1_rpc('bonding_listTApps', [true]);
+console.log(111, list);
       this.list = await Promise.all(_.map(list, async (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),

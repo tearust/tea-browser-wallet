@@ -124,7 +124,7 @@ export default {
   data(){
     return {
       list: null,
-      reward_rate: 'XXXX',
+      reward_rate: '31251.5690',
 
       show_for_coffee: false,
     };
@@ -225,7 +225,7 @@ export default {
         }));
       }
 
-      this.reward_rate = utils.layer1.roundAmount((sum/tea_total)*3);
+      // this.reward_rate = utils.layer1.roundAmount(sum/3);
 
       this.list = _.reverse(_.sortBy(_.map(x_list, (item)=>{
          
