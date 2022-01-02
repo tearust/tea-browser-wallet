@@ -6,9 +6,10 @@
   <!-- <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
   </el-button> -->
-  <span style="position:absolute;top:8px;left:160px;">
-    Current reward rate <b style="color:#35a696;">{{reward_rate}} TEA</b> = 1 Mainnet CML Coupon.
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLSD7JPA_9xF4qzYMM3gyUPqWJ_smiC3v28YQR0tq5Y07ZhA/viewform" target="_blank">Reward application form</a>.
+  <span style="">
+    Current reward rate:
+    <b style="color:#35a696;">Total 130747.1277 TEA / 3.4911 Mainnet CML coupon = 37451.5562 T/C</b>.
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLSD7JPA_9xF4qzYMM3gyUPqWJ_smiC3v28YQR0tq5Y07ZhA/viewform" style="margin-left: 10px;" target="_blank">Reward application form</a>.
     Rules in 
     <a href="https://github.com/tearust/teaproject/wiki/epoch-7-Reward-Details" target="_blank">detail</a>.
   </span>
