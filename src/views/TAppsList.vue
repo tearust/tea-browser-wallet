@@ -243,7 +243,7 @@ export default {
       // await utils.sleep(1000);
 
       const list = await request.layer1_rpc('bonding_listTApps', [false]);
-// console.log(111, list);
+
       this.list = await Promise.all(_.map(list, async (arr)=>{
         const item = {
           id: _.toNumber(arr[1]),
@@ -282,9 +282,15 @@ export default {
       this.$root.loading(false);
     },
     showLink(scope){
+<<<<<<< HEAD
 
       const url = utils.get_env('FAUCET_URL')+'#/tapp_links/'+scope.row.id;
       helper.openUrl(url);
+=======
+      helper.showTAppLink(this, scope.row.id);
+      // const url = utils.get_env('FAUCET_URL')+'#/tapp_links/'+scope.row.id;
+      // helper.openUrl(url);
+>>>>>>> master
     },
     showDetails(scope){
       helper.showTAppDetails(this, scope.row.id);
@@ -432,16 +438,16 @@ export default {
                   }
                 }),
 
-                // {
-                //   label: 'Tea party',
-                //   value: 'bbs',
-                //   disabled: true,
-                // },
+                {
+                  label: 'Tea party',
+                  value: 'bbs',
+                  disabled: true,
+                },
               ],
               action: {
                 tip_html: (val, form)=>{
                   if(!val) return null;
-                  const x = {'youtube': 2000, 'reddit':1500, 'twitter':1000, 'bbs': 2000,}[_.toLower(val)];
+                  const x = {'youtube': 3000, 'reddit':1500, 'twitter':1000, 'bbs': 2000, 'referralcode': 2000,}[_.toLower(val)];
                   return `Requires a ${x} performance CML`;
                 }
               },
@@ -504,6 +510,28 @@ export default {
               el_props: {
                 placeholder: 'e.g. tea project',
               }
+            },
+            ReferralCode: {
+              label: 'Referral info',
+              type: 'Input',
+              required: true,
+              condition: {
+                target: 'template',
+                value: 'ReferralCode'
+              },
+              el_props: {
+                type: 'textarea',
+                rows: 4,
+                style: {
+                  width: '800px'
+                }
+              },
+            },
+            code: {
+              label: 'Referral Code',
+              type: 'Input',
+              disabled: true,
+              model: 'ticker',
             },
             
             min_hosts: {
@@ -612,7 +640,7 @@ export default {
               required: true,
               default: 1,
               options: [
-                {id: 1}, {id: 2}, {id: 3}, {id: 5}, {id: 10}, {id: 30}
+                {id: 0}, {id: 1}, {id: 2}, {id: 3}, {id: 5}, {id: 10}, {id: 30}
               ],
               rules: [{
                 type: 'number',
@@ -623,8 +651,8 @@ export default {
                     return cb('Must be integer value.');
                   }
                   
-                  if(_.toNumber(val)<1) 
-                    return cb('min value is 1');
+                  if(_.toNumber(val)<0) 
+                    return cb('min value is 0');
                   if(_.toNumber(val)>30){
                     return cb('max value is 30');
                   }
@@ -652,8 +680,9 @@ export default {
             const fund = utils.toBN(amount);
             const ticker = stringToHex(_.toUpper(form.ticker));
 
-            let link_param = form[form.template];
+            let link_param = form[form.template]||'NA';
             const link = tapp.template.genLink(form.template, link_param);
+            
 
             if(form.template === 'YouTube' && _.includes(_.map(this.youtube_options, (x)=>x.value), link_param)){
               const x = await this.$confirm(`Note that you need to pay 100 TEA for this TApp.`, {
@@ -706,7 +735,12 @@ export default {
     },
 
     async initCreaetTAppModalOptions(){
-      const xl = await request.layer1_rpc('cml_approvedLinks', []);
+      const xl_1 = await request.layer1_rpc('cml_approvedLinks', [false]);
+      const xl_2 = await request.layer1_rpc('cml_approvedLinks', [true]);
+      const xl = _.differenceBy(xl_1, xl_2, (val)=>{
+        return val.toString();
+      });
+
       let list = await Promise.all(_.map(xl, async (arr)=>{
         const link = utils.rpcArrayToString(arr[0]);
         const tapp_id = arr[1];

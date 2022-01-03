@@ -183,6 +183,26 @@ a, a:hover, a:focus, button:focus {
     }
   }
 
+  span.button{
+    background: #35a696;
+    padding: 0 8px;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+  }
+  pre.code{
+    background: #000;
+    padding: 5px 8px;
+    display: inline-block;
+    clear: both;
+    margin: 0;
+    color: #0f0;
+  }
+
+  ol>li{
+    margin-bottom: 8px;
+  }
+
   .hidden{
     display: none;
   }
@@ -274,10 +294,10 @@ a, a:hover, a:focus, button:focus {
   word-break: break-word;
 }
 .el-table .v-error{
-  & > td:first-child{
-    background: rgb(245, 108, 108) !important;
+  & > td{
+    background: #fdf6ec !important;
     border-color: none !important;
-    color: #fff;
+    color: #e6a23c;
 
   }
 }

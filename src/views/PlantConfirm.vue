@@ -43,7 +43,7 @@
   </div>
 
   <div class="tea-page" v-if="step===2">
-    <h2>Active miner success.</h2>
+    <h2>Miner activated successfully.</h2>
 
     <h4>
       Please read carefully before hosting any applications. Failure to do so could result in penalties.

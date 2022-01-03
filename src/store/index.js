@@ -114,6 +114,8 @@ const store = new Vuex.Store({
         address: account.address,
         balance: account.balance,
         lock_balance: account.lock_balance,
+        total_balance: account.total_balance,
+        fee_frozen: account.fee_frozen,
         cml: account.cml || [],
         reward: account.reward,
         // debt: account.debt,

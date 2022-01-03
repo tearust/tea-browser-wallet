@@ -23,7 +23,7 @@
 
       </div>
       <div class="x-item">
-        <b>{{'My TEA' | cardTitle}}</b>
+        <b>{{'Transferrable TEA' | cardTitle}}</b>
         <span :inner-html.prop="layer1_account ? layer1_account.balance : '' | teaIcon"></span>
       </div>
 
@@ -45,6 +45,14 @@
           <TeaIconButton style="position:relative; top:0;" place="right" tip="The balance locked in staking and auction selling or bidding." icon="questionmark" />
         </b>
         <span :inner-html.prop="layer1_account ? layer1_account.lock_balance : '' | teaIcon"></span>
+      </div>
+
+      <div class="x-item">
+        <b>
+          {{'Total TEA'}}
+          <TeaIconButton style="position:relative; top:0;" place="right" tip="Total balance include frozen and reserved balance." icon="questionmark" />
+        </b>
+        <span :inner-html.prop="layer1_account ? layer1_account.total_balance : '' | teaIcon"></span>
       </div>
 
       <!-- <div class="x-item">
@@ -604,7 +612,7 @@ export default {
       this.loan_rate = (loan_rate/100)+'%';
 
       let loan_amount = utils.layer1.formatBalance(api.consts.genesisBank.cmlALoanAmount.toJSON(), true);
-      loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
+      // loan_amount += '(A)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlBLoanAmount.toJSON());
       loan_amount += '(B)/'+utils.layer1.formatBalance(api.consts.genesisBank.cmlCLoanAmount.toJSON());
       loan_amount += '(C)';
       this.loan_amount = loan_amount;

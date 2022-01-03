@@ -20,6 +20,12 @@
         Note that you need to pay 100 TEA as a deposit which will be forfeited if your miner goes offline without unhosting first. <br />
         For more info about maximizing your hosting revenue, <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Mining:-Host-and-Unhost-TApps" target="_blank">visit our wiki</a>.
       </p>
+
+      <p class="c-info">
+        Note: Please make sure your miner software version is <b>{{layer1_image}}</b><br/>
+        Click <a class="t-wiki" href="https://github.com/tearust/teaproject/wiki/Mining:-Host-and-Unhost-TApps" target="_blank">here</a> to learn how to check version.
+        
+      </p>
     
 
     <el-table 
@@ -111,6 +117,7 @@ export default {
       loading: true,
 
       tapp: null,
+      layer1_image: null,
     };
   },
   computed: {
@@ -136,6 +143,8 @@ export default {
       await this.wf.init();
 
       await this.init_cml_list();
+
+      this.layer1_image = utils.get_env('layer1_image');
     },
 
     close(){

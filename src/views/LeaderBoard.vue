@@ -6,6 +6,13 @@
   <!-- <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
   </el-button> -->
+  <span style="">
+    Current reward rate:
+    <b style="color:#35a696;">Total 130747.1277 TEA / 3.4911 Mainnet CML coupon = 37451.5562 T/C</b>.
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLSD7JPA_9xF4qzYMM3gyUPqWJ_smiC3v28YQR0tq5Y07ZhA/viewform" style="margin-left: 10px;" target="_blank">Reward application form</a>.
+    Rules in 
+    <a href="https://github.com/tearust/teaproject/wiki/epoch-7-Reward-Details" target="_blank">detail</a>.
+  </span>
   <el-button type="primary" size="small" style="position:absolute; top:0; right: 50px;" @click="registerHandler()">Register for competition</el-button>
   <el-button size="small" style="top: 0px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
@@ -39,6 +46,12 @@
       </template>
     </el-table-column>
 
+    <el-table-column
+      prop="coupon_amount"
+      width="120"
+      label="Mainnet coupon"
+    />
+
     <!-- <el-table-column
       prop="cml_asset"
       label="Projected 7 day mining income"
@@ -67,6 +80,7 @@
       prop="usd_debt"
       label="COFFEE debt"
     /> -->
+
     <el-table-column
       prop="total"
       width="180"
@@ -77,15 +91,16 @@
         <span v-if="scope.row.total<0" style="color:#f00;">({{scope.row.total}})</span>
       </template>
     </el-table-column>
+    
 
-    <el-table-column
+    <!-- <el-table-column
       prop="reward"
       label="Prize share"
     >
       <template slot-scope="scope">
         <span style="color: #35a696;font-weight:bold;" :inner-html.prop="scope.row.reward>0?`<i class='iconfont icon-dollar'></i>${scope.row.reward}`:'0'"></span>
       </template>
-    </el-table-column>
+    </el-table-column> -->
       
 
   </TeaTable>
@@ -110,6 +125,7 @@ export default {
   data(){
     return {
       list: null,
+      reward_rate: '31251.5690',
 
       show_for_coffee: false,
     };
@@ -140,6 +156,7 @@ export default {
       let x_list = null;
       const sum_arr = [];
       let sum = 0;
+      let tea_total = 0;
       if(this.show_for_coffee){
         x_list = await Promise.all(_.map(tmp, async (arr, i)=>{
           for(let j=1; j<7; j++){
@@ -195,16 +212,21 @@ export default {
             loan_credit: utils.layer1.roundAmount(arr[5]),
             usd_debt: utils.layer1.roundAmount(arr[6]),
             total: utils.layer1.roundAmount(total),
+
+            coupon_amount: _.toNumber(arr[8])/1000000000000,
           };
 
           if(rs.total > 0){
             sum += rs.total;
             sum_arr.push(rs.index);
           }
+          tea_total += rs.tea_asset;
 
           return rs;
         }));
       }
+
+      // this.reward_rate = utils.layer1.roundAmount(sum/3);
 
       this.list = _.reverse(_.sortBy(_.map(x_list, (item)=>{
          
@@ -244,6 +266,10 @@ export default {
               disabled: true,
               default: this.layer1_account.address,
             },
+            erc20_address: {
+              class: 'hidden',
+              default: 'NA',
+            }
           },
         },
         cb: async (form, close)=>{

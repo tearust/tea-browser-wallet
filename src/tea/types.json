@@ -4,6 +4,7 @@
   "Url": "Bytes",
   "TeaPubKey": "[u8; 32]",
   "PeerId": "Bytes",
+  "ConnId": "Bytes",
   "Cid": "Bytes",
   "Signature": "Bytes",
   "NodeStatus": {
@@ -178,7 +179,7 @@
   "TAppId": "u64",
   "Performance": "u32",
   "TAppType": {
-    "_enum": ["YouTube", "Reddit", "Twitter", "Bbs"]
+    "_enum": ["YouTube", "Reddit", "Twitter", "Bbs", "ReferralCode"]
   },
   "BillingMode": {
     "_enum": {
