@@ -471,6 +471,45 @@ query {
     self.$root.goPath('/cml/migrate/'+cml.id);
   },
 
+  async transferToCmlControllerAccount(self, to, succ_cb){
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    self.$store.commit('modal/open', {
+      key: 'common_form',
+      param: {
+        title: 'Transfer TEA to Controller account',
+        text: 'Please don\'t transfer too much, 1 TEA is enough.',
+        props: {
+          to: {
+            label: 'Controller account',
+            type: 'Input',
+            default: to,
+            disabled: true
+          },
+          amount: {
+            label: 'Amount',
+            type: 'number',
+            default: 1,
+          }
+        }
+        
+      },
+      cb: async (form, closeFn)=>{
+        self.$root.loading(true);
+        try{
+          await self.wf.transferBalance(form.to, form.amount);
+
+          closeFn();
+          await succ_cb();
+        }catch(e){
+          self.$root.showError(e);
+        }
+        self.$root.loading(false);
+      },
+    });
+  },
+
 };
 
 

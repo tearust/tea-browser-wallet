@@ -121,6 +121,27 @@
     </el-table-column>
 
     <el-table-column
+      label="Controller account balance"
+      width="150"
+    >
+      <template slot-scope="scope">
+        <el-button
+          v-if="scope.row.miner_controller_account"
+          @click="transferToControllerAccount(scope.row)"
+          type="text"
+
+          size="small">
+          <!-- {{scope.row.miner_controller_account}}
+          <br/> -->
+          <span v-if="scope.row.miner_controller_account_balance>=0.1">{{scope.row.miner_controller_account_balance}}</span> 
+          <span style="color:red;" v-if="scope.row.miner_controller_account_balance<0.1">{{scope.row.miner_controller_account_balance}} - Click to topup</span> 
+
+        </el-button>
+      </template>
+      
+    </el-table-column>
+
+    <el-table-column
       label="Actions"
       fixed="right"
       width="120"
@@ -454,6 +475,11 @@ export default {
     
       await this.refresh();
       this.$root.loading(false);
+    },
+    async transferToControllerAccount(row){
+      await helper.transferToCmlControllerAccount(this, row.miner_controller_account, async ()=>{
+        utils.publish('refresh-current-account__account');
+      });
     }
 
   }

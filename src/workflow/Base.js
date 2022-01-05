@@ -350,7 +350,7 @@ export default class {
     // let my_auction = await api.query.auction.userAuctionStore(layer1_account.address);
     // my_auction = my_auction.toHuman();
     const cml_list = await this.getCmlListByUser(layer1_account.address);
-    const cml_data = await this.getCmlByList(cml_list);
+    const cml_data = await this.getCmlByList(cml_list, true);
 
     this._log.i("refresh current layer1_account");
     store.commit('set_account', {
@@ -383,7 +383,7 @@ export default class {
     return user_cml_list;
   }
 
-  async getCmlByList(cml_list) {
+  async getCmlByList(cml_list, flag=false) {
     const layer1_instance = this.getLayer1Instance();
     const api = layer1_instance.getApi();
 
@@ -447,6 +447,10 @@ export default class {
         cml.miner_status = miner.status;
         cml.suspend_block = miner.suspend_height;
         cml.miner_orbitdb_id = miner.orbitdb_id;
+
+        if (flag) {
+          cml.miner_controller_account_balance = utils.layer1.balanceToAmount(((await api.query.system.account(cml.miner_controller_account)).toJSON()).data.free);
+        }
 
       }
 

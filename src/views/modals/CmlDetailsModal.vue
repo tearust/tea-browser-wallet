@@ -54,6 +54,8 @@
         width="120"
       />
 
+      
+
       <el-table-column
         prop="status"
         label="Status"
@@ -125,7 +127,9 @@ export default {
   },
 
   methods: {
-    
+    async transferToControllerAccount(){
+
+    }
   }
 }
 </script>
