@@ -449,7 +449,13 @@ export default class {
         cml.miner_orbitdb_id = miner.orbitdb_id;
 
         if (flag) {
-          cml.miner_controller_account_balance = utils.layer1.balanceToAmount(((await api.query.system.account(cml.miner_controller_account)).toJSON()).data.free);
+          try{
+            cml.miner_controller_account_balance = utils.layer1.balanceToAmount(((await api.query.system.account(cml.miner_controller_account)).toJSON()).data.free);
+          }catch(e){
+            console.error(e);
+            cml.miner_controller_account = null;
+          }
+          
         }
 
       }

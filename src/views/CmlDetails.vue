@@ -99,8 +99,6 @@
             type="text"
 
             size="small">
-            <!-- {{scope.row.miner_controller_account}}
-            <br/> -->
             <span v-if="scope.row.miner_controller_account_balance>=0.1">{{scope.row.miner_controller_account_balance}}</span> 
             <span style="color:red;" v-if="scope.row.miner_controller_account_balance<0.1">{{scope.row.miner_controller_account_balance}} - Click to topup</span> 
 
