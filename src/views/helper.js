@@ -478,8 +478,8 @@ query {
     self.$store.commit('modal/open', {
       key: 'common_form',
       param: {
-        title: 'Transfer TEA to Controller account',
-        text: 'Please don\'t transfer too much, 1 TEA is enough.',
+        title: 'Transfer TEA to Controller account ',
+        text: 'A small amount of TEA (e.g. 1 TEA) should be enough to cover your mining node\'s transaction fees. <br/>For more information, please <a href="https://github.com/tearust/teaproject/wiki/Mining:-Controller-Account" target="_blank">visit our wiki.</a>',
         props: {
           to: {
             label: 'Controller account',

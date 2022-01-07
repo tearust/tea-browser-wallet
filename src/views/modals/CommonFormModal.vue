@@ -1,15 +1,16 @@
 <template>
 
   <el-dialog
-    :title="title"
     :visible="visible"
     width="78%"
+    :title="title"
     :close-on-click-modal="false"
     custom-class="tea-modal"
     :destroy-on-close="true"
     @opened="openHandler()"
     @close="close()"
   >
+    <!-- <div slot="title" class="el-dialog__title" v-html="title"></div> -->
 
     <i v-if="!param || loading" class="el-icon-loading" style="display: block; width: 40px; height: 40px;font-size: 40px; margin: 0 auto;"></i>
 
