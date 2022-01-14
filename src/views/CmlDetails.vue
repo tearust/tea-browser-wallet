@@ -149,7 +149,7 @@
     <div v-if="layer1_account && cml && miner && layer1_account.address===cml.owner">
       <p style="margin-top: 8px;margin-bottom:-8px;" v-if="miner.status==='Active'">
         Please note that mining machines must be shutdown before their CML can be migrated. 
-        <a href="https://github.com/tearust/teaproject/wiki/CML-Transfer" target="_blank">Click here </a>
+        <a href="https://github.com/tearust/teaproject/wiki/CML-Migration-(Transfer)" target="_blank">Click here </a>
         for more information. <br>
         For more information on becoming a blockchain validator, <a href="https://github.com/tearust/teaproject/wiki/Mining---Layer-1-Validator-Mining" target="_blank">click and follow this guide</a>.
       </p>
