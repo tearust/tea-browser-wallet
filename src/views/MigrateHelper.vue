@@ -14,6 +14,7 @@
         <p style="font-weight:bold;">
           <span class="js_need_copy1">
             sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7/gen_tea_id.sh)"
+            
           </span>
 
           <span title="copy" data-clipboard-target=".js_need_copy1" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
@@ -89,10 +90,21 @@
       <div class="c-shell">
         <p style="font-weight:bold;">
           <span class="js_need_copy">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7/install.sh)"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7/install.sh)" "" "update"
           </span>
 
           <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
+        </p>
+      </div>
+
+      <p style="margin:5px 0;">If you are running as a validator in layer1, please run the following command instead:</p>
+      <div class="c-shell" style="margin-top:0;">
+        <p style="font-weight:bold;">
+          <span class="js_need_copy1">
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7/install.sh)" "" "update" "true"
+          </span>
+
+          <span title="copy" data-clipboard-target=".js_need_copy1" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
         </p>
       </div>
 

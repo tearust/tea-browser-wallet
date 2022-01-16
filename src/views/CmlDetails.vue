@@ -89,25 +89,6 @@
       />
 
       <el-table-column
-        label="Controller account balance"
-        width="150"
-      >
-        <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.miner_controller_account"
-            @click="transferToControllerAccount(scope.row)"
-            type="text"
-
-            size="small">
-            <span v-if="scope.row.miner_controller_account_balance>=0.1">{{scope.row.miner_controller_account_balance}}</span> 
-            <span style="color:red;" v-if="scope.row.miner_controller_account_balance<0.1">{{scope.row.miner_controller_account_balance}} - Click to topup</span> 
-
-          </el-button>
-        </template>
-        
-      </el-table-column>
-
-      <el-table-column
           prop="status"
           label="Status"
           width="120"
@@ -168,7 +149,7 @@
     <div v-if="layer1_account && cml && miner && layer1_account.address===cml.owner">
       <p style="margin-top: 8px;margin-bottom:-8px;" v-if="miner.status==='Active'">
         Please note that mining machines must be shutdown before their CML can be migrated. 
-        <a href="https://github.com/tearust/teaproject/wiki/CML-Transfer" target="_blank">Click here </a>
+        <a href="https://github.com/tearust/teaproject/wiki/CML-Migration-(Transfer)" target="_blank">Click here </a>
         for more information. <br>
         For more information on becoming a blockchain validator, <a href="https://github.com/tearust/teaproject/wiki/Mining---Layer-1-Validator-Mining" target="_blank">click and follow this guide</a>.
       </p>
@@ -393,7 +374,7 @@ export default {
       this.$root.loading(true);
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
-      const cml_data = await this.wf.getCmlByList([this.id], true);
+      const cml_data = await this.wf.getCmlByList([this.id]);
       // console.log(111, cml_data[0]);
       this.cml = cml_data[0];
       this.cml.staking_slot = await Promise.all(_.map(this.cml.staking_slot, async (item, index)=>{
@@ -507,12 +488,6 @@ export default {
         await this.refresh();
       });
     },
-    async transferToControllerAccount(row){
-      await helper.transferToCmlControllerAccount(this, row.miner_controller_account, async ()=>{
-       
-        await this.refresh();
-      });
-    }
     
   }
 }
