@@ -31,7 +31,19 @@ Investors purchasing TApp tokens and purchasing or staking CML will incur transa
     </el-tab-pane>
     <el-tab-pane label="Miners">
 
-<strong style="font-size:18px;">Miners</strong>
+
+<strong style="font-size:18px;">Epoch 8 Starts Jan 21, 2022</strong>
+<p>
+  A snapshot of all wallets will be taken right before the epoch 8 launch. The snapshot will ensure users have the same amount of assets in the new epoch and will include the following:
+</p>
+<ul>
+  <li>All users will have their TApp tokens liquidated for their underlying value according to the bonding curve (a fair distribution will be used where all owners will sell at the same price).</li>
+  <li>All TEA in a user's wallet will be brought over from epoch 7.1 to epoch 8.</li>
+  <li>Any unused frozen CML seeds that a user has during epoch 7.1 will be reissued as CML coupons in epoch 8.</li>
+  <li>For CML mining nodes that are currently running in epoch 7.1, no matter how much life span they have left, each of these will also be reissued as CML coupons in epoch 8.</li>
+</ul>
+
+<strong style="font-size:18px;margin-top: 24px;">Miners</strong>
 <p> To sign up for the mining competition, you'll need to <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist#install-the-polkadotjs-extension" target="_blank">install the polkadot{.js} wallet extension</a>. We have a <a href="https://github.com/tearust/teaproject/wiki/%5ENewbie-Mining-Contest-Getting-Started-Guide%5E" target="_blank">new user's guide</a> to help contestants get started.</p>
 <ul>
 <li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">use the faucet</a> so you have enough TEA for your first transactions.</li>
