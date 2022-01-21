@@ -29,7 +29,7 @@ The chain will restart January 18 around 9pm PST. Do not be alarmed if you see m
 <p>
 Investors have two ways of participating in the TEA Project ecosystem: CML and TApp token investing.
 
-- <b>CML</b> NFTs allow holders to earn a share of a mining node's revenue when the CML is staked into a mining machine. To invest in CML, investors will follow the same procedure as miners to purchase contest CML using the <a href="https://forms.gle/jeBkBn8wDj1np92eA" target="_blank">CML purchase form</a>. To stake their contest CML, investors can pick any mining CML from the <a href="https://wallet.teaproject.org/#/top_tree_list" target="_blank">mining CML list</a> and click the <b>Stake</b> button in the <b>Actions</b> column.
+- <b>CML</b> NFTs allow holders to earn a share of a mining node's revenue when the CML is staked into a mining machine. To invest in CML, investors will follow the same procedure as miners to purchase contest CML using the <a href="https://forms.gle/9McACwtEeyX4GXov6" target="_blank">CML purchase form</a>. To stake their contest CML, investors can pick any mining CML from the <a href="https://wallet.teaproject.org/#/top_tree_list" target="_blank">mining CML list</a> and click the <b>Stake</b> button in the <b>Actions</b> column.
 
 - <b>TApp tokens</b> are an important investment vehicle in the TEA economy. Each TApp will have its own TApp token that investors can purchase as if investing in a stock. Each TApp token represents a share in the TApp and gives the holder dividends in the form of more TApp tokens issued to its holders whenever someone uses the TApp. As these tokens are issued on a bonding curve, the earliest TApp token investors will enjoy the largest amount of price appreciation.
 
@@ -70,7 +70,7 @@ The chain will restart January 18 around 9pm PST. Do not be alarmed if you see m
 <ul>
 <li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">use the faucet</a> so you have enough TEA for your first transactions.</li>
 <li>You can sign up directly through <a href="https://wallet.teaproject.org/#/leader_board">the Leader board</a> by clicking on the <strong>Register for competition</strong> button at the top of that page.</li>
-<li>Use the <a href="https://forms.gle/jeBkBn8wDj1np92eA" target="_blank">CML purchase form</a> to buy your contest CML seeds.</li>
+<li>Use the <a href="https://forms.gle/9McACwtEeyX4GXov6" target="_blank">CML purchase form</a> to buy your contest CML seeds.</li>
 <li>Wait for your CML coupons to be transferred to your wallet. You'll be notified by email when they've been transferred, after which you can redeem them.</li>
 <li>Take out Genesis loans with some of your CML seeds for your initial TEA necessary for the first staking slot.</li>
 </ul>
