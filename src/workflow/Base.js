@@ -277,7 +277,9 @@ export default class {
     const api = layer1_instance.getApi();
 
     const total = layer1_instance.asUnit() * amount;
-    const transfer_tx = api.tx.balances.transfer(address, numberToHex(total));
+    const tt = amount > 9000 ? numberToHex(total) : Math.floor(total);
+    console.log(11, tt);
+    const transfer_tx = api.tx.balances.transfer(address, tt);
     await layer1_instance.sendTx(layer1_account.address, transfer_tx);
   }
 
