@@ -93,7 +93,7 @@
       <div class="x-bottom">
         <el-button v-if="layer1_account && layer1_account.address==='5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" type="primary" @click="$root.goPath('/admin/batch_transfer')">Batch transfer</el-button>
 
-        <!-- <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button type="primary" v-if="layer1_account" @click="rechargeHandler()">Faucet</el-button></el-tooltip> -->
+        <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button type="primary" v-if="layer1_account" @click="rechargeHandler()">Faucet</el-button></el-tooltip>
 
         <el-tooltip v-if="layer1_account && layer1_account.reward" effect="light" placement="top" content="Send your staking reward to your TEA wallet balance"><el-button type="primary" @click="withdrawStakingReward()">Withdraw reward</el-button></el-tooltip>
         
