@@ -311,7 +311,13 @@ const F = {
   isValidIP(ip){
     var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
     return reg.test(ip);
-  } 
+  },
+
+  minerHexToB64(hex){
+    if(!hex) return '';
+    const val = hex.replace(/^0x/, '');
+    return forge.util.encode64(forge.util.hexToBytes(val));
+  },
 
 
 };

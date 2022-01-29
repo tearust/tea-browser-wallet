@@ -74,7 +74,7 @@
             @click="showMinerInfo(scope.row.machine_id)"
             type="text"
             size="small">
-            {{scope.row.machine_id}}
+            {{scope.row.machine_id | minerHexToB64}}
           </el-button>
         </template>
       </el-table-column>
@@ -192,7 +192,7 @@ export default {
       let mm = await api.query.cml.minerItemStore(miner_id);
       mm = mm.toJSON();
 
-      mm.id = ' '+mm.id;
+      mm.id = ' '+utils.minerHexToB64(mm.id);
       mm.ip = hexToString(mm.ip);
       
       this.$store.commit('modal/open', {
