@@ -180,7 +180,7 @@ export default {
   },
   data() {
     return {
-      step: 3,
+      step: 1,
       cml_type: null,
       form: {
         cml_id: null,
