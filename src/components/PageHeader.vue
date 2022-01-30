@@ -14,12 +14,16 @@
 
   
   <!-- <el-menu-item style="margin-left: 50px;" index="/login_account">{{layer1_account.name || 'N/A'}}</el-menu-item> -->
-  <div style="margin-left: 50px;" class="el-menu-item">
+  <div style="margin-left: 20px;" class="el-menu-item">
     <el-dropdown trigger="click" @command="handleCommand">
+      
       <el-button size="small" type="primary" round style="font-size: 14px; " @click="clickSelectAccount()">
         {{layer1_account.name || 'Select account'}}
+        
         <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
       </el-button>
+      
+      
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="(item, i) of all_account" :key="i" :command="item">
           <span v-if="layer1_account && layer1_account.address!==item.address">{{item.ori_name}}</span>
@@ -30,6 +34,14 @@
   </div>
 
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
+
+  
+  <el-menu-item v-if="notification_count" @click="clickNotificationHandler()">
+      <el-badge :value="notification_count" class="item" style="display:inline;">
+        Notifications
+      </el-badge>
+  </el-menu-item>
+  
 
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
 
@@ -58,6 +70,7 @@ import {mapGetters, mapState} from 'vuex';
 import Base from '../workflow/Base';
 import _ from 'lodash';
 import utils from '../tea/utils';
+import request from '../request';
 export default {
   data() {
     return {
@@ -67,6 +80,8 @@ export default {
 
       all_account: [],
       no_plugin_account: false,
+
+      notification_count: null,
     };
   },
   watch: {
@@ -154,7 +169,17 @@ export default {
           dangerouslyUseHTMLString: true,
         });
       }
-    }
+    },
+    async clickNotificationHandler(){
+      // alert(1)
+    },
+
+    async refreshNotificationCount(){
+      const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address]);
+      console.log('notification count => ', count);
+      // this.notification_count = count;
+      this.notification_count = 2;
+    },
     
   },
   mounted(){
@@ -202,7 +227,14 @@ export default {
       }
     });
 
+    const nf_loop = async ()=>{
+      await this.refreshNotificationCount();
 
+      await utils.sleep(2000 * 10);
+      await nf_loop();
+    };
+
+    // nf_loop();
   }
 }
 </script>
