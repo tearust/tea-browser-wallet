@@ -36,11 +36,11 @@
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
 
   
-  <el-menu-item v-if="notification_count" @click="clickNotificationHandler()">
-      <el-badge :value="notification_count" class="item" style="display:inline;">
-        Notifications
-      </el-badge>
-  </el-menu-item>
+  <div class="el-menu-item" v-if="notification_count" @click="clickNotificationHandler()">
+    <el-badge :value="notification_count" class="item" style="display:inline;" >
+      Notifications
+    </el-badge>
+  </div>
   
 
   <el-menu-item index="/log">{{'Log'}}</el-menu-item>
@@ -71,6 +71,7 @@ import Base from '../workflow/Base';
 import _ from 'lodash';
 import utils from '../tea/utils';
 import request from '../request';
+import helper from '../views/helper';
 export default {
   data() {
     return {
@@ -171,7 +172,7 @@ export default {
       }
     },
     async clickNotificationHandler(){
-      // alert(1)
+      helper.showNotificationLink(this);
     },
 
     async refreshNotificationCount(){

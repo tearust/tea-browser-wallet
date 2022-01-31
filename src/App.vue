@@ -27,6 +27,7 @@
     <HostTAppModal />
     <TAppDetailsModal />
     <TAppLinkModal />
+    <NotificationLinkModal />
   </div>
 </template>
 
@@ -50,6 +51,7 @@ import DepositLoanModal from './views/modals/DepositLoanModal';
 import HostTAppModal from './views/modals/HostTAppModal';
 import TAppDetailsModal from './views/modals/TAppDetailsModal';
 import TAppLinkModal from './views/modals/TAppLinkModal';
+import NotificationLinkModal from './views/modals/NotificationLinkModal';
 
 export default {
   components: {
@@ -71,6 +73,7 @@ export default {
     HostTAppModal,
     TAppDetailsModal,
     TAppLinkModal,
+    NotificationLinkModal,
   }
 }
 </script>

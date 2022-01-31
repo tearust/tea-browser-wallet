@@ -347,6 +347,13 @@ query {
       },
     });
   },
+  async showNotificationLink(self){
+    self.$store.commit('modal/open', {
+      key: 'notification_link',
+      param: {
+      },
+    });
+  },
 
   // goToTAppWithIpfsCid(cid){
   //   const ss = utils.get_env('ipfs_url');
