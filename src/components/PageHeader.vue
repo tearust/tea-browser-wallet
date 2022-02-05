@@ -38,7 +38,7 @@
   
   <div class="el-menu-item" v-if="notification_count" @click="clickNotificationHandler()">
     <el-badge :value="notification_count" class="item" style="display:inline;" >
-      Notifications
+      Inbox
     </el-badge>
   </div>
   
