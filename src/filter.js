@@ -56,3 +56,7 @@ Vue.filter('percent', (value)=>{
   return (value*100) + '%';
 });
 
+Vue.filter('minerHexToB64', (hex)=>{
+  return utils.minerHexToB64(hex);
+});
+

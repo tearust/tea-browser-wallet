@@ -347,6 +347,13 @@ query {
       },
     });
   },
+  async showNotificationLink(self){
+    self.$store.commit('modal/open', {
+      key: 'notification_link',
+      param: {
+      },
+    });
+  },
 
   // goToTAppWithIpfsCid(cid){
   //   const ss = utils.get_env('ipfs_url');
@@ -469,6 +476,45 @@ query {
   },
   async migrateMiner(self, cml, miner, succ_cb){
     self.$root.goPath('/cml/migrate/'+cml.id);
+  },
+
+  async transferToCmlControllerAccount(self, to, succ_cb){
+    const layer1_instance = self.wf.getLayer1Instance();
+    const api = layer1_instance.getApi();
+
+    self.$store.commit('modal/open', {
+      key: 'common_form',
+      param: {
+        title: 'Transfer TEA to Controller account ',
+        text: 'A small amount of TEA (e.g. 1 TEA) should be enough to cover your mining node\'s transaction fees. <br/>For more information, please <a href="https://github.com/tearust/teaproject/wiki/Mining:-Controller-Account" target="_blank">visit our wiki.</a>',
+        props: {
+          to: {
+            label: 'Controller account',
+            type: 'Input',
+            default: to,
+            disabled: true
+          },
+          amount: {
+            label: 'Amount',
+            type: 'number',
+            default: 1,
+          }
+        }
+        
+      },
+      cb: async (form, closeFn)=>{
+        self.$root.loading(true);
+        try{
+          await self.wf.transferBalance(form.to, form.amount);
+
+          closeFn();
+          await succ_cb();
+        }catch(e){
+          self.$root.showError(e);
+        }
+        self.$root.loading(false);
+      },
+    });
   },
 
 };

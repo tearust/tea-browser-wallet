@@ -237,5 +237,8 @@ export default {
   CanNotCommitOfflineEvidenceMultiTimes: 'Can not commit offline evidence multiple times within a short interval',
   RedundantTips: 'These tips have been committed multiple times already',
 
+  CompetitionUserInsufficientFreeBalance: 'Insufficient TEA balance to register for contest.',
+  CompetitionUserAlreadyRegistered: 'Insufficient balance for contest registration.',
 
+  CannotPawnWhenCmlIsInAuction: 'Cannot use CML for collateral when it\'s in auction',
 };

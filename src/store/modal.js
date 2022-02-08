@@ -58,6 +58,10 @@ const initState = ()=>{
       visible: false,
       param: {},
     },
+    notification_link: {
+      visible: false,
+      param: {},
+    }
 
   };
 }

@@ -25,6 +25,7 @@ import LeaderBoard from './views/LeaderBoard';
 import TAppsList from './views/TAppsList';
 
 import ApproveLinks from './views/admin/ApproveLinks';
+import BatchTransfer from './views/admin/BatchTransfer';
 
 
 Vue.use(Router);
@@ -117,6 +118,10 @@ let routers = [
   {
     path: '/admin/approve_links',
     component: ApproveLinks,
+  },
+  {
+    path: '/admin/batch_transfer',
+    component: BatchTransfer,
   }
   
 ];

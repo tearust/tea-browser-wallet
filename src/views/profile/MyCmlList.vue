@@ -47,7 +47,7 @@
           @click="showMinerInfo(scope.row.machine_id)"
           type="text"
           size="small">
-          {{scope.row.machine_id}}
+          {{scope.row.machine_id | minerHexToB64}}
         </el-button>
       </template>
     </el-table-column>
@@ -118,6 +118,26 @@
           </el-button> at slot #{{scope.row.staking_index}}
         </span>
       </template>
+    </el-table-column>
+
+    <el-table-column
+      label="Controller account balance"
+      width="150"
+    >
+      <template slot-scope="scope">
+        <el-button
+          v-if="scope.row.miner_controller_account"
+          @click="transferToControllerAccount(scope.row)"
+          type="text"
+
+          size="small">
+
+          <span v-if="scope.row.miner_controller_account_balance>=0.1">{{scope.row.miner_controller_account_balance}}</span> 
+          <span style="color:red;" v-if="scope.row.miner_controller_account_balance<0.1">{{scope.row.miner_controller_account_balance}} - Click to topup</span> 
+
+        </el-button>
+      </template>
+      
     </el-table-column>
 
     <el-table-column
@@ -320,7 +340,7 @@ export default {
       let mm = await api.query.cml.minerItemStore(miner_id);
       mm = mm.toJSON();
 
-      mm.id = ' '+mm.id;
+      mm.id = ' '+utils.minerHexToB64(mm.id);
       mm.ip = hexToString(mm.ip);
       
       this.$store.commit('modal/open', {
@@ -454,6 +474,11 @@ export default {
     
       await this.refresh();
       this.$root.loading(false);
+    },
+    async transferToControllerAccount(row){
+      await helper.transferToCmlControllerAccount(this, row.miner_controller_account, async ()=>{
+        utils.publish('refresh-current-account__account');
+      });
     }
 
   }
