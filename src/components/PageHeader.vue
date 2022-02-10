@@ -176,17 +176,10 @@ export default {
     },
 
     async refreshNotificationCount(){
-      let last_block = utils.cache.get('notification_last_block');
-      if(!last_block){
-        last_block = 1;
-      }
+      let last_block = helper.getLastNotificationBlock(this.layer1_account.address);
       const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address, _.toNumber(last_block)]);
-      console.log('notification count => ', count);
+      console.log('notification count => ', count, last_block, this.layer1_account.address);
       this.notification_count = count;
-
-      let cc = await request.layer1_rpc('cml_tappNotificationCount', [20000]);
-      console.log(222, cc);
-      
     },
     
   },
@@ -222,6 +215,13 @@ export default {
       }, time);
     };
 
+    const nf_loop = async ()=>{
+      await this.refreshNotificationCount();
+
+      await utils.sleep(1000 * 20);
+      await nf_loop();
+    };
+
     loop(async ()=>{
       if(this.wf && this.chain && this.chain.metadata){
         await this.wf.init();
@@ -232,17 +232,11 @@ export default {
         if(block <= outdated_block){
           this.has_seed_pool = true;
         }
+
+        nf_loop();
       }
     });
 
-    const nf_loop = async ()=>{
-      await this.refreshNotificationCount();
-
-      await utils.sleep(1000 * 20);
-      await nf_loop();
-    };
-
-    nf_loop();
   }
 }
 </script>

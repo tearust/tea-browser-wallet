@@ -35,7 +35,7 @@
             label="Link"
           >
             <template slot-scope="scope">
-              <el-link :href="scope.row.url" target="_blank" :inner-html.prop="scope.row.url"></el-link>
+              <el-link @click="update_block(scope.row.url)" :inner-html.prop="scope.row.url"></el-link>
             </template>
           </el-table-column>
 
@@ -231,6 +231,12 @@ export default {
     },
     openUrl(url){
       helper.openUrl(url);
+    },
+    update_block(url){
+      helper.updateLastNotificationBlock(this.layer1_account.address);
+
+      this.openUrl(url);
+      this.close();
     }
   }
 }
