@@ -176,9 +176,16 @@ export default {
     },
 
     async refreshNotificationCount(){
-      const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address]);
+      let last_block = utils.cache.get('notification_last_block');
+      if(!last_block){
+        last_block = 1;
+      }
+      const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address, _.toNumber(last_block)]);
       console.log('notification count => ', count);
       this.notification_count = count;
+
+      let cc = await request.layer1_rpc('cml_tappNotificationCount', [20000]);
+      console.log(222, cc);
       
     },
     
