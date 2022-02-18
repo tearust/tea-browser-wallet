@@ -220,5 +220,10 @@
     "created_at": "BlockNumber"
   },
 
-  "VersionItem": ["Bytes", "Bytes"]
+  "VersionItem": ["Bytes", "Bytes"],
+  "NotificationItem": {
+    "tapp_id": "TAppId",
+    "start_height": "BlockNumber",
+    "expired_height": "BlockNumber"
+  }
 }
