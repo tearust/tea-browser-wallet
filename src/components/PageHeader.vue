@@ -180,6 +180,14 @@ export default {
       const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address, _.toNumber(last_block)]);
       console.log('notification count => ', count, last_block, this.layer1_account.address);
       this.notification_count = count;
+
+      if(count > 0){
+        document.title = 'Tea-project wallet ('+count+')';
+      }
+      else{
+        document.title = 'Tea-project wallet';
+      }
+      
     },
     
   },
