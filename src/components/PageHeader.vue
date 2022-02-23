@@ -36,10 +36,11 @@
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
 
   
-  <div class="el-menu-item" v-if="notification_count" @click="clickNotificationHandler()">
-    <el-badge :value="notification_count" class="item" style="display:inline;" >
+  <div class="el-menu-item" @click="clickNotificationHandler()">
+    <el-badge v-if="notification_count" :value="notification_count" class="item" style="display:inline;" >
       Inbox
     </el-badge>
+    <span v-if="!notification_count">Inbox</span>
   </div>
   
 
