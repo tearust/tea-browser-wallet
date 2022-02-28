@@ -55,15 +55,15 @@
         <span :inner-html.prop="layer1_account ? layer1_account.total_balance : '' | teaIcon"></span>
       </div>
 
-      <!-- <div class="x-item">
+      <div class="x-item">
         <b>
           {{'My COFFEE' | cardTitle}}
-          <TeaIconButton style="position:relative;" place="right" :tip="
+          <!-- <TeaIconButton style="position:relative;" place="right" :tip="
             (usd_interest_rate ? ('COFFEE interest rate is '+(usd_interest_rate)+'.') : '')
-          " icon="questionmark" />
+          " icon="questionmark" /> -->
         </b>
-        <span :inner-html.prop="layer1_account ? layer1_account.usd : '' | usd"></span>
-      </div> -->
+        <span :inner-html.prop="(layer1_account && layer1_account.usd) ? layer1_account.usd : 0 | usd"></span>
+      </div>
 
       <!-- <div class="x-item" v-if="layer1_account && layer1_account.usd_debt">
         <b>
@@ -91,6 +91,15 @@
       </div>
 
       <div class="x-bottom">
+        <el-button type="primary" v-if="layer1_account && layer1_account.balance>0" @click="teaToUsd()">
+          Sell TEA ({{rate.teaToUsd}} COFFEE/TEA)
+        </el-button>
+
+        <el-button type="primary" v-if="layer1_account && layer1_account.usd>0" @click="usdToTea()">
+          Sell COFFEE ({{rate.usdToTea}} TEA/COFFEE)
+        </el-button>
+
+        
         <el-button v-if="layer1_account && layer1_account.address==='5D2od84fg3GScGR139Li56raDWNQQhzgYbV7QsEJKS4KfTGv'" type="primary" @click="$root.goPath('/admin/batch_transfer')">Batch transfer</el-button>
 
         <el-tooltip effect="light" placement="top" content="Receive 0.01 TEA to help pay transaction fees"><el-button type="primary" v-if="layer1_account" @click="rechargeHandler()">Faucet</el-button></el-tooltip>
@@ -101,7 +110,9 @@
 
         <!-- <el-button v-if="layer1_account && layer1_account.usd_debt" @click="payOffButtonhandler()">Pay off COFFEE debt</el-button> -->
 
-        <el-button v-if="layer1_account" type="primary" @click="transferBalance()">Send</el-button>
+        <el-button v-if="layer1_account" type="primary" @click="transferBalance()">Send TEA</el-button>
+
+        <el-button v-if="layer1_account" type="primary" @click="transferUsd()">Send COFFEE</el-button>
         
       </div>
 
@@ -336,6 +347,41 @@ export default {
             const {address, amount} = form;
 
             await this.wf.transferBalance(address, amount);
+
+            closeFn();
+            await this.refreshAccount();
+          }catch(e){
+            this.$root.showError(e);
+          }
+          this.$root.loading(false);
+        },
+      });
+    },
+    async transferUsd(){
+      const layer1_instance = this.wf.getLayer1Instance();
+      const api = layer1_instance.getApi();
+
+      this.$store.commit('modal/open', {
+        key: 'common_form',
+        param: {
+          title: 'Send COFFEE',
+          props: {
+            target: {
+              type: 'Input',
+              label: 'Receiver\'s address'
+            },
+            amt: {
+              type: 'Input',
+              label: 'COFFEE amount',
+            }
+          }
+        },
+        cb: async (form, closeFn)=>{
+          this.$root.loading(true);
+          try{
+            const {target, amt} = form;
+
+            await this.wf.transferBalance(target, amt, true);
 
             closeFn();
             await this.refreshAccount();

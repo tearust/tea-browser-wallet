@@ -236,9 +236,9 @@ export default class {
     }
 
 
-    // let usd = await api.query.genesisExchange.uSDStore(address);
-    // usd = usd.toJSON();
-    // usd = utils.layer1.balanceToAmount(usd);
+    let usd = await api.query.genesisExchange.uSDStore(address);
+    usd = usd.toJSON();
+    usd = utils.layer1.balanceToAmount(usd);
 
     // let usd_debt = await api.query.genesisExchange.uSDDebt(address);
     // usd_debt = usd_debt.toJSON();
@@ -250,12 +250,12 @@ export default class {
       fee_frozen: Math.floor(fee_frozen * 10000) / 10000,
       total_balance: Math.floor(total * 10000) / 10000,
       reward: reward ? Math.floor(reward * 10000) / 10000 : null,
-      usd: 0,
+      usd,
       usd_debt: 0
     };
   }
 
-  async transferBalance(address, amount) {
+  async transferBalance(address, amount, isCoffee=false) {
     const layer1_account = store.getters.layer1_account;
     if (!layer1_account.address) {
       return false;
@@ -270,7 +270,7 @@ export default class {
     }
 
     if(address === layer1_account.address){
-      throw 'You cannot send TEA to yourself.';
+      throw 'You cannot send to yourself.';
     }
 
     const layer1_instance = this.getLayer1Instance();
@@ -279,7 +279,10 @@ export default class {
     const total = layer1_instance.asUnit() * amount;
     const tt = amount > 9000 ? numberToHex(total) : Math.floor(total);
     console.log(11, tt);
-    const transfer_tx = api.tx.balances.transfer(address, tt);
+    let transfer_tx = api.tx.balances.transfer(address, tt);
+    if(isCoffee){
+      transfer_tx = api.tx.genesisExchange.transferUsd(address, tt);
+    }
     await layer1_instance.sendTx(layer1_account.address, transfer_tx);
   }
 
