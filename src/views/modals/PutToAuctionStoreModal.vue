@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Starting price">
-        <el-input-number v-model="form.starting_price" :min="1" :max="500000"></el-input-number>
+        <el-input-number v-model="form.starting_price" :min="0" :max="500000"></el-input-number>
       </el-form-item>
       <el-form-item label="Buy now price">
         <el-input-number v-model="form.buy_now_price" :min="0" :max="1000000"></el-input-number>

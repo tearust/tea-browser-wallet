@@ -167,6 +167,7 @@
         <TeaIconButton
           :disabled="
             !(scope.row.status==='FrozenSeed'
+            && scopee.row.cml_type !== 'C'
             && scope.row.staking_slot.length<1)"
           @click="pawnCmlToGB(scope)"
           tip="Deposit for loan"
