@@ -71,8 +71,12 @@ _.each(TEM_LIST, (item)=>{
 });
 
 export default {
-  list(){
-    return _.map(TEM_LIST, (item)=>{
+  list(is_sudo){
+    let list = _.clone(TEM_LIST);
+    if(!is_sudo){
+      list.pop();
+    }
+    return _.map(list, (item)=>{
       return item.key;
     });
   },

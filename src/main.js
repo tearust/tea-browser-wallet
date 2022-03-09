@@ -92,6 +92,9 @@ new Vue({
     },
     goPath(path, type="push"){
       this.$router[type](path).catch(()=>{});
+    },
+    is_sudo(address){
+      return utils.consts.SUDO_ACCOUNT === address;
     }
   },
   render: h => h(App),
