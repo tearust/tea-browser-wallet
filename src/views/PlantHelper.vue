@@ -20,7 +20,7 @@
         <p style="font-weight:bold;">
 
           <span class="js_need_copy1">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch8/gen_tea_id.sh)"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/gen_tea_id.sh)"
           </span>
           <span title="copy" data-clipboard-target=".js_need_copy1" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
         </p>
@@ -105,18 +105,31 @@
           </el-option>
         </el-select>
       </div>
+
+      <p style="font-size:17px;font-weight:bold;">Run layer1</p>
       <div class="c-shell" style="margin-top:0;">
         <p style="font-weight:bold;">
           <span v-if="script_role===1" class="js_need_copy">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch8/install.sh)"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "true" "init"
           </span>
           <span v-if="script_role===2" class="js_need_copy">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch8/install.sh)" "" "init" "true"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "true" "init" "true"
           </span>
 
           <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
         </p>
       </div>
+      <p style="font-size:17px;font-weight:bold;">Run layer2</p>
+      <div class="c-shell" style="margin-top:0;">
+        <p style="font-weight:bold;">
+          <span class="js_need_copy2">
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "false" "init"
+          </span>
+
+          <span title="copy" data-clipboard-target=".js_need_copy2" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
+        </p>
+      </div>
+
 
       <p style="margin-top:5px;">
         The command above must be run on your mining machine from your terminal application. <br/>

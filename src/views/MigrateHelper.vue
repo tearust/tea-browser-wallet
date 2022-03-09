@@ -13,7 +13,7 @@
       <div class="c-shell" style="margin-top:0;">
         <p style="font-weight:bold;">
           <span class="js_need_copy1">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch8/gen_tea_id.sh)"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/gen_tea_id.sh)"
             
           </span>
 
@@ -106,11 +106,11 @@
       <div class="c-shell" style="margin-top:0;">
         <p style="font-weight:bold;">
           <span v-if="script_role===1" class="js_need_copy">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch8/install.sh)" "" "update"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "" "update"
           </span>
 
           <span v-if="script_role===2" class="js_need_copy">
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch8/install.sh)" "" "update" "true"
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "" "update" "true"
           </span>
 
 
