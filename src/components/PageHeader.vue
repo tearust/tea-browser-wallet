@@ -36,10 +36,11 @@
   <!-- <el-menu-item index="/social_recovery">{{'Recovery'}}</el-menu-item> -->
 
   
-  <div class="el-menu-item" v-if="notification_count" @click="clickNotificationHandler()">
-    <el-badge :value="notification_count" class="item" style="display:inline;" >
+  <div class="el-menu-item" @click="clickNotificationHandler()">
+    <el-badge v-if="notification_count" :value="notification_count" class="item" style="display:inline;" >
       Inbox
     </el-badge>
+    <span v-if="!notification_count">Inbox</span>
   </div>
   
 
@@ -176,10 +177,18 @@ export default {
     },
 
     async refreshNotificationCount(){
-      const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address]);
-      console.log('notification count => ', count);
-      // this.notification_count = count;
-      this.notification_count = 2;
+      let last_block = helper.getLastNotificationBlock(this.layer1_account.address);
+      const count = await request.layer1_rpc('cml_userNotificationCount', [this.layer1_account.address, _.toNumber(last_block)]);
+      console.log('notification count => ', count, last_block, this.layer1_account.address);
+      this.notification_count = count;
+
+      if(count > 0){
+        document.title = 'Tea-project wallet ('+count+')';
+      }
+      else{
+        document.title = 'Tea-project wallet';
+      }
+      
     },
     
   },
@@ -215,6 +224,13 @@ export default {
       }, time);
     };
 
+    const nf_loop = async ()=>{
+      await this.refreshNotificationCount();
+
+      await utils.sleep(1000 * 20);
+      await nf_loop();
+    };
+
     loop(async ()=>{
       if(this.wf && this.chain && this.chain.metadata){
         await this.wf.init();
@@ -225,17 +241,11 @@ export default {
         if(block <= outdated_block){
           this.has_seed_pool = true;
         }
+
+        nf_loop();
       }
     });
 
-    const nf_loop = async ()=>{
-      await this.refreshNotificationCount();
-
-      await utils.sleep(2000 * 10);
-      await nf_loop();
-    };
-
-    // nf_loop();
   }
 }
 </script>

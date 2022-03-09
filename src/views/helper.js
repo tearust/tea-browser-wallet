@@ -3,6 +3,7 @@ import {_} from 'tearust_utils';
 import utils from '../tea/utils';
 import request from '../request';
 import tapp from '../tapp';
+import store from '../store';
 
 // self means vue instance, required.
 const F = {
@@ -353,6 +354,24 @@ query {
       param: {
       },
     });
+  },
+
+  getLastNotificationBlock(account){
+    const epoch_v = utils.get_env('EPOCH_VERSION');
+    const key = 'notification_last_block-'+account+'-'+epoch_v;
+    let last_block = utils.cache.get(key);
+    if(!last_block){
+      return 1;
+    }
+    return last_block;
+  },
+  updateLastNotificationBlock(account){
+    const epoch_v = utils.get_env('EPOCH_VERSION');
+    const key = 'notification_last_block-'+account+'-'+epoch_v;
+
+    const block = store.state.chain.current_block.toJSON();
+
+    utils.cache.put(key, block);
   },
 
   // goToTAppWithIpfsCid(cid){
