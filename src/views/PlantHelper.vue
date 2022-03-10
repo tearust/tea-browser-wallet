@@ -106,7 +106,7 @@
         </el-select>
       </div>
 
-      <p style="font-size:17px;font-weight:bold;">Run layer1</p>
+      <p style="font-size:17px;font-weight:bold;">Step 1: install layer1 script</p>
       <div class="c-shell" style="margin-top:0;">
         <p style="font-weight:bold;">
           <span v-if="script_role===1" class="js_need_copy">
@@ -119,7 +119,7 @@
           <span title="copy" data-clipboard-target=".js_need_copy" style="margin-left: 5px; float:right;" class="iconfont tea-icon-btn icon-copy js_copy"></span>
         </p>
       </div>
-      <p style="font-size:17px;font-weight:bold;">Run layer2</p>
+      <p style="font-size:17px;font-weight:bold;">Step 2: install layer2 script</p>
       <div class="c-shell" style="margin-top:0;">
         <p style="font-weight:bold;">
           <span class="js_need_copy2">
@@ -132,8 +132,8 @@
 
 
       <p style="margin-top:5px;">
-        The command above must be run on your mining machine from your terminal application. <br/>
-        After the script has completed, you can use the button below to verify the installation. <br/>
+        The commands above must be run on your mining machine from your terminal application. <br/>
+        After the scripts have completed, you can use the button below to verify the installation. <br/>
         A more in-depth mining hardware setup guide is available on our <a href="https://github.com/tearust/teaproject/wiki/Mining-With-Your-Own-Hardware" target="_blank">Github wiki</a>.
       </p>
 
