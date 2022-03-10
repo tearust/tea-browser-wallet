@@ -6,12 +6,12 @@
   <!-- <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
   </el-button> -->
-  <span style="">
+  <!-- <span style="">
     Current reward rate:
     <b style="color:#35a696;">271172.5277 TEA /11.6444 Mainnet CML coupon = 23287.80596 T/C Remaining: 8.9363</b>.
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLSD7JPA_9xF4qzYMM3gyUPqWJ_smiC3v28YQR0tq5Y07ZhA/viewform" style="margin-left: 10px;" target="_blank">Reward application</a>.
     <a href="https://github.com/tearust/teaproject/wiki/epoch-7-Reward-Details" target="_blank">Rules</a>.
-  </span>
+  </span> -->
   <el-button type="primary" size="small" style="position:absolute; top:0; right: 50px;" @click="registerHandler()">Register for competition</el-button>
   <el-button size="small" style="top: 0px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
@@ -61,11 +61,11 @@
       label="TEA account balance"
       width="180"
     />
-    <!-- <el-table-column
+    <el-table-column
       prop="usd_asset"
       label="COFFEE account balance"
       width="110"
-    /> -->
+    />
     <el-table-column
       prop="token_asset"
       label="TApp token balance"
@@ -150,7 +150,7 @@ export default {
       });
 
       const rtmp = await request.layer1_rpc('cml_currentExchangeRate', []);
-      const usdToTea = utils.layer1.balanceToAmount(rtmp[1]);
+      const usdToTea = 1; //utils.layer1.balanceToAmount(rtmp[1]);
 
       let x_list = null;
       const sum_arr = [];
@@ -197,9 +197,10 @@ export default {
             arr[j] = _.toNumber(arr[j]);
           }
           arr[1] = 0;
-          arr[3] = 0;
+          // arr[3] = 0;
           arr[6] = 0;
-          const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
+          // const total = arr[1]+arr[2]+arr[3]+arr[4]-arr[5]-arr[6];
+          const total = arr[1]+arr[2]+arr[4]-arr[5]-arr[6];
           
           const rs = {
             index: i+1,
