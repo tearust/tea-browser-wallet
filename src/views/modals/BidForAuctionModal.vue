@@ -79,7 +79,7 @@ export default {
 
       const [min_price, my_bid, is_mining] = await this.calculateBidMinPrice();
 
-      if(min_price.lte(utils.toBN(0))){
+      if(min_price.lt(utils.toBN(0))){
         this.$root.showError('This auction is completed, please refresh.');
         this.close();
         return;
