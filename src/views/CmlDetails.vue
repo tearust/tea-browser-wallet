@@ -419,12 +419,18 @@ export default {
       this.$root.loading(false);
     },
     async getMinerDetails(miner_id){
+      if(!miner_id) return {};
       const layer1_instance = this.wf.getLayer1Instance();
       const api = layer1_instance.getApi();
 
       let mm = await api.query.cml.minerItemStore(miner_id);
       mm = mm.toJSON();
 
+      const tea_id = mm.id;
+      const tea_profile = (await api.query.tea.nodes(tea_id)).toJSON();
+
+      console.log('tea node profile => ', tea_profile);
+      mm.node_last_update_block = tea_profile.updateTime;
       mm.id = ' '+utils.minerHexToB64(mm.id);
       mm.ip = hexToString(mm.ip);
 
