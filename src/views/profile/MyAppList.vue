@@ -167,7 +167,7 @@ export default {
           name: utils.rpcArrayToString(arr[0]),
           token_symbol: utils.rpcArrayToString(arr[2]),
 
-          invest_amount: utils.layer1.balanceToAmount(arr[3][0]),
+          invest_amount: utils.layer1.balanceToRealAmount(arr[3][0]),
           stake_amount: utils.layer1.balanceToAmount(arr[3][1]),
 
           sell_price: utils.layer1.balanceToAmount(arr[4]),

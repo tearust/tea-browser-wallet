@@ -134,7 +134,7 @@ const F = {
                 if(!tmp){
                   return 0;
                 }
-                return utils.layer1.balanceToAmount(tmp[3][0]);
+                return utils.layer1.balanceToRealAmount(tmp[3][0]);
               },
             },
           },

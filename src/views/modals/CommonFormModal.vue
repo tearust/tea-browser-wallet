@@ -50,7 +50,7 @@
           </el-option>
         </el-select>
 
-        <el-input-number v-if="types[item.name]==='number'" :disabled="props[item.name].disabled||false" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000" :step="props[item.name].step || 1" v-bind="{...props[item.name].el_props||{}}"></el-input-number>
+        <el-input-number v-if="types[item.name]==='number'" :disabled="props[item.name].disabled||false" v-model="form[item.name]" :min="props[item.name].min || 0" :max="props[item.name].max || 50000" :step="props[item.name].step || 1" v-bind="{...props[item.name].el_props||{}}" style="width: 200px;"></el-input-number>
 
         <el-checkbox v-if="types[item.name]==='checkbox'" v-model="form[item.name]" v-bind="{...props[item.name].el_props||{}}"></el-checkbox>
 

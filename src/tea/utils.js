@@ -94,6 +94,9 @@ const layer1 = {
   balanceToAmount(value){
     return layer1.formatBalance(value);
   },
+  balanceToRealAmount(value){
+    return value/(1000000*1000000);
+  },
   roundAmount(value){
     return Math.floor(value*10000) / 10000;
   },
