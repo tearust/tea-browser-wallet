@@ -214,7 +214,13 @@
         </li>
         <li>
           Login to your mining node and run <br/>
-          <pre class="code">sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch7/install.sh)" "" "update"</pre><br/>
+          <pre class="code">
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "" "update"
+          </pre><br/>
+          And if you are running as a validator in layer1, please run the following command instead.
+          <pre class="code">
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/tearust/delegator-resources/epoch9/install.sh)" "" "update" "true"
+          </pre><br/>
           This scripts will update the mining software and restart.
         </li>
         <li>
@@ -319,6 +325,7 @@ export default {
           cml_list[cml_index].version_expired = true;
         }
       });
+      // cml_list[3].version_expired = true;
       
       return cml_list;
     },
