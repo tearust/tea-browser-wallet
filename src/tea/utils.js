@@ -181,6 +181,12 @@ const F = {
     return _.get(process.env, x_key, null);
   },
 
+  is_electron(){
+    const val = process.env.IS_ELECTRON;
+    if(val) return true;
+    return false;
+  },
+
   register: (key, cb) => {
     Pubsub.unsubscribe(key);
     Pubsub.subscribe(key, cb);
@@ -335,7 +341,7 @@ F.safe = {
     if(F.safe.layer1_url && F.safe.layer1_rpc){
       return [F.safe.layer1_url, F.safe.layer1_rpc];
     }
-
+    
     const arr1 = F.get_env('layer1_url') ? F.get_env('layer1_url').split(',') : ['ws://127.0.0.1:9944'];
     const arr2 = F.get_env('layer1_rpc') ? F.get_env('layer1_rpc').split(',') : ['http://127.0.0.1:9933'];
 

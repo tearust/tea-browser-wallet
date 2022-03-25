@@ -9,19 +9,25 @@
     "build": "vue-cli-service build --mode prod",
     "testnet": "vue-cli-service build --mode stage",
     "test": "jest",
-    "deploy:ipfs_to_kevin": "ipfs add -r dist --api /ip4/64.227.49.206/tcp/5001/p2p/12D3KooWC6J9kTmxfVkDAbb7gjdrfeqBshGYiJuyuWTvnnbZkJhT"
+    "electron:build": "vue-cli-service electron:build",
+    "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "electron": "vue-cli-service electron:serve --mode test"
   },
+  "main": "background.js",
   "dependencies": {
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
     "clipboard": "^2.0.8",
     "core-js": "3.15.1",
+    "electron-tabs": "^0.17.0",
+    "electron-updater": "^4.2.0",
     "element-ui": "2.13.2",
     "js-yaml": "^3.14.0",
     "jsoneditor": "9.5.0",
     "lodash": "4.17.21",
     "protobufjs": "^6.9.0",
     "pubsub-js": "^1.9.0",
+    "register-service-worker": "^1.6.2",
     "tearust_layer1": "1.0.1",
     "tearust_utils": "1.0.1",
     "vue": "2.6.14",
@@ -40,7 +46,12 @@
     "sass": "^1.35.1",
     "sass-loader": "8.0.2",
     "sass-resources-loader": "2.2.3",
-    "vue-template-compiler": "2.6.14"
+    "vue-template-compiler": "2.6.14",
+    "@vue/cli-plugin-pwa": "^4.0.0",
+    "@vue/cli-plugin-unit-jest": "^4.0.0",
+    "vue-cli-plugin-electron-builder": "^2.0.0-rc.4",
+    "electron": "17.1.2",
+    "electron-devtools-installer": "^3.1.0"
   },
   "eslintConfig": {
     "root": true,

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="stylesheet" href="./electron-tabs.css">
+  </head>
+  <body>
+    
+    <!-- built files will be auto injected -->
+
+    <div class="etabs-tabgroup">
+      <div class="etabs-tabs"></div>
+      <div class="etabs-buttons"></div>
+    </div>
+    <div class="etabs-views"></div>
+
+    <script>
+      const TabGroup = require('electron-tabs')
+     console.log(222, location.href)
+      let tabGroup = new TabGroup({
+        newTab: {
+          title: 'New Tab',
+          src: 'http://127.0.0.1:3000',
+    visible: true,
+    active: true,
+    webviewAttributes: {
+            nodeintegration: true,
+            disablewebsecurity: true,
+            webpreferences: {},
+            plugins: ''
+          }
+        }
+      });
+    
+      const wallet_link = location.search.replace(/^\?/g, '');
+      console.log(decodeURIComponent(wallet_link))
+
+      tabGroup.addTab({
+    title: "TEA wallet",
+    closable: false,
+    src: 'http://127.0.0.1:3000',
+    visible: true,
+    active: true,
+    webviewAttributes: {
+      
+      nodeintegration: true,
+            disablewebsecurity: true,
+            webpreferences: {},
+            plugins: ''
+          }
+  });
+
+    
+    </script>
+
+  </body>
+</html>

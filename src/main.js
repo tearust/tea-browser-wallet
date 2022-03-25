@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import VueAnalytics from 'vue-analytics';
+import 'electron-tabs/electron-tabs.css'
 
 import './elementui-style/index.css';
 import ElementUI from 'element-ui';
@@ -20,6 +21,10 @@ import layer1_error_tips from './assets/error';
 import strings from './assets/string';
 
 import './filter';
+
+if(utils.is_electron()){
+  require('./electron/init');
+}
 
 Vue.use(ElementUI, { locale });
 Vue.config.productionTip = false;
@@ -43,9 +48,10 @@ const C = {};
 new Vue({
   router,
   store,
+
   methods: {
     isDev() {
-      return true;
+      return utils.get_env('env') === 'development';
     },
     loading(f, text = 'Loading...') {
       if (f) {
