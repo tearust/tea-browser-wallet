@@ -2,12 +2,12 @@
 <div class="tea-page p-home">
   <!-- <h4 style="background:#35a696; color: #fff; text-align:center; padding: 5px 10px;">Epoch7.1 starts at 8PM PST Dec 17.</h4> -->
 
-  <h4>This is the preview version of the epoch 9 TEA browser wallet.</h4>
+  <!-- <h4>This is the preview version of the epoch 9 TEA browser wallet.</h4>
 <ul>
 <li>Epoch 9 will officially start after preview testing has completed.</li>
 <li>To participate in the epoch 9 public testing phase, post your polkadot address along with a message that you want to join the public test <a href="https://t.me/teaprojectorg">in our Telegram group</a>.</li>
 <li>Make sure to join our <a href="https://t.me/teaprojectorg">Telegram group</a> to get notifications on the official epoch 9 start time.</li>
-</ul>
+</ul> -->
 
   <el-tabs type="border-card">
     <el-tab-pane label="Investors">
