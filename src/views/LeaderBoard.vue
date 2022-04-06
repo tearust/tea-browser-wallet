@@ -6,12 +6,12 @@
   <!-- <el-button @click="changeShowType()" type="primary" size="small" style="margin:5px 0 10px;">
     {{show_for_coffee ? 'All assets are in COFFEE, change to TEA?' : 'All assets are in TEA, change to COFFEE?'}}
   </el-button> -->
-  <!-- <span style="">
+  <span style="">
     Current reward rate:
-    <b style="color:#35a696;">271172.5277 TEA /11.6444 Mainnet CML coupon = 23287.80596 T/C Remaining: 8.9363</b>.
+    <b style="color:#35a696;">379074.6008 TEA /3 Mainnet CML coupon = 126358.2003 T/C Remaining: 3</b>.
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLSD7JPA_9xF4qzYMM3gyUPqWJ_smiC3v28YQR0tq5Y07ZhA/viewform" style="margin-left: 10px;" target="_blank">Reward application</a>.
     <a href="https://github.com/tearust/teaproject/wiki/epoch-7-Reward-Details" target="_blank">Rules</a>.
-  </span> -->
+  </span>
   <el-button type="primary" size="small" style="position:absolute; top:0; right: 50px;" @click="registerHandler()">Register for competition</el-button>
   <el-button size="small" style="top: 0px;" class="tea-refresh-btn" type="primary" plain icon="el-icon-refresh" circle @click="refreshList()"></el-button>
   <TeaTable
