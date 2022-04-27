@@ -16,23 +16,23 @@
 
 <strong style="display:block; font-size: 18px;">Investors</strong>
 <p>
-Investors have two ways of participating in the TEA Project ecosystem: CML and TApp token investing.
-
-- <b>CML</b> NFTs allow holders to earn a share of a mining node's revenue when the CML is staked into a mining machine. To invest in CML, investors will follow the same procedure as miners to purchase contest CML using the <a href="https://forms.gle/9McACwtEeyX4GXov6" target="_blank">CML purchase form</a>. To stake their contest CML, investors can pick any mining CML from the <a href="https://wallet.teaproject.org/#/top_tree_list" target="_blank">mining CML list</a> and click the <b>Stake</b> button in the <b>Actions</b> column.
-
-- <b>TApp tokens</b> are an important investment vehicle in the TEA economy. Each TApp will have its own TApp token that investors can purchase as if investing in a stock. Each TApp token represents a share in the TApp and gives the holder dividends in the form of more TApp tokens issued to its holders whenever someone uses the TApp. As these tokens are issued on a bonding curve, the earliest TApp token investors will enjoy the largest amount of price appreciation.
-
-To purchase TApp tokens, investors can visit the <a href="https://wallet.teaproject.org/#/tapps_list" target="_blank">TApps list</a> and click the <b>Buy</b> button in the <b>Actions</b> column for the desired TApp. The TApp tokens that the user has invested in are available to view in the <b>My investment in TApps</b> tab of the user's <a href="https://wallet.teaproject.org/#/login_account" target="_blank">My asset</a> wallet page.
+Investors have two ways of participating in the TEA Project ecosystem: CML staking and TApp token investing. Investors will first need to purchase COFFEE which they can then exchange for contest TEA within the TEA browser wallet. Investors can then use the TEA tokens to participate in CML staking or buying TApp tokens.
 </p>
+
+<ul>
+<li>Investors will need to follow the same procedure as miners to purchase COFFEE using the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfb1fjb_Pyfkfa4zOORoWoZcbWJ61OO5r1Egp2CcYsbdwtIeQ/viewform?ts=621ea246" target="_blank">COFFEE purchase form</a>.</li>
+<li> <b>CML staking</b> allows TEA token holders to earn a share of a mining node's revenue when their TEA is staked into a mining machine. Since miners need CML NFTs to activate their mining nodes, we refer to this as CML staking or staking to a CML machine. To stake their contest TEA to a miner, investors can pick any mining CML from the <a href="https://wallet.teaproject.org/#/top_tree_list" target="_blank">mining CML list</a> and click the <b>Stake</b> button in the <b>Actions</b> column.</li>
+
+<li> <b>TApp tokens</b> are an important investment vehicle in the TEA economy. Each TApp will have its own TApp token that investors can purchase as if investing in a stock. Each TApp token represents a share in the TApp and gives the holder dividends in the form of more TApp tokens issued to its holders whenever someone uses the TApp. As these tokens are issued on a bonding curve, the earliest TApp token investors will enjoy the largest amount of price appreciation. To purchase TApp tokens, investors can visit the <a href="https://wallet.teaproject.org/#/tapps_list" target="_blank">TApps list</a> and click the <b>Buy</b> button in the <b>Actions</b> column for the desired TApp. The TApp tokens that the user has invested in are available to view in the <b>My investment in TApps</b> tab of the user's <a href="https://wallet.teaproject.org/#/login_account" target="_blank">My asset</a> wallet page.</li>
 
 <strong style="margin-top: 20px; display:block; font-size: 18px;">Disclaimer</strong>
   <ul>
 <li>Please note that price appreciation of any of these assets are not guaranteed! Investors must perform their own due diligence as the price of CML and TApp tokens will fluctuate according to market conditions.</li>
-  <li>Contest CML are purchased with USDT, and TApp tokens are purchased with contest TEA. Investors participating in the current testnet stage are competing for a weekly share of CML mainnet vouchers redeemable for CML when the TEA mainnet launches.</li>
+  <li>Contest TEA is purchased with COFFEE, and TApp tokens are purchased with contest TEA. Investors participating in the current testnet stage are competing for a weekly share of CML mainnet vouchers redeemable for CML when the TEA mainnet launches.</li>
   </ul>
 
 Investors will need to first <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist#install-the-polkadotjs-extension" target="_blank">install the polkadot{.js} wallet extension</a>.
-Investors purchasing TApp tokens and purchasing or staking CML will incur transaction costs. TEA is used as gas on the TEA network and can be obtained by [following this guide](https://github.com/tearust/teaproject/wiki/TEA-Tokens). Investors can also <a href="http://198.199.82.222:2900/#/" target="_blank">use the faucet</a> to give them enough TEA for their first few transactions.
+Investors purchasing TApp tokens and purchasing or staking CML will incur transaction costs. TEA is used as gas on the TEA network. When contestants purchase COFFEE, their wallets will be deposited with enough TEA for the first few transactions.
     
     </el-tab-pane>
     <el-tab-pane label="Miners">
@@ -42,11 +42,11 @@ Investors purchasing TApp tokens and purchasing or staking CML will incur transa
 <strong style="font-size:18px;margin-top: 24px;">Miners</strong>
 <p> To sign up for the mining competition, you'll need to <a href="https://github.com/tearust/teaproject/wiki/Mining-Contest:-Competitor-Checklist#install-the-polkadotjs-extension" target="_blank">install the polkadot{.js} wallet extension</a>. We have a <a href="https://github.com/tearust/teaproject/wiki/%5ENewbie-Mining-Contest-Getting-Started-Guide%5E" target="_blank">new user's guide</a> to help contestants get started.</p>
 <ul>
-<li>Login to the TEA browser wallet and <a href="http://198.199.82.222:2900/#/" target="_blank">use the faucet</a> so you have enough TEA for your first transactions.</li>
+<li>Login to the TEA browser wallet.</li>
 <li>You can sign up directly through <a href="https://wallet.teaproject.org/#/leader_board">the Leader board</a> by clicking on the <strong>Register for competition</strong> button at the top of that page.</li>
-<li>Use the <a href="https://forms.gle/9McACwtEeyX4GXov6" target="_blank">CML purchase form</a> to buy your contest CML seeds.</li>
-<li>Wait for your CML coupons to be transferred to your wallet. You'll be notified by email when they've been transferred, after which you can redeem them.</li>
-<li>Take out Genesis loans with some of your CML seeds for your initial TEA necessary for the first staking slot.</li>
+<li>Use the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfb1fjb_Pyfkfa4zOORoWoZcbWJ61OO5r1Egp2CcYsbdwtIeQ/viewform?ts=621ea246" target="_blank">COFFEE purchase form</a> to buy your COFFEE. Note that when contestants purchase COFFEE, their wallets will be deposited with enough TEA which should provide enough gas for their first few transactions.</li>
+<li>Wait for your COFFEE to be transferred to your Polkadot wallet. This is currently a manual process so please be patient. You'll be notified by email when they've been transferred, after which you can exchange them for TEA.</li>
+<li>Visit the <a href="https://wallet.teaproject.org/#/auction_store">Marketplace</a> to purchase B CML. Once you have B CML, you can setup your mining machine by following the <a href="https://github.com/tearust/teaproject/wiki/%5ENewbie-Mining-Contest-Getting-Started-Guide%5E" target="_blank">new user's guide</a>.</li>
 </ul>
 
   <strong style="margin-top:20px;display:block;font-size:18px;">Basic concept of plant and staking</strong>
