@@ -1,4 +1,6 @@
 {
+  "IssuerId": "u64",
+
   "Address": "MultiAddress",
   "LookupSource": "MultiAddress",
   "Url": "Bytes",

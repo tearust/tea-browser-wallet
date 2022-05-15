@@ -234,13 +234,7 @@ export default {
     loop(async ()=>{
       if(this.wf && this.chain && this.chain.metadata){
         await this.wf.init();
-        const block = await this.wf.getCurrentBlock();
-
-        // console.log(1, this.chain.metadata.consts.cml.couponTimoutHeight.toJSON());
-        const outdated_block = this.chain.metadata.consts.cml.couponTimoutHeight.toJSON();
-        if(block <= outdated_block){
-          this.has_seed_pool = true;
-        }
+        this.has_seed_pool = true;
 
         nf_loop();
       }

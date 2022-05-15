@@ -195,15 +195,7 @@ export default {
       return list;
     },
     expired_block: (p)=>{
-      if(!p.chain) return 'NA';
-      
-      const block = parseInt(p.chain.current_block, 10);
-      const max = p.chain.metadata.consts.cml.couponTimoutHeight.toJSON();
-
-      let rs = max-block;
-      if(rs < 0) rs = 0;
-
-      return rs;
+      return 0;
     },
   },
   
