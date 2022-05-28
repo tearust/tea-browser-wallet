@@ -8,7 +8,7 @@
   </el-button> -->
   <span style="">
     Current reward rate:
-    <b style="color:#35a696;">1080813.104 TEA /6 Mainnet CML coupon = 180135.5173 T/C Remaining: 6</b>.
+    <b style="color:#35a696;">1150028.606 TEA /3 Mainnet CML coupon = 383342.8687 T/C Remaining: 3</b>.
     <a href="https://docs.google.com/forms/d/1NzNKRNTaNgif2-zYgVC1IOdo4PPoM9Z619LDpji5d4U/viewform?edit_requested=true" style="margin-left: 10px;" target="_blank">Reward application</a>.
     <a href="https://github.com/tearust/teaproject/wiki/Epoch-9" target="_blank">Rules</a>.
   </span>
