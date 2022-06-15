@@ -239,7 +239,7 @@ export default {
 
   // CompetitionUserInsufficientFreeBalance: 'Insufficient TEA balance to register for contest.',
   CompetitionUserInsufficientFreeBalance: 'You need at least 10 TEA to register for contest.',
-  CompetitionUserAlreadyRegistered: 'Insufficient balance for contest registration.',
+  CompetitionUserAlreadyRegistered: 'Current user already registered.',
 
   CannotPawnWhenCmlIsInAuction: 'Cannot use CML for collateral when it\'s in auction',
 };
